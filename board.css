@@ -1,0 +1,9 @@
+.board {
+    width: 100%;
+    max-width: 1208px;
+    background-color: #F6F7F8;
+}
+
+.board .headBar {
+    justify-content: space-between;
+}
