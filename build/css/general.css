@@ -90,6 +90,7 @@ nav a {
 }
 
 header {
+    width: calc(100vw - 232px);
     height: 96px;
     box-shadow: 0px 4px 4px 0px #0000001A;
 }

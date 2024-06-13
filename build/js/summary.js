@@ -10,6 +10,7 @@ let greetName = document.getElementById('greetName');
 
 function init() {
     getGreetingTime();
+    getGreetingName();
     getValues();
 }
 
@@ -28,6 +29,9 @@ function getGreetingTime() {
     }
 }
 
+function getGreetingName() {
+
+}
 
 function getValues() {
 
