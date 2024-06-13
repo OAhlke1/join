@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./build/css/summary.css">
 </head>
 
-<body onload="includeHTML()">
+<body onload="includeHTML(), init()">
     <div class="flex container">
         <nav w3-include-html="./build/templates/navigation.html"></nav>
 
@@ -44,7 +44,7 @@
 
                             </div>
                             <div class="tile-info flex-center">
-                                <span class="count">1</span>
+                                <span id="todo" class="count">1</span>
                                 <span class="tile-text">To-Do</span>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
                                 </svg>
                             </div>
                             <div class="tile-info flex-center">
-                                <span class="count">1</span>
+                                <span id="done" class="count">1</span>
                                 <span class="tile-text">Done</span>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                                 <img src="./assets/img/urgent.svg" alt="">
                             </div>
                             <div class="tile-info flex-center">
-                                <span class="count">1</span>
+                                <span id="urgent" class="count">1</span>
                                 <span class="tile-text">Urgent</span>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                         <div class="sub"></div>
 
                         <div class="tile-info flex-center tile-info-left">
-                            <span class="tile-date">October 16, 2022</span>
+                            <span id="tileDate" class="tile-date">October 16, 2022</span>
                             <span class="upcoming">Upcoming Deadline</span>
                         </div>
 
@@ -95,19 +95,19 @@
                     <div class="flex-center tiles3">
                         <div class="tile tile-state">
                             <div class="tile-info flex-center">
-                                <span class="count">1</span>
+                                <span id="taskBoard" class="count">1</span>
                                 <span class="tile-text">Tasks in<br>Board</span>
                             </div>
                         </div>
                         <div class="tile tile-state">
                             <div class="tile-info flex-center">
-                                <span class="count">1</span>
+                                <span id="taskProgress" class="count">1</span>
                                 <span class="tile-text">Tasks In<br>Progress</span>
                             </div>
                         </div>
                         <div class="tile tile-state">
                             <div class="tile-info flex-center">
-                                <span class="count">1</span>
+                                <span id="feedback" class="count">1</span>
                                 <span class="tile-text">Awaiting<br>Feedback</span>
                             </div>
                         </div>
@@ -115,8 +115,8 @@
                 </div>
 
                 <div class="flex-center greet">
-                    <span class="daytime">Good morning,</span>
-                    <span class="greet-name">Sofia Müller</span>
+                    <span id="greetTime" class="daytime"></span>
+                    <span id="greetName" class="greet-name">Sofia Müller</span>
                 </div>
             </div>
         </main>
