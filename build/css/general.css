@@ -1,4 +1,25 @@
+/* -- Fonts -- */
+@font-face {
+    font-family: Inter;
+    src: url(../../assets/fonts/Inter-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%;
+}
+
 .flex {
     display: flex;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
     align-items: center;
-} 
+}
