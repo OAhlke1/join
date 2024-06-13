@@ -79,6 +79,57 @@
     gap: 32px;
 }
 
+.tile {
+    background: #FFFFFF;
+    border-radius: 30px;
+    color: #000000;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    cursor: pointer;
+}
+
+.tile-todo {
+    width: 264px;
+    height: 168px;
+    padding: 38px 19px;
+    gap: 18px;
+}
+
+.tile:hover {
+    background-color: #2A3647;
+    color: #FFFFFF;
+    transform: scale(1.1);
+
+    .tile-img {
+        background-color: #FFFFFF;
+    }
+}
+
+.tile-todo:hover {
+    svg path {
+        fill: #2A3647;
+    }
+}
+
+.tile-done {
+    width: 264px;
+    height: 168px;
+    padding: 38px 19px;
+    gap: 18px;
+}
+
+.tile-done:hover {
+    svg path {
+        stroke: #2A3647;
+    }
+}
+
+.tile-todo {
+    width: 264px;
+    height: 168px;
+    padding: 38px 19px;
+    gap: 18px;
+}
+
 .tile-img {
     width: 69px;
     height: 69px;
@@ -91,15 +142,16 @@
     height: 32px;
 }
 
-.test1-1 {
-    width: 264px;
-    height: 168px;
-    background: #FFFFFF;
-    padding: 38px 19px;
-    gap: 18px;
-    border-radius: 30px;
-    box-shadow: 0px 0px 4px 0px #0000001A;
 
+.tiles2 .tile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.tiles2 img {
+    width: 60px;
+    height: 60px;
 }
 
 .sub {
@@ -110,10 +162,10 @@
 .tile-info {
     flex-direction: column;
     text-align: center;
+    gap: 13px;
 }
 
 .count {
-    font-family: Inter;
     font-size: 64px;
     font-weight: 600;
     line-height: 76.8px;
@@ -126,7 +178,10 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
+}
 
+.tile-urgent {
+    gap: 18px;
 }
 
 .tiles2 {
@@ -145,7 +200,7 @@
     justify-content: space-between;
 }
 
-.test3-1 {
+.tile-state {
     width: 168px;
     height: 168px;
     background: #FFFFFF;
@@ -154,4 +209,22 @@
     padding: 25px 0px;
     gap: 13px;
     box-shadow: 0px 0px 4px 0px #0000001A;
+}
+
+.tile-date {
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: left;
+}
+
+.upcoming {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+}
+
+.tile-info-left {
+    align-items: flex-start;
 }
