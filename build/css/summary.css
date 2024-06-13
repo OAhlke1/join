@@ -1,27 +1,3 @@
-nav {
-    width: 16.111vw;
-    height: 100vh;
-    background: #2a364736;
-    position: sticky;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-.container {
-    background: #F6F7F8;
-}
-
-header {
-    height: 96px;
-    box-shadow: 0px 4px 4px 0px #0000001A;
-}
-
-main {
-    flex-direction: column;
-    width: 83.889vw;
-}
-
 .summary-headline {
     margin-top: 110px;
     margin-left: 96px;
@@ -43,7 +19,6 @@ main {
     font-weight: 400;
     line-height: 32.4px;
     text-align: left;
-
 }
 
 .subline {
@@ -51,6 +26,11 @@ main {
     height: 59px;
     border: 3px 0px 0px 0px;
     border: 3px solid #29ABE2
+}
+
+.overview-container {
+    align-items: center;
+    margin-left: 96px;
 }
 
 .overview {
@@ -93,33 +73,73 @@ main {
 
 }
 
-.test1 {
+.tiles1 {
     width: 560px;
     height: 168px;
     gap: 32px;
+}
 
+.tile-img {
+    width: 69px;
+    height: 69px;
+    border-radius: 50%;
+    background: #2A3647;
+}
+
+.tiles1 img {
+    width: 32px;
+    height: 32px;
 }
 
 .test1-1 {
     width: 264px;
     height: 168px;
     background: #FFFFFF;
-    padding: 38px 19px 38px 19px;
+    padding: 38px 19px;
     gap: 18px;
     border-radius: 30px;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+
 }
 
-.test2 {
+.sub {
+    height: 102.02px;
+    border: 2px solid #D1D1D1;
+}
+
+.tile-info {
+    flex-direction: column;
+    text-align: center;
+}
+
+.count {
+    font-family: Inter;
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 76.8px;
+    text-align: center;
+
+}
+
+.tile-text {
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+
+}
+
+.tiles2 {
     width: 560px;
     height: 168px;
-    padding: 28px 48px 28px 48px;
+    padding: 28px 48px;
     gap: 61px;
-    border-radius: 30px 0px 0px 0px;
+    border-radius: 30px;
     background: #FFFFFF;
-
+    box-shadow: 0px 0px 4px 0px #0000001A;
 }
 
-.test3 {
+.tiles3 {
     width: 560px;
     height: 170px;
     justify-content: space-between;
@@ -131,7 +151,7 @@ main {
     background: #FFFFFF;
     border-radius: 30px;
     width: Fixed (168px)px;
-    padding: 25px 0px 25px 0px;
+    padding: 25px 0px;
     gap: 13px;
-
+    box-shadow: 0px 0px 4px 0px #0000001A;
 }
