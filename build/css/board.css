@@ -1,15 +1,15 @@
-.board {
-    width: 100%;
-    max-width: 1208px;
-    background-color: #F6F7F8;
+main .boardCont {
+    padding-left: 64px;
 }
 
-.topBar {
+main .boardCont .topBar {
     align-items: center;
     justify-content: space-between;
+    width: 1056px;
+    padding: 79.5px 0px 48px 0px;
 }
 
-.topBar form.searchBar {
+main .boardCont .topBar form.searchBar {
     width: 312px;
     height: 48px;
     border: 1px solid #a8a8a8;
@@ -19,21 +19,21 @@
     border-radius: 10px;
 }
 
-.topBar form.searchBar input {
+main .boardCont .topBar form.searchBar input {
     max-width: 230px;
     color: #a8a8a8;
     outline: none;
     border: none;
 }
 
-.topBar form.searchBar input[placeholder] {
+main .boardCont .topBar form.searchBar input[placeholder] {
     font-size: 20px;
     color: #d1d1d1;
     line-height: 24px;
     font-weight: 400;
 }
 
-.topBar form.searchBar .findTask {
+main .boardCont .topBar form.searchBar .findTask {
     align-items: center;
     justify-content: flex-end;
     width: 48px;
@@ -43,16 +43,43 @@
     border-left: 1px solid #a8a8a8;
 }
 
-.board .board-column {
+main .boardCont .topBar .topBar-right {
+    column-gap: 32px;
+}
+
+main .boardCont .topBar .topBar-right .add-task {
+    justify-content: space-evenly;
+    width: 160px;
+    height: 48px;
+    background-color: #2a3647;
+    border-radius: 10px;
+}
+
+main .boardCont .topBar .topBar-right .add-task p {
+    font-size: 21px;
+    line-height: 25.2px;
+    font-weight: 700;
+    color: white;
+}
+
+main .boardCont .board {
+    column-gap: 26px;
+    width: 100%;
+    max-width: 1208px;
+    background-color: #F6F7F8;
+}
+
+main .boardCont .board .board-column {
     width: 244px;
 }
 
-.board .board-column .column-top {
+main .boardCont .board .board-column .column-top {
     align-items: center;
     justify-content: space-between;
 }
 
-.board .board-column .column-top h2 {
+main .boardCont .board .board-column .column-top h2 {
     font-size:  20px;
     line-height: 24px;
+    color: #42526e;
 }
