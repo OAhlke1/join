@@ -62,6 +62,8 @@ main .boardCont .topBar .topBar-right .add-task p {
     color: white;
 }
 
+/* styling of the board */
+
 main .boardCont .board {
     column-gap: 26px;
     width: 100%;
@@ -71,6 +73,7 @@ main .boardCont .board {
 
 main .boardCont .board .board-column {
     width: 244px;
+    row-gap: 16px;
 }
 
 main .boardCont .board .board-column .column-top {
@@ -82,4 +85,28 @@ main .boardCont .board .board-column .column-top h2 {
     font-size:  20px;
     line-height: 24px;
     color: #42526e;
+}
+
+main .boardCont .board .board-column .column-card-cont {
+    row-gap: 16px;
+}
+
+main .boardCont .board .board-column .column-card-cont .card {
+    width: 100%;
+    background-color: white;
+    border-radius: 16px;
+}
+
+main .boardCont .board .board-column .column-card-cont .card.no-task-to-do {
+    background-color: #e7e7e7;
+    border: 1px dashed #a8a8a8;
+    padding: 14.5px 0px;
+}
+
+main .boardCont .board .board-column .column-card-cont .card.no-task-to-do p {
+    font-family: 'open-sans', sans-serif;
+    font-size: 16px;
+    line-height: 19.2px;
+    text-decoration: none;
+    color: #a8a8a8;
 }
