@@ -20,6 +20,7 @@ main .boardCont .topBar form.searchBar {
 }
 
 main .boardCont .topBar form.searchBar input {
+    justify-content: flex-start;
     max-width: calc(100% - 48px);
     color: #a8a8a8;
     outline: none;
@@ -29,9 +30,10 @@ main .boardCont .topBar form.searchBar input {
 main .boardCont .topBar form.searchBar input[placeholder] {
     font-size: 20px;
     color: #d1d1d1;
-    line-height: 24px;
+    line-height: 0;
     font-weight: 400;
     opacity: 0.6;
+    padding: 0;
 }
 
 main .boardCont .topBar form.searchBar .findTask {
