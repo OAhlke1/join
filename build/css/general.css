@@ -11,6 +11,11 @@
     font-family: Inter, sans-serif;
 }
 
+h1 {
+    font-size: 61px;
+    line-height: 63px;
+}
+
 img {
     width: 100%;
 }
@@ -108,4 +113,13 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    cursor: pointer;
 }
