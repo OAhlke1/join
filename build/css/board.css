@@ -4,6 +4,55 @@
     background-color: #F6F7F8;
 }
 
-.board .headBar {
+.topBar {
+    align-items: center;
     justify-content: space-between;
+}
+
+.topBar form.searchBar {
+    width: 312px;
+    height: 48px;
+    border: 1px solid #a8a8a8;
+    background-color: white;
+    outline: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+}
+
+.topBar form.searchBar input {
+    max-width: 230px;
+    color: #a8a8a8;
+    outline: none;
+    border: none;
+}
+
+.topBar form.searchBar input[placeholder] {
+    font-size: 20px;
+    color: #d1d1d1;
+    line-height: 24px;
+    font-weight: 400;
+}
+
+.topBar form.searchBar .findTask {
+    align-items: center;
+    justify-content: flex-end;
+    width: 48px;
+    height: 32px;
+    background-color: transparent;
+    border: none;
+    border-left: 1px solid #a8a8a8;
+}
+
+.board .board-column {
+    width: 244px;
+}
+
+.board .board-column .column-top {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.board .board-column .column-top h2 {
+    font-size:  20px;
+    line-height: 24px;
 }
