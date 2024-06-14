@@ -113,3 +113,89 @@ main .boardCont .board .board-column .column-card-cont .card.no-task-to-do p {
     text-decoration: none;
     color: #a8a8a8;
 }
+
+main .boardCont .board .board-column .column-card-cont .user-story {
+    border-radius: 16px;
+    background-color: white;
+    padding: 16px;
+    font-size: 16px;
+    row-gap: 24px;
+    width: 252px;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .task-type {
+    padding: 4px 16px;
+    background-color: #0038ff;
+    width: fit-content;
+    min-height: 27px;
+    border-radius: 8px;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .task-type p {
+    font-family: 'inter', sans-serif;
+    color: white;
+    line-height: 0;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story h2 {
+    font-size: 16px;
+    color: #2a3647;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .task-description p {
+    font-size: 16px;
+    color: #a8a8a8;
+    font-weight: 400;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .subtask {
+    justify-content: space-between;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .subtask .subtask-bar {
+    width: 128px;
+    height: 8px;
+    background: #f4f4f4;
+    border-radius: 8px;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .subtask .subtask-bar .inner {
+    border-radius: 8px;
+    width: 50%;
+    height: 100%;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .subtask .subtask-count {
+    font-size: 12px;
+    color: black;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .subtask .subtask-count span {
+    display: inline;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .participants-and-menu {
+    align-items: center;
+    justify-content: space-between;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .participants-and-menu .participants .participant {
+    width: 32px;
+    height: 32px;
+    border: 2px solid white;
+    border-radius: 45px;
+    position: relative;
+    background-color: green;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .participants-and-menu .participants .participant:first-child {
+    left: 0;
+}
+
+main .boardCont .board .board-column .column-card-cont .user-story .participants-and-menu .participants .participant p {
+    font-family: 'inter', sans-serif;
+    font-size: 12px;
+    line-height: 0;
+    font-weight: 400;
+    color: white;
+}
