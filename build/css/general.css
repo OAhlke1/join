@@ -1,7 +1,7 @@
 /* -- Fonts -- */
 @font-face {
     font-family: Inter;
-    src: url(../../assets/fonts/Inter-Regular.ttf);
+    src: url(../../assets/fonts/inter.ttf);
 }
 
 @font-face {
@@ -22,6 +22,7 @@
 }
 
 h1 {
+    font-family: 'Inter', sans-serif;
     font-size: 61px;
     line-height: 63px;
 }
