@@ -22,10 +22,15 @@
 }
 
 *::-webkit-scrollbar {
+    display: none;
     background-color: transparent;
     width: 5px;
     height: 5px;
     margin: 3px;
+}
+
+*:hover::-webkit-scrollbar {
+    display: block;
 }
 
 *::-webkit-scrollbar-thumb {
