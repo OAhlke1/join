@@ -21,6 +21,18 @@
     font-family: Inter, sans-serif;
 }
 
+*::-webkit-scrollbar {
+    background-color: transparent;
+    width: 5px;
+    height: 5px;
+    margin: 3px;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: #a8a8a8;
+}
+
 h1 {
     font-family: 'Inter', sans-serif;
     font-size: 61px;
