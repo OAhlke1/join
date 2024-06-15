@@ -76,6 +76,8 @@
                         </div>
 
                         <div class="column-card-cont">
+                            
+                            <!-- User-story-card-template -->
                             <div class="user-story flex-column">
                                 <div class="task-type flex-center">
                                     <p>User Story</p>
@@ -100,7 +102,7 @@
                                         <span class="count">1</span>/<span class="total">2</span> Subtasks
                                     </p>
                                 </div>
-                                <div class="participants-and-menu flex">
+                                <div class="participants-and-urgency flex">
                                     <div class="participants flex">
                                         <div class="participant flex-center">
                                             <p class="initials">
@@ -173,7 +175,7 @@
 
     <script>
         function shiftParticipants() {
-            document.querySelectorAll('main .boardCont .board .board-column .column-card-cont .user-story .participants-and-menu .participants .participant').forEach((elem, index) => {
+            document.querySelectorAll('main .boardCont .board .board-column .column-card-cont .user-story .participants-and-urgency .participants .participant').forEach((elem, index) => {
                 elem.style.left = `${-5*index}px`;
             })
         }

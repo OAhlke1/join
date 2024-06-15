@@ -94,6 +94,8 @@ main .boardCont .board .board-column .column-card-cont {
     row-gap: 16px;
 }
 
+/* User-story-card styling */
+
 main .boardCont .board .board-column .column-card-cont .card {
     width: 100%;
     background-color: white;
@@ -174,12 +176,12 @@ main .boardCont .board .board-column .column-card-cont .user-story .subtask .sub
     display: inline;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .participants-and-menu {
+main .boardCont .board .board-column .column-card-cont .user-story .participants-and-urgency {
     align-items: center;
     justify-content: space-between;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .participants-and-menu .participants .participant {
+main .boardCont .board .board-column .column-card-cont .user-story .participants-and-urgency .participants .participant {
     width: 32px;
     height: 32px;
     border: 2px solid white;
@@ -188,11 +190,11 @@ main .boardCont .board .board-column .column-card-cont .user-story .participants
     background-color: green;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .participants-and-menu .participants .participant:first-child {
+main .boardCont .board .board-column .column-card-cont .user-story .participants-and-urgency .participants .participant:first-child {
     left: 0;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .participants-and-menu .participants .participant p {
+main .boardCont .board .board-column .column-card-cont .user-story .participants-and-urgency .participants .participant p {
     font-family: 'inter', sans-serif;
     font-size: 12px;
     line-height: 0;
