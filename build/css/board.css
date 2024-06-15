@@ -1,12 +1,21 @@
 main .boardCont {
-    padding-left: 64px;
+    padding: 0px 64px;
+}
+
+main .board-hl-add-task-mobile {
+    display: hidden;
 }
 
 main .boardCont .topBar {
     align-items: center;
     justify-content: space-between;
-    width: 1056px;
+    width: 100%;
+    max-width: 1056px;
     padding: 79.5px 0px 48px 0px;
+}
+
+main .boardCont .topBar .board-hl-add-task-mobile {
+    display: none;
 }
 
 main .boardCont .topBar form.searchBar {
@@ -69,6 +78,7 @@ main .boardCont .topBar .topBar-right .add-task p {
 
 main .boardCont .board {
     column-gap: 26px;
+    min-width: 768px;
     width: 100%;
     max-width: 1208px;
     background-color: #F6F7F8;
@@ -91,6 +101,7 @@ main .boardCont .board .board-column .column-top h2 {
 }
 
 main .boardCont .board .board-column .column-card-cont {
+    flex-direction: column;
     row-gap: 16px;
 }
 
@@ -200,4 +211,93 @@ main .boardCont .board .board-column .column-card-cont .user-story .participants
     line-height: 0;
     font-weight: 400;
     color: white;
+}
+
+@media only screen and (max-width: 1220px) {
+    nav {
+        display: none;
+    }
+
+    main {
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+    }
+
+    main .boardCont {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 428px;
+        height: calc(100% - 80px);
+        margin: 0 auto;
+        padding: 0;
+
+    }
+
+    main .boardCont .topBar {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 46px 0px 24px 0px;
+    }
+
+    main .boardCont .topBar .board-hl-desktop {
+        display: none;
+    }
+
+    main .boardCont .topBar .board-hl-add-task-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 392px;
+        margin-bottom: 40px;
+    }
+
+    main .boardCont .topBar .board-hl-add-task-mobile h1 {
+        font-size: 47px;
+    }
+
+    main .boardCont .topBar form.searchBar {
+        width: 396px;
+    }
+
+    main .boardCont .topBar .topBar-right .add-task {
+        display: none;
+    }
+
+    main .boardCont .board-overflow-cont {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    main .boardCont .board {
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 19px;
+        min-width: 396px;
+        width: 396px;
+        overflow-x: hidden;
+    }
+
+    main .boardCont .board .board-column {
+        width: 100%;
+        column-gap: 16px;
+        padding-bottom: 5px;
+    }
+
+    main .boardCont .board .board-column .column-card-cont {
+        flex-direction: row;
+        column-gap: 16px;
+        overflow-x: scroll;
+    }
+
+    main .boardCont .board .board-column .column-card-cont .user-story {
+        min-width: 252px;
+    }
 }
