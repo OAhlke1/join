@@ -257,6 +257,7 @@ main .boardCont .board .board-column .column-card-cont .user-story .participants
 
     main .boardCont .topBar .board-hl-add-task-mobile h1 {
         font-size: 47px;
+        line-height: 0;
     }
 
     main .boardCont .topBar form.searchBar {
@@ -291,10 +292,15 @@ main .boardCont .board .board-column .column-card-cont .user-story .participants
         padding-bottom: 5px;
     }
 
+    main .boardCont .board .board-column .column-top {
+        justify-content: space-between;
+    }
+
     main .boardCont .board .board-column .column-card-cont {
         flex-direction: row;
         column-gap: 16px;
         overflow-x: scroll;
+        box-sizing: unset;
     }
 
     main .boardCont .board .board-column .column-card-cont .user-story {
