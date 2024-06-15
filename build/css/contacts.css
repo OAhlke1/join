@@ -1,0 +1,86 @@
+.newContactButton button {
+  background-color: #2a3647;
+  color: white;
+  width: 352px;
+  height: 56px;
+  gap: 16px;
+  font-weight: 700;
+  border: 1px;
+  border-radius: 10px;
+  padding: 12px, 0px, 12px, 0px;
+  margin-top: 22.5px;
+}
+
+.newContactButton img {
+  width: 32px;
+  height: 32px;
+}
+
+.contactList {
+  justify-content: space-between;
+  width: 456px;
+  height: 928px;
+  background-color: white;
+  overflow-y: auto;
+  max-height: 638px;
+}
+
+.contactNames h3 {
+  font-weight: 400;
+  font-size: 20px;
+  border-bottom: 1px solid #ddd;
+  padding: 17px 36px 17px 36px;
+}
+
+.contactNames li {
+  list-style-type: none;
+  padding: 0;
+  font-weight: 400;
+  cursor: pointer;
+  
+}
+
+.contactNames span {
+  color: #007CEE;
+  cursor: pointer;
+
+}
+
+.contactNames {
+margin-left: 28px;
+padding: 32px 24px 32px 24px;
+}
+
+#profileImage{
+    border-radius:45px;
+    width: 42px;
+    height: 42px;
+    gap: 10px;
+    border-radius: 45px;
+    background-color:royalblue;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.gap{
+  margin: 10px;
+}
+
+.contactList::-webkit-scrollbar {
+   width: 6px;
+}
+.contactList::-webkit-scrollbar-track {
+    background: #f8f6f6;
+    border-radius: 5px;
+    
+}
+
+.contactList::-webkit-scrollbar-thumb {
+    background: #a8a8a8;
+    border-radius: 5px;
+   
+}
+.contactList::-webkit-scrollbar-thumb:hover {
+    background: #b9b6b6;
+}
+
