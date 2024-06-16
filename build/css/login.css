@@ -319,6 +319,9 @@ input:focus {
     }
 
     .sign-up-mobile {
-        display: flex; 
+        display: flex;
+        visibility: visible;
     }
 }
+
+/* ölsakjfljdsaflksaflkdsaf */
