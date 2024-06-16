@@ -153,3 +153,7 @@ button {
     background-color: transparent;
     border: none;
 }
+
+.d-none{
+    display: none;
+}
