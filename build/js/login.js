@@ -14,7 +14,7 @@ var allInputs = document.querySelectorAll('input');
                 logoBig.classList.add('shrinking');
                 setTimeout(()=>{
                     logoBig.classList.add('disNone');
-                }, 750)
+                }, 700)
             }
         }
 
