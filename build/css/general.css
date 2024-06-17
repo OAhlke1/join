@@ -38,6 +38,11 @@
     background-color: #a8a8a8;
 }
 
+body {
+    justify-content: center;
+    max-width: 1440px;
+}
+
 h1 {
     font-family: 'Inter', sans-serif;
     font-size: 61px;
