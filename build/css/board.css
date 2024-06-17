@@ -214,6 +214,10 @@ main .boardCont .board .board-column .column-card-cont .user-story .participants
 }
 
 @media only screen and (max-width: 1220px) {
+    body {
+        display: flex;
+    }
+
     nav {
         display: none;
     }
