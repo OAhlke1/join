@@ -104,6 +104,9 @@ nav a {
 
 .nav-body {
     flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .nav-container {
