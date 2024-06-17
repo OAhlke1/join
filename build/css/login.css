@@ -77,33 +77,49 @@ input:focus {
 }
 
 .logo-big {
-    width: calc(100vw - 2*77px);
-    height: calc(100vh - 2*80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
     position: absolute;
     top: 80px;
     left: 77px;
-    z-index: 500;
+    z-index: 5000;
     background-color: white;
 }
 
 .logo-big .svgCont {
-    width: calc(27400%/1920);
+    width: 274px;
     aspect-ratio: 274 / 335;
 }
 
 .logo-big.shrinking {
-    animation: shrinkBigLogo 1s linear;
-    
+    animation: shrinkOverlay 0.75s linear;
 }
 
-@keyframes shrinkBigLogo {
+.logo-big.shrinking .svgCont {
+    animation: shrinkLogo 0.75s linear;
+}
+
+@keyframes shrinkOverlay {
     0% {
         width: 100vw;
         height: 100vh;
     }
     100% {
-        width: 261px;
-        height: 276px;
+        width: 101px;
+        height: 122px;
+    }
+}
+
+@keyframes shrinkLogo {
+    0% {
+        width: 274px;
+    }
+    100% {
+        width: 101px;
+        display: none;
     }
 }
 
@@ -249,6 +265,7 @@ input:focus {
     left: 50%;
     transform: translateX(-50%);
     height: 35px;
+    z-index: 50;
 }
 
 .terms-and-cond a {
@@ -320,7 +337,6 @@ input:focus {
 
     .sign-up-mobile {
         display: flex;
-        visibility: visible;
     }
 }
 
