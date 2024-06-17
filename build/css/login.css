@@ -166,6 +166,7 @@ input:focus {
 .form-block form {
     row-gap: 32px;
     width: 100%;
+    margin-top: 27px;
 }
 
 #name-signin {

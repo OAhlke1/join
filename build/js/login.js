@@ -4,7 +4,7 @@ var allInputs = document.querySelectorAll('input');
         var logoBigHeight = logoBig.offsetHeight;
 
         function toStartAtBeginning() {
-            //document.querySelector('.logo-big').style.aspectRatio = window.innerWidth / window.innerHeight;
+            document.querySelector('.logo-big').style.aspectRatio = window.innerWidth / window.innerHeight;
             setTimeout(()=>{shrinkLogoBig(1000)}, 250);
             focused();
         }
@@ -14,7 +14,11 @@ var allInputs = document.querySelectorAll('input');
                 logoBig.classList.add('shrinking');
                 setTimeout(()=>{
                     logoBig.classList.add('disNone');
-                }, 700)
+                    document.querySelector('.topBar').classList.remove('disNone');
+                    document.querySelector('.form-block').classList.remove('disNone');
+                    //document.querySelector('.form-block.sign-in').classList.remove('disNone');
+                    document.querySelector('.terms-and-cond').classList.remove('disNone');
+                }, 720)
             }
         }
 
