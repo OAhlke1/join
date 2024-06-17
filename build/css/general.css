@@ -40,7 +40,6 @@
 
 body {
     justify-content: center;
-
 }
 
 h1 {
@@ -86,13 +85,34 @@ nav a {
     text-align: left;
 }
 
+.nav-links a:hover {
+    background-color: #27abe323;
+}
+
+.sub-nav a:hover {
+    color: #29ABE2;
+    font-weight: 500;
+}
+
+.active {
+    background-color: #091931;
+}
+
+.nav-logo {
+    flex: 1;
+}
+
+.nav-body {
+    flex: 2;
+}
+
 .nav-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     width: 232px;
-    height: 100vh;
+    height: 100%;
     padding: 64px 0px 64px 0px;
 }
 
@@ -129,8 +149,29 @@ nav a {
 
 header {
     width: calc(100vw - 232px);
-    height: 96px;
+    height: 104px;
     box-shadow: 0px 4px 4px 0px #0000001A;
+    padding: 20px 40px 20px 96px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}
+
+.user-button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 3px solid #2A3647;
+}
+
+.help {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
 }
 
 main {
@@ -159,6 +200,6 @@ button {
     border: none;
 }
 
-.d-none{
+.d-none {
     display: none;
 }
