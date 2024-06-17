@@ -30,6 +30,7 @@
 
 .overview-container {
     align-items: center;
+    gap: 96px;
     margin-left: 96px;
 }
 
@@ -46,7 +47,6 @@
     width: 385px;
     height: 136px;
     gap: 3px;
-    margin-left: 80px;
     margin-top: 56px;
 }
 

@@ -164,6 +164,10 @@ header {
     text-align: left;
 }
 
+.logo-mobile-header {
+    display: none;
+}
+
 .user-button {
     width: 56px;
     height: 56px;
