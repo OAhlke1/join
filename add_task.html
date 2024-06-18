@@ -1,28 +1,81 @@
 <!DOCTYPE html>
 <html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico" />
+        <link rel="stylesheet" href="./build/css/general.css" />
+        <link rel="stylesheet" href="./build/css/.css" />
+        <link rel="stylesheet" href="./build/css/addTask.css" />
+        <!-- Platzhalter für CSS Datei-->
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
-    <link rel="stylesheet" href="./build/css/general.css">
-    <link rel="stylesheet" href="./build/css/.css"> <!-- Platzhalter für CSS Datei-->
-</head>
+    <body>
+        <div class="flex container">
+            <nav></nav>
+            <!-- Platzhalter für die spätere Navigation (Nicht ändern) -->
 
-<body>
-    <div class="flex container">
-         <nav></nav> <!-- Platzhalter für die spätere Navigation (Nicht ändern) -->
-        
-        <main class="flex">
-            <header class="flex">Kanban Project Management Tool</header> <!-- Platzhalter für den späteren Header (Nicht ändern) -->
+            <main class="flex">
+                <header class="flex">Kanban Project Management Tool</header>
+                <!-- Platzhalter für den späteren Header (Nicht ändern) -->
+                <div id="content-box-container">
+                    <div id="cnt-left">
+                        <h1>Add Task</h1>
 
-            <!-- Hier den Inhalt der Seite einfügen und stylen in separater CSS Datei -->
+                        <div id="title-cnt">
+                            <span id="title-font">Title*</span>
+                            <input type="text" placeholder="Enter a title" id="title-input" />
+                        </div>
+                        <div id="description-cnt">
+                            <span id="description-font">Description</span>
 
-        </main>
-    </div>
+                            <textarea placeholder="Enter a Description" id="description-content"></textarea>
+                            <div id="assigned-cnt">
+                                <span id="assigned-font">Assigned to</span>
+                                <div>
+                                    <select name="Select contacts to assign" id="assigned-container">
+                                        <option value="Select contacts to assign">Select contacts to assign</option>
+                                        <option value="Sofia Müller (You)">Sofia Müller (You)</option>
+                                        <option value="Anton Mayer">Anton Mayer</option>
+                                        <option value="Anja Schulz" selected>Anja Schulz</option>
+                                        <option value="Benedikt Ziegler">Benedikt Ziegler</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="border-cnt"></div>
+                    <div id="cnt-right">
+                        <div id="date-cnt">
+                            <p id="date-font">Due date*</p>
+                            <input type="date" id="date-input" />
+                        </div>
+                        <div id="prio-cnt">
+                            <span id="prio-font">Prio</span>
+                            <div id="choose-prio-container">
+                                <button id="prio-urgent" class="prio">Urgent</button>
+                                <button id="prio-medium" class="prio">Medium</button>
+                                <button id="prio-low" class="prio">Low</button>
+                            </div>
+                        </div>
+                        <div id="category-cnt">
+                            <span id="category-font">Cateogory*</span>
+                            <select id="task-category-id">
+                                <option value="Technical Task">Technical Task</option>
+                                <option value="User Story">User Story</option>
+                            </select>
+                        </div>
+                        <div id="substasks-cnt">
+                            <span id="substasks-font">Subtasks</span>
+                            <input type="text" id="subtasks-input" placeholder="Add new subtask" />
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
 
-    <script src="./build/js/"></script> <!-- Platzhalter für den spätere JS-Datei -->
-</body>
-
+        <script src="./build/js/"></script>
+        <!-- Platzhalter für den spätere JS-Datei -->
+    </body>
 </html>
