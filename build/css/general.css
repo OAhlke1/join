@@ -15,7 +15,6 @@
 }
 
 body {
-    max-width: 1440px;
     margin: 0 auto;
 }
 
@@ -99,6 +98,10 @@ nav a {
 .nav-container img {
     width: 100px;
     height: 122px;
+}
+
+.nav-links {
+    padding-bottom: 64px;
 }
 
 .nav-link img {
