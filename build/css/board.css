@@ -111,6 +111,7 @@ main .boardCont .board .board-column .column-card-cont .card {
     width: 100%;
     background-color: white;
     border-radius: 16px;
+    user-select: none;
 }
 
 main .boardCont .board .board-column .column-card-cont .card.no-task-to-do {
@@ -134,6 +135,7 @@ main .boardCont .board .board-column .column-card-cont .user-story {
     font-size: 16px;
     row-gap: 24px;
     width: 252px;
+    user-select: none;
 }
 
 main .boardCont .board .board-column .column-card-cont .user-story .task-type {

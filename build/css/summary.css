@@ -1,5 +1,5 @@
 .summary-headline {
-    margin-top: 80px;
+    margin-top: 110px;
     margin-left: 96px;
     gap: 30px;
     align-items: center;
@@ -30,7 +30,6 @@
 
 .overview-container {
     align-items: center;
-    gap: 96px;
     margin-left: 96px;
 }
 
@@ -47,6 +46,7 @@
     width: 385px;
     height: 136px;
     gap: 3px;
+    margin-left: 80px;
     margin-top: 56px;
 }
 
@@ -98,6 +98,7 @@
     background-color: #2A3647;
     color: #FFFFFF;
     transform: scale(1.1);
+
     .tile-img {
         background-color: #FFFFFF;
     }
