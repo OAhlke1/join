@@ -2,6 +2,10 @@
   position: fixed;
 }
 
+header {
+    width: 100%;
+}
+
 /* Style button */
 
 .newContactButton {
@@ -26,6 +30,10 @@
   height: 32px;
 }
 
+.container {
+  max-width: 1440px;
+}
+
 /* Style contact list */
 
 .contactList {
@@ -33,6 +41,7 @@
   width: 456px;
   height: 928px;
   background-color: white;
+  box-shadow: 4px 0px 4px 0px #0000001A;
 }
 
 .contactNames h3 {
