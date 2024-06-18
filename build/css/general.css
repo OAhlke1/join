@@ -165,7 +165,7 @@ header {
 
 main {
     flex-direction: column;
-    width: calc(100vw - 232px);
+    width: 100%;
     max-width: 1440px;
 }
 
