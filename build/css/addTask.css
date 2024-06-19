@@ -2,298 +2,309 @@
     display: flex;
 }
 
-#border-cnt {
-    width: 0px;
-    height: 424px;
+#content-box-left {
+    width: 440px;
+    height: 376px;
     top: 327px;
-    left: 816.25px;
-    gap: 0px;
-    border: 1px 0px 0px 0px;
+    left: 328px;
+    position: fixed;
+    gap: 16px;
     opacity: 0px;
-    border: 1px solid #d1d1d1;
+}
+
+#content-box-right {
+    width: 440px;
+    height: 416px;
+    top: 327px;
+    left: 864.25px;
+    position: fixed;
+    gap: 24px;
+    opacity: 0px;
 }
 
 #content-box-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    width: 976.25px;
+    height: 424px;
+    top: 327px;
+    left: 328px;
+    position: fixed;
 }
 
-#title-cnt {
-    display: flex;
-    flex-direction: column;
-}
-
-#title-font {
-    width: 440px;
-    height: 24px;
-    gap: 0px;
-    opacity: 0px;
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
+.subtitle {
     line-height: 24px;
-    text-align: left;
-    color: #2a3647;
+}
+
+h1 {
+    position: fixed;
+    top: 206px;
+    left: 328px;
+    height: 73px;
+    width: 278px;
+}
+
+#title-container {
+    width: 440px;
+    height: 96px;
+    gap: 8px;
+}
+
+#title-input-container {
+    width: 440px;
+    height: 64px;
 }
 
 #title-input {
-    width: Fill (440px) px;
-    height: Hug (48px) px;
+    width: 440px;
+    height: 48px;
     padding: 12px 21px 12px 21px;
     gap: 10px;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px;
     border: 1px 0px 0px 0px;
     opacity: 0px;
     border: 1px solid #d1d1d1;
 }
 
-#date-cnt {
-    display: flex;
-    flex-direction: column;
-}
-
-#description-cnt {
-    display: flex;
-    flex-direction: column;
-    width: Fixed (440px) px;
-    height: Hug (168px) px;
+#description-container {
+    width: 440px;
+    height: 168px;
     top: 112px;
     gap: 8px;
     opacity: 0px;
 }
 
-#description-content {
-    width: Fill (440px) px;
-    height: Fixed (120px) px;
+#textarea-container {
+    width: 440px;
+    height: 136px;
+    gap: 4px;
+    opacity: 0px;
+}
+
+#textarea-input {
+    width: 440px;
+    height: 120px;
     padding: 18px 16px 18px 16px;
     gap: 10px;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 10px;
     border: 1px 0px 0px 0px;
     opacity: 0px;
     border: 1px solid #d1d1d1;
-    background-color: white;
+    resize: none;
 }
 
-#category-cnt {
-    display: flex;
-    flex-direction: column;
-}
-
-#cnt-left {
-    width: 440px;
-    height: 376px;
-    top: 327px;
-    left: 328px;
-    gap: 16px;
-    opacity: 0px;
-}
-
-#cnt-right {
-    width: 440px;
-    height: 416px;
-    top: 327px;
-    left: 864.25px;
-    gap: 24px;
-    opacity: 0px;
-}
-
-#substasks-cnt {
-    display: flex;
-    flex-direction: column;
-}
-
-.prio {
-    width: 136px;
-    height: 56px;
-    padding: 16px 10px 16px 10px;
-    gap: 8px;
-    border-radius: 10px 10px 10px 10px;
-    opacity: 0px;
-    box-shadow: 0px 0px 4px 0px #0000001a;
-    border: 1px solid #d1d1d1;
-}
-
-#assigned-font {
-    width: 239px;
-    height: 24px;
-    gap: 0px;
-    opacity: 0px;
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: left;
-    color: #2a3647;
-}
-
-#description-font {
-    width: 440px;
-    height: 24px;
-    gap: 0px;
-    opacity: 0px;
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: left;
-    color: #2a3647;
-}
-
-#assigned-cnt {
-    width: Fixed (440px);
-    height: Fixed (80px);
+#assigned-container {
+    width: Fixed 440px;
+    height: Fixed 80px;
     top: 296px;
     gap: 8px;
     opacity: 0px;
 }
 
-#assigned-container {
-    height: Hug (48px);
+.select-container {
+    width: 440px;
+    height: 48px;
     padding: 12px 16px 12px 16px;
     gap: 0px;
-    border-radius: 10px 10px 10px 10px;
-    border: 1px 0px 0px 0px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d1;
     justify-content: space-between;
     opacity: 0px;
-    background-color: #ffffff;
+}
+
+#border-container {
+    width: 0px;
+    height: 424px;
+    top: 327px;
+    left: 816.25px;
+    position: fixed;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
     border: 1px solid #d1d1d1;
 }
 
-h1 {
-    width: 278px;
-    height: 73px;
-    font-family: Inter;
-    font-size: 61px;
-    font-weight: 700;
-    line-height: 73.2px;
-    text-align: left;
-}
-
-#date-cnt {
-    width: Fixed (440px) px;
-    height: Hug (96px) px;
+#date-container {
+    width: 440px;
+    height: 96px;
     gap: 8px;
     opacity: 0px;
 }
 
-#date-font {
-    width: 96px;
-    height: 24px;
-    gap: 0px;
+#calender {
+    width: 440px;
+    height: 64px;
+    gap: 4px;
     opacity: 0px;
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: left;
 }
 
 #date-input {
-    width: Fill (440px) px;
-    height: Hug (48px) px;
+    width: 440px;
+    height: 48px;
     padding: 12px 16px 12px 16px;
     gap: 0px;
-    border-radius: 10px 10px 10px 10px;
-    border: 1px 0px 0px 0px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d1;
     justify-content: space-between;
     opacity: 0px;
-    border: 1px solid #d1d1d1;
 }
 
-#prio-cnt {
-    width: Hug (440px) px;
-    height: Hug (88px) px;
-    top: 120px;
+#prio-container {
+    width: 440px;
+    height: 88px;
     gap: 8px;
     opacity: 0px;
 }
 
-#prio-font {
-    font-family: Inter;
+#prio-urgent {
+    width: 65px;
+    height: 24px;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
     text-align: left;
     color: #000000;
+}
+
+#prio-medium-button {
+    background: #ffa800;
+}
+
+#prio-medium {
+    width: 84px;
+    height: 24px;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: left;
+    color: #ffffff;
+}
+
+#prio-low {
+    width: 40px;
+    height: 24px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
 }
 
 #choose-prio-container {
-    width: Fixed (440px) px;
-    height: Hug (56px) px;
+    width: 440px;
+    height: 56px;
     gap: 16px;
     opacity: 0px;
+    display: flex;
 }
 
-#category-cnt {
-    width: Fixed (440px) px;
-    height: Hug (80px) px;
-    top: 232px;
+.choose-prio-button {
+    width: 136px;
+    height: 56px;
+    padding: 16px 10px 16px 10px;
+    gap: 8px;
+    border-radius: 10px;
+    opacity: 0px;
+    background: #ffffff;
+    box-shadow: 0px 0px 4px 0px #0000001a;
+}
+
+#category-container {
+    width: 440px;
+    height: 80px;
     gap: 8px;
     opacity: 0px;
 }
 
-#category-font {
-    width: 98px;
-    height: 24px;
-    gap: 0px;
-    opacity: 0px;
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: left;
-}
-
-#task-category-id {
-    width: Fixed (440px) px;
-    height: Hug (48px) px;
-    padding: 12px 16px 12px 16px;
-    gap: 0px;
-    border-radius: 10px 10px 10px 10px;
-    border: 1px 0px 0px 0px;
-    justify-content: space-between;
-    opacity: 0px;
-    border: 1px solid #d1d1d1;
-}
-
-#substasks-cnt {
-    width: Fixed (440px) px;
-    height: Hug (80px) px;
-    top: 336px;
+#substasks-container {
+    width: 440px;
+    height: 80px;
     gap: 8px;
     opacity: 0px;
 }
 
-#substasks-font {
-    width: 88px;
+#choose-subtasks {
+    width: 440px;
+    height: 48px;
+    padding: 12px 16px 12px 16px;
+    gap: 0px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d1;
+    justify-content: space-between;
+    opacity: 0px;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+#required-container {
+    position: fixed;
+    width: 170px;
+    height: 27px;
+    top: 926px;
+    left: 328px;
+    opacity: 0px;
+}
+
+#required-span {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+}
+
+#interactives-buttons-container {
+    position: fixed;
+    width: 309px;
+    height: 56px;
+    top: 889px;
+    left: 995.25px;
+    gap: 16px;
+    opacity: 0px;
+    display: flex;
+}
+
+#clear-button {
+    width: 110px;
+    height: 56px;
+    padding: 16px;
+    gap: 4px;
+    border-radius: 10px;
+    opacity: 0px;
+    border: 1px solid #2a3647;
+    display: flex;
+}
+
+#clear-button-font {
+    width: 50px;
     height: 24px;
     gap: 0px;
     opacity: 0px;
-    font-family: Inter;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
     text-align: left;
+    color: #2a3647;
 }
 
-#subtasks-input {
-    width: Fill (440px) px;
-    height: Hug (48px) px;
-    padding: 12px 16px 12px 16px;
-    gap: 0px;
-    border-radius: 10px 10px 10px 10px;
-    border: 1px 0px 0px 0px;
-    justify-content: space-between;
+#create-button {
+    width: 183px;
+    height: 56px;
+    padding: 16px;
+    gap: 4px;
+    border-radius: 10px;
     opacity: 0px;
-    border: 1px solid #d1d1d1;
+    background: #2a3647;
+    display: flex;
 }
 
-.prio {
-    font-family: Inter;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: left;
-    color: #000000;
-    background-color: white;
+#create-task-button-font {
+    width: 123px;
+    height: 24px;
+    opacity: 0px;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    color: #ffffff;
 }

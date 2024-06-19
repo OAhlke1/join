@@ -8,74 +8,72 @@
         <link rel="stylesheet" href="./build/css/general.css" />
         <link rel="stylesheet" href="./build/css/.css" />
         <link rel="stylesheet" href="./build/css/addTask.css" />
-        <!-- Platzhalter für CSS Datei-->
     </head>
 
-    <body>
+    <body onload="includeHTML()">
         <div class="flex container">
-            <nav></nav>
-            <!-- Platzhalter für die spätere Navigation (Nicht ändern) -->
+            <nav w3-include-html="./build/templates/navigation.html"></nav>
 
             <main class="flex">
-                <header class="flex">Kanban Project Management Tool</header>
-                <!-- Platzhalter für den späteren Header (Nicht ändern) -->
+                <header class="flex" w3-include-html="./build/templates/header.html"></header>
+                <h1>Add Task</h1>
+
                 <div id="content-box-container">
-                    <div id="cnt-left">
-                        <h1>Add Task</h1>
-
-                        <div id="title-cnt">
-                            <span id="title-font">Title*</span>
-                            <input type="text" placeholder="Enter a title" id="title-input" />
+                    <div id="content-box-left" class="flex-column">
+                        <div id="title-container" class="flex-column">
+                            <span class="subtitle">Title*</span>
+                            <div id="title-input-container"><input type="text" placeholder="Enter a title" id="title-input" /></div>
                         </div>
-                        <div id="description-cnt">
-                            <span id="description-font">Description</span>
-
-                            <textarea placeholder="Enter a Description" id="description-content"></textarea>
-                            <div id="assigned-cnt">
-                                <span id="assigned-font">Assigned to</span>
-                                <div>
-                                    <select name="Select contacts to assign" id="assigned-container">
-                                        <option value="Select contacts to assign">Select contacts to assign</option>
-                                        <option value="Sofia Müller (You)">Sofia Müller (You)</option>
-                                        <option value="Anton Mayer">Anton Mayer</option>
-                                        <option value="Anja Schulz" selected>Anja Schulz</option>
-                                        <option value="Benedikt Ziegler">Benedikt Ziegler</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div id="description-container" class="flex-column">
+                            <span class="subtitle">Description</span>
+                            <div id="textarea-container"><textarea placeholder="Enter a Description" id="textarea-input"></textarea></div>
+                        </div>
+                        <div id="assigned-container" class="flex-column">
+                            <span class="subtitle">Assigned to</span>
+                            <select name="Select contacts to assign" class="select-container">
+                                <option value="Select contacts to assign">Select contacts to assign</option>
+                                <option value="Sofia Müller (You)">Sofia Müller (You)</option>
+                                <option value="Anton Mayer">Anton Mayer</option>
+                                <option value="Anja Schulz" selected>Anja Schulz</option>
+                                <option value="Benedikt Ziegler">Benedikt Ziegler</option>
+                            </select>
                         </div>
                     </div>
-                    <div id="border-cnt"></div>
-                    <div id="cnt-right">
-                        <div id="date-cnt">
-                            <p id="date-font">Due date*</p>
-                            <input type="date" id="date-input" />
+                    <div id="border-container"></div>
+                    <div id="content-box-right" class="flex-column">
+                        <div id="date-container" class="flex-column">
+                            <span class="subtitle">Due date*</span>
+                            <div id="calender"><input type="date" id="date-input" /></div>
                         </div>
-                        <div id="prio-cnt">
-                            <span id="prio-font">Prio</span>
+                        <div id="prio-container" class="flex-column">
+                            <span class="subtitle">Prio</span>
                             <div id="choose-prio-container">
-                                <button id="prio-urgent" class="prio">Urgent</button>
-                                <button id="prio-medium" class="prio">Medium</button>
-                                <button id="prio-low" class="prio">Low</button>
+                                <button class="choose-prio-button"><span id="prio-urgent">Urgent</span></button>
+                                <button class="choose-prio-button" id="prio-medium-button"><span id="prio-medium">Medium</span></button>
+                                <button class="choose-prio-button"><span id="prio-low">Low</span></button>
                             </div>
                         </div>
-                        <div id="category-cnt">
-                            <span id="category-font">Cateogory*</span>
-                            <select id="task-category-id">
+                        <div id="category-container" class="flex-column">
+                            <span class="subtitle">Cateogory*</span>
+                            <select class="select-container">
                                 <option value="Technical Task">Technical Task</option>
                                 <option value="User Story">User Story</option>
                             </select>
                         </div>
-                        <div id="substasks-cnt">
-                            <span id="substasks-font">Subtasks</span>
-                            <input type="text" id="subtasks-input" placeholder="Add new subtask" />
+                        <div id="substasks-container" class="flex-column">
+                            <span class="subtitle">Subtasks</span>
+                            <input type="text" id="choose-subtasks" placeholder="Add new subtask" />
                         </div>
+                    </div>
+                    <div id="required-container"><span id="required-span">*This field is required</span></div>
+                    <div id="interactives-buttons-container">
+                        <button id="clear-button"><span id="clear-button-font">Clear</span></button> <button id="create-button"><span id="create-task-button-font">Create Task</span></button>
                     </div>
                 </div>
             </main>
         </div>
 
-        <script src="./build/js/"></script>
+        <script src="./build/js/main.js"></script>
         <!-- Platzhalter für den spätere JS-Datei -->
     </body>
 </html>
