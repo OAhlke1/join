@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./build/css/board.css"> <!-- Platzhalter für CSS Datei-->
 </head>
 
-<body>
+<body onload="shiftParticipants()">
     <div class="flex container">
          <nav></nav> <!-- Platzhalter für die spätere Navigation (Nicht ändern) -->
         
@@ -89,7 +89,7 @@
                             <div class="column-card-cont flex">
 
                                 <!-- User-story-card-template -->
-                                <div class="user-story flex-column">
+                                <div id="firstCard1" class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -153,7 +153,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -217,7 +217,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -281,7 +281,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -345,7 +345,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -426,7 +426,7 @@
                             </div>
 
                             <div class="column-card-cont flex">
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -490,7 +490,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -554,7 +554,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -618,7 +618,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -682,7 +682,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -755,7 +755,7 @@
                             </div>
 
                             <div class="column-card-cont flex">
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -819,7 +819,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -883,7 +883,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -947,7 +947,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
@@ -1011,7 +1011,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="user-story flex-column">
+                                <div class="user-story flex-column" draggable="true" ondrag="tiltCard(event)" ondrop="tiltCardBack(event)" ondragover="return false;">
                                     <div class="task-type flex-center">
                                         <p>User Story</p>
                                     </div>
