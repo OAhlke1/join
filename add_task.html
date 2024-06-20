@@ -21,7 +21,7 @@
                 <div id="content-box-container">
                     <div id="content-box-left" class="flex-column">
                         <div id="title-container" class="flex-column">
-                            <span class="subtitle">Title*</span>
+                            <span class="subtitle">Title<span class="asterisk">*</span></span>
                             <div id="title-input-container"><input type="text" placeholder="Enter a title" id="title-input" /></div>
                         </div>
                         <div id="description-container" class="flex-column">
@@ -42,19 +42,25 @@
                     <div id="border-container"></div>
                     <div id="content-box-right" class="flex-column">
                         <div id="date-container" class="flex-column">
-                            <span class="subtitle">Due date*</span>
+                            <span class="subtitle">Due date<span class="asterisk">*</span></span>
                             <div id="calender"><input type="date" id="date-input" /></div>
                         </div>
                         <div id="prio-container" class="flex-column">
                             <span class="subtitle">Prio</span>
                             <div id="choose-prio-container">
-                                <button class="choose-prio-button"><span id="prio-urgent">Urgent</span></button>
-                                <button class="choose-prio-button" id="prio-medium-button"><span id="prio-medium">Medium</span></button>
-                                <button class="choose-prio-button"><span id="prio-low">Low</span></button>
+                                <button id="prio-urgent-button" class="choose-prio-button flex-center-align">
+                                    <span id="prio-urgent" class="flex-center-align">Urgent<img src="./assets/img/urgent-arrows.svg" id="urgent-arrows" /> </span>
+                                </button>
+                                <button class="choose-prio-button flex-center-align" id="prio-medium-button">
+                                    <span id="prio-medium" class="flex-center-align">Medium<img src="./assets/img/medium-arrows.svg" id="medium-arrows" /></span>
+                                </button>
+                                <button class="choose-prio-button flex-center-align" id="prio-low-button">
+                                    <span id="prio-low" class="flex-center-align">Low<img src="./assets/img/low-arrows.svg" id="low-arrows" /></span>
+                                </button>
                             </div>
                         </div>
                         <div id="category-container" class="flex-column">
-                            <span class="subtitle">Cateogory*</span>
+                            <span class="subtitle">Cateogory<span class="asterisk">*</span></span>
                             <select class="select-container">
                                 <option value="Technical Task">Technical Task</option>
                                 <option value="User Story">User Story</option>
@@ -65,9 +71,16 @@
                             <input type="text" id="choose-subtasks" placeholder="Add new subtask" />
                         </div>
                     </div>
-                    <div id="required-container"><span id="required-span">*This field is required</span></div>
+                    <div id="required-container">
+                        <span id="required-span"><span class="asterisk">*</span>This field is required</span>
+                    </div>
                     <div id="interactives-buttons-container">
-                        <button id="clear-button"><span id="clear-button-font">Clear</span></button> <button id="create-button"><span id="create-task-button-font">Create Task</span></button>
+                        <button id="clear-button" class="flex-center-align">
+                            <span id="clear-button-font" class="contents">Clear<img src="./assets/img/cancel-icon.svg" id="cancel-icon" /></span>
+                        </button>
+                        <button id="create-button" class="flex-center-align">
+                            <span id="create-task-button-font" class="contents">Create Task<img src="./assets/img/check-icon.svg" id="check-icon" /></span>
+                        </button>
                     </div>
                 </div>
             </main>

@@ -33,7 +33,11 @@
 }
 
 .subtitle {
+    font-size: 20px;
+    font-weight: 400;
     line-height: 24px;
+    text-align: left;
+    color: #2a3647;
 }
 
 h1 {
@@ -64,6 +68,10 @@ h1 {
     border: 1px 0px 0px 0px;
     opacity: 0px;
     border: 1px solid #d1d1d1;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
 }
 
 #description-container {
@@ -87,10 +95,12 @@ h1 {
     padding: 18px 16px 18px 16px;
     gap: 10px;
     border-radius: 10px;
-    border: 1px 0px 0px 0px;
     opacity: 0px;
     border: 1px solid #d1d1d1;
     resize: none;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
 }
 
 #assigned-container {
@@ -110,6 +120,10 @@ h1 {
     border: 1px solid #d1d1d1;
     justify-content: space-between;
     opacity: 0px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
 }
 
 #border-container {
@@ -119,7 +133,6 @@ h1 {
     left: 816.25px;
     position: fixed;
     gap: 0px;
-    border: 1px 0px 0px 0px;
     opacity: 0px;
     border: 1px solid #d1d1d1;
 }
@@ -147,6 +160,10 @@ h1 {
     border: 1px solid #d1d1d1;
     justify-content: space-between;
     opacity: 0px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
 }
 
 #prio-container {
@@ -164,6 +181,7 @@ h1 {
     line-height: 24px;
     text-align: left;
     color: #000000;
+    gap: 8px;
 }
 
 #prio-medium-button {
@@ -178,6 +196,7 @@ h1 {
     line-height: 25.2px;
     text-align: left;
     color: #ffffff;
+    gap: 8px;
 }
 
 #prio-low {
@@ -187,6 +206,7 @@ h1 {
     font-weight: 400;
     line-height: 24px;
     text-align: left;
+    gap: 8px;
 }
 
 #choose-prio-container {
@@ -206,6 +226,22 @@ h1 {
     opacity: 0px;
     background: #ffffff;
     box-shadow: 0px 0px 4px 0px #0000001a;
+}
+
+#urgent-arrows {
+    width: 20px;
+    height: 14.51px;
+}
+
+#medium-arrows {
+    width: 20px;
+    height: 7.45px;
+    color: #7ae229;
+}
+
+#low-arrows {
+    width: 20px;
+    height: 14.51px;
 }
 
 #category-container {
@@ -231,11 +267,25 @@ h1 {
     border: 1px solid #d1d1d1;
     justify-content: space-between;
     opacity: 0px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
 }
 
 .flex-column {
     display: flex;
     flex-direction: column;
+}
+
+.flex-center-align {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contents {
+    display: contents;
 }
 
 #required-container {
@@ -307,4 +357,18 @@ h1 {
     font-weight: 700;
     line-height: 25.2px;
     color: #ffffff;
+}
+
+#cancel-icon {
+    width: 24px;
+    height: 24px;
+}
+
+#check-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.asterisk {
+    color: #ff8190;
 }
