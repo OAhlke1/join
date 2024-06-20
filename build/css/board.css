@@ -1,3 +1,7 @@
+.disNone {
+    display: none;
+}
+
 main .boardCont {
     padding: 0px 64px;
 }
@@ -102,7 +106,9 @@ main .boardCont .board .board-column .column-top h2 {
 
 main .boardCont .board .board-column .column-card-cont {
     flex-direction: column;
+    justify-content: flex-start;
     row-gap: 16px;
+    height: 100%;
 }
 
 /* User-story-card styling */
@@ -114,13 +120,13 @@ main .boardCont .board .board-column .column-card-cont .card {
     user-select: none;
 }
 
-main .boardCont .board .board-column .column-card-cont .card.no-task-to-do {
+main .boardCont .board .board-column .column-card-cont .card {
     background-color: #e7e7e7;
     border: 1px dashed #a8a8a8;
     padding: 14.5px 0px;
 }
 
-main .boardCont .board .board-column .column-card-cont .card.no-task-to-do p {
+main .boardCont .board .board-column .column-card-cont .card p {
     font-family: 'open-sans', sans-serif;
     font-size: 16px;
     line-height: 19.2px;
