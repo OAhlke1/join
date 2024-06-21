@@ -14,6 +14,10 @@
     src: url(../../assets/fonts/open-sans-italic.ttf);
 }
 
+body {
+    margin: 0 auto;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -50,6 +54,8 @@ img {
 
 .container {
     background: #F6F7F8;
+    width: 100vw;
+    max-width: 1440px;
 }
 
 nav {
@@ -96,6 +102,10 @@ nav a {
     height: 122px;
 }
 
+.nav-links {
+    padding-bottom: 64px;
+}
+
 .nav-link img {
     display: flex;
     align-items: center;
@@ -123,14 +133,40 @@ nav a {
 }
 
 header {
-    width: calc(100vw - 232px);
-    height: 96px;
+    width: 100%;
+    height: 104px;
     box-shadow: 0px 4px 4px 0px #0000001A;
+    padding: 20px 40px 20px 96px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+}
+
+.logo-mobile-header {
+    display: none;
+}
+
+.user-button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 3px solid #2A3647;
+}
+
+.help {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
 }
 
 main {
     flex-direction: column;
-    width: calc(100vw - 232px);
+    width: 100%;
+    max-width: 1440px;
 }
 
 .flex {
@@ -157,3 +193,51 @@ button {
 .d-none{
     display: none;
 }
+<<<<<<< HEAD
+=======
+
+@media (max-width: 1280px) {
+    nav {
+        position: fixed;
+        width: 100%;
+        height: 96px;
+        bottom: 0;
+        left: 0;
+        top: auto;
+    }
+
+    .nav-container {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .nav-logo {
+        display: none;
+    }
+
+    .nav-links {
+        width: 100vw;
+        padding-bottom: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 32px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    nav a {
+        flex-direction: column;
+        flex: 1;
+        width: 16.111vw;
+        height: 100%;
+        padding: 0;
+    }
+
+    .sub-nav {
+        display: none;
+    }
+}
+>>>>>>> 9618c5a6294954f05419c7c769b413f0d7762800

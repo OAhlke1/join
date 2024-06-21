@@ -1,3 +1,4 @@
+git pull
 git add .
-git commit -m "%*"
+git commit -m "Fetching and and rendering of user-stories"
 git push
