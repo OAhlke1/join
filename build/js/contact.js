@@ -57,10 +57,10 @@ let contacts = [
   },
 ];
 
-function init() {
-  render();
+// function init() {
+//   render();
   
-}
+// }
 
 function render() {
   let showContacts = document.getElementById("showContact");
