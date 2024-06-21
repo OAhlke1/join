@@ -37,13 +37,15 @@ let testParticpantsList = /* HTML */ `<div class="participant flex-center">
                                         </p>
                                     </div>`;
 let dragged = null;
-let draggableObjs;
+const draggableObjs = document.querySelectorAll(".user-story");
 const targets = document.querySelectorAll(".column-card-cont");
 
 function loadCont() {
     getStories();
+    postStories();
     setStoryAttributes();
     shiftParticipants();
+    setDragDrop();
     checkForEmptyColumns();
     checkForFilledColumns();
 }
@@ -74,23 +76,22 @@ function setDragDrop() {
           forEachTarget(event);
         });
     }
-    setStoryAttributes();
 }
 
 function forEachTarget(event) {
-    targets.forEach((elem, index)=>{
-        if(document.querySelectorAll('.user-story').length > 0) {
-            if(elem.contains(event.target) || event.target.classList.contains('column-card-cont')) {
-                dragged.parentNode.removeChild(dragged);
-                event.target.parentNode.append(dragged);
-                checkForEmptyColumns();
-                checkForFilledColumns();
-                if(document.querySelectorAll('.user-story').length > 0) {
-                    setStoryAttributes(index);
-                }
-            }
+    targets.forEach((elem)=>{
+    console.log(event.target);
+    if(document.querySelectorAll('.user-story').length > 0) {
+        if(elem.contains(event.target) || event.target.classList.contains('column-card-cont')) {
+            dragged.parentNode.removeChild(dragged);
+            event.target.parentNode.append(dragged);
+            checkForEmptyColumns();
+            checkForFilledColumns();
+            setStoryAttributes();
+            setStoryArray();
         }
-    })
+    }
+  })
 }
 
 function checkForEmptyColumns() {
@@ -124,31 +125,42 @@ function checkForFilledColumns() {
     }
 }
 
+function setStoryAttributes() {
+    targets.forEach((elem)=>{
+        elem.querySelectorAll('.user-story').forEach((el)=>{
+            el.setAttribute('data-storyType', elem.id);
+        })
+    })
+}
+
 async function getStories() {
     let fetchedStories = await fetch(taskURL);
     fetchedStories = await fetchedStories.json();
     for(const [key, value] of Object.entries(fetchedStories)) {
         allStories.push(value);
     }
-    setStories();
+    renderStories();
 }
 
-function setStoryAttributes() {
-    targets.forEach((elem, index)=>{
-        elem.querySelectorAll('.user-story').forEach((el)=>{
-            el.setAttribute('data-storyType', elem.id);
+async function postStories() {
+    if(allStories.length > 0) {
+        allStories.forEach(async (elem)=>{
+            let response = await fetch(taskURL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(elem)
+            }).then((val)=>{return val;}).catch((err)=>{throw err;})
         })
-        actualizeStory(index);
-    })
+    }
 }
 
-function setStories() {
-    allStories.forEach((elem, index)=>{
-        let card = /* HTML */ `<div class="user-story flex-column" draggable="true" data-storyType="${elem.storyType}" data-storyIndex="${index}">
+function renderStories() {
+    allStories.forEach((elem)=>{
+        let card = /* HTML */ `<div class="user-story flex-column" draggable="true" data-storyType="${elem.storyType}">
             <div class="task-type flex-center"><p>User Story</p></div>
             <div class="headlineDescription flex-column">
                 <h2>${elem.storyTitle}</h2>
-                <div class="task-description"><p>${elem.storyDescrip}</p></div>
+                <div class="task-description"><p>${elem.storyDescip}</p></div>
             </div>
             <div class="subtask flex-center">
                 <div class="subtask-bar"><div class="inner"></div></div>
@@ -159,36 +171,11 @@ function setStories() {
                 <div class="menu flex">${urgencyLow}${urgencyMedium}${urgencyHigh}</div>
             </div>
         </div>`;
-        renderStory(card, elem.storyType);
+        setStory(card, elem.storyType);
     })
 }
 
-async function postStories(postMethod) {
-    if(allStories.length > 0) {
-        allStories.forEach(async (elem)=>{
-            let response = await fetch(taskURL, {
-                method: postMethod,
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(elem)
-            }).then((val)=>{return val;}).catch((err)=>{throw err;})
-        })
-    }
-}
-
-function renderStory(elem, id) {
+function setStory(elem, id) {
+    console.log('setStory: '+typeof elem);
     document.querySelector(`#${id}`).innerHTML += elem;
-    draggableObjs = document.querySelectorAll(".user-story");
-    setStoryAttributes();
-    setDragDrop();
-}
-
-async function actualizeStory(index) {
-    let storyCard = document.querySelector(`.user-story[data-storyIndex=${index}]`);
-    let storyObj = {
-        storyDescrip: storyCard.querySelector('.task-description p').innerHTML,
-        storyTitle: storyCard.querySelector('h2').innerHTML,
-        storyType: storyCard.getAttribute('data-storyType')
-    }
-    allStories[index] = storyObj;
-    postStories('PUT');
 }
