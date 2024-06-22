@@ -69,6 +69,11 @@ main .boardCont .topBar .topBar-right .add-task {
     height: 48px;
     background-color: #2a3647;
     border-radius: 10px;
+    text-decoration: none;
+}
+
+main .boardCont .topBar .topBar-right .add-task:hover {
+    text-decoration: none;
 }
 
 main .boardCont .topBar .topBar-right .add-task p {
@@ -85,11 +90,13 @@ main .boardCont .board {
     min-width: 768px;
     width: 100%;
     max-width: 1208px;
+    height: fit-content;
     background-color: #F6F7F8;
 }
 
 main .boardCont .board .board-column {
     width: 244px;
+    height: auto;
     row-gap: 16px;
 }
 
@@ -115,6 +122,7 @@ main .boardCont .board .board-column .column-card-cont {
 
 main .boardCont .board .board-column .column-card-cont .card {
     width: 100%;
+    height: fit-content;
     background-color: white;
     border-radius: 16px;
     user-select: none;
