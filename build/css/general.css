@@ -14,8 +14,9 @@
     src: url(../../assets/fonts/open-sans-italic.ttf);
 }
 
-body {
-    margin: 0 auto;
+html {
+    display: flex;
+    justify-content: center;
 }
 
 * {
