@@ -9,8 +9,12 @@ function addTaskFunction(event) {
     document.getElementById("title-input").innerHTML;
 }
 
-function clickUrgency(event) {
-    console.log(event);
+function clickUrgency(event = 0) {
+    if(event === 0) {
+
+    }
+    event.stopPropagation();
+    console.log(event.target);
     for (let i = 0; i < document.querySelectorAll(".choose-prio-button").length; i++) {
         document.querySelectorAll(".choose-prio-button")[i].classList.remove("clickedPrio");
     }
