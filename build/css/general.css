@@ -14,16 +14,17 @@
     src: url(../../assets/fonts/open-sans-italic.ttf);
 }
 
-html {
-    display: flex;
-    justify-content: center;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Inter, sans-serif;
+}
+
+.transform50 {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 *::-webkit-scrollbar {
