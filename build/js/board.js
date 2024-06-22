@@ -41,7 +41,6 @@ async function getUsers() {
         userKey.push(key);
         userValue.push(value);
     }
-    console.log(fetchedUsers);
     getStories();
 }
 
@@ -203,10 +202,8 @@ async function actualizeStory(index) {
 function renderParticipants(elem) {
     let pList = "";
     for(let [key, value] of Object.entries(elem)) {
-        console.log(value);
         pList += `<p class="initials">${value.sureName[0]}${value.name[0]}</p>`
     }
-    console.log(pList);
     return pList;
 }
 
