@@ -1,4 +1,4 @@
 git pull
 git add .
-git commit -m "Fetching and and rendering of user-stories"
+git commit -m "Drag-and-Drop and the loading of participants are working"
 git push
