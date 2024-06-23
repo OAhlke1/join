@@ -1,4 +1,4 @@
-git pull
+
 git add .
-git commit -m "klappt"
+git commit -m "centered page"
 git push
