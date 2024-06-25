@@ -10,7 +10,7 @@
     </head>
 
     <body onload="includeHTML()">
-        <div class="flex container">
+        <div class="flex container transform50">
             <nav w3-include-html="./build/templates/navigation.html"></nav>
 
             <main class="flex">
@@ -47,6 +47,7 @@
                         <div id="prio-container" class="flex-column">
                             <span class="subtitle">Prio</span>
                             <div id="choose-prio-container">
+<<<<<<< HEAD
                                 <button class="choose-prio-button flex-center-align" id="prio-urgent-button" type="button" onclick="choosePrio('urgent', 'prio-urgent-button')">
                                     <span id="prio-urgent" class="flex-center-align"
                                         >Urgent
@@ -65,6 +66,17 @@
                                         <img src="./assets/img/low-arrows.svg" id="low-arrows" />
                                     </span>
                                 </button>
+=======
+                                <div id="prio-urgent-button" class="choose-prio-button flex-center-align" onclick="clickUrgency(event)">
+                                    <span id="prio-urgent" class="flex-center-align">Urgent<img src="./assets/img/urgent-arrows.svg" id="urgent-arrows" /> </span>
+                                </div>
+                                <div id="prio-medium-button" class="choose-prio-button flex-center-align" onclick="clickUrgency(event)">
+                                    <span id="prio-medium" class="flex-center-align">Medium<img src="./assets/img/medium-arrows.svg" id="medium-arrows" /></span>
+                                </div>
+                                <div id="prio-low-button" class="choose-prio-button flex-center-align" onclick="clickUrgency(event)">
+                                    <span id="prio-low" class="flex-center-align">Low<img src="./assets/img/low-arrows.svg" id="low-arrows" /></span>
+                                </d>
+>>>>>>> 72635f7dcafc164f525a7611f7d74024e3fb503b
                             </div>
                         </div>
                         <div id="category-container" class="flex-column">

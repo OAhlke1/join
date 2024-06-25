@@ -1,6 +1,6 @@
 let columnCardConts = document.querySelectorAll('.column-card-cont');
 let userStories = document.querySelectorAll('.user-story');
-let draggedElem = null;
+let allStoryKeys = [];
 let allStories = [];
 let userKey = [];
 let userValue = [];
@@ -27,13 +27,6 @@ let dragged = null;
 let draggableObjs;
 const targets = document.querySelectorAll(".column-card-cont");
 
-function loadCont() {
-    getUsers();
-    setStoryType();
-    // checkForEmptyColumns();
-    // checkForFilledColumns();
-}
-
 async function getUsers() {
     let fetchedUsers = await fetch(taskURL);
     fetchedUsers = await fetchedUsers.json();
@@ -48,6 +41,7 @@ async function getStories() {
     let fetchedStories = await fetch(taskURL);
     fetchedStories = await fetchedStories.json();
     for(const [key, value] of Object.entries(fetchedStories)) {
+        allStoryKeys.push(key);
         allStories.push(value);
     }
     setStoriesHtml();
@@ -74,7 +68,15 @@ function setStoriesHtml() {
     });
     checkForEmptyColumns();
     checkForFilledColumns();
-    setStoryType();
+}
+
+function renderStory(elem, id) {
+    document.querySelector(`#${id}`).innerHTML += elem;
+    draggableObjs = document.querySelectorAll(".user-story");
+    shiftParticipants();
+    checkForEmptyColumns();
+    checkForFilledColumns();
+    setDragDrop();
 }
 
 function shiftParticipants() {
@@ -101,9 +103,9 @@ function setDragDrop() {
           event.preventDefault();
           event.stopPropagation();
           forEachTarget(event);
+          setStoryType();
         });
     }
-    setStoryType();
     shiftParticipants();
 }
 
@@ -111,11 +113,7 @@ function forEachTarget(event) {
     targets.forEach((elem, index)=>{
         if(document.querySelectorAll('.user-story').length > 0) {
             if(elem.contains(event.target)) {
-                dragged.parentNode.removeChild(dragged);
                 elem.appendChild(dragged);
-                if(document.querySelectorAll('.user-story').length > 0) {
-                    setStoryType();
-                }
                 checkForEmptyColumns();
                 checkForFilledColumns();
             }
@@ -154,49 +152,19 @@ function checkForFilledColumns() {
     }
 }
 
-function setStoryType(colId = null, story = null) {
-    if(story === null) {
-        targets.forEach((elem)=>{
-            elem.querySelectorAll('.user-story').forEach((el)=>{
-                el.setAttribute('data-storyType', elem.id);
-            })
-            //actualizeStory(index);
-        })
-    }else {
-        story.setAttribute('data-storyType', colId);
-    }
+function setStoryType(story = null, colId = null) {
+    dragged.setAttribute('data-storyType', dragged.parentNode.id);
+    postStory();
 }
 
-async function postStories(postMethod) {
-    if(allStories.length > 0) {
-        allStories.forEach(async (elem)=>{
-            let response = await fetch(taskURL, {
-                method: postMethod,
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(elem)
-            }).then((val)=>{return val;}).catch((err)=>{throw err;})
-        })
-    }
-}
-
-function renderStory(elem, id) {
-    document.querySelector(`#${id}`).innerHTML += elem;
-    draggableObjs = document.querySelectorAll(".user-story");
-    shiftParticipants();
-    checkForEmptyColumns();
-    checkForFilledColumns();
-    setDragDrop();
-}
-
-async function actualizeStory(index) {
-    let storyCard = document.querySelector(`.user-story[data-storyIndex=${index}]`);
-    let storyObj = {
-        storyDescrip: storyCard.querySelector('.task-description p').innerHTML,
-        storyTitle: storyCard.querySelector('h2').innerHTML,
-        storyType: storyCard.getAttribute('data-storyType')
-    }
-    allStories[index] = storyObj;
-    postStories('PUT');
+async function postStory() {
+    let res = await fetch(`https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks/${allStoryKeys[+dragged.getAttribute('data-storyIndex')]}/storyType.json`, {
+        method: 'PUT',
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dragged.getAttribute('data-storyType'))
+    })
 }
 
 function renderParticipants(elem) {

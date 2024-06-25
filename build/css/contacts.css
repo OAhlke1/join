@@ -3,7 +3,7 @@
 }
 
 header {
-    width: 100%;
+  width: 100%;
 }
 
 /* Style button */
@@ -41,7 +41,7 @@ header {
   width: 456px;
   height: 928px;
   background-color: white;
-  box-shadow: 4px 0px 4px 0px #0000001A;
+  box-shadow: 4px 0px 4px 0px #0000001a;
 }
 
 .contactNames h3 {
@@ -163,26 +163,64 @@ header {
 }
 
 .contactInformations p {
-width: 207px;
-height: 74px;
-font-weight: 400;
-font-size: 20px;
+  width: 207px;
+  height: 74px;
+  font-weight: 400;
+  font-size: 20px;
 }
 
 .contactInformations h5 {
-font-weight: 700;
-font-size: 16px;
-margin-top: 10px;
-margin-bottom:10px;
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .contactInformations span {
-font-weight: 400;
-font-size: 16px;
-color: #007cee;
-cursor: pointer;
+  font-weight: 400;
+  font-size: 16px;
+  color: #007cee;
+  cursor: pointer;
 }
 
 .contactInformations span:last-child {
-    color: #000000 !important;
+  color: #000000 !important;
+}
+
+/* Responsive */
+
+@media (max-width: 950px) {
+  .headline {
+    display: none;
+  }
+
+  .contactList {
+    width: 100%;
+  }
+
+  .contactNames {
+    max-height: 928px;
+    margin-right: 28px;
+  }
+
+  .newContactButton {
+    display: none;
+  }
+
+  .personAdd {
+    position: fixed;
+    bottom: 115px;
+    right: 24px;
+    cursor: pointer;
+  }
+
+  .informationPopUp{
+    display: none;
+  }
+}
+
+@media (min-width: 950px) {
+  .personAdd {
+    display: none;
+  }
 }

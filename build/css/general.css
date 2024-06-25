@@ -14,16 +14,17 @@
     src: url(../../assets/fonts/open-sans-italic.ttf);
 }
 
-html {
-    display: flex;
-    justify-content: center;
-}
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Inter, sans-serif;
+}
+
+.transform50 {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 *::-webkit-scrollbar {
@@ -145,6 +146,7 @@ header {
     font-weight: 400;
     line-height: 24px;
     text-align: left;
+    position: relative;
 }
 
 .logo-mobile-header {
@@ -156,6 +158,42 @@ header {
     height: 56px;
     border-radius: 50%;
     border: 3px solid #2A3647;
+}
+
+#user-menu {
+    width: 150px;
+    height: 158px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 16px;
+    border-radius: 20px 0px 20px 20px;
+    background: #2A3647;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    position: absolute;
+    bottom: -158px;
+    right: 16px;
+    padding: 8px 24px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+    color: #CDCDCD;
+}
+
+#user-menu a:-webkit-any-link {
+    display: flex;
+    align-items: center;
+    color: #CDCDCD;
+    text-decoration: none;
+    width: 130px;
+    height: 46px;
+    padding-left: 16px;
+}
+
+#user-menu a:hover {
+    background-color: #2A3D59;
 }
 
 .help {
@@ -191,8 +229,17 @@ button {
     border: none;
 }
 
-.d-none{
-    display: none;
+.d-none {
+    display: none !important;
+}
+
+.privacy-container {
+    padding: 96px 114px 96px 96px;
+}
+
+.privacy-head {
+    display: flex;
+    justify-content: space-between;
 }
 
 @media (max-width: 1280px) {
