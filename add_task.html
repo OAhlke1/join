@@ -29,9 +29,9 @@
                         </div>
                         <div id="assigned-container" class="flex-column">
                             <span class="subtitle">Assigned to</span>
-                            <select name="Select contacts to assign" class="select-container" id="select-name">
+                            <select name="Select contacts to assign" class="select-container">
                                 <option value="Select contacts to assign">Select contacts to assign</option>
-                                <option value="Sofia Müller (You)">Sofia Müller (You)</option>
+                                <option value="Sofia Müller (You)" id="selected-name">Sofia Müller (You)</option>
                                 <option value="Anton Mayer">Anton Mayer</option>
                                 <option value="Anja Schulz" selected>Anja Schulz</option>
                                 <option value="Benedikt Ziegler">Benedikt Ziegler</option>
@@ -47,14 +47,23 @@
                         <div id="prio-container" class="flex-column">
                             <span class="subtitle">Prio</span>
                             <div id="choose-prio-container">
-                                <button id="prio-urgent-button" class="choose-prio-button flex-center-align" onclick="(event)=>{clickUrgency(event);}">
-                                    <span id="prio-urgent" class="flex-center-align">Urgent<img src="./assets/img/urgent-arrows.svg" id="urgent-arrows" /> </span>
+                                <button class="choose-prio-button flex-center-align" id="prio-urgent-button" type="button" onclick="choosePrio('urgent', 'prio-urgent-button')">
+                                    <span id="prio-urgent" class="flex-center-align"
+                                        >Urgent
+                                        <img src="./assets/img/urgent-arrows.svg" id="urgent-arrows" />
+                                    </span>
                                 </button>
-                                <button class="choose-prio-button flex-center-align" id="prio-medium-button" onclick="(event)=>{clickUrgency(event);}">
-                                    <span id="prio-medium" class="flex-center-align">Medium<img src="./assets/img/medium-arrows.svg" id="medium-arrows" /></span>
+                                <button class="choose-prio-button flex-center-align" id="prio-medium-button" type="button" onclick="choosePrio('medium', 'prio-medium-button')">
+                                    <span id="prio-medium" class="flex-center-align"
+                                        >Medium
+                                        <img src="./assets/img/medium-arrows.svg" id="medium-arrows" />
+                                    </span>
                                 </button>
-                                <button class="choose-prio-button flex-center-align" id="prio-low-button" onclick="(event)=>{clickUrgency(event);}">
-                                    <span id="prio-low" class="flex-center-align">Low<img src="./assets/img/low-arrows.svg" id="low-arrows" /></span>
+                                <button class="choose-prio-button flex-center-align" id="prio-low-button" type="button" onclick="choosePrio('low', 'prio-low-button')">
+                                    <span id="prio-low" class="flex-center-align"
+                                        >Low
+                                        <img src="./assets/img/low-arrows.svg" id="low-arrows" />
+                                    </span>
                                 </button>
                             </div>
                         </div>
@@ -77,7 +86,7 @@
                         <button id="clear-button" class="flex-center-align">
                             <span id="clear-button-font" class="contents">Clear<img src="./assets/img/cancel-icon.svg" id="cancel-icon" /></span>
                         </button>
-                        <button id="create-button" class="flex-center-align" type="submit">
+                        <button id="create-button" class="flex-center-align" type="submit" onclick="addTask(event)">
                             <span id="create-task-button-font" class="contents">Create Task<img src="./assets/img/check-icon.svg" id="check-icon" /></span>
                         </button>
                     </div>

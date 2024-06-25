@@ -9,7 +9,6 @@
     left: 328px;
     position: fixed;
     gap: 16px;
-    opacity: 0px;
 }
 
 #content-box-right {
@@ -19,7 +18,6 @@
     left: 864.25px;
     position: fixed;
     gap: 24px;
-    opacity: 0px;
 }
 
 #content-box-container {
@@ -66,7 +64,6 @@ h1 {
     gap: 10px;
     border-radius: 10px;
     border: 1px 0px 0px 0px;
-    opacity: 0px;
     border: 1px solid #d1d1d1;
     font-size: 20px;
     font-weight: 400;
@@ -79,14 +76,12 @@ h1 {
     height: 168px;
     top: 112px;
     gap: 8px;
-    opacity: 0px;
 }
 
 #textarea-container {
     width: 440px;
     height: 136px;
     gap: 4px;
-    opacity: 0px;
 }
 
 #textarea-input {
@@ -95,7 +90,6 @@ h1 {
     padding: 18px 16px 18px 16px;
     gap: 10px;
     border-radius: 10px;
-    opacity: 0px;
     border: 1px solid #d1d1d1;
     resize: none;
     font-weight: 400;
@@ -108,7 +102,6 @@ h1 {
     height: Fixed 80px;
     top: 296px;
     gap: 8px;
-    opacity: 0px;
 }
 
 .select-container {
@@ -119,11 +112,11 @@ h1 {
     border-radius: 10px;
     border: 1px solid #d1d1d1;
     justify-content: space-between;
-    opacity: 0px;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
     text-align: left;
+    cursor: pointer;
 }
 
 #border-container {
@@ -133,7 +126,6 @@ h1 {
     left: 816.25px;
     position: fixed;
     gap: 0px;
-    opacity: 0px;
     border: 1px solid #d1d1d1;
 }
 
@@ -141,14 +133,12 @@ h1 {
     width: 440px;
     height: 96px;
     gap: 8px;
-    opacity: 0px;
 }
 
 #calender {
     width: 440px;
     height: 64px;
     gap: 4px;
-    opacity: 0px;
 }
 
 #date-input {
@@ -159,18 +149,17 @@ h1 {
     border-radius: 10px;
     border: 1px solid #d1d1d1;
     justify-content: space-between;
-    opacity: 0px;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
     text-align: left;
+    cursor: pointer;
 }
 
 #prio-container {
     width: 440px;
     height: 88px;
     gap: 8px;
-    opacity: 0px;
 }
 
 #prio-urgent {
@@ -182,6 +171,15 @@ h1 {
     text-align: left;
     color: #000000;
     gap: 8px;
+}
+
+.prio-urgent-button-bg-color {
+    background-color: #ff3d00 !important;
+}
+
+.prio-urgent-span-color {
+    font-weight: 700;
+    color: white;
 }
 
 #prio-medium-button {
@@ -199,6 +197,10 @@ h1 {
     gap: 8px;
 }
 
+.prio-medium-button-bg-color {
+    background-color: #ffa801;
+}
+
 #prio-low {
     width: 40px;
     height: 24px;
@@ -209,11 +211,14 @@ h1 {
     gap: 8px;
 }
 
+.prio-low-button-bg-color {
+    background-color: #7ae229;
+}
+
 #choose-prio-container {
     width: 440px;
     height: 56px;
     gap: 16px;
-    opacity: 0px;
     display: flex;
 }
 
@@ -223,7 +228,6 @@ h1 {
     padding: 16px 10px 16px 10px;
     gap: 8px;
     border-radius: 10px;
-    opacity: 0px;
     background: #ffffff;
     box-shadow: 0px 0px 4px 0px #0000001a;
 }
@@ -248,14 +252,12 @@ h1 {
     width: 440px;
     height: 80px;
     gap: 8px;
-    opacity: 0px;
 }
 
 #substasks-container {
     width: 440px;
     height: 80px;
     gap: 8px;
-    opacity: 0px;
 }
 
 #choose-subtasks {
@@ -266,7 +268,6 @@ h1 {
     border-radius: 10px;
     border: 1px solid #d1d1d1;
     justify-content: space-between;
-    opacity: 0px;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
@@ -294,7 +295,6 @@ h1 {
     height: 27px;
     top: 926px;
     left: 328px;
-    opacity: 0px;
 }
 
 #required-span {
@@ -311,7 +311,6 @@ h1 {
     top: 889px;
     left: 995.25px;
     gap: 16px;
-    opacity: 0px;
     display: flex;
 }
 
@@ -321,7 +320,6 @@ h1 {
     padding: 16px;
     gap: 4px;
     border-radius: 10px;
-    opacity: 0px;
     border: 1px solid #2a3647;
     display: flex;
 }
@@ -330,7 +328,6 @@ h1 {
     width: 50px;
     height: 24px;
     gap: 0px;
-    opacity: 0px;
     font-size: 20px;
     font-weight: 400;
     line-height: 24px;
@@ -344,7 +341,6 @@ h1 {
     padding: 16px;
     gap: 4px;
     border-radius: 10px;
-    opacity: 0px;
     background: #2a3647;
     display: flex;
 }
@@ -352,7 +348,6 @@ h1 {
 #create-task-button-font {
     width: 123px;
     height: 24px;
-    opacity: 0px;
     font-size: 21px;
     font-weight: 700;
     line-height: 25.2px;
