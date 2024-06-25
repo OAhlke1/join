@@ -11,3 +11,8 @@ async function includeHTML() {
         }
     }
 }
+
+function showUserMenu (){
+    let userMenu = document.getElementById('user-menu');
+    userMenu.classList.toggle('d-none');
+}
