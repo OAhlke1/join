@@ -196,6 +196,15 @@ button {
     display: none;
 }
 
+.privacy-container {
+    padding: 96px 114px 96px 96px; 
+}
+
+.privacy-head{
+    display: flex;
+    justify-content: space-between;
+}
+
 @media (max-width: 1280px) {
     nav {
         position: fixed;
