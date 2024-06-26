@@ -199,12 +199,13 @@ function searchInParticipants(i) {
     let keyWords = searchBar.value.split(' ');
     for(let h=0; h<keyWords.length; h++) {
         for(let j=0; j<allTaskObjects[i].participants.length; j++) {
-            if(allTaskObjects[i].participants[j].sureName.includes(keyWords[h]) || allTaskObjects[i].participants[j].name.includes(keyWords[h])) {
-                console.log(allTaskObjects[i].participants[j]);
-                return false;
+            if(allTaskObjects[i].participants[j].sureName.includes(keyWords[h])) {
+                return true;
+            }else if(allTaskObjects[i].participants[j].name.includes(keyWords[h])) {
+                return true;
             }else {
-                if(j+1 === userTasks.length) {
-                    return true;
+                if(j+1 === allTaskObjects[i].participants.length) {
+                    return false;
                 }
             }
         }
