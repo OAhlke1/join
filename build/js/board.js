@@ -174,25 +174,26 @@ function searchTasks () {
         if(!searchInTitles(i)) {
             if(!searchInDescription(i)) {
                 if(!searchInParticipants(i)) {
-                    userTasks[i].classList.add('disNone');
+                    document.querySelector(`.task[data-storyIndex="${i}"]`).classList.add('disNone');
                 }else {
-                    userTasks[i].classList.remove('disNone');
+                    document.querySelector(`.task[data-storyIndex="${i}"]`).classList.remove('disNone');
                 }
             }else {
-                userTasks[i].classList.remove('disNone');
+                document.querySelector(`.task[data-storyIndex="${i}"]`).classList.remove('disNone');
             }
         }else {
-            userTasks[i].classList.remove('disNone');
+            document.querySelector(`.task[data-storyIndex="${i}"]`).classList.remove('disNone');
         }
     }
 }
 
 function searchInTitles(i) {
-    return userTasks[i].querySelector('h2').innerHTML.includes(searchBar.value);
+    return allTaskObjects[i].storyTitle.includes(searchBar.value);
 }
 
 function searchInDescription(i) {
-    return userTasks[i].querySelector('.task-description p').innerHTML.includes(searchBar.value);
+    console.log(document.querySelector(`.task[data-storyIndex="${i}"] .task-description p`).innerHTML);
+    return allTaskObjects[i].storyDescrip.includes(searchBar.value);
 }
 
 function searchInParticipants(i) {
