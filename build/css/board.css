@@ -118,7 +118,7 @@ main .boardCont .board .board-column .column-card-cont {
     height: 100%;
 }
 
-/* User-story-card styling */
+/* task-card styling */
 
 main .boardCont .board .board-column .column-card-cont .card {
     width: 100%;
@@ -142,7 +142,7 @@ main .boardCont .board .board-column .column-card-cont .card p {
     color: #a8a8a8;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story {
+main .boardCont .board .board-column .column-card-cont .task {
     border-radius: 16px;
     background-color: white;
     padding: 16px;
@@ -152,7 +152,7 @@ main .boardCont .board .board-column .column-card-cont .user-story {
     user-select: none;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .task-type {
+main .boardCont .board .board-column .column-card-cont .task .task-type {
     padding: 4px 16px;
     background-color: #0038ff;
     width: fit-content;
@@ -160,55 +160,55 @@ main .boardCont .board .board-column .column-card-cont .user-story .task-type {
     border-radius: 8px;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .task-type p {
+main .boardCont .board .board-column .column-card-cont .task .task-type p {
     font-family: 'inter', sans-serif;
     color: white;
     line-height: 0;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story h2 {
+main .boardCont .board .board-column .column-card-cont .task h2 {
     font-size: 16px;
     color: #2a3647;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .task-description p {
+main .boardCont .board .board-column .column-card-cont .task .task-description p {
     font-size: 16px;
     color: #a8a8a8;
     font-weight: 400;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .subtask {
+main .boardCont .board .board-column .column-card-cont .task .subtask {
     justify-content: space-between;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .subtask .subtask-bar {
+main .boardCont .board .board-column .column-card-cont .task .subtask .subtask-bar {
     width: 128px;
     height: 8px;
     background: #f4f4f4;
     border-radius: 8px;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .subtask .subtask-bar .inner {
+main .boardCont .board .board-column .column-card-cont .task .subtask .subtask-bar .inner {
     border-radius: 8px;
     width: 50%;
     height: 100%;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .subtask .subtask-count {
+main .boardCont .board .board-column .column-card-cont .task .subtask .subtask-count {
     font-size: 12px;
     color: black;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .subtask .subtask-count span {
+main .boardCont .board .board-column .column-card-cont .task .subtask .subtask-count span {
     display: inline;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .participants-and-urgency {
+main .boardCont .board .board-column .column-card-cont .task .participants-and-urgency {
     align-items: center;
     justify-content: space-between;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .participants-and-urgency .participants .participant {
+main .boardCont .board .board-column .column-card-cont .task .participants-and-urgency .participants .participant {
     width: 32px;
     height: 32px;
     border: 2px solid white;
@@ -217,11 +217,11 @@ main .boardCont .board .board-column .column-card-cont .user-story .participants
     background-color: green;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .participants-and-urgency .participants .participant:first-child {
+main .boardCont .board .board-column .column-card-cont .task .participants-and-urgency .participants .participant:first-child {
     left: 0;
 }
 
-main .boardCont .board .board-column .column-card-cont .user-story .participants-and-urgency .participants .participant p {
+main .boardCont .board .board-column .column-card-cont .task .participants-and-urgency .participants .participant p {
     font-family: 'inter', sans-serif;
     font-size: 12px;
     line-height: 0;
@@ -230,10 +230,6 @@ main .boardCont .board .board-column .column-card-cont .user-story .participants
 }
 
 @media only screen and (max-width: 1220px) {
-    body {
-        /* display: flex; */
-    }
-
     main {
         justify-content: center;
         width: 100%;
@@ -320,7 +316,7 @@ main .boardCont .board .board-column .column-card-cont .user-story .participants
         box-sizing: unset;
     }
 
-    main .boardCont .board .board-column .column-card-cont .user-story {
+    main .boardCont .board .board-column .column-card-cont .task {
         min-width: 252px;
     }
 }

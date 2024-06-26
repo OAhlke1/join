@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./build/css/board.css"> <!-- Platzhalter für CSS Datei-->
 </head>
 
-<body onload="getUsers()">
+<body onload="getTasks()">
     <div class="flex container">
          <nav></nav> <!-- Platzhalter für die spätere Navigation (Nicht ändern) -->
         
@@ -34,7 +34,7 @@
                     </div>
                     <div class="topBar-right flex-center">
                         <form class="searchBar flex" id="searchBar">
-                            <input class="flex-center" type="text" placeholder="Find Task">
+                            <input id="findTaskInput" class="flex-center" type="text" placeholder="Find Task" onkeyup="searchTasks()">
         
                             <button class="findTask flex">
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
