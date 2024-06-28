@@ -1,0 +1,289 @@
+.summary-headline {
+    margin-top: 9.375vh;
+    margin-left: 96px;
+    gap: 30px;
+    align-items: center;
+}
+
+.summary-headline h1 {
+    font-family: Inter;
+    font-size: 61px;
+    font-weight: 700;
+    line-height: 73.2px;
+    text-align: left;
+}
+
+.summary-headline span {
+    font-family: Inter;
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 32.4px;
+    text-align: left;
+}
+
+.subline {
+    width: 0px;
+    height: 59px;
+    border: 3px 0px 0px 0px;
+    border: 3px solid #29ABE2
+}
+
+.overview-container {
+    align-items: center;
+    margin-left: 96px;
+}
+
+.overview {
+    flex-direction: column;
+    width: 560px;
+    height: 562px;
+    gap: 28px;
+    margin-top: 56px;
+}
+
+.greet {
+    flex-direction: column;
+    width: 385px;
+    height: 136px;
+    gap: 3px;
+    margin-left: 80px;
+    margin-top: 56px;
+}
+
+.greet span {
+    width: 385px;
+    text-align: left;
+}
+
+.daytime {
+    font-family: Inter;
+    font-size: 47px;
+    font-weight: 500;
+    line-height: 56.4px;
+    text-align: left;
+}
+
+.greet-name {
+    font-family: Inter;
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 76.8px;
+    text-align: left;
+    color: #29ABE2;
+
+}
+
+.tiles1 {
+    width: 560px;
+    height: 168px;
+    gap: 32px;
+}
+
+.tile {
+    background: #FFFFFF;
+    border-radius: 30px;
+    color: #000000;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    cursor: pointer;
+}
+
+.tile-todo {
+    width: 264px;
+    height: 168px;
+    padding: 38px 19px;
+    gap: 18px;
+}
+
+.tile:hover {
+    background-color: #2A3647;
+    color: #FFFFFF;
+    transform: scale(1.1);
+
+    .tile-img {
+        background-color: #FFFFFF;
+    }
+}
+
+.tile-todo:hover {
+    svg path {
+        fill: #2A3647;
+    }
+}
+
+.tile-done {
+    width: 264px;
+    height: 168px;
+    padding: 38px 19px;
+    gap: 18px;
+}
+
+.tile-done:hover {
+    svg path {
+        stroke: #2A3647;
+    }
+}
+
+.tile-todo {
+    width: 264px;
+    height: 168px;
+    padding: 38px 19px;
+    gap: 18px;
+}
+
+.tile-img {
+    width: 69px;
+    height: 69px;
+    border-radius: 50%;
+    background: #2A3647;
+}
+
+.tiles1 img {
+    width: 32px;
+    height: 32px;
+}
+
+
+.tiles2 .tile-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.tiles2 img {
+    width: 60px;
+    height: 60px;
+}
+
+.sub {
+    height: 102.02px;
+    border: 2px solid #D1D1D1;
+}
+
+.tile-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 13px;
+}
+
+.count {
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 76.8px;
+    text-align: center;
+
+}
+
+.tile-text {
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.tile-urgent {
+    gap: 18px;
+}
+
+.tiles2 {
+    width: 560px;
+    height: 168px;
+    padding: 28px 48px;
+    gap: 61px;
+    border-radius: 30px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+}
+
+.tiles3 {
+    width: 560px;
+    height: 170px;
+    justify-content: space-between;
+}
+
+.tile-state {
+    width: 168px;
+    height: 168px;
+    background: #FFFFFF;
+    border-radius: 30px;
+    width: Fixed (168px)px;
+    padding: 25px 0px;
+    gap: 13px;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+}
+
+.tile-date {
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: left;
+}
+
+.upcoming {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+}
+
+.tile-info-left {
+    align-items: flex-start;
+}
+
+@media (max-width: 1400px) {
+    .summary-headline {
+        margin-left: 48px;
+    }
+
+    .overview-container {
+        margin-left: 48px;
+    }
+
+    .greet {
+        margin-left: 48px;
+    }
+}
+
+/* @media (max-width: 1280px) {
+    nav {
+        position: fixed;
+        width: 100%;
+        height: 96px;
+        bottom: 0;
+        left: 0;
+        top: auto;
+    }
+
+    .nav-container {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .nav-logo {
+        display: none;
+    }
+
+    .nav-links {
+        width: 100vw;
+        padding-bottom: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 32px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    nav a {
+        flex-direction: column;
+        flex: 1;
+        width: 16.111vw;
+        height: 100%;
+        padding: 0;
+    }
+
+    .sub-nav {
+        display: none;
+    }
+} */
