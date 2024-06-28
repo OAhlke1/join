@@ -86,7 +86,13 @@ function setTasksHtml() {
 function getParticipantsHtml(elem) {
     let pList = "";
     for(let [key, value] of Object.entries(elem)) {
-        pList += `<div class="participant flex-center"><p class="initials">${value.sureName[0]}${value.name[0]}</p></div>`;
+        if(!value.lastName) {
+            pList += `<div class="participant flex-center"><p class="initials">${value.sureName[0]}</p></div>`;
+        }else if(!value.sureName) {
+            pList += `<div class="participant flex-center"><p class="initials">${value.lastName[0]}</p></div>`;
+        }else {
+            pList += `<div class="participant flex-center"><p class="initials">${value.sureName[0]}${value.lastName[0]}</p></div>`;
+        }
     }
     return pList;
 }
@@ -182,6 +188,27 @@ function setDragDrop() {
 
 /**
  * 
+ * 
+ * @param {event} event - dragover-event 
+ */
+
+function highlightColumn(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    document.querySelectorAll('.column-card-cont').forEach((elem)=>{
+        if(elem.contains(event.target)) {
+            elem.classList.add('highlighted');
+            return;
+        }
+    })
+}
+
+function unhighlightColumn(event) {
+    document.querySelector('.highlighted').classList.remove('highlighted');
+}
+
+/**
+ * 
  * @param {event} event - the drop-event from the setDragDrop-function
  * The function checks every column if the dragged task-card is dropped into it
  *      - or one of its contained Elements
@@ -196,6 +223,7 @@ function forEachTarget(event) {
     columns.forEach((elem, index)=>{
         if(userTasks.length > 0) {
             if(elem.contains(event.target)) {
+                elem.classList.remove('highlighted');
                 elem.appendChild(dragged);
                 checkForEmptyColumns();
                 checkForFilledColumns();
@@ -318,14 +346,10 @@ function searchInParticipants(i) {
     let keyWords = searchBar.value.split(' ');
     for(let h=0; h<keyWords.length; h++) {
         for(let j=0; j<allTaskObjects[i].participants.length; j++) {
-            if(allTaskObjects[i].participants[j].sureName.includes(keyWords[h])) {
-                return true;
-            }else if(allTaskObjects[i].participants[j].name.includes(keyWords[h])) {
-                return true;
-            }else {
-                if(j+1 === allTaskObjects[i].participants.length) {
-                    return false;
-                }
+            for(let [key, value] of Object.entries(allTaskObjects[i].participants[j])) {
+                if(value.includes(keyWords[h])) {
+                    return true;
+                }else {return false;}
             }
         }
     }

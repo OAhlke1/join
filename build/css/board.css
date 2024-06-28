@@ -221,6 +221,11 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     left: 0;
 }
 
+.highlighted {
+    background-color: rgba(211 211 211 / 0.6);
+    border-radius: 16px;
+}
+
 main .boardCont .board .board-column .column-card-cont .task .participants-and-urgency .participants .participant p {
     font-family: 'inter', sans-serif;
     font-size: 12px;

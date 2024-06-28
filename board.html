@@ -66,7 +66,7 @@
                                 </button>
                             </div>
 
-                            <div class="column-card-cont flex" id="toDo">
+                            <div class="column-card-cont flex" ondragleave="unhighlightColumn(event)" ondragover="highlightColumn(event)" id="toDo">
                                 <div class="card no-task-to-do flex-center">
                                     <p>No task to do</p>
                                 </div>
@@ -86,7 +86,7 @@
                                 </button>
                             </div>
 
-                            <div class="column-card-cont flex" id="inProgress">
+                            <div class="column-card-cont flex" ondragleave="unhighlightColumn(event)" ondragover="highlightColumn(event)" id="inProgress">
 
                                 <!-- User-story-card-template -->
                                 <div class="card no-task-in-progress flex-center disNone">
@@ -108,7 +108,7 @@
                                 </button>
                             </div>
 
-                            <div class="column-card-cont flex" id="awaitFeedback">
+                            <div class="column-card-cont flex" ondragleave="unhighlightColumn(event)" ondragover="highlightColumn(event)" id="awaitFeedback">
                                 <div class="card no-feedback-awaited flex-center disNone">
                                     <p>No feedback awaited</p>
                                 </div>
@@ -120,7 +120,7 @@
                                 <h2>Done</h2>
                             </div>
 
-                            <div class="column-card-cont flex" id="done">
+                            <div class="column-card-cont flex" ondragleave="unhighlightColumn(event)" ondragover="highlightColumn(event)" id="done">
                                 <div class="card no-task-done flex-center disNone">
                                     <p>No task done</p>
                                 </div>
