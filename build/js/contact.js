@@ -1,174 +1,25 @@
-let contacts = [
-  {
-    start: "A",
-    entries: [
-      {
-        name: "Aice Müller",
-        email: "alice.mueller@example.com",
-        number: "+49176235468",
-      },
-      {
-        name: "Anton Müller",
-        email: "bob.schneider@example.com",
-        number: "+49176235468",
-      },
-      {
-        name: "Abrne Müller",
-        email: "bob.schneider@example.com",
-        number: "+49176235468",
-      },
-      {
-        name: "Augst Müller",
-        email: "bob.schneider@example.com",
-        number: "+49176235468",
-      },
-    ],
-  },
+const BASE_URL =
+  "https://join-249-default-rtdb.europe-west1.firebasedatabase.app/";
 
-  {
-    start: "B",
-    entries: [
-      {
-        name: "Bob Schneider",
-        email: "bob.schneider@example.com",
-        number: "+49176235468",
-      },
-      {
-        name: "Boran Schneider",
-        email: "bob.schneider@example.com",
-        number: "+49176235468",
-      },
-    ],
-  },
-
-  {
-    start: "C",
-    entries: [
-      {
-        name: "Charlotte Fischer",
-        email: "bob.schneider@example.com",
-        number: "+49176235468",
-      },
-    ],
-  },
-
-  {
-    start: "D",
-    entries: [
-      {
-        name: "David Weber",
-        email: "bob.schneider@example.com",
-        number: "+49176235468",
-      },
-    ],
-  },
-
-  {
-    start: "E",
-    entries: [
-      {
-        name: "Eva Berger",
-        email: "bob.schneider@example.com",
-        number: "+49176235468",
-      },
-    ],
-  },
-
-  {
-    start: "F",
-    entries: [
-      {
-        name: "Felix Koch",
-        email: "bob.schneider@example.com",
-        number: "+49176235468",
-      },
-    ],
-  },
-
-  {
-    start: "G",
-    entries: [],
-  },
-  {
-    start: "H",
-    entries: [],
-  },
-  {
-    start: "I",
-    entries: [],
-  },
-  {
-    start: "J",
-    entries: [],
-  },
-  {
-    start: "K",
-    entries: [],
-  },
-  {
-    start: "L",
-    entries: [],
-  },
-  {
-    start: "M",
-    entries: [],
-  },
-  {
-    start: "N",
-    entries: [],
-  },
-  {
-    start: "O",
-    entries: [],
-  },
-  {
-    start: "P",
-    entries: [],
-  },
-  {
-    start: "Q",
-    entries: [],
-  },
-  {
-    start: "R",
-    entries: [],
-  },
-  {
-    start: "S",
-    entries: [],
-  },
-  {
-    start: "T",
-    entries: [],
-  },
-  {
-    start: "U",
-    entries: [],
-  },
-  {
-    start: "V",
-    entries: [],
-  },
-  {
-    start: "W",
-    entries: [],
-  },
-  {
-    start: "X",
-    entries: [],
-  },
-  {
-    start: "Y",
-    entries: [],
-  },
-  {
-    start: "Z",
-    entries: [],
-  },
-];
+let contacts = [];
 
 function init() {
+  sorter();
   render();
+  get();
+}
+
+async function get() {
+  let response = await fetch(BASE_URL + ".json");
+  let responseToJson = await response.json();
+
+
+  for (let i = 0; i < responseToJson.contacts.length; i++) {
+    contacts.push(responseToJson.contacts[i]);
+ 
+  }
+
+  console.log(contacts);
 }
 
 function render() {
@@ -193,15 +44,19 @@ function render() {
   }
 }
 
-// function sort() {
-//     let showContacts = document.getElementById("showContact");
+let puffer;
 
-//     for (let i = 0; i < contacts[i]["entries"].length -1; i++) {
-//       for (let j = i+1; j < contacts[i]["entries"].length; j++) {
-        
-        
-        
-//       }
-//     }
-//   }
+function sorter() {
+  for (let i = 0; i < contacts.length - 1; i++) {
+    for (let j = i + 1; j < contacts.length; j++) {
+      if (contacts[i]["entries"].name > contacts[j]["entries"].name) {
+        puffer = contacts[j];
+        contacts[i] = contacts[j];
+        contacts[j] = puffer;
+      }
+    }
+    console.log(contacts);
+  }
+}
+
 
