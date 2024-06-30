@@ -3,7 +3,7 @@ const columns = document.querySelectorAll(".column-card-cont");
 let searchBar = document.querySelector('#findTaskInput');
 let userTasks;
 let allTaskKeys = [];
-let subTaskArray = [];
+let allSubtasksArray = [];
 let allTaskObjects = [];
 let foundTasks = [];
 let urgencyLow = /* HTML */ `<div class="urgency-icon"><svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.99974 7.24524C8.80031 7.24557 8.60603 7.18367 8.44549 7.06863L0.876998 1.63467C0.778524 1.56391 0.695351 1.47498 0.632227 1.37296C0.569103 1.27094 0.527264 1.15784 0.5091 1.0401C0.472414 0.802317 0.534386 0.560105 0.681381 0.366747C0.828377 0.17339 1.04835 0.0447247 1.29292 0.00905743C1.53749 -0.0266099 1.78661 0.0336422 1.98549 0.176559L8.99974 5.2075L16.014 0.17656C16.1125 0.105795 16.2243 0.0545799 16.3431 0.02584C16.462 -0.00289994 16.5855 -0.00860237 16.7066 0.00905829C16.8277 0.0267189 16.944 0.0673968 17.0489 0.128769C17.1538 0.190142 17.2453 0.271007 17.3181 0.366748C17.3909 0.462489 17.4436 0.571231 17.4731 0.686765C17.5027 0.802299 17.5085 0.922362 17.4904 1.0401C17.4722 1.15784 17.4304 1.27094 17.3672 1.37296C17.3041 1.47498 17.221 1.56391 17.1225 1.63467L9.55398 7.06863C9.39344 7.18367 9.19917 7.24557 8.99974 7.24524Z" fill="#7AE229"/><path d="M8.99998 12.0001C8.80055 12.0005 8.60628 11.9386 8.44574 11.8235L0.877242 6.38955C0.678366 6.24664 0.546029 6.03276 0.509344 5.79498C0.472658 5.5572 0.53463 5.31499 0.681625 5.12163C0.828621 4.92827 1.0486 4.79961 1.29317 4.76394C1.53773 4.72827 1.78686 4.78853 1.98574 4.93144L8.99998 9.96239L16.0142 4.93144C16.2131 4.78853 16.4622 4.72827 16.7068 4.76394C16.9514 4.79961 17.1713 4.92827 17.3183 5.12163C17.4653 5.31499 17.5273 5.5572 17.4906 5.79498C17.4539 6.03276 17.3216 6.24664 17.1227 6.38956L9.55423 11.8235C9.39369 11.9386 9.19941 12.0005 8.99998 12.0001Z" fill="#7AE229"/></svg></div>`;
@@ -28,7 +28,23 @@ async function getTasks() {
         allTaskKeys.push(key);
         allTaskObjects.push(value);
     }
+    setSubtaskArray();
     setTasksHtml();
+}
+
+function setSubtaskArray() {
+    let subTaskArray = [];
+    allTaskObjects.forEach((elem, index)=>{
+        if(elem.hasOwnProperty('subTasks')) {
+            for(let [key, value] of Object.entries(elem.subTasks)) {
+                subTaskArray.push([key, value]);
+            }
+            allSubtasksArray.push(subTaskArray);
+            subTaskArray = [];
+        }else {
+            allSubtasksArray.push([]);
+        }
+    })
 }
 
 /**
@@ -56,9 +72,9 @@ function setTasksHtml() {
                 <h2>${elem.taskTitle}</h2>
                 <div class="task-description"><p>${elem.taskDescrip}</p></div>
             </div>
-            <div class="subtask flex-center">
-                <div class="subtask-bar"><div class="inner"></div></div>
-                <p class="subtask-count"><span class="count"></span>/<span class="total"></span> Subtasks</p>
+            <div class="subtasks flex-center" onclick="renderSubtaskOverlay(${index})">
+                <div class="subtasks-bar"><div class="inner"></div></div>
+                <p class="subtasks-count"><span class="count"></span>/<span class="total"></span> Subtasks</p>
             </div>
             <div class="participants-and-urgency flex">
                 <div class="participants flex">${getParticipantsHtml(elem.participants)}</div>
@@ -76,11 +92,11 @@ function setTasksHtml() {
 }
 
 function countSubTasks() {
-    userTasks.forEach((elem, index)=>{
+    allTaskObjects.forEach((elem, index)=>{
         if(!allTaskObjects[index].hasOwnProperty('subTasks')) {
-            elem.querySelector('.subtask').classList.add('disNone');
+            document.querySelector(`.task[data-taskindex="${index}"] .subtasks`).classList.add('disNone');
         }else {
-            userTasks[index].querySelector('.subtask .subtask-count .total').innerHTML = allTaskObjects[index].subTasks.length;
+            document.querySelector(`.task[data-taskindex="${index}"] .subtasks .subtasks-count .total`).innerHTML = allTaskObjects[index].subTasks.length;
             checkDoneSubTasks(index);
         }
     })
@@ -88,13 +104,17 @@ function countSubTasks() {
 
 function checkDoneSubTasks(index) {
     let doneCount = 0;
-    let subTasks = allTaskObjects[index].subTasks;
-    for(let i=0; i<subTasks.length; i++) {
-        if(subTasks.subTaskDone) {
+    for(let i=0; i<allTaskObjects[index].subTasks.length; i++) {
+        if(allTaskObjects[index].subTasks[i].subTaskDone) {
             doneCount++;
         }
     }
-    userTasks[index].querySelector('.subtask .subtask-count .count').innerHTML = doneCount;
+    document.querySelector(`.task[data-taskindex="${index}"] .subtasks .subtasks-count .count`).innerHTML = doneCount;
+    setLengthOfSubtaskBar(index, doneCount);
+}
+
+function setLengthOfSubtaskBar(index, doneCount) {
+    document.querySelector(`.task[data-taskindex="${index}"] .subtasks-bar .inner`).style.width = `${100*doneCount/allTaskObjects[index].subTasks.length}%`;
 }
 
 /**
@@ -369,19 +389,50 @@ function searchTasks () {
 function searchInParticipants(i) {
     let keyWords = searchBar.value.split(' ');
     for(let h=0; h<keyWords.length; h++) {
-        console.log(keyWords[h]);
         for(let j=0; j<allTaskObjects[i].participants.length; j++) {
             for(let [key, value] of Object.entries(allTaskObjects[i].participants[j])) {
-                if(value.includes(keyWords[h])) {
-                    return true;
-                }else {
-                    if(j+1 === allTaskObjects[i].participants.length) {
-                        return false;
-                    }else {
-                        continue;
-                    }
-                }
+                if(value.includes(keyWords[h])) { return true; }
             }
         }
     }
+    return false;
+}
+
+function renderSubtaskOverlay(index) {
+    let input = "";
+    let inputLabel = "";
+    allTaskObjects[index].subTasks.forEach((elem, j)=>{
+        if(elem.subTaskDone == 1) {
+            input = `<input id="checkbox${index}${j}" type="checkbox" checked>`;
+        }else {input = `<input id="checkbox${index}${j}" type="checkbox">`;}
+        inputLabel += `<div class="subtask-check flex" onclick="actualizeSubtaskStatus(${index}, ${j})">${input}<label for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</label></div>`;
+    })
+    document.querySelector('.subtasks-overlay .overlay-card').innerHTML = inputLabel;
+    document.querySelector('.subtasks-overlay').classList.remove('disNone');
+}
+
+function actualizeSubtaskStatus(index, j) {
+    if(document.querySelector(`#checkbox${index}${j}`).checked) {
+        allTaskObjects[index].subTasks[j].subTaskDone = 1;
+    }else {
+        allTaskObjects[index].subTasks[j].subTaskDone = 0;
+    }
+    postActualizedSubtaskStatus(index, j);
+}
+
+async function postActualizedSubtaskStatus(index, j) {
+    let link = `https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks/${index}/subTasks/${allSubtasksArray[index][j][0]}/subTaskDone.json`;
+    let response = await fetch(link, {
+        method: 'PUT',
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(allSubtasksArray[index][j][1].subTaskDone)
+    })
+    checkDoneSubTasks(index);
+}
+
+function closeOverlay(event) {
+    event.stopPropagation();
+    document.querySelector('.subtasks-overlay').classList.add('disNone');
 }
