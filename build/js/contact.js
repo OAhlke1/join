@@ -2,25 +2,25 @@ const BASE_URL =
   "https://join-249-default-rtdb.europe-west1.firebasedatabase.app/";
 
 let contacts = [];
+let puffer;
 
 function init() {
+  includeHTML();
   get();
-  render();
-  renderIntoLetterBox()
+  
+  
+  
 }
 
 async function get() {
   let response = await fetch(BASE_URL + ".json");
   let responseToJson = await response.json();
-
-  for (let i = 0; i < responseToJson.contacts.length; i++) {
-    contacts.push(responseToJson.contacts[i]);
-  }
+  contacts = responseToJson.contacts;
   sorter();
-  console.log(contacts);
+
 }
 
-let puffer;
+
 
 function sorter() {
   for (let i = 0; i < contacts.length - 1; i++) {
@@ -33,12 +33,13 @@ function sorter() {
     }
   }
   console.log(contacts);
+  render();
 }
 
 let firstChar = "A";
 
 function render() {
- 
+//  renderIntoLetterBox();
   let letter = document.getElementById("sort");
 
   letter.innerHTML += `
@@ -51,18 +52,17 @@ function render() {
 
 function renderIntoLetterBox() {
   let showContacts = document.getElementById("showContact");
-  let contactFrame;
+  
   for (let i = 0; i < contacts.length; i++) {
     if (contacts[i].lastName[0] != firstChar) {
       firstChar = contacts[i].lastName[0];
-      
     }
 
-    showContacts.innerHTML +=`
+    showContacts.innerHTML += `
      <div class="flex ">
       <div id="profileImage" class="flex-center">AM</div>
       <div class="gap">
-        <li>${contacts[i].sureName}${contacts[i].lastName}</li>
+        <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
         <span>${contacts[i].email}</span>
       </div>
     </div>`;
