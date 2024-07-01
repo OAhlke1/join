@@ -1,4 +1,4 @@
 
 git add .
-git commit -m "render"
+git commit -m "renderContacts"
 git push
