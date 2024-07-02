@@ -6,21 +6,15 @@ let puffer;
 
 function init() {
   includeHTML();
-  get();
-  
-  
-  
+  getContacts();
 }
 
-async function get() {
+async function getContacts() {
   let response = await fetch(BASE_URL + ".json");
   let responseToJson = await response.json();
   contacts = responseToJson.contacts;
   sorter();
-
 }
-
-
 
 function sorter() {
   for (let i = 0; i < contacts.length - 1; i++) {
@@ -33,39 +27,76 @@ function sorter() {
     }
   }
   console.log(contacts);
-  render();
+  renderIntoLetterBox();
 }
 
-let firstChar = "A";
+let newChar;
+let char;
 
-function render() {
-//  renderIntoLetterBox();
-  let letter = document.getElementById("sort");
+// function render() {
+// //  renderIntoLetterBox();
+//   let letter = document.getElementById("sort");
 
-  letter.innerHTML += `
-      ${firstChar}
-    <div class="flex">
-      ${renderIntoLetterBox()} 
-      <div>
-`;
-}
+//   letter.innerHTML += `
+//       ${firstChar}
+//     <div class="flex">
+//       ${renderIntoLetterBox()}
+//       <div>
+// `;
+// }
 
 function renderIntoLetterBox() {
   let showContacts = document.getElementById("showContact");
-  
-  for (let i = 0; i < contacts.length; i++) {
-    if (contacts[i].lastName[0] != firstChar) {
-      firstChar = contacts[i].lastName[0];
-    }
+  let letter = document.getElementById("sort");
 
-    showContacts.innerHTML += `
+  for (let i = 0; i < contacts.length; i++) {
+    if (contacts[i].lastName[0] != newChar) {
+      newChar = contacts[i].lastName[0];
+      showContacts.innerHTML += `
+      <h3 id="sort"> ${newChar}</h3>
+      <div class="flex ">
+ <div id="profileImage" class="flex-center">AM</div>
+ <div class="gap">
+   <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
+   <span>${contacts[i].email}</span>
+ </div>
+ </div>
+     `;
+    } else {
+      showContacts.innerHTML += `
+    
+    <h3 id="sort"> ${newChar}</h3>
      <div class="flex ">
-      <div id="profileImage" class="flex-center">AM</div>
-      <div class="gap">
-        <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
-        <span>${contacts[i].email}</span>
-      </div>
+<div id="profileImage" class="flex-center">AM</div>
+<div class="gap">
+  <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
+  <span>${contacts[i].email}</span>
+</div>
+</div>
+   `;
+    }
+  }
+}
+
+function checkChar(i) {
+  if (char == contacts[i].lastName[0]) {
+    return `     <div class="flex ">
+    <div id="profileImage" class="flex-center">AM</div>
+    <div class="gap">
+      <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
+      <span>${contacts[i].email}</span>
+    </div>
     </div>`;
+  } else {
+    return `
+    <h3 id="sort"> ${newChar}</h3>
+     <div class="flex ">
+<div id="profileImage" class="flex-center">AM</div>
+<div class="gap">
+  <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
+  <span>${contacts[i].email}</span>
+</div>
+</div>`;
   }
 }
 
