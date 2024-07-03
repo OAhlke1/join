@@ -8,7 +8,7 @@ let char;
 let letterBlock = ``;
 let contactsString = "";
 let contactsIndex = 0;
-let showContacts = document.querySelector('#showContact');
+let showContacts = document.querySelector("#showContact");
 
 function init() {
   includeHTML();
@@ -29,6 +29,12 @@ function sorter() {
         puffer = contacts[i];
         contacts[i] = contacts[j];
         contacts[j] = puffer;
+      } else if (contacts[i]["lastName"] === contacts[i]["lastName"]) {
+        if (contacts[i]["sureName"] > contacts[j]["sureName"]) {
+          puffer = contacts[i];
+          contacts[i] = contacts[j];
+          contacts[j] = puffer;
+        }
       }
     }
   }
@@ -75,7 +81,7 @@ function renderIntoLetterBox() {
   getContactsHtml();
   letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
   contactsString = "";
-  if(contactsIndex+1 === contacts.length) {
+  if (contactsIndex + 1 === contacts.length) {
     showContacts.innerHTML = letterBlock;
     return;
   }
@@ -83,9 +89,9 @@ function renderIntoLetterBox() {
 }
 
 function getContactsHtml() {
-  for(let i=contactsIndex; i<contacts.length; i++) {
+  for (let i = contactsIndex; i < contacts.length; i++) {
     contactsIndex = i;
-    if(newChar != contacts[i].lastName[0]) {
+    if (newChar != contacts[i].lastName[0]) {
       return;
     }
     contactsString += `<div class="flex "><div id="profileImage" class="flex-center">${contacts[i].sureName[0]}${contacts[i].lastName[0]}</div><div class="gap"><li>${contacts[i].sureName} ${contacts[i].lastName}</li><span>${contacts[i].email}</span></div></div>`;

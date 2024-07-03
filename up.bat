@@ -1,4 +1,4 @@
 
 git add .
-git commit -m "aktualisiert board/contacts"
+git commit -m "aktualisiert sorter"
 git push
