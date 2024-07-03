@@ -10,6 +10,12 @@ label {
     line-height: 0;
 }
 
+main {
+    min-height: 895px;
+    height: fit-content;
+    padding-bottom: 110px;
+}
+
 main .boardCont {
     padding: 0px 64px;
 }
@@ -18,7 +24,7 @@ main .board-hl-add-task-mobile {
     display: hidden;
 }
 
-main .boardCont .topBar {
+main .boardCont .top-bar {
     align-items: center;
     justify-content: space-between;
     width: 100%;
@@ -26,11 +32,11 @@ main .boardCont .topBar {
     padding: 79.5px 0px 48px 0px;
 }
 
-main .boardCont .topBar .board-hl-add-task-mobile {
+main .boardCont .top-bar .board-hl-add-task-mobile {
     display: none;
 }
 
-main .boardCont .topBar form.searchBar {
+main .boardCont .top-bar form.searchBar {
     width: 312px;
     height: 48px;
     border: 1px solid #a8a8a8;
@@ -40,15 +46,15 @@ main .boardCont .topBar form.searchBar {
     border-radius: 10px;
 }
 
-main .boardCont .topBar form.searchBar input {
+main .boardCont .top-bar form.searchBar input {
     justify-content: flex-start;
     max-width: calc(100% - 48px);
-    color: #a8a8a8;
+    color: #2a3647;
     outline: none;
     border: none;
 }
 
-main .boardCont .topBar form.searchBar input[placeholder] {
+main .boardCont .top-bar form.searchBar input::placeholder {
     font-size: 20px;
     color: #d1d1d1;
     line-height: 0;
@@ -57,7 +63,7 @@ main .boardCont .topBar form.searchBar input[placeholder] {
     padding: 0;
 }
 
-main .boardCont .topBar form.searchBar .findTask {
+main .boardCont .top-bar form.searchBar .findTask {
     align-items: center;
     justify-content: flex-end;
     width: 48px;
@@ -67,11 +73,11 @@ main .boardCont .topBar form.searchBar .findTask {
     border-left: 1px solid #a8a8a8;
 }
 
-main .boardCont .topBar .topBar-right {
+main .boardCont .top-bar .top-bar-right {
     column-gap: 32px;
 }
 
-main .boardCont .topBar .topBar-right .add-task {
+main .boardCont .top-bar .top-bar-right .add-task {
     justify-content: space-evenly;
     width: 160px;
     height: 48px;
@@ -80,11 +86,11 @@ main .boardCont .topBar .topBar-right .add-task {
     text-decoration: none;
 }
 
-main .boardCont .topBar .topBar-right .add-task:hover {
+main .boardCont .top-bar .top-bar-right .add-task:hover {
     text-decoration: none;
 }
 
-main .boardCont .topBar .topBar-right .add-task p {
+main .boardCont .top-bar .top-bar-right .add-task p {
     font-size: 21px;
     line-height: 25.2px;
     font-weight: 700;
@@ -93,12 +99,17 @@ main .boardCont .topBar .topBar-right .add-task p {
 
 /* styling of the board */
 
+main .boardCont .board-overflow-cont {
+    min-height: 895px;
+}
+
 main .boardCont .board {
     column-gap: 26px;
     min-width: 768px;
     width: 100%;
     max-width: 1208px;
-    height: fit-content;
+    min-height: 895px;
+    height: 100%;
     background-color: #F6F7F8;
 }
 
@@ -156,11 +167,52 @@ main .boardCont .board .board-column .column-card-cont .task {
     padding: 16px;
     font-size: 16px;
     row-gap: 24px;
-    width: 252px;
+    width: 244px;
     user-select: none;
+    cursor: pointer;
 }
 
-main .boardCont .board .board-column .column-card-cont .task .task-type {
+main .boardCont .board .board-column .column-card-cont .pseudo-task {
+    width: 252px;
+    height: 200px;
+    opacity: 0;
+}
+
+main .tasks-overlay {
+    height: 100vh;
+}
+
+main .tasks-overlay .overlay-card {
+    align-items: flex-start;
+}
+
+main .tasks-overlay div {
+    width: fit-content;
+}
+
+/* main .urgency-icon {
+    width: fit-content !important;
+}
+
+main .tasks-overlay p {
+    width: fit-content;
+} */
+
+main .tasks-overlay p {
+    white-space: nowrap;
+}
+
+main .tasks-overlay .overlay-card .top-bar {
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+main .tasks-overlay .overlay-card .top-bar .close-overlay {
+    width: fit-content;
+}
+
+main .boardCont .board .board-column .column-card-cont .task .task-type, main .tasks-overlay .overlay-card .top-bar .task-type {
     padding: 4px 16px;
     background-color: #0038ff;
     width: fit-content;
@@ -168,9 +220,167 @@ main .boardCont .board .board-column .column-card-cont .task .task-type {
     border-radius: 8px;
 }
 
-main .boardCont .board .board-column .column-card-cont .task .task-type p {
+main .boardCont .board .board-column .column-card-cont .task .task-type p, main .tasks-overlay .overlay-card .top-bar p {
     font-family: 'inter', sans-serif;
     color: white;
+    line-height: 0;
+}
+
+main .tasks-overlay {
+    width: 100%;
+    max-width: 1440px;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50000;
+    background: rgba(0 0 0 / 0.2)
+}
+
+main .tasks-overlay .overlay-card {
+    width: 525px;
+    background-color: white;
+    border-radius: 30px;
+    padding: 48px 40px;
+    row-gap: 24px;
+    user-select: none;
+}
+
+main .tasks-overlay .overlay-card .top-bar {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+main .tasks-overlay .overlay-card .top-bar .urgency {
+    width: 116px;
+    height: 28px;
+}
+
+main .tasks-overlay .overlay-card .top-bar .close-overlay {
+    width: 13.5px;
+    height: 13.5px;
+    cursor: pointer;
+}
+
+main .tasks-overlay .overlay-card h2 {
+    font-size: 61px;
+    line-height: 73.2px;
+}
+
+main .tasks-overlay .overlay-card .top-texts {
+    row-gap: 24px;
+}
+
+main .tasks-overlay .overlay-card .top-texts p {
+    font-size: 20px;
+}
+
+main .tasks-overlay .overlay-card .top-texts h3 {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+main .tasks-overlay .overlay-card .top-texts .due-date {
+    column-gap: 25px;
+}
+
+main .tasks-overlay .overlay-card .top-texts .urgency {
+    column-gap: 43px;
+}
+
+main .tasks-overlay .overlay-card .top-texts .urgency .urgency-right {
+    column-gap: 9px
+}
+
+main .tasks-overlay .overlay-card .participants-block {
+    width: 100%;
+    row-gap: 15px;
+}
+
+main .tasks-overlay .overlay-card .participants-block p {
+    font-size: 20px;
+}
+
+main .tasks-overlay .overlay-card .participants-block .participants {
+    row-gap: 18px;
+    margin-left: 16px;
+    width: 100%;
+    max-height: 168px;
+    overflow-y: scroll;
+}
+
+main .tasks-overlay .overlay-card .participants-block .participants .overlay-participant {
+    display: flex;
+    align-items: center;
+    column-gap: 18px;
+}
+
+main .tasks-overlay .overlay-card .participants-block .participants .overlay-participant .circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 100%;
+    background-color: #6e52ff;
+}
+
+main .tasks-overlay .overlay-card .participants-block .participants .overlay-participant .circle p {
+    font-size: 12px;
+    color: white;
+    line-height: 0;
+}
+
+main .tasks-overlay .overlay-card .participants-block .participants .overlay-participant .full-name {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: fit-content;
+}
+
+main .tasks-overlay .overlay-card .participants-block .participants .overlay-participant .full-name p {
+
+    line-height: 0;
+}
+
+main .tasks-overlay .overlay-card .subtasks-block {
+    width: 100%;
+    row-gap: 8px;
+}
+
+main .tasks-overlay .overlay-card .subtasks-block p {
+    font-size: 20px;
+}
+
+main .tasks-overlay .overlay-card .subtasks-block .subtasks {
+    width: 100%;
+    max-height: 68px;
+    overflow-y: scroll;
+}
+
+main .tasks-overlay .overlay-card .subtask-check {
+    align-items: center;
+    column-gap: 20px;
+    padding: 6px 16px;
+}
+
+main .tasks-overlay .overlay-card .subtask-check input {
+    width: 24px;
+    height: 24px;
+    border: none;
+    background-image: url('../../assets/img/unchecked.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    padding: 0;
+    appearance: none;
+}
+
+main .tasks-overlay .overlay-card .subtask-check input:checked {
+    background-image: url('../../assets/img/checked.svg');
+}
+
+main .tasks-overlay .overlay-card input.subtask-check label {
     line-height: 0;
 }
 
@@ -244,51 +454,11 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     color: white;
 }
 
-main .subtasks-overlay {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 50000;
-    background: rgba(0 0 0 / 0.2)
-}
-
-main .subtasks-overlay .overlay-card {
-    width: 525px;
-    background-color: white;
-    border-radius: 30px;
-    padding: 48px 40px;
-    align-items: center;
-}
-
-main .subtasks-overlay .overlay-card .subtask-check {
-    align-items: center;
-}
-
-main .subtasks-overlay .overlay-card .subtask-check input {
-    width: 24px;
-    height: 24px;
-    border: none;
-    background-image: url('../../assets/img/unchecked.svg');
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    padding: 0;
-    appearance: none;
-}
-
-main .subtasks-overlay .overlay-card .subtask-check input:checked {
-    background-image: url('../../assets/img/checked.svg');
-}
-
-main .subtasks-overlay .overlay-card input.subtask-check label {
-    line-height: 0;
-}
-
 @media only screen and (max-width: 1220px) {
     main {
         justify-content: center;
         width: 100%;
+        min-height: unset;
         height: 100vh;
     }
 
@@ -304,18 +474,22 @@ main .subtasks-overlay .overlay-card input.subtask-check label {
 
     }
 
-    main .boardCont .topBar {
+    main .boardCont .top-bar {
         flex-direction: column;
         align-items: center;
-        width: 100%;
+        width: 392px;
         padding: 46px 0px 24px 0px;
     }
 
-    main .boardCont .topBar .board-hl-desktop {
+    main .boardCont .board-overflow-cont {
+        min-height: unset;
+    }
+
+    main .boardCont .top-bar .board-hl-desktop {
         display: none;
     }
 
-    main .boardCont .topBar .board-hl-add-task-mobile {
+    main .boardCont .top-bar .board-hl-add-task-mobile {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -324,16 +498,28 @@ main .subtasks-overlay .overlay-card input.subtask-check label {
         margin-bottom: 40px;
     }
 
-    main .boardCont .topBar .board-hl-add-task-mobile h1 {
+    main .boardCont .top-bar .board-hl-add-task-mobile h1 {
         font-size: 47px;
         line-height: 0;
     }
 
-    main .boardCont .topBar form.searchBar {
-        width: 396px;
+    main .boardCont .top-bar .top-bar-right {
+        width: 100%;
     }
 
-    main .boardCont .topBar .topBar-right .add-task {
+    main .boardCont .top-bar .top-bar-right form {
+        width: 100%;
+    }
+
+    main .boardCont .top-bar .searchBar {
+        width: 100%;
+    }
+
+    main .boardCont .top-bar .searchBar input {
+        width: 100%;
+    }
+
+    main .boardCont .top-bar .top-bar-right .add-task {
         display: none;
     }
 
@@ -352,17 +538,21 @@ main .subtasks-overlay .overlay-card input.subtask-check label {
         row-gap: 19px;
         min-width: 396px;
         width: 100%;
+        min-height: unset;
+        height: fit-content;
         overflow-x: hidden;
+        overflow-y: scroll;
     }
 
     main .boardCont .board .board-column {
-        width: 100%;
+        width: 98%;
         column-gap: 16px;
         padding-bottom: 5px;
     }
 
     main .boardCont .board .board-column .column-top {
         justify-content: space-between;
+        width: 100%;
     }
 
     main .boardCont .board .board-column .column-card-cont {
@@ -374,5 +564,6 @@ main .subtasks-overlay .overlay-card input.subtask-check label {
 
     main .boardCont .board .board-column .column-card-cont .task {
         min-width: 252px;
+        height: fit-content;
     }
 }

@@ -3,6 +3,12 @@ const BASE_URL =
 
 let contacts = [];
 let puffer;
+let newChar;
+let char;
+let letterBlock = ``;
+let contactsString = "";
+let contactsIndex = 0;
+let showContacts = document.querySelector('#showContact');
 
 function init() {
   includeHTML();
@@ -26,12 +32,9 @@ function sorter() {
       }
     }
   }
-  console.log(contacts);
+  newChar = contacts[0].lastName[0];
   renderIntoLetterBox();
 }
-
-let newChar;
-let char;
 
 // function render() {
 // //  renderIntoLetterBox();
@@ -45,59 +48,47 @@ let char;
 // `;
 // }
 
-function renderIntoLetterBox() {
-  let showContacts = document.getElementById("showContact");
-  let letter = document.getElementById("sort");
+// function checkChar(i) {
+//   if (char == contacts[i].lastName[0]) {
+//     return `     <div class="flex ">
+//     <div id="profileImage" class="flex-center">AM</div>
+//     <div class="gap">
+//       <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
+//       <span>${contacts[i].email}</span>
+//     </div>
+//     </div>`;
+//   } else {
+//     return `
+//     <h3 id="sort"> ${newChar}</h3>
+//      <div class="flex ">
+// <div id="profileImage" class="flex-center">AM</div>
+// <div class="gap">
+//   <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
+//   <span>${contacts[i].email}</span>
+// </div>
+// </div>`;
+//   }
+// }
 
-  for (let i = 0; i < contacts.length; i++) {
-    if (contacts[i].lastName[0] != newChar) {
-      newChar = contacts[i].lastName[0];
-      showContacts.innerHTML += `
-      <h3 id="sort"> ${newChar}</h3>
-      <div class="flex ">
- <div id="profileImage" class="flex-center">AM</div>
- <div class="gap">
-   <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
-   <span>${contacts[i].email}</span>
- </div>
- </div>
- 
-     `;
-    } else {
-      showContacts.innerHTML += `
-    
-    <h3 id="sort"> ${newChar}</h3>
-     <div class="flex ">
-<div id="profileImage" class="flex-center">AM</div>
-<div class="gap">
-  <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
-  <span>${contacts[i].email}</span>
-</div>
-</div>
-   `;
-    }
+function renderIntoLetterBox() {
+  newChar = contacts[contactsIndex].lastName[0];
+  getContactsHtml();
+  letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
+  contactsString = "";
+  if(contactsIndex+1 === contacts.length) {
+    showContacts.innerHTML = letterBlock;
+    return;
   }
+  renderIntoLetterBox();
 }
 
-function checkChar(i) {
-  if (char == contacts[i].lastName[0]) {
-    return `     <div class="flex ">
-    <div id="profileImage" class="flex-center">AM</div>
-    <div class="gap">
-      <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
-      <span>${contacts[i].email}</span>
-    </div>
-    </div>`;
-  } else {
-    return `
-    <h3 id="sort"> ${newChar}</h3>
-     <div class="flex ">
-<div id="profileImage" class="flex-center">AM</div>
-<div class="gap">
-  <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
-  <span>${contacts[i].email}</span>
-</div>
-</div>`;
+function getContactsHtml() {
+  for(let i=contactsIndex; i<contacts.length; i++) {
+    contactsIndex = i;
+    if(newChar != contacts[i].lastName[0]) {
+      return;
+    }
+    contactsString += `<div class="flex "><div id="profileImage" class="flex-center">${contacts[i].sureName[0]}${contacts[i].lastName[0]}</div><div class="gap"><li>${contacts[i].sureName} ${contacts[i].lastName}</li><span>${contacts[i].email}</span></div></div>`;
   }
 }
 
