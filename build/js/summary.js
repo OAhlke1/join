@@ -33,7 +33,52 @@ function getGreetingName() {
 
 }
 
-function getValues() {
+async function getValues() {
+    let response = await fetch('https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
+    let data = await response.json();
 
+    todo.innerHTML = getCount(data, 'toDo');
+    done.innerHTML = getCount(data, 'done');
+    urgent.innerHTML = getUrgentTask(data);
+    taskProgress.innerHTML = getCount(data, 'inProgress');
+    feedback.innerHTML = getCount(data, 'awaitFeedback');
+    taskBoard.innerHTML = data.length;
+    tileDate.innerHTML = getUrgentDate(data);
+
+    console.log(data);
 }
 
+function getCount(data, title) {
+    let count = 0
+    if (data && data.length > 0) {
+        data.forEach((task) => {
+           if(task.taskType == title){
+            count  += 1;
+           }
+        });
+        return count;
+    }
+}
+
+function getUrgentTask (data) {
+    let count = 0
+    if (data && data.length > 0) {
+        data.forEach((task) => {
+           if(task.urgency == 'high'){
+            count  += 1;
+           }
+        });
+        return count;
+    }
+}
+
+
+function getUrgentDate (data) {
+    let dateTasks = [];
+    if (data && data.length > 0) {
+        data.forEach((task) => {
+           dateTasks.push(task.date);
+        });
+        return new Date(Math.min(...dateTasks)).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+}
