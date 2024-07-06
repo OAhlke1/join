@@ -265,7 +265,7 @@ button {
     }
 
     .nav-links {
-        width: 100vw;
+        width: 90vw;
         padding-bottom: 0;
         display: flex;
         flex-direction: row;
@@ -282,7 +282,47 @@ button {
         padding: 0;
     }
 
+    .nav-link {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.8px;
+        text-align: left;
+    }
+
     .sub-nav {
         display: none;
     }
+
+    header {
+        padding: 20px 16px;
+    }
+
+    header img {
+        width: 32px;
+        height: 39.02px;
+        gap: 10px;
+    }
+
+    .header-text {
+        display: none;
+    }
+
+    .logo-mobile-header {
+        display: flex;
+    }
+
+    .help-desktop {
+        display: none;
+    }
+
+    .help-mobile {
+        display: flex;
+    }
+}
+
+@media (max-width: 382px) {
+
+.nav-link {
+    font-size: 10px;
+}
 }

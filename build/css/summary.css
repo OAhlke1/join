@@ -85,6 +85,7 @@
     color: #000000;
     box-shadow: 0px 0px 4px 0px #0000001A;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .tile-todo {
@@ -205,7 +206,7 @@
     height: 168px;
     background: #FFFFFF;
     border-radius: 30px;
-    width: Fixed (168px)px;
+    width: 168px;
     padding: 25px 0px;
     gap: 13px;
     box-shadow: 0px 0px 4px 0px #0000001A;
@@ -243,47 +244,186 @@
     }
 }
 
-/* @media (max-width: 1280px) {
-    nav {
-        position: fixed;
-        width: 100%;
-        height: 96px;
-        bottom: 0;
-        left: 0;
-        top: auto;
-    }
+@media (max-width: 1280px) {
 
-    .nav-container {
-        width: 100%;
-        height: 100%;
-        padding: 0;
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    .nav-logo {
-        display: none;
-    }
-
-    .nav-links {
-        width: 100vw;
-        padding-bottom: 0;
+    .overview-container {
         display: flex;
-        flex-direction: row;
-        gap: 32px;
-        align-items: center;
         justify-content: center;
+        align-items: center;
+        padding-bottom: 96px;
+        margin-bottom: 96px;
+        margin-left: 0;
     }
 
-    nav a {
+    .greet {
+        height: 100vh;
+        margin: 0;
+        padding-bottom: 128px;
+        animation: hideGreet 1s forwards;
+    }
+
+    .summary-headline {
+        visibility: hidden;
+        opacity: 0;
+        height: 0;
+        width: 0;
+        animation: showOverview 1s forwards;
         flex-direction: column;
-        flex: 1;
-        width: 16.111vw;
-        height: 100%;
-        padding: 0;
+        align-items: flex-start;
+        gap: 8px;
+        margin-top: 48px;
     }
 
-    .sub-nav {
+    .summary-headline h1 {
+        font-size: 47px;
+        font-weight: 700;
+        line-height: 56.4px;
+        text-align: left;
+    }
+
+    .summary-headline span {
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 24px;
+        text-align: left;
+
+    }
+
+    .overview {
+        visibility: hidden;
+        opacity: 0;
+        height: 0;
+        width: 0;
+        animation: showOverview 1s forwards;
+        padding: 16px;
+        gap: 0;
+        margin-top: 0;
+    }
+
+    .subline {
         display: none;
     }
-} */
+
+    .subline-mobile {
+        width: 128px;
+        height: 0;
+        border: 2px solid #29ABE2
+    }
+
+    .tiles1,
+    .tiles2,
+    .tiles3 {
+        width: 90vw;
+    }
+
+    .tiles1 {
+        gap: 10px;
+    }
+
+    .tiles2 {
+        gap: 20px;
+    }
+
+    .tiles3 {
+        gap: 16px;
+    }
+
+    .tile {
+        height: 110px;
+    }
+
+    .tile-todo,
+    .tile-done {
+        width: 50%;
+    }
+
+    .tile-state {
+        width: 33%;
+        padding: 8px;
+    }
+
+    .tile-info {
+        gap: 4px;
+    }
+
+    .tile-img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .tile-urgent .tile-img {
+        width: 40px;
+        height: 40px;
+        background: transparent;
+    }
+
+    .sub {
+        height: 68px;
+    }
+
+    .upcoming {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.8px;
+    }
+
+    .tiles2 .tile-urgent img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .count {
+        font-size: 47px;
+        font-weight: 600;
+        line-height: 56.4px;
+        text-align: center;
+    }
+
+    .tile-text {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.8px;
+    }
+
+    .tile-date {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 19.2px;
+        text-align: left;
+    }
+
+    @keyframes hideGreet {
+        from {
+            display: flex;
+        }
+
+        to {
+            display: none;
+        }
+    }
+
+    @keyframes showOverview {
+        0% {
+            visibility: hidden;
+            opacity: 0;
+            height: 0;
+            width: 0;
+        }
+
+        99% {
+            visibility: hidden;
+            opacity: 0;
+            height: 0;
+            width: 0;
+        }
+
+        100% {
+            visibility: visible;
+            opacity: 1;
+            height: auto;
+            width: auto;
+        }
+    }
+
+
+}
