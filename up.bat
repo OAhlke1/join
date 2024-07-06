@@ -1,4 +1,4 @@
 
 git add .
-git commit -m "aktualisiert sorter"
+git commit -m "add edit Contact/ expand JS"
 git push
