@@ -242,6 +242,43 @@ button {
     justify-content: space-between;
 }
 
+.help-container {
+    padding: 96px 114px 96px 96px;
+}
+
+.help-head {
+    display: flex;
+    justify-content: space-between;
+}
+
+.help-container ol {
+    padding-right: 16px;
+}
+
+.help-container li::marker {
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 32.4px;
+    text-align: left;
+    padding-top: 16px;
+    list-style-position: inherit;
+}
+
+.help-container h4 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: left;
+}
+
+.help-container p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.2px;
+    text-align: left;
+
+}
+
 @media (max-width: 1280px) {
     nav {
         position: fixed;
@@ -322,7 +359,7 @@ button {
 
 @media (max-width: 382px) {
 
-.nav-link {
-    font-size: 10px;
-}
+    .nav-link {
+        font-size: 10px;
+    }
 }
