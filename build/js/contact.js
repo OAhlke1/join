@@ -9,6 +9,7 @@ let letterBlock = ``;
 let contactsString = "";
 let contactsIndex = 0;
 let showContacts = document.querySelector("#showContact");
+let toggle = true;
 
 function init() {
   includeHTML();
@@ -42,40 +43,6 @@ function sorter() {
   renderIntoLetterBox();
 }
 
-// function render() {
-// //  renderIntoLetterBox();
-//   let letter = document.getElementById("sort");
-
-//   letter.innerHTML += `
-//       ${firstChar}
-//     <div class="flex">
-//       ${renderIntoLetterBox()}
-//       <div>
-// `;
-// }
-
-// function checkChar(i) {
-//   if (char == contacts[i].lastName[0]) {
-//     return `     <div class="flex ">
-//     <div id="profileImage" class="flex-center">AM</div>
-//     <div class="gap">
-//       <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
-//       <span>${contacts[i].email}</span>
-//     </div>
-//     </div>`;
-//   } else {
-//     return `
-//     <h3 id="sort"> ${newChar}</h3>
-//      <div class="flex ">
-// <div id="profileImage" class="flex-center">AM</div>
-// <div class="gap">
-//   <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
-//   <span>${contacts[i].email}</span>
-// </div>
-// </div>`;
-//   }
-// }
-
 function renderIntoLetterBox() {
   newChar = contacts[contactsIndex].lastName[0];
   getContactsHtml();
@@ -94,8 +61,47 @@ function getContactsHtml() {
     if (newChar != contacts[i].lastName[0]) {
       return;
     }
-    contactsString += `<div class="flex "><div id="profileImage" class="flex-center">${contacts[i].sureName[0]}${contacts[i].lastName[0]}</div><div class="gap"><li>${contacts[i].sureName} ${contacts[i].lastName}</li><span>${contacts[i].email}</span></div></div>`;
+    contactsString += ` <div class="flex contact" onclick="clickContact(event)" data-contactIndex="${contactsIndex}"><div id="profileImage" class="flex-center">${contacts[i].sureName[0]}${contacts[i].lastName[0]}</div><div class="gap"><li>${contacts[i].sureName} ${contacts[i].lastName}</li><span>${contacts[i].email}</span></div></div>`;
   }
+}
+
+function clickContact(event) {
+  let information = document.querySelector(".informationPopUp")
+  event.stopPropagation();
+  console.log(contacts[+event.target.getAttribute('data-contactIndex')]);
+
+information.innerHTML =`
+          <div class="flex showContactName">
+<div id="profileImage" class="flex-center bigSize">${contacts[+event.target.getAttribute('data-contactIndex')]["sureName"][0]}${contacts[+event.target.getAttribute('data-contactIndex')]["lastName"][0]}</div>
+<div>
+<span> Anton Meyer </span>
+   <div><img src="./assets/img/editContacts.png" alt="" onclick="editContact()">
+       <img src="./assets/img/DeleteContact.png" alt="">
+      </div>
+  </div>
+  </div>
+  <div class="contactInformations">
+  <p>Contact Information</p>
+  <div>
+      <h5>Email</h5>
+      <span> ${contacts[+event.target.getAttribute('data-contactIndex')]["email"]}</span>
+      <h5>Phone</h5>
+      <span> ${contacts[+event.target.getAttribute('data-contactIndex')]["number"]}</span>
+  </div>
+</div>`
+
+
+} 
+
+function editContact(){
+  let editContact = document.querySelector(".editContactMainContainer")
+  if(toggle){
+    editContact.classList.remove("d-none");
+    toggle = false;
+  }else{
+  editContact.classList.add("d-none");
+  toggle = true;
+}
 }
 
 // function render() {

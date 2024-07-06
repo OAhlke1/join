@@ -187,6 +187,89 @@ header {
   color: #000000 !important;
 }
 
+/* Edit Contact */
+
+.editContactMainContainer{
+  position: absolute;
+  top: 25%;
+  left:4%;
+ /* right:5%; */
+  z-index: 1;
+  
+  }
+
+  .editContactMainContainer img{
+width: 240px;
+    
+    }
+
+.editContactLeftContainer{
+background-color: #2A3647;
+width: 450px;
+height:600px ;
+padding: 66px,46px,66px,46px;
+border-radius:12px;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+}
+
+.editContactLeftContainer img{
+width: 60px;
+margin-right: 291px;
+
+}
+
+.editContactLeftContainer p{
+color: white;
+font-weight: 700;
+font-size: 60px;
+padding: 16px;
+  }
+
+
+
+.rightContainer{
+background-color: white;
+width: 45em;
+justify-content: center;
+align-items: center;
+}
+
+.rightContainer input{
+margin: 8px;
+width: 422px;
+height: 50px;
+}
+
+.rightContainer img{
+width: 24px;
+cursor: pointer;
+  }
+  
+
+.editContactButton button{
+width: 110px;
+height: 50px;
+border: 1px solid #2A3647;
+margin-top: 32px;
+border-radius: 8px;
+}
+
+.editContactButton{
+display:flex;
+justify-content: space-evenly;
+}
+
+
+
+.inputContainer{
+  flex-direction: column;
+
+}
+
+
 /* Responsive */
 
 @media (max-width: 950px) {
