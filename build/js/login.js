@@ -140,7 +140,6 @@ async function checkSignUp() {
             let userExistsFirebase = false;
 
             for (const key in users) {
-                console.log(users[key].email);
                 if (users[key].email === signUserEmail.value) {
                     document.getElementById('sign-error-message').innerHTML = "User already exists! Please try again.";
                     console.log("E-Mail-Adresse ist bereits vorhanden");
@@ -148,14 +147,10 @@ async function checkSignUp() {
                     break; // Beende die Schleife, da der Benutzer bereits existiert
                 }
             }
-            
-            console.log(signUserEmail.value);
-            console.log(userExistsFirebase);
-
-            if(!userExistsFirebase) {
+            if (!userExistsFirebase) {
                 signUp(data);
             }
-            
+
         } else {
             document.getElementById('sign-error-message').innerHTML = "Wrong password Ups! Try Again.";
         }
@@ -174,6 +169,17 @@ async function signUp(data = {}) {
     });
     return resToJson = await res.json();
 }
+
+function acceptPolicy() {
+    let checkBox = document.getElementById('acceptPp');
+    let button = document.getElementById('signInButton');
+    if (checkBox.checked === true) {
+        button.removeAttribute('disabled');
+    } else {
+        button.setAttribute('disabled', 'true');
+    }
+}
+
 
 
 

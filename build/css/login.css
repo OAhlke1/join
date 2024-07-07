@@ -283,6 +283,11 @@ input:focus {
     color: red;
 }
 
+.signin-btn:disabled {
+    background-color: #a8a8a8;
+    color: #d1d1d1;
+}
+
 @media only screen and (max-width: 825px) {
     body {
         padding: 37px 16px;

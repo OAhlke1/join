@@ -78,12 +78,12 @@
         <div id="sign-error-message"></div>
 
         <div class="acceptPp">
-            <input type="checkbox" id="acceptPp">
+            <input onchange="acceptPolicy()" type="checkbox" id="acceptPp">
             <label for="acceptPp">I accept the <a>Privacy policy</a></label>
         </div>
 
         <div class="login-btns flex-center">
-            <button onclick="checkSignUp()" class="signin-btn flex-center" type="button">Sign up</button>
+            <button onclick="checkSignUp()" class="signin-btn flex-center" type="button" id="signInButton" disabled>Sign up</button>
         </div>
     </form>
   </div>
