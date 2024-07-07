@@ -30,7 +30,8 @@ function getGreetingTime() {
 }
 
 function getGreetingName() {
-
+    let user = localStorage.getItem('User');
+    greetName.innerHTML = user;
 }
 
 async function getValues() {

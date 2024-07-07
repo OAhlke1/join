@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./build/css/login.css">
   <script src="./build/js/sort.js"></script>
 </head>
-<body onload="toStartAtBeginning()">
+<body onload="init()">
 <div class="logo-big">
     <div class="svgCont">
         <svg width="100%" height="100%" viewBox="0 0 274 335" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,16 +49,17 @@
   </div>
   <div class="form-block flex disNone" id="login">
     <h1>Log in</h1>
-    <form action="" class="flex-column">
+    <form class="flex-column">
       <input type="email" id="mail-login" required placeholder="Email" class="flex">
       <input type="password" id="password-login" required placeholder="Password" class="flex">
+      <div id="error-message"></div>
       <div class="remember flex">
         <input type="checkbox" id="rememberMe">
         <label for="rememberMe">Remember me</label>
       </div>
       <div class="login-btns flex-center">
-        <button class="flex-center login" type="submit">Log in</button>
-        <button class="flex-center guest-login" type="">Guest Log in</button>
+        <button onclick="checkLogin()" class="flex-center login" type="button">Log in</button>
+        <button class="flex-center guest-login" type="button">Guest Log in</button>
       </div>
     </form>
   </div>
