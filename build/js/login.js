@@ -127,7 +127,8 @@ function rememberMe() {
     }
 }
 
-function checkSignUp() {
+async function checkSignUp() {
+    document.getElementById('sign-error-message').innerHTML = '';
     if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
         if (signUserPassword.value === signUserPasswordConfirm.value) {
             let data = {
@@ -135,12 +136,31 @@ function checkSignUp() {
                 "name": signUserName.value,
                 "password": signUserPassword.value
             }
-            signUp(data);
+            let users = await loadUser();
+            let userExistsFirebase = false;
+
+            for (const key in users) {
+                console.log(users[key].email);
+                if (users[key].email === signUserEmail.value) {
+                    document.getElementById('sign-error-message').innerHTML = "User already exists! Please try again.";
+                    console.log("E-Mail-Adresse ist bereits vorhanden");
+                    userExistsFirebase = true; // Setze die Flagge auf true, wenn die E-Mail gefunden wurde
+                    break; // Beende die Schleife, da der Benutzer bereits existiert
+                }
+            }
+            
+            console.log(signUserEmail.value);
+            console.log(userExistsFirebase);
+
+            if(!userExistsFirebase) {
+                signUp(data);
+            }
+            
         } else {
-            alert('Fehler');
+            document.getElementById('sign-error-message').innerHTML = "Wrong password Ups! Try Again.";
         }
     } else {
-        alert('Valuevergleich');
+        document.getElementById('sign-error-message').innerHTML = "Something missed! Please fill all fields";
     }
 }
 
@@ -154,5 +174,6 @@ async function signUp(data = {}) {
     });
     return resToJson = await res.json();
 }
+
 
 

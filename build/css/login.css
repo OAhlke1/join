@@ -279,6 +279,10 @@ input:focus {
     display: none;
 }
 
+#sign-error-message {
+    color: red;
+}
+
 @media only screen and (max-width: 825px) {
     body {
         padding: 37px 16px;
