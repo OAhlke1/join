@@ -6,8 +6,12 @@ let userUrl = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/u
 let userValue = document.getElementById('mail-login');
 let password = document.getElementById('password-login');
 let error = document.getElementById('error-message');
+let signUserName = document.getElementById('name-signin');
+let signUserEmail = document.getElementById('mail-signin');
+let signUserPassword = document.getElementById('password-signin');
+let signUserPasswordConfirm = document.getElementById('confirm-passwordsignin');
 
-function init () {
+function init() {
     toStartAtBeginning();
     rememberMe();
 }
@@ -89,14 +93,16 @@ async function checkLogin() {
     let userName;
     let userEmail;
     let remember = document.getElementById('rememberMe').checked;
+    console.log(data);
 
-    data.forEach((user) => {
-        if (user.email === userValue.value && user.password === password.value) {
-            userName = user.name;
-            userEmail = user.email;
+    for (const property in data) {
+        if (data[property].email === userValue.value && data[property].password === password.value) {
+            userName = data[property].name;
+            userEmail = data[property].email;
             loginSuccess = true;
+            break;
         }
-    });
+    }
 
     if (loginSuccess) {
         localStorage.setItem('User', userName);
@@ -119,6 +125,34 @@ function rememberMe() {
         userValue.value = email;
         document.getElementById('rememberMe').checked = true;
     }
+}
+
+function checkSignUp() {
+    if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
+        if (signUserPassword.value === signUserPasswordConfirm.value) {
+            let data = {
+                "email": signUserEmail.value,
+                "name": signUserName.value,
+                "password": signUserPassword.value
+            }
+            signUp(data);
+        } else {
+            alert('Fehler');
+        }
+    } else {
+        alert('Valuevergleich');
+    }
+}
+
+async function signUp(data = {}) {
+    let res = await fetch(userUrl + ".json", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    });
+    return resToJson = await res.json();
 }
 
 
