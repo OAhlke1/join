@@ -103,6 +103,8 @@ async function checkLogin() {
         localStorage.setItem('Email', userEmail);
         if (remember) {
             localStorage.setItem('Remember', true);
+        } else {
+            localStorage.setItem('Remember', '');
         }
         window.location.href = 'summary.html';
     } else {
@@ -115,6 +117,7 @@ function rememberMe() {
     if (status) {
         let email = localStorage.getItem('Email');
         userValue.value = email;
+        document.getElementById('rememberMe').checked = true;
     }
 }
 

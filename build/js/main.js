@@ -37,3 +37,14 @@ function getInitials(name) {
     }
     return initials;
 }
+
+function logout() {
+    localStorage.setItem('User', '');
+}
+
+function checkLogin(){
+    let user = localStorage.getItem('User');
+    if(!user){
+        window.location.href = 'login.html';
+    }
+}

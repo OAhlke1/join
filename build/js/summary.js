@@ -9,6 +9,7 @@ let greetTime = document.getElementById('greetTime');
 let greetName = document.getElementById('greetName');
 
 function init() {
+    checkLogin();
     getGreetingTime();
     getGreetingName();
     getValues();
