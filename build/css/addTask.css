@@ -1,3 +1,12 @@
+main {
+    padding-bottom: 70px;
+}
+
+.headline-form {
+    align-items: center;
+    justify-content: center;
+}
+
 .contentBox {
     display: flex;
 }
@@ -7,7 +16,6 @@
     height: 376px;
     top: 327px;
     left: 328px;
-    position: fixed;
     gap: 16px;
 }
 
@@ -16,7 +24,6 @@
     height: 416px;
     top: 327px;
     left: 864.25px;
-    position: fixed;
     gap: 24px;
 }
 
@@ -27,7 +34,6 @@
     height: 424px;
     top: 327px;
     left: 328px;
-    position: fixed;
 }
 
 .subtitle {
@@ -39,11 +45,9 @@
 }
 
 h1 {
-    position: fixed;
-    top: 206px;
-    left: 328px;
-    height: 73px;
-    width: 278px;
+    width: 100%;
+    max-width: 976.25px;
+    margin: 110px 0 48px 0;
 }
 
 #title-container {
@@ -124,7 +128,6 @@ h1 {
     height: 424px;
     top: 327px;
     left: 816.25px;
-    position: fixed;
     gap: 0px;
     border: 1px solid #d1d1d1;
 }
@@ -283,7 +286,6 @@ h1 {
 }
 
 #required-container {
-    position: fixed;
     width: 170px;
     height: 27px;
     top: 926px;
@@ -297,8 +299,15 @@ h1 {
     text-align: left;
 }
 
+.bottom-bar {
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-top: 138px;
+    width: 100%;
+    max-width: 976.25px;
+}
+
 #interactives-buttons-container {
-    position: fixed;
     width: 309px;
     height: 56px;
     top: 889px;
