@@ -79,7 +79,7 @@ function getUrgentDate (data) {
     let dateTasks = [];
     if (data && data.length > 0) {
         data.forEach((task) => {
-           dateTasks.push(task.date);
+           dateTasks.push(Date.parse(task.date));
         });
         return new Date(Math.min(...dateTasks)).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     }
