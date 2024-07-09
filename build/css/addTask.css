@@ -162,7 +162,7 @@ h1 {
     gap: 8px;
 }
 
-#prio-urgent {
+.choose-prio-button {
     width: 65px;
     height: 24px;
     font-size: 20px;
@@ -173,32 +173,25 @@ h1 {
     gap: 8px;
 }
 
-.prio-urgent-button-bg-color {
-    background-color: #ff3d00;
+.prio-high-button-bg-color {
+    background-color: #ff3d00 !important;
 }
 
-.prio-urgent-span-color {
+.prio-high-span-color {
     font-weight: 700;
     color: white;
 }
 
-#prio-medium-button {
-    background: #ffa800;
-}
-
-#prio-medium {
-    width: 84px;
-    height: 24px;
-    font-size: 21px;
-    font-weight: 700;
-    line-height: 25.2px;
-    text-align: left;
-    color: #ffffff;
-    gap: 8px;
-}
-
 .prio-medium-button-bg-color {
-    background-color: #ffa801;
+    background-color: #ffa801 !important;
+}
+
+.prio-low-button-bg-color, .prio-medium-button-bg-color, .prio-high-button-bg-color {
+    color: white !important;
+}
+
+.prio-low-button-bg-color svg path, .prio-medium-button-bg-color svg path, .prio-high-button-bg-color svg path {
+    fill: white;
 }
 
 #prio-low {
@@ -212,7 +205,7 @@ h1 {
 }
 
 .prio-low-button-bg-color {
-    background-color: #7ae229;
+    background-color: #7ae229 !important;
 }
 
 #choose-prio-container {

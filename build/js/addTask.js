@@ -17,11 +17,16 @@ async function getTasks() {
     includeHTML();
     let fetchedTasks = await fetch(tasksURL+'.json');
     fetchedTasks = await fetchedTasks.json();
+    if(!fetchedTasks) {
+        getContacts();
+        return;
+    }
     for(const [key, value] of Object.entries(fetchedTasks)) {
         allTaskObjects.push(value);
     }
     getContacts();
 }
+
 async function getContacts() {
     includeHTML();
     allContactsObjects = await fetch(BASE_URL+'/contacts.json');
