@@ -9,11 +9,14 @@ let letterBlock = ``;
 let contactsString = "";
 let contactsIndex = 0;
 let showContacts = document.querySelector("#showContact");
-let toggle = true;
+let toggleEditContact = true;
+let toggleAddContact = true;
+let contactKeys = [];
 
 function init() {
   includeHTML();
   getContacts();
+  postData();
 }
 
 async function getContacts() {
@@ -21,6 +24,7 @@ async function getContacts() {
   let responseToJson = await response.json();
   contacts = responseToJson.contacts;
   sorter();
+  addcontactKeys();
 }
 
 function sorter() {
@@ -61,20 +65,36 @@ function getContactsHtml() {
     if (newChar != contacts[i].lastName[0]) {
       return;
     }
-    contactsString += ` <div class="flex contact" onclick="clickContact(event)" data-contactIndex="${contactsIndex}"><div id="profileImage" class="flex-center">${contacts[i].sureName[0]}${contacts[i].lastName[0]}</div><div class="gap"><li>${contacts[i].sureName} ${contacts[i].lastName}</li><span>${contacts[i].email}</span></div></div>`;
+    contactsString += ` <div
+      class="flex contact"
+      onclick="clickContact(event)"
+      data-contactIndex="${contactsIndex}">
+      <div id="profileImage" class="flex-center">
+        ${contacts[i].sureName[0]}${contacts[i].lastName[0]}
+      </div>
+      <div class="gap"> 
+        <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
+        <span>${contacts[i].email}</span>
+      </div>
+    </div>`;
   }
 }
 
 function clickContact(event) {
-  let information = document.querySelector(".informationPopUp")
+  let information = document.querySelector(".informationPopUp");
   event.stopPropagation();
-  console.log(contacts[+event.target.getAttribute('data-contactIndex')]);
+  let index = +event.target
+    .closest(".contact")
+    .getAttribute("data-contactIndex");
+  console.log(index);
 
-information.innerHTML =`
+  information.innerHTML = `
           <div class="flex showContactName">
-<div id="profileImage" class="flex-center bigSize">${contacts[+event.target.getAttribute('data-contactIndex')]["sureName"][0]}${contacts[+event.target.getAttribute('data-contactIndex')]["lastName"][0]}</div>
+<div id="profileImage" class="flex-center bigSize">${contacts[index]["sureName"][0]}${contacts[index]["lastName"][0]}</div>
 <div>
-<span> Anton Meyer </span>
+<span> 
+${contacts[index]["sureName"]}
+${contacts[index]["lastName"]}</span>
    <div><img src="./assets/img/editContacts.png" alt="" onclick="editContact()">
        <img src="./assets/img/DeleteContact.png" alt="">
       </div>
@@ -84,44 +104,67 @@ information.innerHTML =`
   <p>Contact Information</p>
   <div>
       <h5>Email</h5>
-      <span> ${contacts[+event.target.getAttribute('data-contactIndex')]["email"]}</span>
+      <span> ${contacts[index]["email"]}</span>
       <h5>Phone</h5>
-      <span> ${contacts[+event.target.getAttribute('data-contactIndex')]["number"]}</span>
+      <span> ${contacts[index]["number"]}</span>
   </div>
-</div>`
+</div>`;
+}
+
+async function postData(path = "", data = {}) {
+  let response = await fetch(BASE_URL + path + ".json", {
+    method: "POST",
+    header: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return responseToJson = await response.json();
+  ;
+}
+
+function createContact(){
+let name = document.querySelector(".inputName").value;
+let email = document.querySelector(".inputEmail").value;
+let number = document.querySelector(".inputNumber").value;
+console.log(name);
+
+postData("/contacts",{"name":name,"email":email,"number":number});
+getContacts();
+addContactToggle()
+}
 
 
-} 
 
-function editContact(){
-  let editContact = document.querySelector(".editContactMainContainer")
-  if(toggle){
+
+
+
+
+function addcontactKeys() {
+  for (let [key] of Object.entries(contacts)) {
+    contactKeys.push(key);
+    console.log(contactKeys);
+  }
+}
+
+function editContact() {
+  let editContact = document.querySelector(".editContactMainContainer");
+  if (toggleEditContact) {
     editContact.classList.remove("d-none");
-    toggle = false;
-  }else{
-  editContact.classList.add("d-none");
-  toggle = true;
+    toggleEditContact = false;
+  } else {
+    editContact.classList.add("d-none");
+    toggleEditContact = true;
+  }
 }
+
+function addContactToggle() {
+  let addContact = document.querySelector(".addContactMainContainer");
+  if (toggleAddContact) {
+    addContact.classList.remove("d-none");
+    toggleAddContact = false;
+  } else {
+    addContact.classList.add("d-none");
+    toggleAddContact = true;
+  }
 }
-
-// function render() {
-//   let showContacts = document.getElementById("showContact");
-//   let letter = document.getElementById("sort");
-
-//   for (let i = 0; i < contacts.length; i++) {
-//     if (contacts[i]["entries"].length > 0) {
-//       letter.innerHTML += `${contacts[i]["start"]}`;
-//     }
-
-//     for (let j = 0; j < contacts[i]["entries"].length; j++) {
-//       showContacts.innerHTML += `
-// <div class="flex">
-//    <div id="profileImage" class="flex-center">AM</div>
-//     <div class="gap">
-//      <li>${contacts[i]["entries"][j]["name"]}</li>
-//      <span>${contacts[i]["entries"][j]["email"]}</span>
-//     </div>
-// </div>`;
-//     }
-//   }
-// }

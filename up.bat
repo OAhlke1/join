@@ -1,4 +1,4 @@
 git pull
 git add .
-git commit -m "add edit Contact/ expand JS"
+git commit -m "expand JS"
 git push

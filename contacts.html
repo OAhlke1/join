@@ -22,12 +22,12 @@
 
         <!-- Hier den Inhalt der Seite einfügen und stylen in separater CSS Datei -->
 
-        <div class="flex">
-          <div class="contactList">
+        <div class="flex mainContainer">
+          <div class="contactList d-non">
             <div class="newContactButton flex-center">
               <!-- Add new contact Button -->
 
-              <button class="flex-center">
+              <button class="flex-center" onclick="addContactToggle()">
                 Add new contact
 
                 <img src="./assets/img/person_add.png" alt="" />
@@ -36,7 +36,6 @@
             <!-- Contactlist -->
 
             <div class="contactNames">
-                <h3 id="sort"></h3>
                 <ul>
                     <div  id="showContact"></div>
                 
@@ -52,7 +51,7 @@
           </div>
 
 
-          <div class="d-non informationPopUp">
+          <div class="informationPopUp">
 
          </div>
         </div>
@@ -70,19 +69,52 @@
 
   <div class="flex rightContainer">
     <img src="./assets/img/close.png" alt="" onclick="editContact()">
-   <div id="profileImage" class="flex-center">AM</div>
+   <div id="profileImage" class="flex-center bigSize">AM</div>
 <div class="flex inputContainer">
-  <input type="text">
-  <input type="text">
-  <input type="text">
+  <input type="text" placeholder="name">
+  <input type="text" placeholder="email">
+  <input type="text" placeholder="number">
  
-<div class="flex editContactButton"> <button>Delete</button>  <button>Save</button></div>
+<div class="flex editContactButton"> <button>Delete</button> <button class="flex">Save <img src="./assets/img/check.png" alt=""></button></div>
    
 
 </div>
 </div>
 
     </div>
+
+
+    <div class="addContactMainContainer flex d-none" >
+  
+      <div class="editContactLeftContainer flex">
+       <img src="./assets/img/capa 2.png" alt="">
+        <p>Add contact</p>
+       </div>
+      
+     
+       <div class="flex rightContainer">
+         <img src="./assets/img/close.png" alt="" onclick="addContactToggle()">
+        <div class="flex-center bigSize nonePerson"><img src="./assets/img/personNone.png" alt=""></div>
+     <div class="flex inputContainer">
+       <input class="inputName" type="text" placeholder="name">
+       <input  class="inputEmail" type="text" placeholder="email">
+       <input class="inputNumber"  type="text" placeholder="number">
+      
+     <div class="flex editContactButton"> <button onclick="addContactToggle()">Cancel</button> <button class="flex" onclick="createContact()">Create contact <img src="./assets/img/check.png" alt=""></button></div>
+        
+     
+     </div>
+     </div>
+     
+         </div>
+
+
+
+
+
+
+
+
 
   
 

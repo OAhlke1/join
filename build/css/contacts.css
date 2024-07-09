@@ -6,6 +6,10 @@ header {
   width: 100%;
 }
 
+.mainContainer{
+  height: 928px;
+}
+
 /* Style button */
 
 .newContactButton {
@@ -156,6 +160,7 @@ header {
   align-items: center;
   gap: 36px;
   margin: 54px;
+
 }
 
 .contactInformations {
@@ -189,86 +194,115 @@ header {
 
 /* Edit Contact */
 
-.editContactMainContainer{
+.editContactMainContainer {
   position: absolute;
   top: 25%;
-  left:4%;
- /* right:5%; */
+  left: 4%;
+  /* right:5%; */
   z-index: 1;
-  
-  }
-
-  .editContactMainContainer img{
-width: 240px;
-    
-    }
-
-.editContactLeftContainer{
-background-color: #2A3647;
-width: 450px;
-height:600px ;
-padding: 66px,46px,66px,46px;
-border-radius:12px;
-display: flex;
-justify-content: center;
-align-items: center;
-flex-direction: column;
 }
 
-.editContactLeftContainer img{
-width: 60px;
-margin-right: 291px;
-
+.addContactMainContainer{
+  position: absolute;
+  top: 25%;
+  left: 4%;
+  /* right:5%; */
+  z-index: 1;
 }
 
-.editContactLeftContainer p{
-color: white;
-font-weight: 700;
-font-size: 60px;
-padding: 16px;
-  }
-
-
-
-.rightContainer{
-background-color: white;
-width: 45em;
-justify-content: center;
-align-items: center;
+.editContactMainContainer img {
+  width: 240px;
 }
 
-.rightContainer input{
-margin: 8px;
-width: 422px;
-height: 50px;
+.addContactMainContainer img {
+  width: 240px;
 }
 
-.rightContainer img{
-width: 24px;
-cursor: pointer;
-  }
-  
-
-.editContactButton button{
-width: 110px;
-height: 50px;
-border: 1px solid #2A3647;
-margin-top: 32px;
-border-radius: 8px;
-}
-
-.editContactButton{
-display:flex;
-justify-content: space-evenly;
-}
-
-
-
-.inputContainer{
+.editContactLeftContainer {
+  background-color: #2a3647;
+  width: 450px;
+  height: 600px;
+  padding: 66px, 46px, 66px, 46px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
-
 }
 
+.editContactLeftContainer img {
+  width: 60px;
+  margin-right: 291px;
+}
+
+.editContactLeftContainer p {
+  color: white;
+  font-weight: 700;
+  font-size: 60px;
+  padding: 16px;
+}
+
+.rightContainer {
+  background-color: white;
+  width: 45em;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.rightContainer input {
+  margin: 8px;
+  width: 422px;
+  height: 50px;
+}
+
+.rightContainer img {
+  width: 24px;
+  cursor: pointer;
+}
+
+.editContactButton button {
+  width: 110px;
+  height: 50px;
+  border: 1px solid #2a3647;
+  margin-top: 32px;
+  border-radius: 8px;
+}
+
+.editContactButton {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.editContactButton button:last-child {
+  align-items: center;
+  justify-content: center;
+}
+
+.editContactButton button:last-child {
+  background-color: #2a3647;
+  color: white;
+}
+
+.inputContainer {
+  flex-direction: column;
+}
+
+.inputContainer input {
+  padding: 12px 20px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border-color: #d1d1d1;
+}
+
+.nonePerson img {
+display: flex;
+align-items: center;
+}
+
+.nonePerson img{
+  width:120px;
+  height:120px;
+}
 
 /* Responsive */
 
@@ -297,8 +331,8 @@ justify-content: space-evenly;
     cursor: pointer;
   }
 
-  .informationPopUp{
-    display: none;
+  .informationPopUp {
+    display: non;
   }
 }
 
@@ -306,4 +340,21 @@ justify-content: space-evenly;
   .personAdd {
     display: none;
   }
+}
+
+@media (max-width: 720px) {
+  .showContactName span {
+font-size: 32px
+  }
+
+#profileImage{
+
+}
+
+}
+
+@media (max-width: 1135px) {
+
+
+
 }
