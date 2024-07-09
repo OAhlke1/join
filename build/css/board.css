@@ -281,6 +281,7 @@ main .tasks-overlay .overlay-card h2 {
 }
 
 main .tasks-overlay .overlay-card .top-texts {
+    width: 100%;
     row-gap: 24px;
 }
 
