@@ -1,10 +1,12 @@
-const taskURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks.json';
+const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks';
+const contactsURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/contacts';
 const columns = document.querySelectorAll(".column-card-cont");
 let searchBar = document.querySelector('#findTaskInput');
 let userTasks;
 let allTaskKeys = [];
 let allSubtasksArray = [];
 let allTaskObjects = [];
+let allContactsObjects = [];
 let foundTasks = [];
 let urgencyLow = /* HTML */ `<div class="urgency-icon"><svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.99974 7.24524C8.80031 7.24557 8.60603 7.18367 8.44549 7.06863L0.876998 1.63467C0.778524 1.56391 0.695351 1.47498 0.632227 1.37296C0.569103 1.27094 0.527264 1.15784 0.5091 1.0401C0.472414 0.802317 0.534386 0.560105 0.681381 0.366747C0.828377 0.17339 1.04835 0.0447247 1.29292 0.00905743C1.53749 -0.0266099 1.78661 0.0336422 1.98549 0.176559L8.99974 5.2075L16.014 0.17656C16.1125 0.105795 16.2243 0.0545799 16.3431 0.02584C16.462 -0.00289994 16.5855 -0.00860237 16.7066 0.00905829C16.8277 0.0267189 16.944 0.0673968 17.0489 0.128769C17.1538 0.190142 17.2453 0.271007 17.3181 0.366748C17.3909 0.462489 17.4436 0.571231 17.4731 0.686765C17.5027 0.802299 17.5085 0.922362 17.4904 1.0401C17.4722 1.15784 17.4304 1.27094 17.3672 1.37296C17.3041 1.47498 17.221 1.56391 17.1225 1.63467L9.55398 7.06863C9.39344 7.18367 9.19917 7.24557 8.99974 7.24524Z" fill="#7AE229"/><path d="M8.99998 12.0001C8.80055 12.0005 8.60628 11.9386 8.44574 11.8235L0.877242 6.38955C0.678366 6.24664 0.546029 6.03276 0.509344 5.79498C0.472658 5.5572 0.53463 5.31499 0.681625 5.12163C0.828621 4.92827 1.0486 4.79961 1.29317 4.76394C1.53773 4.72827 1.78686 4.78853 1.98574 4.93144L8.99998 9.96239L16.0142 4.93144C16.2131 4.78853 16.4622 4.72827 16.7068 4.76394C16.9514 4.79961 17.1713 4.92827 17.3183 5.12163C17.4653 5.31499 17.5273 5.5572 17.4906 5.79498C17.4539 6.03276 17.3216 6.24664 17.1227 6.38956L9.55423 11.8235C9.39369 11.9386 9.19941 12.0005 8.99998 12.0001Z" fill="#7AE229"/></svg></div>`;
 let urgencyMedium = /* HTML */ `<div class="urgency-icon"><svg width="18" height="8" viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.5685 7.16658L1.43151 7.16658C1.18446 7.16658 0.947523 7.06773 0.772832 6.89177C0.598141 6.71581 0.5 6.47716 0.5 6.22831C0.5 5.97947 0.598141 5.74081 0.772832 5.56485C0.947523 5.38889 1.18446 5.29004 1.43151 5.29004L16.5685 5.29004C16.8155 5.29004 17.0525 5.38889 17.2272 5.56485C17.4019 5.74081 17.5 5.97947 17.5 6.22831C17.5 6.47716 17.4019 6.71581 17.2272 6.89177C17.0525 7.06773 16.8155 7.16658 16.5685 7.16658Z" fill="#FFA800"/><path d="M16.5685 2.7098L1.43151 2.7098C1.18446 2.7098 0.947523 2.61094 0.772832 2.43498C0.598141 2.25902 0.5 2.02037 0.5 1.77152C0.5 1.52268 0.598141 1.28403 0.772832 1.10807C0.947523 0.932105 1.18446 0.833252 1.43151 0.833252L16.5685 0.833252C16.8155 0.833252 17.0525 0.932105 17.2272 1.10807C17.4019 1.28403 17.5 1.52268 17.5 1.77152C17.5 2.02037 17.4019 2.25902 17.2272 2.43498C17.0525 2.61094 16.8155 2.7098 16.5685 2.7098Z" fill="#FFA800"/></svg></div>`;
@@ -23,18 +25,47 @@ let dragged = null;
  */
 async function getTasks() {
     includeHTML();
-    let fetchedTasks = await fetch(taskURL);
+    let fetchedTasks = await fetch(tasksURL+'.json');
     fetchedTasks = await fetchedTasks.json();
     for(const [key, value] of Object.entries(fetchedTasks)) {
         allTaskKeys.push(key);
         allTaskObjects.push(value);
     }
+    getContacts();
+}
+
+async function getContacts() {
+    let fetchedContacts = await fetch(contactsURL+'.json');
+    fetchedContacts = await fetchedContacts.json();
+    for(let [key, value] of Object.entries(fetchedContacts)) {
+        allContactsObjects.push(value)
+    }
+    sortContacts();
     setSubtaskArray();
     setTasksHtml();
 }
 
+function sortContacts() {
+    for (let i = 0; i < allContactsObjects.length - 1; i++) {
+        for (let j = i + 1; j < allContactsObjects.length; j++) {
+            if (allContactsObjects[i]["lastName"] > allContactsObjects[j]["lastName"]) {
+                puffer = allContactsObjects[i];
+                allContactsObjects[i] = allContactsObjects[j];
+                allContactsObjects[j] = puffer;
+            } else if (allContactsObjects[i]["lastName"] === allContactsObjects[i]["lastName"]) {
+                if (allContactsObjects[i]["sureName"] > allContactsObjects[j]["sureName"]) {
+                    puffer = allContactsObjects[i];
+                    allContactsObjects[i] = allContactsObjects[j];
+                    allContactsObjects[j] = puffer;
+                }
+            }
+        }   
+    }
+}
+
 function setSubtaskArray() {
     let subTaskArray = [];
+    allSubtasksArray = [];
     allTaskObjects.forEach((elem, index)=>{
         if(elem.hasOwnProperty('subTasks')) {
             for(let [key, value] of Object.entries(elem.subTasks)) {
@@ -85,14 +116,14 @@ function setTasksHtml() {
         renderTask(card, elem.taskType);
     });
     userTasks = document.querySelectorAll('.task');
-    countSubTasks();
+    checkIfSubtasksExist();
     checkForEmptyColumns();
     checkForFilledColumns();
     shiftParticipants();
     setDragDrop();
 }
 
-function countSubTasks() {
+function checkIfSubtasksExist() {
     allTaskObjects.forEach((elem, index)=>{
         if(!allTaskObjects[index].hasOwnProperty('subTasks')) {
             document.querySelector(`.task[data-taskindex="${index}"] .subtasks`).classList.add('disNone');
@@ -130,13 +161,15 @@ function setLengthOfSubtaskBar(index, doneCount) {
 
 function getParticipantsHtml(elem) {
     let pList = "";
-    for(let [key, value] of Object.entries(elem)) {
-        if(!value.lastName) {
-            pList += `<div class="participant flex-center"><p class="initials">${value.sureName[0]}</p></div>`;
-        }else if(!value.sureName) {
-            pList += `<div class="participant flex-center"><p class="initials">${value.lastName[0]}</p></div>`;
-        }else {
-            pList += `<div class="participant flex-center"><p class="initials">${value.sureName[0]}${value.lastName[0]}</p></div>`;
+    if(elem) {
+        for(let [key, value] of Object.entries(elem)) {
+            if(!value.lastName) {
+                pList += `<div class="participant flex-center"><p class="initials">${value.sureName[0]}</p></div>`;
+            }else if(!value.sureName) {
+                pList += `<div class="participant flex-center"><p class="initials">${value.lastName[0]}</p></div>`;
+            }else {
+                pList += `<div class="participant flex-center"><p class="initials">${value.sureName[0]}${value.lastName[0]}</p></div>`;
+            }
         }
     }
     return pList;
@@ -250,7 +283,6 @@ function highlightColumn(event) {
 
 function unhighlightColumn(event) {
     let unHighlighted = document.querySelector('.highlighted');
-    console.log('');
     unHighlighted.classList.remove('highlighted');
 }
 
@@ -402,25 +434,16 @@ function searchInParticipants(i) {
 }
 
 function renderSubtaskOverlay(index) {
-    document.querySelector('.tasks-overlay .overlay-card').innerHTML = `
+    document.querySelector('.overlay-card').setAttribute('data-subtaskIndex', index);
+    document.querySelector('.tasks-overlay .overlay-card').innerHTML = /* HTML */ `
         <div class="top-bar flex">${getUserStoryType(index)}</div>
         <h2>${allTaskObjects[index].taskTitle}</h2>
-        <div class="top-texts flex-column">
-            <h3>${allTaskObjects[index].taskDescrip}</h3>
-            <div class="due-date flex"><p>Due date:</p>${getDate()}</div>
-            <div class="urgency flex">
-                <p>Priority:</p>
-                <div class="urgency-right flex-center">
-                    <p>${allTaskObjects[index].urgency}</p>
-                    ${getUrgencyHtml(allTaskObjects[index].urgency)}
-                </div>
-            </div>
+        ${renderTopTexts(index)}
+        ${renderParticipantsBlock(index)}
+        <div class="subtasks-block flex flex-column">
+            ${getOverlaySubtasks(index)}
         </div>
-        <div class="participants-block flex-column">
-            <p>Assigned to:</p>
-            <div class="participants flex-column">${getParticipantsHtmlOverlay(allTaskObjects[index].participants)}</div>
-        </div>
-        ${getOverlaySubtasks(index)}`;
+        ${renderEditDelete(index)}`;
     document.querySelector('.tasks-overlay').classList.remove('disNone');
 }
 
@@ -432,18 +455,112 @@ function getDate(index) {
     return `<p>0</p>`;
 }
 
+function renderTopTexts(index) {
+    return /* HTML */ `<div class="top-texts flex-column">
+        <h3>${allTaskObjects[index].taskDescrip}</h3>
+        <div class="due-date flex"><p>Due date:</p>${getDate()}</div>
+        <div class="flex flex-column">
+            <div class="flex flex-column">
+                <div class="urgency flex">
+                    <p>Priority:</p>
+                    <div class="urgency-right flex-center">
+                        <p>${allTaskObjects[index].urgency}</p>
+                        ${getUrgencyHtml(allTaskObjects[index].urgency)}
+                    </div>
+                </div>
+                <div class="reset-urgency flex show-for-editing disNone">
+                    <div class="reset-urgency-tile flex flex-center" data-resetUrgency="low" onclick="resetUrgency(event, ${index})"><p>low</p></div>
+                    <div class="reset-urgency-tile flex flex-center" data-resetUrgency="medium" onclick="resetUrgency(event, ${index})"><p>medium</p></div>
+                    <div class="reset-urgency-tile flex flex-center" data-resetUrgency="high" onclick="resetUrgency(event, ${index})"><p>high</p></div>
+                </div>
+            </div>
+        </div>
+    </div>`;
+}
+
+function renderParticipantsBlock(index) {
+    return /* HTML */ `<div class="participants-block flex-column">
+        <div class="flex-center" style="justify-content: space-between; column-gap: 20px; width: 100%;"><p>Assigned to:</p></div>
+        <div class="flex flex-center;" style="justify-content: space-between; width: 100%;">
+            <div class="show-for-editing disNone"><select id="participantsSelectOverlay" type="select">${renderAllContactsToSelect()}</select></div>
+            <div class="show-for-editing flex-center disNone cg12" onclick="addParticipant(${index})"><p class="add">Add participant</p><img src="./assets/img/add.svg" alt=""></div>
+        </div>
+        <div class="participants flex-column">${getParticipantsHtmlOverlay(allTaskObjects[index].participants)}</div>
+    </div>`;
+}
+
+function renderAllContactsToSelect() {
+    let options = "";
+    allContactsObjects.forEach((el, i)=>{
+        options += /* HTML */ `<option data-participantIndex="${i}">${el.sureName} ${el.lastName}</option>`;
+    })
+    return options;
+}
+
 function getParticipantsHtmlOverlay(elem) {
     let participantBlock = "";
-    elem.forEach((el)=>{
-        if(!el.hasOwnProperty('sureName')) {
-            participantBlock += /* HTML */ `<div class="overlay-participant flex"><div class="circle flex-center"><p>${el.lastName[0]}</p></div><div class="full-name"><p>${el.lastName}</p></div></div>`;
-        }else if(!el.hasOwnProperty('lastName')) {
-            participantBlock += /* HTML */ `<div class="overlay-participant flex"><div class="circle flex-center"><p>${el.sureName[0]}</p></div><div class="full-name"><p>${el.sureName}</p></div></div>`;
-        }else {
-            participantBlock += /* HTML */ `<div class="overlay-participant flex"><div class="circle flex-center"><p>${el.sureName[0]}${el.lastName[0]}</p></div><div class="full-name"><p>${el.sureName} ${el.lastName}</p></div></div>`;
-        }
-    })
+    if(elem) {
+        elem.forEach((el, index)=>{
+            if(!el.hasOwnProperty('sureName')) {
+                participantBlock += /* HTML */ `<div class="flex-column participant-block" data-participantOverlayIndex="${index}" style="row-gap: 12px;"><div class="flex-center" style="column-gap: 11px;"><div class="overlay-participant flex"><div class="circle flex-center"><p>${el.lastName[0]}</p></div><div class="full-name"><p>${el.lastName}</p></div></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" onclick="removeParticipant(event, ${index})"></div></div>`;
+            }else if(!el.hasOwnProperty('lastName')) {
+                participantBlock += /* HTML */ `<div class="flex-column participant-block" data-participantOverlayIndex="${index}" style="row-gap: 12px;"><div class="flex-center" style="column-gap: 11px;"><div class="overlay-participant flex"><div class="circle flex-center"><p>${el.sureName[0]}</p></div><div class="full-name"><p>${el.sureName}</p></div></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" onclick="removeParticipant(event, ${index})"></div></div>`;
+            }else {
+                participantBlock += /* HTML */ `<div class="flex-column participant-block" data-participantOverlayIndex="${index}" style="row-gap: 12px;"><div class="flex-center" style="column-gap: 11px;"><div class="overlay-participant flex"><div class="circle flex-center"><p>${el.sureName[0]}${el.lastName[0]}</p></div><div class="full-name"><p>${el.sureName} ${el.lastName}</p></div></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" onclick="removeParticipant(event, ${index})"></div></div>`;
+            }
+        })
+    }
     return participantBlock;
+}
+
+function addParticipant(index) {
+    if(isParticipantYet(index)) {
+        return;
+    }else {
+        let pIndex = +document.querySelector('#participantsSelectOverlay').options[document.querySelector('#participantsSelectOverlay').selectedIndex].getAttribute('data-participantIndex');
+        if(!allTaskObjects[index].participants) {
+            allTaskObjects[index].participants = [];
+        }
+        allTaskObjects[index].participants.push({sureName: allContactsObjects[pIndex].sureName, lastName: allContactsObjects[pIndex].lastName});
+        actualizeTaskOnRemote(index);
+        renderSubtaskOverlay(index);
+        reRenderTask(index);
+    }
+}
+
+function isParticipantYet(index) {
+    pName = "";
+    if(allTaskObjects[index].participants) {
+        for(let i=0; i<allTaskObjects[index].participants.length; i++) {
+            pName = allTaskObjects[index].participants[i].sureName + " " + allTaskObjects[index].participants[i].lastName;
+            if(pName === document.querySelector('#participantsSelectOverlay').options[document.querySelector('#participantsSelectOverlay').selectedIndex].value) {
+                return true;
+            }else if(pName != document.querySelector('#participantsSelectOverlay').options[document.querySelector('#participantsSelectOverlay').selectedIndex].value){
+                if(i+1 === allTaskObjects[index].participants.length) {
+                    return false;
+                }
+            }
+        }
+    }else {return false;}
+}
+
+function removeParticipant(event) {
+    let index = +document.querySelector('.overlay-card').getAttribute('data-subtaskindex');
+    allTaskObjects[index].participants.splice(+event.target.closest('.participant-block').getAttribute('data-participantOverlayIndex'), 1);
+    //allTaskKeys[index].participants.splice(+event.target.closest('.participant-block').getAttribute('data-participantOverlayIndex'), 1);
+    actualizeTaskOnRemote(index);
+    renderSubtaskOverlay(index);
+    reRenderTask(index);
+}
+
+async function actualizeTaskOnRemote(index) {
+    response = await fetch(tasksURL+`/${allTaskKeys[index]}.json`, {
+        method: 'PUT',
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(allTaskObjects[index])
+    })
 }
 
 function getOverlaySubtasks(index) {
@@ -454,11 +571,87 @@ function getOverlaySubtasks(index) {
             if(elem.subTaskDone == 1) {
                 input = `<input id="checkbox${index}${j}" type="checkbox" checked>`;
             }else {input = `<input id="checkbox${index}${j}" type="checkbox">`;}
-            inputLabel += `<div class="subtask-check flex" onclick="actualizeSubtaskStatus(${index}, ${j})">${input}<label for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</label></div>`;
+            inputLabel += /* HTML */ `<div class="flex-center" style="column-gap: 10px;"><div class="subtask-check flex" onclick="actualizeSubtaskStatus(${index}, ${j})">${input}<label for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</label></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" style="width: 18px; height: 18px;" onclick="deleteSubtask(${index}, ${j})"></div>`;
         })
-        inputLabel = `<div class="subtasks-block flex-column"><p>Subtasks:</p><div class="subtasks">${inputLabel}</div></div>`;
+        inputLabel = `<div class="subtasks"><div class="flex flex-center show-for-editing disNone" style="column-gap: 20px;"></div>${inputLabel}</div>`;
     }
-    return inputLabel;
+    return /* HTML */ `<div class="flex flex-center" stlye="justify-content: space-between;"><p>Subtasks:</p><div class="flex flex-center show-for-editing disNone" style="column-gap: 20px; width: 100%;"><input type="text" id="new-subtask-input"><div class="flex flex-center cg12" onclick="addSubtask(${index})"><p class="add">Add subtask</p><img src="./assets/img/add.svg" alt="" style="width: 18px; height: 18px;"></div></div></div>`+inputLabel;
+}
+
+function addSubtask(index) {
+    if(!allTaskObjects[index].subTasks) {
+        allTaskObjects[index].subTasks = [];
+    }
+    allTaskObjects[index].subTasks.push({subTaskDone: 0, subTaskTitle: document.querySelector('#new-subtask-input').value});
+    setSubtaskArray();
+    renderSubtaskOverlay(index);
+    actualizeSubtaskStatus(index, allTaskObjects[index].subTasks.length-1);
+    actualizeTaskOnRemote(index);
+    checkIfSubtasksExist();
+}
+
+function deleteSubtask(index, j) {
+    allTaskObjects[index].subTasks.splice(j, 1);
+    renderSubtaskOverlay(index);
+    actualizeTaskOnRemote(index);
+    checkIfSubtasksExist();
+}
+
+function renderEditDelete(index) {
+    return /* HTML */`<div class="editDelete flex">
+        <div class="delete flex" onclick="deleteTask(${index})">
+            <img src="./assets/img/bin.svg" alt="">
+            <p>Delete</p>
+        </div>
+        <div class="separator hide-for-editing"></div>
+        <div class="edit hide-for-editing flex" onclick="showEditingElements(${index})">
+            <img src="./assets/img/pen.svg" alt="">
+            <p>Edit</p>
+        </div>
+        <div class="separator show-for-editing disNone"></div>
+        <div class="stop-editing flex show-for-editing disNone" onclick="hideEditingElements()">
+            <p>Stop Editing</p>
+        </div>
+    </div>`;
+}
+
+function resetUrgency(event, index) {
+    allTaskObjects[index].urgency = event.target.closest('.reset-urgency-tile').getAttribute('data-resetUrgency');
+    actualizeTaskOnRemote(index);
+    renderSubtaskOverlay(index);
+    reRenderTask(index);
+}
+
+function deleteTask(index) {
+    allTaskObjects.splice(index, 1);
+    allTaskKeys.splice(index, 1);
+    document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('disNone');
+    deleteTaskOnRemote(index);
+    closeOverlay();
+}
+
+function showEditingElements(index) {
+    document.querySelectorAll('.hide-for-editing').forEach((el)=>{el.classList.add('disNone')});
+    document.querySelectorAll('.show-for-editing').forEach((el)=>{el.classList.remove('disNone')});
+}
+
+function hideEditingElements() {
+    document.querySelectorAll('.show-for-editing').forEach((el)=>{
+        el.classList.add('disNone');
+    });
+    document.querySelectorAll('.hide-for-editing').forEach((el)=>{
+        el.classList.remove('disNone');
+    })
+}
+
+async function deleteTaskOnRemote(index) {
+    let response = await fetch(tasksURL+'.json', {
+        method: 'PUT',
+        header: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(allTaskObjects)
+    })
 }
 
 function actualizeSubtaskStatus(index, j) {
@@ -480,6 +673,33 @@ async function postActualizedSubtaskStatus(index, j) {
         body: JSON.stringify(allSubtasksArray[index][j][1].subTaskDone)
     })
     checkDoneSubTasks(index);
+}
+
+function checkForSubtasks(index) {
+    if(allTaskObjects[index].subTasks.length > 0) {
+        return;
+    }else {
+        document.querySelector(`.task[data-taskindex="${index}"] .subtasks`).classList.add('disNone');
+    }
+}
+
+function reRenderTask(index) {
+    let elem = allTaskObjects[index];
+    let cardInner = /* HTML */ `<div class="task-type flex-center"><p>User Story</p></div>
+    <div class="headlineDescription flex-column">
+        <h2>${elem.taskTitle}</h2>
+        <div class="task-description"><p>${elem.taskDescrip}</p></div>
+    </div>
+    <div class="subtasks flex-center">
+        <div class="subtasks-bar"><div class="inner"></div></div>
+        <p class="subtasks-count"><span class="count"></span>/<span class="total"></span> Subtasks</p>
+    </div>
+    <div class="participants-and-urgency flex">
+        <div class="participants flex">${getParticipantsHtml(elem.participants)}</div>
+        <div class="menu flex">${getUrgencyHtml(elem.urgency)}</div>
+    </div>`;
+    document.querySelectorAll('.task')[index].innerHTML = cardInner;
+    checkIfSubtasksExist();
 }
 
 function closeOverlay() {

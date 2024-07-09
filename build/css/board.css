@@ -10,6 +10,18 @@ label {
     line-height: 0;
 }
 
+input {
+    border: 1px solid #a8a8a8;
+    background-color: white;
+    outline: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+}
+
+.cg12 {
+    column-gap: 12px;
+}
+
 main {
     min-height: 895px;
     height: fit-content;
@@ -369,6 +381,8 @@ main .tasks-overlay .overlay-card .subtask-check input {
     width: 24px;
     height: 24px;
     border: none;
+    border-radius: 0px;
+    outline: none;
     background-image: url('../../assets/img/unchecked.svg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -382,6 +396,62 @@ main .tasks-overlay .overlay-card .subtask-check input:checked {
 
 main .tasks-overlay .overlay-card input.subtask-check label {
     line-height: 0;
+}
+
+main .tasks-overlay .overlay-card .show-for-editing {
+    cursor: pointer;
+}
+
+main .tasks-overlay .overlay-card img.show-for-editing {
+    width: 18px;
+    height: 18px;
+}
+
+main .tasks-overlay .overlay-card .show-for-editing p.add {
+    font-size: 16px;
+    color: #d1d1d1;
+}
+
+main .tasks-overlay .overlay-card .editDelete {
+    align-items: center;
+    justify-content: flex-end;
+    column-gap: 11px;
+    width: 100%;
+}
+
+main .tasks-overlay .overlay-card .editDelete .delete, main .tasks-overlay .overlay-card .editDelete .edit, main .tasks-overlay .overlay-card .editDelete .delete, main .tasks-overlay .overlay-card .editDelete .stop-editing {
+    align-items: center;
+    justify-content: center;
+    column-gap: 8px;
+    cursor: pointer;
+}
+
+main .tasks-overlay .overlay-card .editDelete .separator {
+    width: 1px;
+    height: 24px;
+    background-color: #d1d1d1;
+}
+
+main .tasks-overlay .overlay-card .reset-urgency {
+    column-gap: 20px;
+    width: 100%;
+}
+
+main .tasks-overlay .overlay-card .reset-urgency-tile {
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 10px;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+}
+
+main .tasks-overlay .overlay-card .reset-urgency-tile:hover {
+    background-color: #ffa800;
+}
+
+main .tasks-overlay .overlay-card .reset-overlay-tile p {
+    font-size: 16px;
 }
 
 main .boardCont .board .board-column .column-card-cont .task h2 {
@@ -398,6 +468,7 @@ main .boardCont .board .board-column .column-card-cont .task .task-description p
 main .boardCont .board .board-column .column-card-cont .task .subtasks {
     justify-content: space-between;
     cursor: pointer;
+    width: 100%;
 }
 
 main .boardCont .board .board-column .column-card-cont .task .subtasks .subtasks-bar {
@@ -452,6 +523,10 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     line-height: 0;
     font-weight: 400;
     color: white;
+}
+
+#new-subtask-input {
+    width: 50%;
 }
 
 @media only screen and (max-width: 1220px) {
