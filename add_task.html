@@ -30,13 +30,16 @@
                             </div>
                             <div id="assigned-container" class="flex-column">
                                 <span class="subtitle">Assigned to</span>
-                                <select name="Select contacts to assign" class="select-container contacts">
-                                    <option value="Select contacts to assign">Select contacts to assign</option>
-                                    <option value="Sofia Müller (You)" id="selected-name">Sofia Müller (You)</option>
-                                    <option value="Anton Mayer">Anton Mayer</option>
-                                    <option value="Anja Schulz" selected>Anja Schulz</option>
-                                    <option value="Benedikt Ziegler">Benedikt Ziegler</option>
-                                </select>
+                                <div name="Select contacts to assign" class="select-container contacts" style="position: relative;" onclick="showHideContactList(event)">
+                                    <div class="flex flex-center contacts-inner">
+                                        <p>Select contacts to assign</p>
+                                            <svg class="triangle" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3.29998 4.3L0.699975 1.7C0.383309 1.38333 0.312475 1.02083 0.487475 0.6125C0.662475 0.204167 0.974975 0 1.42498 0H6.57498C7.02498 0 7.33747 0.204167 7.51248 0.6125C7.68748 1.02083 7.61664 1.38333 7.29997 1.7L4.69998 4.3C4.59998 4.4 4.49164 4.475 4.37498 4.525C4.25831 4.575 4.13331 4.6 3.99998 4.6C3.86664 4.6 3.74164 4.575 3.62498 4.525C3.50831 4.475 3.39998 4.4 3.29998 4.3Z" fill="#2A3647"/>
+                                            </svg>
+                                    </div>
+                                    <div class="flex flex-column contact-list disNone"></div>
+                                </div>
+                                <ul class="chosen-list flex flex-center disNone"></ul>
                             </div>
                         </div>
                         <div id="border-container"></div>
@@ -79,15 +82,41 @@
                                 </div>
                             </div>
                             <div id="category-container" class="flex-column">
-                                <span class="subtitle">Cateogory<span class="asterisk">*</span></span>
-                                <select class="select-container category">
-                                    <option value="Technical Task">Technical Task</option>
-                                    <option value="User Story">User Story</option>
-                                </select>
+                                <span class="subtitle">Category<span class="asterisk">*</span></span>
+                                <div name="Select categories to assign" class="select-container categories" style="position: relative;" onclick="showHideCategoriesList(event)">
+                                    <div class="flex flex-center categories-inner">
+                                        <p class="category-name">Select contacts to assign</p>
+                                        <svg class="triangle" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M3.29998 4.3L0.699975 1.7C0.383309 1.38333 0.312475 1.02083 0.487475 0.6125C0.662475 0.204167 0.974975 0 1.42498 0H6.57498C7.02498 0 7.33747 0.204167 7.51248 0.6125C7.68748 1.02083 7.61664 1.38333 7.29997 1.7L4.69998 4.3C4.59998 4.4 4.49164 4.475 4.37498 4.525C4.25831 4.575 4.13331 4.6 3.99998 4.6C3.86664 4.6 3.74164 4.575 3.62498 4.525C3.50831 4.475 3.39998 4.4 3.29998 4.3Z" fill="#2A3647"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-column categories-list disNone">
+                                        <div class="flex flex-center category" onclick="setCategory(event)"><p>Technical Task</p></div>
+                                        <div class="flex flex-center category" onclick="setCategory(event)"><p>User Story</p></div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="substasks-container" class="flex-column">
                                 <span class="subtitle">Subtasks</span>
-                                <input type="text" id="choose-subtasks" placeholder="Add new subtask"/>
+                                <div class="flex flex-center subtask-input">
+                                    <input type="text" id="choose-subtasks" placeholder="Add new subtask" onkeyup="if(event.key === 'Enter'){addSubtask();showCrossTic()}" onfocus="showCrossTic()"/>
+                                    <svg class="add" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M6.24854 8H1.24854C0.965202 8 0.727702 7.90417 0.536035 7.7125C0.344368 7.52083 0.248535 7.28333 0.248535 7C0.248535 6.71667 0.344368 6.47917 0.536035 6.2875C0.727702 6.09583 0.965202 6 1.24854 6H6.24854V1C6.24854 0.716667 6.34437 0.479167 6.53604 0.2875C6.7277 0.0958333 6.9652 0 7.24854 0C7.53187 0 7.76937 0.0958333 7.96104 0.2875C8.1527 0.479167 8.24854 0.716667 8.24854 1V6H13.2485C13.5319 6 13.7694 6.09583 13.961 6.2875C14.1527 6.47917 14.2485 6.71667 14.2485 7C14.2485 7.28333 14.1527 7.52083 13.961 7.7125C13.7694 7.90417 13.5319 8 13.2485 8H8.24854V13C8.24854 13.2833 8.1527 13.5208 7.96104 13.7125C7.76937 13.9042 7.53187 14 7.24854 14C6.9652 14 6.7277 13.9042 6.53604 13.7125C6.34437 13.5208 6.24854 13.2833 6.24854 13V8Z" fill="#2A3647"/>
+                                    </svg>
+                                    <div class="flex flex-center cross-tic disNone">
+                                        <div class="clear-subtask-input">
+                                            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12.2496 11.9998L17.4926 17.2428M7.00659 17.2428L12.2496 11.9998L7.00659 17.2428ZM17.4926 6.75684L12.2486 11.9998L17.4926 6.75684ZM12.2486 11.9998L7.00659 6.75684L12.2486 11.9998Z" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
+                                        <div onclick="addSubtask()">
+                                            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.79923 9.15L14.2742 0.675C14.4742 0.475 14.7117 0.375 14.9867 0.375C15.2617 0.375 15.4992 0.475 15.6992 0.675C15.8992 0.875 15.9992 1.1125 15.9992 1.3875C15.9992 1.6625 15.8992 1.9 15.6992 2.1L6.49923 11.3C6.29923 11.5 6.0659 11.6 5.79923 11.6C5.53256 11.6 5.29923 11.5 5.09923 11.3L0.79923 7C0.59923 6.8 0.503397 6.5625 0.51173 6.2875C0.520064 6.0125 0.62423 5.775 0.82423 5.575C1.02423 5.375 1.26173 5.275 1.53673 5.275C1.81173 5.275 2.04923 5.375 2.24923 5.575L5.79923 9.15Z" fill="black"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <ul class="subtask-list flex flex-column disNone"></ul>
                             </div>
                         </div>
                     </form>

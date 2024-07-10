@@ -7,6 +7,14 @@ main {
     justify-content: center;
 }
 
+ul {
+    list-style-type: none;
+}
+
+.disNone {
+    display: none !important;
+}
+
 .contentBox {
     display: flex;
 }
@@ -256,20 +264,6 @@ h1 {
     gap: 8px;
 }
 
-#choose-subtasks {
-    width: 440px;
-    height: 48px;
-    padding: 12px 16px 12px 16px;
-    gap: 0px;
-    border-radius: 10px;
-    border: 1px solid #d1d1d1;
-    justify-content: space-between;
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 24px;
-    text-align: left;
-}
-
 .flex-column {
     display: flex;
     flex-direction: column;
@@ -368,4 +362,174 @@ h1 {
 
 .asterisk {
     color: #ff8190;
+}
+
+.contacts, .categories {
+    background-color: white;
+}
+
+.contacts .contacts-inner, .categories .categories-inner {
+    justify-content: space-between;
+    width: 100%;
+}
+
+.triangle {
+    height: 5px;
+}
+
+.triangle svg {
+    position: static;
+}
+
+.triangle.rotated {
+    transform: rotateZ(180deg);
+}
+
+.contact-list, .categories-list {
+    width: 100%;
+    max-height: 200px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    overflow-y: scroll;
+    border-radius: 8px;
+    z-index: 500;
+}
+
+.contact-list .contact, .categories-list .category {
+    justify-content: space-between;
+    padding: 4px 8px;
+    border-radius: 8px;
+    height: 40px;
+}
+
+.contact-list .contact-left {
+    column-gap: 15px;
+}
+
+.contact-list .contact:hover, .categories-list .category:hover {
+    background-color: lightslategrey;
+}
+
+.circle, .contact-list .contact .circle {
+    height: 32px;
+    aspect-ratio: 1 / 1;
+    border-radius: 100%;
+    background-color: green;
+}
+
+.circle p, .contact-list .contact .circle p {
+    font-size: 12px;
+    color: white;
+    width: fit-content;
+}
+
+.contact-list .contact p {
+    font-size: 14px;
+    color: black;
+    white-space: nowrap;
+    text-align: left;
+    width: 100%;
+}
+
+.contact-list .contact .not-chosen {
+    display: block;
+    width: 14px;
+    height: 14px;
+}
+
+.contact-list .contact .is-chosen {
+    display: none;
+    width: 14px;
+    height: 14px;
+}
+
+.contact-list .contact.chosen {
+    background-color: #2a3647;
+}
+
+.contact-list .contact.chosen .not-chosen {
+    display: none;
+}
+
+.contact-list .contact.chosen .is-chosen {
+    display: block;
+}
+
+.contact-list .contact.chosen p {
+    color: white;
+}
+
+.subtask-input {
+    width: 440px;
+    height: 48px;
+    padding: 12px 16px 12px 16px;
+    gap: 0px;
+    border-radius: 10px;
+    border: 1px solid #d1d1d1;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.subtask-input input {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.subtask-input input:focus {
+    background-color: white;
+}
+
+.subtask-input svg {
+    cursor: pointer;
+}
+
+.cross-tic {
+    column-gap: 10px;
+}
+
+.subtask-list {
+    padding-left: 18px;
+}
+
+.subtask-list li {
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.chosen-list {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    row-gap: 12px;
+    column-gap: 12px;
+    padding-left: 18px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.chosen-list .circle {
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+}
+
+.chosen-list .circle .name-block {
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid #d1d1d1;
+    padding: 4px 8px;
+    background-color: white;
+}
+
+.chosen-list .circle .name-block p {
+    color: black;
+    white-space: nowrap;
 }
