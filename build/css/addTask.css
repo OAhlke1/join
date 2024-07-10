@@ -538,3 +538,28 @@ h1 {
     color: black;
     white-space: nowrap;
 }
+
+@media (max-width: 1024px) {
+    #content-box-container {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        gap: 32px;
+        width: 80vh;
+    }
+
+    #border-container {
+        width: 80vw;
+        height: 0;
+    }
+
+    h1 {
+        margin-left: 64px;
+        text-align: center;
+    }
+
+    .bottom-bar {
+        margin-bottom: 64px;
+        justify-content: space-around;
+    }
+}
