@@ -539,6 +539,12 @@ h1 {
     white-space: nowrap;
 }
 
+@media (max-width: 1280px) {
+    .bottom-bar {
+        margin-bottom: 64px;
+    }
+}
+
 @media (max-width: 1024px) {
     #content-box-container {
         flex-direction: column;
@@ -554,12 +560,30 @@ h1 {
     }
 
     h1 {
-        margin-left: 64px;
         text-align: center;
     }
 
     .bottom-bar {
-        margin-bottom: 64px;
         justify-content: space-around;
+        flex-direction: column;
+        width: auto;
+    }
+
+    .subtask-input input {
+        width: 80%;
+    }
+
+    #content-box-left, #content-box-right, #prio-container, #category-container, #substasks-container, #title-input, #textarea-input, #date-input, #choose-prio-container, .subtask-input   {
+        width: 80vw;
+        height: auto;
+    }
+
+    #choose-prio-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .select-container {
+        width: auto;
     }
 }
