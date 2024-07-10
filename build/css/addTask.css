@@ -5,6 +5,7 @@ main {
 .headline-form {
     align-items: center;
     justify-content: center;
+    overflow-x: hidden;
 }
 
 input:focus {
@@ -570,20 +571,31 @@ h1 {
     }
 
     .subtask-input input {
-        width: 80%;
+        width: 90%;
     }
 
-    #content-box-left, #content-box-right, #prio-container, #category-container, #substasks-container, #title-input, #textarea-input, #date-input, #choose-prio-container, .subtask-input   {
-        width: 80vw;
+    #content-box-left, #content-box-right, #prio-container, #category-container, #substasks-container, #title-input, #textarea-input, #date-input, #choose-prio-container, .subtask-input, #title-container, #title-input-container   {
+        width: 60vw;
+        height: auto;
+    }
+
+    #textarea-input {
+        height: 128px;
+    }
+
+    .select-container {
+        width: auto;
+    }
+}
+
+@media (max-width: 600px) {
+    #content-box-left, #content-box-right, #prio-container, #category-container, #substasks-container, #title-input, #textarea-input, #date-input, #choose-prio-container, .subtask-input, #title-container, #title-input-container   {
+        width: 90vw;
         height: auto;
     }
 
     #choose-prio-container {
         flex-direction: column;
         align-items: center;
-    }
-
-    .select-container {
-        width: auto;
     }
 }
