@@ -4,12 +4,13 @@ let allTaskKeys = [];
 let name, sureName, lastName;
 let selectedPrio = "low";
 let allContactsObjects;
+let contactKeys = [];
 let allTaskObjects = [];
 let allSubtasksArray = [];
 let newTask;
 let selectContacts = document.querySelector('.contact-list');
-let selectCategory = document.querySelector('.select-container.category');
 let subtaskInput = document.querySelector('#choose-subtasks');
+let catagoryType = "low";
 const BASE_URL = "https://join-249-default-rtdb.europe-west1.firebasedatabase.app";
 const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks';
 
@@ -23,16 +24,18 @@ async function getTasks() {
         getContacts();
         return;
     }
-    for(const [key, value] of Object.entries(fetchedTasks)) {
-        allTaskObjects.push(value);
-    }
     getContacts();
 }
 
 async function getContacts() {
-    includeHTML();
     allContactsObjects = await fetch(BASE_URL+'/contacts.json');
     allContactsObjects = await allContactsObjects.json();
+    let contactsArray = [];
+    for(const [key, value] of Object.entries(allContactsObjects)) {
+        contactKeys.push(key);
+        contactsArray.push(value);
+    }
+    allContactsObjects = contactsArray;
     sortContacts();
 }
 
@@ -59,12 +62,12 @@ function showHideCategoriesList(event) {
 function sortContacts() {
     for (let i = 0; i < allContactsObjects.length - 1; i++) {
         for (let j = i + 1; j < allContactsObjects.length; j++) {
-            if (allContactsObjects[i]["lastName"] > allContactsObjects[j]["lastName"]) {
+            if (allContactsObjects[i]["lastName"].toLowerCase() > allContactsObjects[j]["lastName"].toLowerCase()) {
                 puffer = allContactsObjects[i];
                 allContactsObjects[i] = allContactsObjects[j];
                 allContactsObjects[j] = puffer;
-            } else if (allContactsObjects[i]["lastName"] === allContactsObjects[i]["lastName"]) {
-                if (allContactsObjects[i]["sureName"] > allContactsObjects[j]["sureName"]) {
+            } else if (allContactsObjects[i]["lastName"].toLowerCase() === allContactsObjects[i]["lastName"].toLowerCase()) {
+                if (allContactsObjects[i]["sureName"].toLowerCase() > allContactsObjects[j]["sureName"].toLowerCase()) {
                     puffer = allContactsObjects[i];
                     allContactsObjects[i] = allContactsObjects[j];
                     allContactsObjects[j] = puffer;
@@ -72,6 +75,7 @@ function sortContacts() {
             }
         }   
     }
+    console.log(allContactsObjects);
     renderSelectContacts();
 }
 
@@ -148,7 +152,7 @@ function addTask() {
         participants: participantsArray,
         date: document.getElementById("date-input").value,
         urgency: selectedPrio,
-        category: selectCategory.options[selectCategory.selectedIndex].value,
+        category: catagoryType,
         taskType: 'toDo'
     }
     if(allSubtasksArray.length > 0) {
@@ -247,4 +251,5 @@ function removeSubtask(i) {
 function setCategory(event) {
     event.preventDefault();
     document.querySelector('.category-name').innerHTML = event.target.innerHTML;
+    catagoryType = event.target.closest('.category').querySelector('p').innerHTML;
 }
