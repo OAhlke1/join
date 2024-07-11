@@ -58,7 +58,7 @@ function renderIntoLetterBox() {
   getContactsHtml();
   letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
   contactsString = "";
-  if (contactsIndex + 1 === contacts.length) {
+  if (contactsIndex + 1 === contactKeys.length) {
     showContacts.innerHTML = letterBlock;
     return;
   }
@@ -149,6 +149,7 @@ convertNames();
 postData("/contacts",{"sureName":sureLastName[0],"lastName":sureLastName[1],"email":email,"number":number});
 getContacts();
 addContactToggle()
+getContacts();
 }
 
 
