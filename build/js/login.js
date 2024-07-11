@@ -154,6 +154,7 @@ async function checkSignUp() {
             }
             if (!userExistsFirebase) {
                 signUp(data);
+                showLogInForm();
             }
 
         } else {
