@@ -304,6 +304,10 @@ button {
     color: red;
 }
 
+.back-button {
+    cursor: pointer;
+}
+
 @media (max-width: 1280px) {
     nav {
         position: fixed;
