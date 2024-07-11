@@ -262,6 +262,11 @@
         animation: hideGreet 1s forwards;
     }
 
+    .greet span {
+        width: 100vw;
+        text-align: center;
+    }
+
     .summary-headline {
         visibility: hidden;
         opacity: 0;
