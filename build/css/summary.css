@@ -256,6 +256,7 @@
     }
 
     .greet {
+        width: 100vw;
         height: 100vh;
         margin: 0;
         padding-bottom: 128px;
@@ -264,7 +265,8 @@
 
     .greet span {
         width: 100vw;
-        text-align: center;
+        text-align: left;
+        font-size: 48px;
     }
 
     .summary-headline {
