@@ -180,6 +180,7 @@ header {
     line-height: 19.2px;
     text-align: left;
     color: #CDCDCD;
+    z-index: 999;
 }
 
 #user-menu a:-webkit-any-link {
