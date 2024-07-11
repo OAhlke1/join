@@ -10,29 +10,35 @@ let greetName = document.getElementById('greetName');
 
 function init() {
     checkLogin();
-    getGreetingTime();
+    getGreetingTime(localStorage.getItem('User'));
     getGreetingName();
     getValues();
 }
 
-function getGreetingTime() {
+function getGreetingTime(user) {
+    let sign = ',';
     let actualHours = new Date(Date.now()).getHours();
+    if (user === 'Guest') {
+        sign = '!';
+    }
     if (actualHours >= 6 && actualHours <= 10) {
-        greetTime.innerHTML = "Good morning,";
+            greetTime.innerHTML = "Good morning"+sign;     
     } else if (actualHours >= 11 && actualHours <= 13) {
-        greetTime.innerHTML = "Good day,";
+        greetTime.innerHTML = "Good day"+sign;
     } else if (actualHours >= 14 && actualHours <= 18) {
-        greetTime.innerHTML = "Good afternoon,";
+        greetTime.innerHTML = "Good afternoon"+sign;
     } else if (actualHours >= 19 && actualHours <= 21) {
-        greetTime.innerHTML = "Good evening,";
+        greetTime.innerHTML = "Good evening"+sign;
     } else {
-        greetTime.innerHTML = "Good night,";
+        greetTime.innerHTML = "Good night"+sign;
     }
 }
 
 function getGreetingName() {
     let user = localStorage.getItem('User');
-    greetName.innerHTML = user;
+    if (user !== 'Guest') {
+        greetName.innerHTML = user;
+    }
 }
 
 async function getValues() {
@@ -54,32 +60,32 @@ function getCount(data, title) {
     let count = 0
     if (data && data.length > 0) {
         data.forEach((task) => {
-           if(task.taskType == title){
-            count  += 1;
-           }
+            if (task.taskType == title) {
+                count += 1;
+            }
         });
         return count;
     }
 }
 
-function getUrgentTask (data) {
+function getUrgentTask(data) {
     let count = 0
     if (data && data.length > 0) {
         data.forEach((task) => {
-           if(task.urgency == 'high'){
-            count  += 1;
-           }
+            if (task.urgency == 'high') {
+                count += 1;
+            }
         });
         return count;
     }
 }
 
 
-function getUrgentDate (data) {
+function getUrgentDate(data) {
     let dateTasks = [];
     if (data && data.length > 0) {
         data.forEach((task) => {
-           dateTasks.push(Date.parse(task.date));
+            dateTasks.push(Date.parse(task.date));
         });
         return new Date(Math.min(...dateTasks)).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     }

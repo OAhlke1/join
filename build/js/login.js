@@ -118,6 +118,11 @@ async function checkLogin() {
     }
 }
 
+function checkLoginGuest() {
+    localStorage.setItem('User', 'Guest');
+    window.location.href = 'summary.html';
+}
+
 function rememberMe() {
     let status = localStorage.getItem('Remember');
     if (status) {
