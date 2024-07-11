@@ -1,5 +1,5 @@
 const BASE_URL =
-  "https://join-249-default-rtdb.europe-west1.firebasedatabase.app/";
+  "https://join-249-default-rtdb.europe-west1.firebasedatabase.app";
 
 let contacts = [];
 let puffer;
@@ -12,6 +12,11 @@ let showContacts = document.querySelector("#showContact");
 let toggleEditContact = true;
 let toggleAddContact = true;
 let contactKeys = [];
+let sureLastName;
+let nameSuffix = false;
+
+
+
 
 function init() {
   includeHTML();
@@ -20,25 +25,26 @@ function init() {
 }
 
 async function getContacts() {
-  let response = await fetch(BASE_URL + ".json");
-  let responseToJson = await response.json();
-  contacts = responseToJson.contacts;
+contacts  = await fetch(BASE_URL  + "/contacts.json");
+  contacts = await contacts.json();
+  // contacts = responseToJson.contacts;
+  addcontactKeys();
   sorter();
   addcontactKeys();
 }
 
 function sorter() {
-  for (let i = 0; i < contacts.length - 1; i++) {
-    for (let j = i + 1; j < contacts.length; j++) {
-      if (contacts[i]["lastName"] > contacts[j]["lastName"]) {
-        puffer = contacts[i];
-        contacts[i] = contacts[j];
-        contacts[j] = puffer;
-      } else if (contacts[i]["lastName"] === contacts[i]["lastName"]) {
-        if (contacts[i]["sureName"] > contacts[j]["sureName"]) {
-          puffer = contacts[i];
-          contacts[i] = contacts[j];
-          contacts[j] = puffer;
+  for (let i = 0; i < contactKeys.length - 1; i++) {
+    for (let j = i + 1; j < contactKeys.length; j++) {
+      if (contacts[contactKeys[i]]["lastName"] > contacts[contactKeys[j]]["lastName"]) {
+        puffer = contacts[contactKeys[i]];
+        contacts[contactKeys[i]] = contacts[contactKeys[j]];
+        contacts[contactKeys[j]] = puffer;
+      } else if (contacts[contactKeys[i]]["lastName"] === contacts[contactKeys[i]]["lastName"]) {
+        if (contacts[contactKeys[i]]["sureName"] > contacts[contactKeys[j]]["sureName"]) {
+          puffer = contacts[contactKeys[i]];
+          contacts[contactKeys[i]] = contacts[contactKeys[j]];
+          contacts[contactKeys[j]] = puffer;
         }
       }
     }
@@ -48,7 +54,7 @@ function sorter() {
 }
 
 function renderIntoLetterBox() {
-  newChar = contacts[contactsIndex].lastName[0];
+  newChar = contacts[contactKeys[contactsIndex]].lastName[0];
   getContactsHtml();
   letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
   contactsString = "";
@@ -60,9 +66,12 @@ function renderIntoLetterBox() {
 }
 
 function getContactsHtml() {
-  for (let i = contactsIndex; i < contacts.length; i++) {
-    contactsIndex = i;
-    if (newChar != contacts[i].lastName[0]) {
+  for (let i = contactsIndex; i < contactKeys.length; i++) {
+    if (contactsIndex == contactKeys.length){
+           return;
+    }
+          contactsIndex = i;
+    if (newChar != contacts[contactKeys[i]].lastName[0]) {
       return;
     }
     contactsString += ` <div
@@ -70,11 +79,11 @@ function getContactsHtml() {
       onclick="clickContact(event)"
       data-contactIndex="${contactsIndex}">
       <div id="profileImage" class="flex-center">
-        ${contacts[i].sureName[0]}${contacts[i].lastName[0]}
+        ${ contacts[contactKeys[i]].sureName[0]}${ contacts[contactKeys[i]].lastName[0]}
       </div>
       <div class="gap"> 
-        <li>${contacts[i].sureName} ${contacts[i].lastName}</li>
-        <span>${contacts[i].email}</span>
+        <li>${ contacts[contactKeys[i]].sureName} ${ contacts[contactKeys[i]].lastName}</li>
+        <span>${ contacts[contactKeys[i]].email}</span>
       </div>
     </div>`;
   }
@@ -123,15 +132,52 @@ async function postData(path = "", data = {}) {
   ;
 }
 
+
+
 function createContact(){
-let name = document.querySelector(".inputName").value;
+ sureLastName = document.querySelector('.inputName').value.split(' ');
+
+if(sureLastName.length == 1){
+  sureLastName.push("");
+}
+
 let email = document.querySelector(".inputEmail").value;
 let number = document.querySelector(".inputNumber").value;
-console.log(name);
 
-postData("/contacts",{"name":name,"email":email,"number":number});
+
+convertNames();
+postData("/contacts",{"sureName":sureLastName[0],"lastName":sureLastName[1],"email":email,"number":number});
 getContacts();
 addContactToggle()
+}
+
+
+
+function convertNames(){
+let rest;
+
+for (let i = 0; i < sureLastName.length; i++) {
+ if (sureLastName[i] === "von"|| sureLastName[i] ==="zu" ) {
+  nameSuffix = true;
+  continue;
+ }
+rest = sureLastName[i].slice(1, sureLastName[i].length)
+sureLastName[i] = sureLastName[i][0].toUpperCase() + rest;
+
+}
+
+hasNameSuffix();
+}
+
+
+function hasNameSuffix(){
+if (!nameSuffix){
+  return;
+}
+
+sureLastName = [sureLastName[0], sureLastName[1] + " " + sureLastName[2]]
+console.log(sureLastName);
+
 }
 
 
@@ -141,7 +187,7 @@ addContactToggle()
 
 
 function addcontactKeys() {
-  for (let [key] of Object.entries(contacts)) {
+  for (let [key,value] of Object.entries(contacts)) {
     contactKeys.push(key);
     console.log(contactKeys);
   }
