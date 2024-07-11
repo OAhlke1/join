@@ -53,32 +53,28 @@ function checkLogin(){
 }
 
 function extractFilename(url) {
-    // Erstellen Sie ein URL-Objekt
     const urlObj = new URL(url);
-    
-    // Extrahieren Sie den Pfad aus der URL
     const pathname = urlObj.pathname;
-    
-    // Extrahieren Sie den Dateinamen aus dem Pfad
     const filenameWithExtension = pathname.substring(pathname.lastIndexOf('/') + 1);
-    
-    // Entfernen Sie die Dateierweiterung
     const filename = filenameWithExtension.split('.').slice(0, -1).join('.');
     
     return filename;
   }
   
 
+  /**
+   * 
+   */
   function activeLink() {
       setTimeout(() => {
         const url = window.location.href;
         const filename = extractFilename(url);
-        console.log(filename); // Gibt 'summary' aus
-      console.log(document.getElementById(filename));
         document.getElementById(filename).classList.add('active');
     }, 150);
  
 }
 
+checkLogin();
 activeLink();
+
   

@@ -9,7 +9,6 @@ let greetTime = document.getElementById('greetTime');
 let greetName = document.getElementById('greetName');
 
 function init() {
-    checkLogin();
     getGreetingTime(localStorage.getItem('User'));
     getGreetingName();
     getValues();
@@ -52,8 +51,6 @@ async function getValues() {
     feedback.innerHTML = getCount(data, 'awaitFeedback');
     taskBoard.innerHTML = data.length;
     tileDate.innerHTML = getUrgentDate(data);
-
-    console.log(data);
 }
 
 function getCount(data, title) {
