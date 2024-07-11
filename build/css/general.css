@@ -308,6 +308,10 @@ button {
     cursor: pointer;
 }
 
+.active {
+    background-color: #2A3D59;
+}
+
 @media (max-width: 1280px) {
     nav {
         position: fixed;
