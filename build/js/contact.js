@@ -21,16 +21,16 @@ let nameSuffix = false;
 function init() {
   includeHTML();
   getContacts();
-  postData();
+  // postData();
 }
 
 async function getContacts() {
+
 contacts  = await fetch(BASE_URL  + "/contacts.json");
   contacts = await contacts.json();
   // contacts = responseToJson.contacts;
   addcontactKeys();
   sorter();
-  addcontactKeys();
 }
 
 function sorter() {
@@ -62,6 +62,7 @@ function renderIntoLetterBox() {
     showContacts.innerHTML = letterBlock;
     return;
   }
+ 
   renderIntoLetterBox();
 }
 
@@ -74,6 +75,7 @@ function getContactsHtml() {
     if (newChar != contacts[contactKeys[i]].lastName[0]) {
       return;
     }
+    
     contactsString += ` <div
       class="flex contact"
       onclick="clickContact(event)"
@@ -149,7 +151,7 @@ convertNames();
 postData("/contacts",{"sureName":sureLastName[0],"lastName":sureLastName[1],"email":email,"number":number});
 getContacts();
 addContactToggle()
-getContacts();
+
 }
 
 
@@ -188,6 +190,7 @@ console.log(sureLastName);
 
 
 function addcontactKeys() {
+  contactKeys = [];
   for (let [key,value] of Object.entries(contacts)) {
     contactKeys.push(key);
     console.log(contactKeys);

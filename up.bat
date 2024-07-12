@@ -1,4 +1,4 @@
 git pull
 git add .
-git commit -m "expand JS"
+git commit -m "sorter"
 git push
