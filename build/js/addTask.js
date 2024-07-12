@@ -10,7 +10,7 @@ let allSubtasksArray = [];
 let newTask;
 let selectContacts = document.querySelector('.contact-list');
 let subtaskInput = document.querySelector('#choose-subtasks');
-let catagoryType = "low";
+let categoryType = "medium";
 const BASE_URL = "https://join-249-default-rtdb.europe-west1.firebasedatabase.app";
 const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks';
 
@@ -75,7 +75,6 @@ function sortContacts() {
             }
         }   
     }
-    console.log(allContactsObjects);
     renderSelectContacts();
 }
 
@@ -101,9 +100,9 @@ function renderSelectContacts() {
 function renderChosenList() {
     document.querySelector('.chosen-list').innerHTML = '';
     participantsArray.forEach((elem, i)=>{
-        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" title="Click to remove ${elem.sureName} ${elem.lastName}" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})">
+        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})">
             <p>${elem.sureName[0]}${elem.lastName[0]}</p>
-            <div class="name-block${i} name-block disNone"><p>${elem.sureName} ${elem.lastName}</p></div>
+            <div class="name-block${i} name-block disNone"><p>${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
         </div>
     </li>`;
     })
@@ -152,7 +151,7 @@ function addTask() {
         participants: participantsArray,
         date: document.getElementById("date-input").value,
         urgency: selectedPrio,
-        category: catagoryType,
+        category: categoryType,
         taskType: 'toDo'
     }
     if(allSubtasksArray.length > 0) {
@@ -235,12 +234,48 @@ function checkIfSubtaskExists() {
 function renderSubtaskList() {
     document.querySelector('.subtask-list').innerHTML = '';
     allSubtasksArray.forEach((elem, i)=>{
-        document.querySelector('.subtask-list').innerHTML += /* HTML */ `<li class="flex flex-center" style="column-gap: 12px;">
-            ${elem.subTaskTitle}
-            <img src="./assets/img/delete.svg" alt="" style="width: 12px; height: 12px; cursor: pointer" onclick="removeSubtask(${i})">
+        document.querySelector('.subtask-list').innerHTML += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
+            <p class="subtask-title-p-${i}">${elem.subTaskTitle}</p>
+            <div class="pen-bin-subtask flex flex-center" id="pen-bin-subtask-${i}">
+                <img src="../../assets/img/pen.svg" alt="" onclick="editSubtask(${i})">
+                <img src="../../assets/img/bin.svg" alt="" onclick="removeSubtask(${i})">
+            </div>
+            <div class="edit-subtask flex flex-center disNone" id="edit-subtask-${i}" style="justify-content: space-between;">
+                <input type="text" id="edit-subtask-input-${i}" value="${elem.subTaskTitle}">
+                <div class="bin-check flex flex-center">
+                    <img src="./assets/img/bin.svg" alt="" onclick="removeSubtask(${i})">
+                    <img src="./assets/img/check-icon-black.svg" alt="" onclick="changeSubtask(${i})">
+                </div>
+            </div>
         </li>`
     })
     document.querySelector('.subtask-list').classList.remove('disNone');
+}
+
+function fadeInPenBin(i) {
+    let liTag = document.querySelector(`#subtask-li-${i}`);
+    liTag.classList.remove('fade-out-pen-bin');
+    liTag.classList.add('fade-in-pen-bin');
+}
+
+function fadeOutPenBin(i) {
+    let liTag = document.querySelector(`#subtask-li-${i}`);
+    liTag.classList.add('fade-out-pen-bin');
+    liTag.classList.remove('fade-in-pen-bin');
+}
+
+function editSubtask(i) {
+    let editElem = document.querySelector(`#edit-subtask-${i}`);
+    document.querySelector(`.subtask-title-p-${i}`).classList.add('disNone');
+    document.querySelector(`#pen-bin-subtask-${i}`).classList.add('disNone');
+    editElem.classList.remove('disNone');
+    editElem.querySelector('input').focus();
+}
+
+function changeSubtask(i) {
+    allSubtasksArray[i].subTaskTitle = document.querySelector(`#edit-subtask-input-${i}`).value;
+    renderSubtaskList();
+    document.querySelector(`#edit-subtask-${i}`).classList.add('disNone');
 }
 
 function removeSubtask(i) {
@@ -251,5 +286,5 @@ function removeSubtask(i) {
 function setCategory(event) {
     event.preventDefault();
     document.querySelector('.category-name').innerHTML = event.target.innerHTML;
-    catagoryType = event.target.closest('.category').querySelector('p').innerHTML;
+    categoryType = event.target.closest('.category').querySelector('p').innerHTML;
 }
