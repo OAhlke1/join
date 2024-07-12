@@ -28,6 +28,10 @@ main {
     padding-bottom: 110px;
 }
 
+main .boardCont .top-bar .board-hl-desktop {
+    margin: 0 !important;
+}
+
 main .boardCont {
     padding: 0px 64px;
 }
