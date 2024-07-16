@@ -324,7 +324,7 @@ align-items: center;
     display: none;
   }
 
-  .personAdd {
+  .personAdd p {
     position: fixed;
     bottom: 115px;
     right: 24px;
@@ -332,7 +332,7 @@ align-items: center;
   }
 
   .informationPopUp {
-    display: non;
+
   }
 }
 
@@ -357,4 +357,16 @@ font-size: 32px
 
 
 
+}
+
+@keyframes slidein {
+  from {
+    translate: 150vw 0;
+    scale: 200% 1;
+  }
+
+  to {
+    translate: 0 0;
+    scale: 100% 1;
+  }
 }
