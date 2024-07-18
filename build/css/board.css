@@ -199,10 +199,6 @@ main .boardCont .board .board-column .column-card-cont .pseudo-task {
     opacity: 0;
 }
 
-main .tasks-overlay {
-    height: 100vh;
-}
-
 main .tasks-overlay .overlay-card {
     width: 525px;
     max-height: 811px;
@@ -275,7 +271,8 @@ main .tasks-overlay {
     height: 100%;
     position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 50000;
     background: rgba(0 0 0 / 0.2)
 }

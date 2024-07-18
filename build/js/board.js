@@ -6,6 +6,7 @@ let searchBar = document.querySelector('#findTaskInput');
 let userTasks;
 let allTaskKeys = [];
 let allSubtasksArray = [];
+let allParticipantsKeys = [];
 let newSubtasksArray = [];
 let allTaskObjects = [];
 let allContactsObjects = [];
@@ -48,7 +49,25 @@ async function getTasks() {
             allTaskObjects.push(value);
         }
     }
+    getParticipantsKeys();
     getContacts();
+}
+
+function getParticipantsKeys() {
+    let subTaskKeys = [];
+    allTaskObjects.forEach((elem)=>{
+        if(elem.participants) {
+            for(let [key, value] of Object.entries(elem.participants)) {
+                if(value) {
+                    subTaskKeys.push(key);
+                }
+            }
+            allParticipantsKeys.push(subTaskKeys);
+            subTaskKeys = [];
+        }else {
+            allParticipantsKeys.push([]);
+        }
+    })
 }
 
 /**
@@ -62,8 +81,10 @@ async function getTasks() {
 async function getContacts() {
     let fetchedContacts = await fetch(contactsURL+'.json');
     fetchedContacts = await fetchedContacts.json();
-    for(let [key, value] of Object.entries(fetchedContacts)) {
-        allContactsObjects.push(value)
+    if(fetchedContacts) {
+        for(let [key, value] of Object.entries(fetchedContacts)) {
+            allContactsObjects.push(value)
+        }
     }
     sortContacts();
     renderSelectContactsAdd();
@@ -145,7 +166,7 @@ function setTasksHtml() {
                 <p class="subtasks-count"><span class="count"></span>/<span class="total"></span> Subtasks</p>
             </div>
             <div class="participants-and-urgency flex">
-                <div class="participants flex">${getParticipantsHtml(elem.participants)}</div>
+                <div class="participants flex">${getParticipantsHtml(index)}</div>
                 <div class="menu flex">${getUrgencyHtml(elem.urgency)}</div>
             </div>
         </div>`;
@@ -214,17 +235,15 @@ function setLengthOfSubtaskBar(index, doneCount) {
  * 
  */
 
-function getParticipantsHtml(elem) {
+function getParticipantsHtml(index) {
     let pList = "";
-    if(elem) {
-        for(let [key, value] of Object.entries(elem)) {
-            if(!value.lastName) {
-                pList += `<div class="participant flex-center"><p class="initials">${value.sureName[0]}</p></div>`;
-            }else if(!value.sureName) {
-                pList += `<div class="participant flex-center"><p class="initials">${value.lastName[0]}</p></div>`;
-            }else {
-                pList += `<div class="participant flex-center"><p class="initials">${value.sureName[0]}${value.lastName[0]}</p></div>`;
-            }
+    for(let i=0; i<allParticipantsKeys[index].length; i++) {
+        if(!allTaskObjects[index].participants[allParticipantsKeys[index][i]].lastName) {
+            pList += `<div class="participant flex-center"><p class="initials">${allTaskObjects[index].participants[allParticipantsKeys[index][i]].sureName[0]}</p></div>`;
+        }else if(!allTaskObjects[index].participants[allParticipantsKeys[index][i]].sureName) {
+            pList += `<div class="participant flex-center"><p class="initials">${allTaskObjects[index].participants[allParticipantsKeys[index][i]].lastName[0]}</p></div>`;
+        }else {
+            pList += `<div class="participant flex-center"><p class="initials">${allTaskObjects[index].participants[allParticipantsKeys[index][i]].sureName[0]}${allTaskObjects[index].participants[allParticipantsKeys[index][i]].lastName[0]}</p></div>`;
         }
     }
     return pList;
@@ -870,14 +889,15 @@ function renderChosenListOverlay() {
 function renderChosenListFrontOverlay(index) {
     let list = "";
     if(allTaskObjects[index].participants) {
-        allTaskObjects[index].participants.forEach((elem, i)=>{
+        let elem = allTaskObjects[index].participants;
+        for(let i=0; i<allParticipantsKeys[index].length; i++) {
             list += /* HTML */ `<li class="flex flex-center"><div class="flex flex-center circle" onmouseover="showNameOverlay(${i})" onmouseleave="hideNameOverlay(${i})">
-                <p>${elem.sureName[0]}${elem.lastName[0]}</p>
-                <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
+                <p>${elem[allParticipantsKeys[index][i]].sureName[0]}${elem[allParticipantsKeys[index][i]].lastName[0]}</p>
+                <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem[allParticipantsKeys[index][i]].sureName} ${elem[allParticipantsKeys[index][i]].lastName}<br>Click icon to remove</p></div>
             </div>
-            <p>${elem.sureName} ${elem.lastName}</p>
+            <p>${elem[allParticipantsKeys[index][i]].sureName} ${elem[allParticipantsKeys[index][i]].lastName}</p>
         </li>`;
-        })
+        }
     }
     return list;
 }
@@ -923,6 +943,7 @@ function removeParticipantAdd(i) {
 
 function removeParticipantOverlay(i) {
     participantsArrayOverlay.splice(i, 1);
+    allParticipantsKeys[+document.querySelector('.overlay-card').getAttribute('data-taskindex')].splice(i, 1);
     document.querySelectorAll('.overlay-card .contact.chosen')[i].classList.remove('chosen');
     renderChosenListOverlay();
 }
@@ -1192,7 +1213,7 @@ function reRenderTask(index) {
         <p class="subtasks-count"><span class="count"></span>/<span class="total"></span> Subtasks</p>
     </div>
     <div class="participants-and-urgency flex">
-        <div class="participants flex">${getParticipantsHtml(elem.participants)}</div>
+        <div class="participants flex">${getParticipantsHtml(index)}</div>
         <div class="menu flex">${getUrgencyHtml(elem.urgency)}</div>
     </div>`;
     document.querySelectorAll('.task')[index].innerHTML = cardInner;
