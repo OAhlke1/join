@@ -26,11 +26,11 @@ body {
     justify-content: center;
 }
 
-.transform50 {
+/* .transform50 {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
-}
+} */
 
 *::-webkit-scrollbar {
     display: none;
