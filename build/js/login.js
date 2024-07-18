@@ -93,7 +93,6 @@ async function checkLogin() {
     let userName;
     let userEmail;
     let remember = document.getElementById('rememberMe').checked;
-    console.log(data);
 
     for (const property in data) {
         if (data[property].email === userValue.value && data[property].password === password.value) {
@@ -147,7 +146,6 @@ async function checkSignUp() {
             for (const key in users) {
                 if (users[key].email === signUserEmail.value) {
                     document.getElementById('sign-error-message').innerHTML = "User already exists! Please try again.";
-                    console.log("E-Mail-Adresse ist bereits vorhanden");
                     userExistsFirebase = true; // Setze die Flagge auf true, wenn die E-Mail gefunden wurde
                     break; // Beende die Schleife, da der Benutzer bereits existiert
                 }
