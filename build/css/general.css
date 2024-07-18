@@ -21,6 +21,11 @@
     font-family: Inter, sans-serif;
 }
 
+body {
+    display: flex;
+    justify-content: center;
+}
+
 .transform50 {
     position: relative;
     left: 50%;
