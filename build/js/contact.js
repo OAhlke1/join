@@ -14,9 +14,7 @@ let toggleAddContact = true;
 let contactKeys = [];
 let sureLastName;
 let nameSuffix = false;
-
-
-
+let newContact;
 
 function init() {
   includeHTML();
@@ -25,84 +23,93 @@ function init() {
 }
 
 async function getContacts() {
-
-  contacts  = await fetch(BASE_URL  + "/contacts.json");
+  contacts = await fetch(BASE_URL + "/contacts.json");
   contacts = await contacts.json();
   // contacts = responseToJson.contacts;
-  addcontactKeys();
+  setContactsAsArray();
   sorter();
 }
 
 // let contactKeysPuffer;
+let objectKey = Object.keys(contacts);
 
 function sorter() {
-  for (let i = 0; i < contactKeys.length - 1; i++) {
-    for (let j = i + 1; j < contactKeys.length; j++) {
-      if (contacts[contactKeys[i]]["lastName"] > contacts[contactKeys[j]]["lastName"]) {
-        let contactKeysPuffer = Object.keys(contacts)[i];
-        Object.keys(contacts)[i] = Object.keys(contacts)[j];
-        Object.keys(contacts)[j] = contactKeysPuffer;
+  console.log(contacts);
+  for (let i = 0; i < contacts.length - 1; i++) {
+    for (let j = i + 1; j < contacts.length; j++) {
+      if (contacts[i][1]["lastName"] > contacts[j][1]["lastName"]) {
+        //   let contactKeysPuffer =  Object.keys(contacts)[i];
+        //   Object.keys(contacts)[i] =  Object.keys(contacts)[j];
+        //   Object.keys(contacts)[j] = contactKeysPuffer;
 
-        puffer = contacts[contactKeys[i]];
-        contacts[contactKeys[i]] = contacts[contactKeys[j]];
-        contacts[contactKeys[j]] = puffer;
+        puffer = contacts[i];
+        contacts[i] = contacts[j];
+        contacts[j] = puffer;
+
+        // contacts[i][1]
 
         // let contactKeysPuffer = contactKeys[i];
         // contactKeys[i] = contactKeys[j];
         // contactKeys[j] = contactKeysPuffer;
 
-
         // contactKeysPuffer = contactKeys[i];
         // contactKeys[i] = contactKeys[j];
         // contactKeys[j] = contactKeysPuffer;
-
-      } else if (contacts[contactKeys[i]]["lastName"] === contacts[contactKeys[j]]["lastName"]) {
-        if (contacts[contactKeys[i]]["sureName"] > contacts[contactKeys[j]]["sureName"]) {
-          puffer = contacts[contactKeys[i]];
-          contacts[contactKeys[i]] = contacts[contactKeys[j]];
-          contacts[contactKeys[j]] = puffer;
-
+      } else if (contacts[i][1]["lastName"] === contacts[j][1]["lastName"]) {
+        if (contacts[i][1]["sureName"] > contacts[j][1]["sureName"]) {
+          puffer = contacts[i];
+          contacts[i] = contacts[j];
+          contacts[j] = puffer;
         }
       }
     }
   }
-  newChar = contacts[contactKeys[0]].lastName[0];
+  newChar = contacts[0][1]["lastName"][0];
+
+  // addcontactKeys();
   renderIntoLetterBox();
 }
 
 function renderIntoLetterBox() {
-  newChar = contacts[contactKeys[contactsIndex]].lastName[0];
+  if (contacts.length === 0) {
+    showContacts.innerHTML = "";
+  }
+  newChar = contacts[contactsIndex][1]["lastName"][0];
+
   getContactsHtml();
-  letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
-  contactsString = "";
-  if (contactsIndex +1 === contactKeys.length) {
+  if (contactsIndex < contacts.length) {
+    letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
+    contactsString = "";
+  }
+  if (contactsIndex === contacts.length) {
     showContacts.innerHTML = letterBlock;
     return;
   }
- 
+
   renderIntoLetterBox();
 }
-
+let q = 0;
 function getContactsHtml() {
-  for (let i = contactsIndex; i < contactKeys.length; i++) {
-    if (contactsIndex == contactKeys.length){
-           return;
-    }
-          contactsIndex = i ;
-    if (newChar != contacts[contactKeys[i]].lastName[0]) {
+  for (contactsIndex = q; q < contacts.length; q++) {
+    if (contactsIndex == contacts.length) {
       return;
     }
-    
+    contactsIndex = q;
+    if (newChar != contacts[q][1].lastName[0]) {
+      // continue;
+      return;
+    }
+
     contactsString += ` <div
       class="flex contact"
       onclick="clickContact(event)"
       data-contactIndex="${contactsIndex}">
       <div id="profileImage" class="flex-center">
-        ${ contacts[contactKeys[i]].sureName[0]}${ contacts[contactKeys[i]].lastName[0]}
+        ${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}
       </div>
       <div class="gap"> 
-        <li>${ contacts[contactKeys[i]].sureName} ${ contacts[contactKeys[i]].lastName}</li>
-        <span>${ contacts[contactKeys[i]].email}</span>
+        <li>${contacts[q][1].sureName} ${contacts[q][1].lastName}</li>
+        <span>${contacts[q][1].email}</span>
       </div>
     </div>`;
   }
@@ -118,11 +125,11 @@ function clickContact(event) {
 
   information.innerHTML = `
           <div class="flex showContactName">
-<div id="profileImage" class="flex-center bigSize">${contacts[contactKeys[index]]["sureName"][0]}${contacts[contactKeys[index]]["lastName"][0]}</div>
+<div id="profileImage" class="flex-center bigSize">${contacts[index][1]["sureName"][0]}${contacts[index][1]["lastName"][0]}</div>
 <div>
 <span> 
-${contacts[contactKeys[index]]["sureName"]}
-${contacts[contactKeys[index]]["lastName"]}</span>
+${contacts[index][1]["sureName"]}
+${contacts[index][1]["lastName"]}</span>
    <div><img src="./assets/img/editContacts.png" alt="" onclick="editContact()">
        <img src="./assets/img/DeleteContact.png" alt="" onclick= "deleteContact(${index})">
       </div>
@@ -132,33 +139,31 @@ ${contacts[contactKeys[index]]["lastName"]}</span>
   <p>Contact Information</p>
   <div>
       <h5>Email</h5>
-      <span> ${contacts[contactKeys[index]]["email"]}</span>
+      <span> ${contacts[index][1]["email"]}</span>
       <h5>Phone</h5>
-      <span> ${contacts[contactKeys[index]]["number"]}</span>
+      <span> ${contacts[index][1]["number"]}</span>
   </div>
 </div>`;
 }
 
-function deleteContact(index){
+function deleteContact(index) {
+  deleteData("/contacts/" + contacts[index][0]);
+  contacts.splice(index, 1);
+  // delete contacts[index];
+  letterBlock = "";
+  // contacts.innerHTML = "";
+  contactsIndex = 0;
+  q = 0;
 
-  contactKeys.splice(index,1)
-delete contacts[index];
-deleteData("/contacts/" + Object.keys(contacts)[index] );
-
-
+  renderIntoLetterBox();
 }
 
-async function deleteData(path=""){
+async function deleteData(path = "") {
   let response = await fetch(BASE_URL + path + ".json", {
     method: "DELETE",
   });
-  return responseToJson = await response.json();
-  ;
-
+  return (responseToJson = await response.json());
 }
-
-
-
 
 async function postData(path = "", data = {}) {
   let response = await fetch(BASE_URL + path + ".json", {
@@ -168,70 +173,70 @@ async function postData(path = "", data = {}) {
     },
     body: JSON.stringify(data),
   });
-  return responseToJson = await response.json();
-  ;
+  return (responseToJson = await response.json());
 }
 
+function createContact() {
+  sureLastName = document.querySelector(".inputName").value.split(" ");
 
-
-function createContact(){
- sureLastName = document.querySelector('.inputName').value.split(' ');
-
-if(sureLastName.length == 1){
-  sureLastName.push("");
-}
-
-let email = document.querySelector(".inputEmail").value;
-let number = document.querySelector(".inputNumber").value;
-
-addContactToggle();
-convertNames();
-postData("/contacts",{"sureName":sureLastName[0],"lastName":sureLastName[1],"email":email,"number":number});
-init();
-
-}
-
-
-
-function convertNames(){
-let rest;
-
-for (let i = 0; i < sureLastName.length; i++) {
- if (sureLastName[i] === "von"|| sureLastName[i] ==="zu" ) {
-  nameSuffix = true;
-  continue;
- }
-rest = sureLastName[i].slice(1, sureLastName[i].length)
-sureLastName[i] = sureLastName[i][0].toUpperCase() + rest;
-
-}
-
-hasNameSuffix();
-}
-
-
-function hasNameSuffix(){
-if (!nameSuffix){
-  return;
-}
-
-sureLastName = [sureLastName[0], sureLastName[1] + " " + sureLastName[2]]
-console.log(sureLastName);
-
-}
-
-
-
-
-
-
-
-function addcontactKeys() {
-  // contactKeys = [];
-  for (let [key,value] of Object.entries(contacts)) {
-    contactKeys.push(key);
-    console.log(contactKeys);
+  if (sureLastName.length == 1) {
+    sureLastName.push("");
   }
+
+  let email = document.querySelector(".inputEmail").value;
+  let number = document.querySelector(".inputNumber").value;
+
+  convertNames();
+  newContact ={
+    sureName: sureLastName[0],
+    lastName: sureLastName[1],
+    email: email,
+    number: number,
+  };
+  addContactToggle();
+  
+  contacts.push([contacts.length + 1,newContact ]);
+  showContacts.innerHTML="";
+
+  // contactsIndex = 0;
+  // newChar = contacts[contactsIndex][1]["lastName"][0].toUpperCase();
+  // sorter();
+  debugger;
+  postData("/contacts", newContact);
+  getContacts();
+  // renderIntoLetterBox()
+}
+
+function convertNames() {
+  let rest;
+
+  for (let i = 0; i < sureLastName.length; i++) {
+    if (sureLastName[i] === "von" || sureLastName[i] === "zu") {
+      nameSuffix = true;
+      continue;
+    }
+    rest = sureLastName[i].slice(1, sureLastName[i].length);
+    sureLastName[i] = sureLastName[i][0].toUpperCase() + rest;
+  }
+
+  hasNameSuffix();
+}
+
+function hasNameSuffix() {
+  if (!nameSuffix) {
+    return;
+  }
+
+  sureLastName = [sureLastName[0], sureLastName[1] + " " + sureLastName[2]];
+}
+
+function setContactsAsArray() {
+  let contacsKeysArray = [];
+  contactKeys = [];
+  for (let [key, value] of Object.entries(contacts)) {
+    contacsKeysArray.push([key, value]);
+  }
+  contacts = contacsKeysArray;
 }
 
 function editContact() {
