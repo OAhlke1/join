@@ -197,11 +197,13 @@ function createContact() {
   
   contacts.push([contacts.length + 1,newContact ]);
   showContacts.innerHTML="";
-
-  // contactsIndex = 0;
+debugger;
+  contactsIndex = 0;
   // newChar = contacts[contactsIndex][1]["lastName"][0].toUpperCase();
   // sorter();
-  debugger;
+  q =0;
+  letterBlock = "";
+  newChar= "A";
   postData("/contacts", newContact);
   getContacts();
   // renderIntoLetterBox()
