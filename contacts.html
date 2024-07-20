@@ -69,13 +69,13 @@
 
   <div class="flex rightContainer">
       <img src="./assets/img/close.png" alt="" onclick="editContactToggle()">
-      <div id="profileImage" class="flex-center bigSize">AM</div>
+      <div id="profileImage" class="flex-center bigSize editContactImg" onclick=" editContactImg()">AM</div>
    <div class="flex inputContainer">
        <input type="text" placeholder="name" class="inputEditName"      >
        <input type="text" placeholder="email" class="inputEditEmail"    >
        <input type="text" placeholder="number" class="inputEditNumber"   >
    
-    <div class="flex editContactButton"> <button onclick="deleteContact()">Delete</button> <button class="flex" onclick="editContact()">Save <img src="./assets/img/check.png" alt=""></button></div>
+    <div class="flex editContactButton"> <button onclick="deleteContact(presentlyIndexContacts);editContactToggle();">Delete</button> <button class="flex" onclick="editContact()">Save <img src="./assets/img/check.png" alt=""></button></div>
    
 
      </div>

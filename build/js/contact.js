@@ -4,7 +4,6 @@ const BASE_URL =
 let contacts = [];
 let puffer;
 let newChar;
-let char;
 let letterBlock = ``;
 let contactsString = "";
 let contactsIndex = 0;
@@ -17,6 +16,8 @@ let sureLastName;
 let nameSuffix = false;
 let newContact;
 let q = 0;
+let presentlyIndexContacts;
+let information = document.querySelector(".informationPopUp");
 
 function init() {
   includeHTML();
@@ -98,15 +99,13 @@ function contactHTML(contactsIndex, q) {
     </div>`;
 }
 
-let presentlyIndexContacts;
-let information = document.querySelector(".informationPopUp");
+
 function clickContact(event) {
 
   event.stopPropagation();
    presentlyIndexContacts = +event.target
     .closest(".contact")
     .getAttribute("data-contactIndex");
-  console.log(presentlyIndexContacts);
 
   information.innerHTML = clickContactHTML(presentlyIndexContacts);
 }
@@ -130,7 +129,7 @@ function clickContactHTML(index) {
           <img
             src="./assets/img/DeleteContact.png"
             alt=""
-            onclick="deleteContact(${index})"
+            onclick="deleteContact(${presentlyIndexContacts})"
           />
         </div>
       </div>
@@ -144,50 +143,37 @@ function clickContactHTML(index) {
         <span> ${contacts[index][1]["number"]}</span>
       </div>
     </div>`;
+   
 }
 
 function startingValueEditContact(index){
 let name = document.querySelector(".inputEditName");
 let email= document.querySelector(".inputEditEmail");
 let number = document.querySelector(".inputEditNumber");
+let letters = document.querySelector(".editContactImg")
 
 name.value= contacts[index][1]["sureName"] +" "+ contacts[index][1]["lastName"];
 email.value= contacts[index][1]["email"];
 number.value= contacts[index][1]["number"];
+letters.innerHTML = contacts[index][1]["sureName"][0] + contacts[index][1]["lastName"][0];
 
 
-  editContactToggle()
+editContactToggle()
 }
 
 function editContact(){
 let name = document.querySelector(".inputEditName");
 let email= document.querySelector(".inputEditEmail");
 let number = document.querySelector(".inputEditNumber");
-console.log(name.value);
 sureLastName = document.querySelector(".inputEditName").value.split(" ");
 
 editContactToggle();
-addContactToggle();
 deleteContact(presentlyIndexContacts);
 setTimeout(function() {
   createContact(email, number, name, sureLastName);
 }, 50);
 
 
-}
-
-
-
-
-async function putData(path = "", data = {}) {
-  let response = await fetch(BASE_URL + path + ".json", {
-    method: "PUT",
-    header: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  return (responseToJson = await response.json());
 }
 
 function deleteContact(index) {
@@ -223,9 +209,9 @@ function createContactValue(){
   let number = document.querySelector(".inputNumber");
   let name =  document.querySelector(".inputName");
   sureLastName = document.querySelector(".inputName").value.split(" ");
-  createContact(email,number,name,sureLastName)
+  createContact(email,number,name,sureLastName);
+  addContactToggle();
 }
-
 
 function createContact(email,number,name,sureLastName) {
   if (sureLastName.length == 1) {
@@ -233,9 +219,13 @@ function createContact(email,number,name,sureLastName) {
   }
   convertNames();
   newContact = {sureName: sureLastName[0],lastName: sureLastName[1],email: email.value,number: number.value,};
-  addContactToggle();
-
   contacts.push([contacts.length + 1, newContact]);
+  resetValue(email,number,name)
+  postData("/contacts", newContact);
+  getContacts();
+}
+
+function resetValue(email,number,name){
   email.value="";
   number.value="";
   name.value="";
@@ -244,8 +234,7 @@ function createContact(email,number,name,sureLastName) {
   q = 0;
   letterBlock = "";
   newChar = "A";
-  postData("/contacts", newContact);
-  getContacts();
+
 }
 
 function convertNames() {
@@ -273,7 +262,6 @@ function hasNameSuffix() {
 
 function setContactsAsArray() {
   let contacsKeysArray = [];
-  contactKeys = [];
   for (let [key, value] of Object.entries(contacts)) {
     contacsKeysArray.push([key, value]);
   }
