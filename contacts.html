@@ -59,29 +59,28 @@
   
 
 
-         <div class="editContactMainContainer flex d-none" >
+<div class="editContactMainContainer flex d-none" >
   
- <div class="editContactLeftContainer flex">
-  <img src="./assets/img/capa 2.png" alt="">
-   <p>Edit contact</p>
-  </div>
+    <div class="editContactLeftContainer flex">
+      <img src="./assets/img/capa 2.png" alt="">
+      <p>Edit contact</p>
+    </div>
  
 
   <div class="flex rightContainer">
-    <img src="./assets/img/close.png" alt="" onclick="editContact()">
-   <div id="profileImage" class="flex-center bigSize">AM</div>
-<div class="flex inputContainer">
-  <input type="text" placeholder="name">
-  <input type="text" placeholder="email">
-  <input type="text" placeholder="number">
- 
-<div class="flex editContactButton"> <button>Delete</button> <button class="flex">Save <img src="./assets/img/check.png" alt=""></button></div>
+      <img src="./assets/img/close.png" alt="" onclick="editContactToggle()">
+      <div id="profileImage" class="flex-center bigSize">AM</div>
+   <div class="flex inputContainer">
+       <input type="text" placeholder="name" class="inputEditName"      >
+       <input type="text" placeholder="email" class="inputEditEmail"    >
+       <input type="text" placeholder="number" class="inputEditNumber"   >
+   
+    <div class="flex editContactButton"> <button onclick="deleteContact()">Delete</button> <button class="flex" onclick="editContact()">Save <img src="./assets/img/check.png" alt=""></button></div>
    
 
-</div>
-</div>
-
-    </div>
+     </div>
+   </div>
+  </div>
 
 
     <div class="addContactMainContainer flex d-none" >
@@ -95,27 +94,18 @@
        <div class="flex rightContainer">
          <img src="./assets/img/close.png" alt="" onclick="addContactToggle()">
         <div class="flex-center bigSize nonePerson"><img src="./assets/img/personNone.png" alt=""></div>
-     <div class="flex inputContainer">
-       <input class="inputName" type="text" placeholder="name">
-       <input  class="inputEmail" type="text" placeholder="email">
-       <input class="inputNumber"  type="text" placeholder="number">
+     <form class="flex inputContainer" onsubmit="forceInput()">
+       <input class="inputName" type="text" placeholder="name" required>
+       <input  class="inputEmail" type="email" placeholder="email" require>
+       <input class="inputNumber"  type="number" placeholder="number" min="0" require>
       
-     <div class="flex editContactButton"> <button onclick="addContactToggle()">Cancel</button> <button class="flex" onclick="createContact()">Create contact <img src="./assets/img/check.png" alt=""></button></div>
+     <div class="flex editContactButton"> <button onclick="addContactToggle()">Cancel</button> <button class="flex" onclick="createContactValue()">Create contact <img src="./assets/img/check.png" alt=""></button></div>
         
      
-     </div>
+     </form>
      </div>
      
-         </div>
-
-
-
-
-
-
-
-
-
+    </div>
   
 
       </main>
