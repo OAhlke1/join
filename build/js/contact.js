@@ -32,22 +32,16 @@ async function getContacts() {
 }
 
 function sorter() {
-  for (let i = 0; i < contacts.length - 1; i++) {
-    for (let j = i + 1; j < contacts.length; j++) {
-      if (contacts[i][1]["lastName"] > contacts[j][1]["lastName"]) {
-        puffer = contacts[i];
-        contacts[i] = contacts[j];
-        contacts[j] = puffer;
-      } else if (contacts[i][1]["lastName"] === contacts[j][1]["lastName"]) {
-        if (contacts[i][1]["sureName"] > contacts[j][1]["sureName"]) {
-          puffer = contacts[i];
-          contacts[i] = contacts[j];
-          contacts[j] = puffer;
-        }
-      }
+  contacts.sort((a, b) => {
+    if (a[1].lastName > b[1].lastName) {
+      return 1;
+    } else if (a[1].lastName < b[1].lastName) {
+      return -1;
+    } else {
+      return a[1].sureName > b[1].sureName ? 1 : (a[1].sureName < b[1].sureName ? -1 : 0);
     }
-  }
-  newChar = contacts[0][1]["lastName"][0];
+  });
+  
 
   renderIntoLetterBox();
 }
@@ -98,7 +92,6 @@ function contactHTML(contactsIndex, q) {
       </div>
     </div>`;
 }
-
 
 function clickContact(event) {
 

@@ -39,7 +39,7 @@
                 <ul>
                     <div  id="showContact"></div>
                 
-
+                    <div class="personAdd"> <img src="./assets/img/person_add.png" alt=""></div>
             </div>
           </div>
 
@@ -54,6 +54,7 @@
           <div class="informationPopUp">
 
          </div>
+         
         </div>
         <div class="personAdd"> <img src="./assets/img/person_add.png" alt=""></div>
   
@@ -70,15 +71,15 @@
   <div class="flex rightContainer">
       <img src="./assets/img/close.png" alt="" onclick="editContactToggle()">
       <div id="profileImage" class="flex-center bigSize editContactImg" onclick=" editContactImg()">AM</div>
-   <div class="flex inputContainer">
-       <input type="text" placeholder="name" class="inputEditName"      >
-       <input type="text" placeholder="email" class="inputEditEmail"    >
-       <input type="text" placeholder="number" class="inputEditNumber"   >
+   <div class="flex inputContainer" onsubmit="forceInput()">
+       <input type="text" placeholder="name" class="inputEditName" required>
+       <input type="email" placeholder="email" class="inputEditEmail"required>
+       <input type="number" placeholder="number" class="inputEditNumber"required>
    
     <div class="flex editContactButton"> <button onclick="deleteContact(presentlyIndexContacts);editContactToggle();">Delete</button> <button class="flex" onclick="editContact()">Save <img src="./assets/img/check.png" alt=""></button></div>
    
 
-     </div>
+   </div>
    </div>
   </div>
 
@@ -95,9 +96,9 @@
          <img src="./assets/img/close.png" alt="" onclick="addContactToggle()">
         <div class="flex-center bigSize nonePerson"><img src="./assets/img/personNone.png" alt=""></div>
      <form class="flex inputContainer" onsubmit="forceInput()">
-       <input class="inputName" type="text" placeholder="name" required>
-       <input  class="inputEmail" type="email" placeholder="email" require>
-       <input class="inputNumber"  type="number" placeholder="number" min="0" require>
+       <input type="text" placeholder="name" class="inputName" required>
+       <input type="email" placeholder="email" class="inputEmail" required>
+       <input type="number" placeholder="number" class="inputNumber" required>
       
      <div class="flex editContactButton"> <button onclick="addContactToggle()">Cancel</button> <button class="flex" onclick="createContactValue()">Create contact <img src="./assets/img/check.png" alt=""></button></div>
         
