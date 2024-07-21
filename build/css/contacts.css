@@ -18,7 +18,7 @@ header {
 
 .newContactButton button {
   background-color: #2a3647;
-  color: white;
+  color: rgb(255, 255, 255);
   width: 352px;
   height: 56px;
   gap: 16px;

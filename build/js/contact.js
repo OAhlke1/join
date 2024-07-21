@@ -46,12 +46,12 @@ function sorter() {
   renderIntoLetterBox();
 }
 
+
 function renderIntoLetterBox() {
   if (contacts.length === 0) {
     showContacts.innerHTML = "";
   }
   newChar = contacts[contactsIndex][1]["lastName"][0];
-
   getContactsHtml();
   if (contactsIndex < contacts.length) {
     letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
@@ -72,18 +72,22 @@ function getContactsHtml() {
     contactsIndex = q;
     if (newChar != contacts[q][1].lastName[0]) {
       return;
+
     }
 
     contactsString += contactHTML(contactsIndex, q);
+
   }
+  
 }
 
 function contactHTML(contactsIndex, q) {
+  getRandomColor(); 
   return ` <div
       class="flex contact"
       onclick="clickContact(event)"
       data-contactIndex="${contactsIndex}">
-      <div id="profileImage" class="flex-center">
+      <div id="profileImage" class="flex-center" style="background-color: ${color};" >
         ${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}
       </div>
       <div class="gap"> 
@@ -92,6 +96,18 @@ function contactHTML(contactsIndex, q) {
       </div>
     </div>`;
 }
+
+let color;
+
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+   color = '#11';
+  for (let i = 0; i < 4; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 
 function clickContact(event) {
 
@@ -105,7 +121,7 @@ function clickContact(event) {
 
 function clickContactHTML(index) {
   return ` <div class="flex showContactName">
-      <div id="profileImage" class="flex-center bigSize">
+      <div id="profileImage" class="flex-center bigSize"  style="background-color: ${color};">
         ${contacts[index][1]["sureName"][0]}${contacts[index][1]["lastName"][0]}
       </div>
       <div>
@@ -164,7 +180,7 @@ editContactToggle();
 deleteContact(presentlyIndexContacts);
 setTimeout(function() {
   createContact(email, number, name, sureLastName);
-}, 50);
+}, 100);
 
 
 }
