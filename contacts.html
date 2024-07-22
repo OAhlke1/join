@@ -36,10 +36,10 @@
             <!-- Contactlist -->
 
             <div class="contactNames">
-                <ul>
+                
                     <div  id="showContact"></div>
                 
-                    <!-- <div class="personAdd"> <img src="./assets/img/person_add.png" alt=""></div> -->
+                    <div class="personAdd"> <img src="./assets/img/person_add.png" alt=""></div>
             </div>
           </div>
 
@@ -56,7 +56,7 @@
          </div>
          
         </div>
-        <div class="personAdd"> <img src="./assets/img/person_add.png" alt=""></div>
+        <!-- <div class="personAdd"> <img src="./assets/img/person_add.png" alt=""></div> -->
   
 
 
@@ -75,7 +75,7 @@
        <input type="text" placeholder="name" class="inputEditName" required>
        <input type="email" placeholder="email" class="inputEditEmail"required>
        <input type="number" placeholder="number" class="inputEditNumber"required>
-   
+    
     <div class="flex editContactButton"> <button onclick="deleteContact(presentlyIndexContacts);editContactToggle();">Delete</button> <button class="flex" onclick="editContact()">Save <img src="./assets/img/check.png" alt=""></button></div>
    
 
@@ -96,9 +96,9 @@
          <img src="./assets/img/close.png" alt="" onclick="addContactToggle()">
         <div class="flex-center bigSize nonePerson"><img src="./assets/img/personNone.png" alt=""></div>
      <form class="flex inputContainer" onsubmit="forceInput()">
-       <input type="text" placeholder="name" class="inputName" required>
-       <input type="email" placeholder="email" class="inputEmail" required>
-       <input type="number" placeholder="number" class="inputNumber" required>
+      <span><input type="text" placeholder="name" class="inputName" required><img src="./assets/img/person.png" alt=""></span>
+      <span> <input type="email" placeholder="email" class="inputEmail" required><img src="./assets/img/mail.png" alt=""></span>
+      <div><input type="number" placeholder="number" class="inputNumber" required><img src="./assets/img/call.png" alt=""></div>
       
      <div class="flex editContactButton"> <button onclick="addContactToggle()">Cancel</button> <button class="flex" onclick="createContactValue()">Create contact <img src="./assets/img/check.png" alt=""></button></div>
         
