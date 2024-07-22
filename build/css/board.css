@@ -3,6 +3,10 @@ body {
     justify-content: center;
 }
 
+img {
+    width: auto;
+}
+
 .flex.container {
     position: relative;
 }
@@ -21,6 +25,7 @@ input {
     outline: none;
     padding: 8px 16px;
     border-radius: 10px;
+    font-size: 20px;
 }
 
 .cg12 {
@@ -226,16 +231,8 @@ main .tasks-overlay .overlay-card .inner h2 {
 }
 
 main .tasks-overlay div {
-    width: fit-content;
+    width: 100%;
 }
-
-/* main .urgency-icon {
-    width: fit-content !important;
-}
-
-main .tasks-overlay p {
-    width: fit-content;
-} */
 
 main .tasks-overlay p {
     white-space: nowrap;
@@ -433,15 +430,17 @@ main .tasks-overlay .overlay-card .inner img.show-for-editing {
 }
 
 main .tasks-overlay .overlay-card .inner .show-for-editing p.add {
-    font-size: 16px;
-    color: #d1d1d1;
+    font-size: 20px;
+    color: black;
+    text-align: left;
+    width: 100%;
 }
 
 main .tasks-overlay .overlay-card .edit-delete {
     align-items: center;
     justify-content: flex-end;
     column-gap: 11px;
-    width: calc(100% - 80px);
+    width: 159px;
     position: absolute;
     right: 40px;
     bottom: 24px;
@@ -452,6 +451,11 @@ main .tasks-overlay .overlay-card .edit-delete .delete, main .tasks-overlay .ove
     justify-content: center;
     column-gap: 8px;
     cursor: pointer;
+}
+
+main .tasks-overlay .overlay-card .edit-delete .delete img, main .tasks-overlay .overlay-card .edit-delete .edit img {
+    width: 18px;
+    height: 18px;
 }
 
 main .tasks-overlay .overlay-card .edit-delete .separator {
@@ -560,18 +564,18 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     width: 50%;
 }
 
-.choose-prio-container {
-    width: 440px;
+.overlay-card .choose-prio-container {
+    width: 100%;
     height: 56px;
     gap: 16px;
     display: flex;
+    justify-content: space-between;
 }
 
 .choose-prio-button {
-    width: 136px !important;
+    min-width: calc(100%/3 - 16px) !important;
     height: 56px;
     padding: 16px 10px 16px 10px;
-    gap: 8px;
     border-radius: 10px;
     background: #ffffff;
     box-shadow: 0px 0px 4px 0px #0000001a;
@@ -598,7 +602,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 }
 
 #date-input-add, #date-input-overlay {
-    width: 440px;
+    width: 100%;
     height: 48px;
     padding: 12px 16px 12px 16px;
     gap: 0px;
@@ -634,6 +638,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 .contacts .contacts-inner, .categories .categories-inner {
     justify-content: space-between;
     width: 100%;
+    height: 100%;
 }
 
 .triangle {
@@ -678,10 +683,15 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 }
 
 .circle, .contact-list .contact .circle {
+    width: 32px;
     height: 32px;
     aspect-ratio: 1 / 1;
     border-radius: 100%;
     background-color: green;
+}
+
+.add-task-overlay-box .contact-list .contact .circle {
+    width: unset !important;
 }
 
 .circle p, .contact-list .contact .circle p {
@@ -756,6 +766,23 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     padding: 32px 4px;
 }
 
+.chosen-list.front {
+    align-items: flex-start;
+    max-height: 184px;
+    overflow-y: scroll;
+    padding: 8px 0 0 0;
+    flex-wrap: nowrap;
+}
+
+.overlay-card .hide-for-editing {
+    width: 100%;
+}
+
+.chosen-list.front li {
+    column-gap: 16px;
+    padding-left: 16px;
+}
+
 .chosen-list .circle {
     position: relative;
     user-select: none;
@@ -777,25 +804,8 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     white-space: nowrap;
 }
 
-.add-task-overlay {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 50000;
-    background: rgba(0 0 0 / 0.2);
-}
-
-.add-task-overlay-box {
-    padding: 30px;
-    border-radius: 16px;
-    background-color: white;
-    width: calc(103600vw/1920);
-    max-height: 90vh;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    position: relative;
+.add-task-overlay-box .cross-tic {
+    width: fit-content;
 }
 
 .add-task-overlay-box input:focus, .add-task-overlay-box textarea:focus {
@@ -841,6 +851,10 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     opacity: 0;
 }
 
+.pen-bin-subtask-overlay {
+    width: fit-content !important;
+}
+
 .subtask-list li .pen-bin-subtask img {
     cursor: pointer;
 }
@@ -866,6 +880,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 }
 
 .recreate-task {
+    width: 80px !important;
     column-gap: 5px;
     padding: 5px;
     background-color: #2A3647;
@@ -873,6 +888,19 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     font-size: 20px;
     color: white;
     font-weight: bold;
+}
+
+.recreate-task img {
+    height: 100%;
+}
+
+#new-title-input, #new-taskdescrip-input {
+    width: 100%;
+    height: 48px;
+}
+
+.due-date.show-for-editing {
+    width: 100%;
 }
 
 @keyframes fade-in-li-bg {
@@ -955,7 +983,55 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     margin-bottom: -2px;
 }
 
+.add-task-overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 50000;
+    background: rgba(0 0 0 / 0.2);
+}
+
+.add-task-overlay-box {
+    padding: 30px;
+    border-radius: 16px;
+    background-color: white;
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+}
+
+#content-box-container {
+    width: fit-content !important;
+    height: fit-content !important;
+}
+
+#choose-subtasks-add {
+    padding: 0 !important;
+}
+
+.overlay-add-center-block {
+    width: 976px;
+    height: fit-content;
+    align-items: flex-start;
+    justify-content: center;
+    column-gap: 48px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.bottom-bar {
+    width: 100%;
+    margin: 30px 0 0 0 !important;
+}
+
 @media only screen and (max-width: 1220px) {
+    .board-hl-add-task-mobile h1 {
+        width: fit-content;
+        margin: 0;
+    }
+
     main {
         justify-content: center;
         width: 100%;
@@ -1071,5 +1147,40 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     .add-task-overlay-box {
         overflow-x: hidden;
         overflow-y: scroll;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+
+    .add-task-overlay-box {
+        width: fit-content;
+    }
+
+    #title-container, #description-container, .add-task-overlay textarea, .add-task-overlay #date-container, .add-task-overlay #assigned-container, #category-container, #prio-container, #substasks-container {
+        width: calc(100% - 10px) !important;
+    }
+
+    .add-task-overlay-box input, .add-task-overlay .subtitle, .add-task-overlay #title-input-container, .add-task-overlay #title-input, .add-task-overlay #textarea-container, .add-task-overlay #textarea-container textarea, #calender, .add-task-overlay-box #search-contacts, .add-task-overlay-box .select-categories, #choose-prio-container, #substasks-container .subtask-input {
+        width: 100% !important;
+    }
+
+    .overlay-add-center-block {
+        flex-direction: column;
+        justify-content: flex-start;
+        row-gap: 24px;
+        width: 100%;
+        height: 300px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    #border-container {
+        display: none;
+    }
+
+    .add-task-overlay-box .bottom-bar {
+        flex-direction: column-reverse;
+        align-items: center;
+        row-gap: 20px;
     }
 }

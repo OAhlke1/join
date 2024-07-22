@@ -7,8 +7,10 @@ let userTasks;
 let allTaskKeys = [];
 let allSubtasksArray = [];
 let allParticipantsKeys = [];
-let newSubtasksArray = [];
+let newSubtasksArrayOverlay = [];
+let newSubtasksArrayAdd = [];
 let allTaskObjects = [];
+let taskArrayPuffer = [];
 let allContactsObjects = [];
 let foundTasks = [];
 let participantsArrayOverlay = [];
@@ -41,6 +43,8 @@ document.querySelector('body').addEventListener('keyup', (event)=>{
  */
 async function getTasks() {
     includeHTML();
+    allTaskKeys = [];
+    allTaskObjects = [];
     let fetchedTasks = await fetch(tasksURL+'.json');
     fetchedTasks = await fetchedTasks.json();
     if(fetchedTasks) {
@@ -49,8 +53,17 @@ async function getTasks() {
             allTaskObjects.push(value);
         }
     }
+    checkIfParticipantsExist();
     getParticipantsKeys();
     getContacts();
+}
+
+function checkIfParticipantsExist() {
+    allTaskObjects.forEach((elem, index)=>{
+        if(!elem.participants) {
+            allTaskObjects[index].participants = [];
+        }
+    })
 }
 
 function getParticipantsKeys() {
@@ -155,8 +168,8 @@ function setSubtaskArray() {
 
 function setTasksHtml() {
     allTaskObjects.forEach((elem, index)=>{
-        let card = /* HTML */ `<div class="task flex-column" draggable="true" data-taskType="${elem.taskType}" data-taskIndex="${index}" onclick="renderTaskOverlay(${index})">
-            <div class="task-category flex-center"><p>User Story</p></div>
+        let card = /* HTML */ `<div class="task flex-column" draggable="true" data-taskType="${elem.taskType}" data-taskIndex="${index}" onclick="renderTaskIntoOverlay(${index})">
+            <div class="task-category flex-center"><p>${elem.category}</p></div>
             <div class="headlineDescription flex-column">
                 <h2>${elem.taskTitle}</h2>
                 <div class="task-description"><p>${elem.taskDescrip}</p></div>
@@ -171,6 +184,7 @@ function setTasksHtml() {
             </div>
         </div>`;
         renderTask(card, elem.taskType);
+        selectTaskCategoryColor(index);
     });
     userTasks = document.querySelectorAll('.task');
     checkIfSubtasksExist();
@@ -244,6 +258,53 @@ function getParticipantsHtml(index) {
             pList += `<div class="participant flex-center"><p class="initials">${allTaskObjects[index].participants[allParticipantsKeys[index][i]].lastName[0]}</p></div>`;
         }else {
             pList += `<div class="participant flex-center"><p class="initials">${allTaskObjects[index].participants[allParticipantsKeys[index][i]].sureName[0]}${allTaskObjects[index].participants[allParticipantsKeys[index][i]].lastName[0]}</p></div>`;
+        }
+    }
+    return pList;
+}
+
+/**
+ * 
+ * @function reGetParticipantsHtml creates the HTML string for the tasks participant-list
+ * @param {object} elem - it contains the JavaScript object with the participants
+ * @param {string} pList - it is the string of the participant list.
+ *      With every participant a new HTML-string is added to @param pList
+ *      When the for-loop has iterated through all the participants, @param pList is being returned
+ * 
+ */
+
+function reGetParticipantsHtml(index) {
+    let pList = "";
+    for(let i=0; i<participantsArrayOverlay.length; i++) {
+        if(!participantsArrayOverlay[i].lastName) {
+            pList += `<div class="participant flex-center"><p class="initials">${participantsArrayOverlay[i].sureName[0]}</p></div>`;
+        }else if(!participantsArrayOverlay[i].sureName) {
+            pList += `<div class="participant flex-center"><p class="initials">${participantsArrayOverlay[i].lastName[0]}</p></div>`;
+        }else {
+            pList += `<div class="participant flex-center"><p class="initials">${participantsArrayOverlay[i].sureName[0]}${participantsArrayOverlay[i].lastName[0]}</p></div>`;
+        }
+    }
+    return pList;
+}
+/**
+ * 
+ * @function getNewParticipants creates the HTML string for the tasks participant-list
+ * @param {object} elem - it contains the JavaScript object with the participants
+ * @param {string} pList - it is the string of the participant list.
+ *      With every participant a new HTML-string is added to @param pList
+ *      When the for-loop has iterated through all the participants, @param pList is being returned
+ * 
+ */
+
+function getHtmlOfNewParticipants(index) {
+    let pList = "";
+    for(let i=0; i<allTaskObjects[index].participants.length; i++) {
+        if(!allTaskObjects[index].participants.lastName) {
+            pList += `<div class="participant flex-center"><p class="initials">${allTaskObjects[index].participants[i].sureName[0]}</p></div>`;
+        }else if(!allTaskObjects[index].participants[i].sureName) {
+            pList += `<div class="participant flex-center"><p class="initials">${allTaskObjects[index].participants[i].lastName[0]}</p></div>`;
+        }else {
+            pList += `<div class="participant flex-center"><p class="initials">${allTaskObjects[index].participants[i].sureName[0]}${allTaskObjects[index].participants[i].lastName[0]}</p></div>`;
         }
     }
     return pList;
@@ -400,16 +461,24 @@ function forEachTarget(event) {
 
 function checkForEmptyColumns() {
     if(document.querySelectorAll('#toDo .task').length === 0) {
-        document.querySelector('.no-task-to-do').classList.remove('disNone');
+        if(document.querySelector('.no-task-to-do')) {
+            document.querySelector('.no-task-to-do').classList.remove('disNone');
+        }
     }
     if(document.querySelectorAll('#inProgress .task').length === 0) {
-        document.querySelector('.no-task-in-progress').classList.remove('disNone');
+        if(document.querySelector('.no-task-in-progress')) {
+            document.querySelector('.no-task-in-progress').classList.remove('disNone');
+        }
     }
     if(document.querySelectorAll('#awaitFeedback .task').length === 0) {
-        document.querySelector('.no-feedback-awaited').classList.remove('disNone');
+        if(document.querySelector('.no-feedback-awaited')) {
+            document.querySelector('.no-feedback-awaited').classList.remove('disNone');
+        }
     }
     if(document.querySelectorAll('#done .task').length === 0) {
-        document.querySelector('.no-task-done').classList.remove('disNone');
+        if(document.querySelector('.no-task-done')) {
+            document.querySelector('.no-task-done').classList.remove('disNone');
+        }
     }
 }
 
@@ -421,16 +490,24 @@ function checkForEmptyColumns() {
 
 function checkForFilledColumns() {
     if(document.querySelectorAll('#toDo .task').length > 0) {
-        document.querySelector('.no-task-to-do').classList.add('disNone');
+        if(document.querySelector('.no-task-to-do')) {
+            document.querySelector('.no-task-to-do').classList.add('disNone');
+        }
     }
     if(document.querySelectorAll('#inProgress .task').length > 0) {
-        document.querySelector('.no-task-in-progress').classList.add('disNone');
+        if(document.querySelector('.no-task-in-progress')) {
+            document.querySelector('.no-task-in-progress').classList.add('disNone');
+        }
     }
     if(document.querySelectorAll('#awaitFeedback .task').length > 0) {
-        document.querySelector('.no-feedback-awaited').classList.add('disNone');
+        if(document.querySelector('.no-feedback-awaited')) {
+            document.querySelector('.no-feedback-awaited').classList.add('disNone');
+        }
     }
     if(document.querySelectorAll('#done .task').length > 0) {
-        document.querySelector('.no-task-done').classList.add('disNone');
+        if(document.querySelector('.no-task-done')) {
+            document.querySelector('.no-task-done').classList.add('disNone');
+        }
     }
 }
 
@@ -519,19 +596,44 @@ function searchInParticipants(i) {
  * This function renders the subtask-overlay and fills it with the data of the task in @param allTaskObjects at index @param index
  */
 
-function renderTaskOverlay(index) {
-    document.querySelector('.overlay-card').setAttribute('data-subtaskIndex', index); //if no task-index is given to a function, the data-subtaskIndex can be checked for the tasks index.
+function renderTaskIntoOverlay(index) {
+    document.querySelector('.overlay-card').setAttribute('data-taskindex', index); //if no task-index is given to a function, the data-taskindex can be checked for the tasks index.
     document.querySelector('.tasks-overlay .overlay-card .inner').innerHTML = /* HTML */ `
         <div class="top-bar flex">${renderTaskCategoryIntoOverlay(index)}<div class="close-overlay" onclick="closeOverlay()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.99999 8.40005L2.09999 13.3C1.91665 13.4834 1.68332 13.575 1.39999 13.575C1.11665 13.575 0.883321 13.4834 0.699988 13.3C0.516654 13.1167 0.424988 12.8834 0.424988 12.6C0.424988 12.3167 0.516654 12.0834 0.699988 11.9L5.59999 7.00005L0.699988 2.10005C0.516654 1.91672 0.424988 1.68338 0.424988 1.40005C0.424988 1.11672 0.516654 0.883382 0.699988 0.700049C0.883321 0.516715 1.11665 0.425049 1.39999 0.425049C1.68332 0.425049 1.91665 0.516715 2.09999 0.700049L6.99999 5.60005L11.9 0.700049C12.0833 0.516715 12.3167 0.425049 12.6 0.425049C12.8833 0.425049 13.1167 0.516715 13.3 0.700049C13.4833 0.883382 13.575 1.11672 13.575 1.40005C13.575 1.68338 13.4833 1.91672 13.3 2.10005L8.39999 7.00005L13.3 11.9C13.4833 12.0834 13.575 12.3167 13.575 12.6C13.575 12.8834 13.4833 13.1167 13.3 13.3C13.1167 13.4834 12.8833 13.575 12.6 13.575C12.3167 13.575 12.0833 13.4834 11.9 13.3L6.99999 8.40005Z" fill="#2A3647"/></svg></div></div>
         ${renderTaskTitleIntoOverlay(index)}
         ${renderTopTexts(index)}
         ${renderParticipantsBlockIntoOverlay(index)}
         <div class="subtasks-block flex flex-column">
-            ${getOverlaySubtasks(index)}
+            ${getSubtasksOverlay(index)}
         </div>`;
     if(allTaskObjects[index].subTasks) {
         renderSubtaskListOverlay(index);
     }
+    selectTaskCategoryColor(index);
+    renderSelectContactsOverlay();
+    renderEditDelete(index);
+    document.querySelector('.tasks-overlay').classList.remove('disNone');
+}
+/**
+ * 
+ * @param {number} index is the tasks index in the @param allTaskObjects array.
+ * This function renders the subtask-overlay and fills it with the data of the task in @param allTaskObjects at index @param index
+ */
+
+function renderTaskIntoOveray(index) {
+    document.querySelector('.overlay-card').setAttribute('data-taskindex', index); //if no task-index is given to a function, the data-taskindex can be checked for the tasks index.
+    document.querySelector('.tasks-overlay .overlay-card .inner').innerHTML = /* HTML */ `
+        <div class="top-bar flex">${renderTaskCategoryIntoOverlay(index)}<div class="close-overlay" onclick="closeOverlay()"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.99999 8.40005L2.09999 13.3C1.91665 13.4834 1.68332 13.575 1.39999 13.575C1.11665 13.575 0.883321 13.4834 0.699988 13.3C0.516654 13.1167 0.424988 12.8834 0.424988 12.6C0.424988 12.3167 0.516654 12.0834 0.699988 11.9L5.59999 7.00005L0.699988 2.10005C0.516654 1.91672 0.424988 1.68338 0.424988 1.40005C0.424988 1.11672 0.516654 0.883382 0.699988 0.700049C0.883321 0.516715 1.11665 0.425049 1.39999 0.425049C1.68332 0.425049 1.91665 0.516715 2.09999 0.700049L6.99999 5.60005L11.9 0.700049C12.0833 0.516715 12.3167 0.425049 12.6 0.425049C12.8833 0.425049 13.1167 0.516715 13.3 0.700049C13.4833 0.883382 13.575 1.11672 13.575 1.40005C13.575 1.68338 13.4833 1.91672 13.3 2.10005L8.39999 7.00005L13.3 11.9C13.4833 12.0834 13.575 12.3167 13.575 12.6C13.575 12.8834 13.4833 13.1167 13.3 13.3C13.1167 13.4834 12.8833 13.575 12.6 13.575C12.3167 13.575 12.0833 13.4834 11.9 13.3L6.99999 8.40005Z" fill="#2A3647"/></svg></div></div>
+        ${renderTaskTitleIntoOverlay(index)}
+        ${renderTopTexts(index)}
+        ${reRenderParticipantsBlockIntoOverlay(index)}
+        <div class="subtasks-block flex flex-column">
+            ${getSubtasksOverlay(index)}
+        </div>`;
+    if(allTaskObjects[index].subTasks) {
+        renderSubtaskListOverlay(index);
+    }
+    selectTaskCategoryColor(index);
     renderSelectContactsOverlay();
     renderEditDelete(index);
     document.querySelector('.tasks-overlay').classList.remove('disNone');
@@ -543,7 +645,15 @@ function renderTaskOverlay(index) {
  * @returns a string of HTML including the tag for the task-category and the clsosing x.
  */
 function renderTaskCategoryIntoOverlay(index) {
-    return `<div class="task-category flex-center"><p>${allTaskObjects[index].category}</p></div>`;
+    return `<div class="task-category flex-center" style="background-color: ${document.querySelectorAll('.task .task-category')[index].style.backgroundColor};"><p>${allTaskObjects[index].category}</p></div>`;
+}
+
+function selectTaskCategoryColor(index) {
+    if(document.querySelectorAll('.task')[index].querySelector('.task-category p').innerHTML === "User Story") {
+        document.querySelectorAll('.task .task-category')[index].style.backgroundColor = '#0038ff';
+    }else {
+        document.querySelectorAll('.task')[index].querySelector('.task-category').style.backgroundColor = '#1fd7c1';
+    }
 }
 
 /**
@@ -607,9 +717,9 @@ function renderTopTexts(index) {
     return /* HTML */ `<div class="top-texts flex-column">
         ${renderTaskDescriptionIntoOverlay(index)}
         <div class="due-date flex hide-for-editing"><p>Due date:</p>${getDate(index)}</div>
-        <div class="flex flex-column show-for-editing disNone" style="row-gap: 16px;">
+        <div class="due-date flex flex-column show-for-editing disNone" style="row-gap: 16px;">
             <p>Due date</p>
-            <input type="date" id="date-input-overlay" required="">
+            <input type="date" id="date-input-overlay" required="" value="${allTaskObjects[index].date}">
         </div>
         <div class="flex flex-column">
             <div class="flex flex-column" style="row-gap: 16px;">
@@ -638,14 +748,14 @@ function renderTopTexts(index) {
 function renderUrgencyButtons(index) {
     return /* HTML */ `<div class="reset-urgency flex show-for-editing disNone">
         <div class="choose-prio-container">
-            <div class="choose-prio-button flex flex-center" class="prio-high-button" onclick="resetUrgency(${index}, 'high')" data-resetUrgency="high">
+            <div class="choose-prio-button flex flex-center" class="prio-high-button" onclick="resetUrgency(event, ${index}, 'high')" data-resetUrgency="high">
                 <span id="prio-high" class="flex flex-center">Urgent</span>
                 <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19.6528 15.2547C19.4182 15.2551 19.1896 15.1803 19.0007 15.0412L10.7487 8.958L2.49663 15.0412C2.38078 15.1267 2.24919 15.1887 2.10939 15.2234C1.96959 15.2582 1.82431 15.2651 1.68184 15.2437C1.53937 15.2223 1.40251 15.1732 1.27906 15.099C1.15562 15.0247 1.04801 14.927 0.96238 14.8112C0.876751 14.6954 0.814779 14.5639 0.780002 14.4243C0.745226 14.2846 0.738325 14.1394 0.759696 13.997C0.802855 13.7095 0.958545 13.4509 1.19252 13.2781L10.0966 6.70761C10.2853 6.56802 10.5139 6.49268 10.7487 6.49268C10.9835 6.49268 11.212 6.56802 11.4007 6.70761L20.3048 13.2781C20.4908 13.415 20.6286 13.6071 20.6988 13.827C20.7689 14.0469 20.7678 14.2833 20.6955 14.5025C20.6232 14.7216 20.4834 14.9124 20.2962 15.0475C20.1089 15.1826 19.8837 15.2551 19.6528 15.2547Z" fill="#FF3D00"></path>
                     <path d="M19.6528 9.50568C19.4182 9.50609 19.1896 9.43124 19.0007 9.29214L10.7487 3.20898L2.49663 9.29214C2.26266 9.46495 1.96957 9.5378 1.68184 9.49468C1.39412 9.45155 1.13532 9.29597 0.962385 9.06218C0.789449 8.82838 0.716541 8.53551 0.7597 8.24799C0.802859 7.96048 0.95855 7.70187 1.19252 7.52906L10.0966 0.958588C10.2853 0.818997 10.5139 0.743652 10.7487 0.743652C10.9835 0.743652 11.212 0.818997 11.4007 0.958588L20.3048 7.52906C20.4908 7.66598 20.6286 7.85809 20.6988 8.07797C20.769 8.29785 20.7678 8.53426 20.6955 8.75344C20.6232 8.97262 20.4834 9.16338 20.2962 9.29847C20.1089 9.43356 19.8837 9.50608 19.6528 9.50568Z" fill="#FF3D00"></path>
                 </svg>  
             </div>
-            <div class="choose-prio-button flex flex-center" class="prio-medium-button" onclick="resetUrgency(${index}, 'medium')" data-resetUrgency="medium">
+            <div class="choose-prio-button flex flex-center" class="prio-medium-button" onclick="resetUrgency(event, ${index}, 'medium')" data-resetUrgency="medium">
                 <span id="prio-medium" class="flex flex-center">Medium</span>
                 <svg width="21" height="8" viewBox="0 0 21 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_200223_4295)">
@@ -659,7 +769,7 @@ function renderUrgencyButtons(index) {
                     </defs>
                 </svg>
             </div>
-            <div class="choose-prio-button flex flex-center" class="prio-low-button" onclick="resetUrgency(${index}, 'low')" data-resetUrgency="low">
+            <div class="choose-prio-button flex flex-center" class="prio-low-button" onclick="resetUrgency(event, ${index}, 'low')" data-resetUrgency="low">
                 <span id="prio-low" class="flex flex-center">Low</span>
                 <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.2485 9.50589C10.0139 9.5063 9.7854 9.43145 9.59655 9.29238L0.693448 2.72264C0.57761 2.63708 0.47977 2.52957 0.405515 2.40623C0.33126 2.28289 0.282043 2.14614 0.260675 2.00379C0.217521 1.71631 0.290421 1.42347 0.463337 1.1897C0.636253 0.955928 0.895022 0.800371 1.18272 0.757248C1.47041 0.714126 1.76347 0.786972 1.99741 0.95976L10.2485 7.04224L18.4997 0.95976C18.6155 0.874204 18.7471 0.812285 18.8869 0.777538C19.0266 0.742791 19.1719 0.735896 19.3144 0.757248C19.4568 0.7786 19.5937 0.82778 19.7171 0.901981C19.8405 0.976181 19.9481 1.07395 20.0337 1.1897C20.1194 1.30545 20.1813 1.43692 20.2161 1.57661C20.2509 1.71629 20.2578 1.86145 20.2364 2.00379C20.215 2.14614 20.1658 2.28289 20.0916 2.40623C20.0173 2.52957 19.9195 2.63708 19.8036 2.72264L10.9005 9.29238C10.7117 9.43145 10.4831 9.5063 10.2485 9.50589Z" fill="#7AE229"></path>
@@ -696,6 +806,32 @@ function renderParticipantsBlockIntoOverlay(index) {
         <ul class="chosen-list back flex flex-center"></ul>
     </div>`;
 }
+/**
+ * 
+ * @param {number} index is the tasks index in the @param allTaskObjects array.
+ * @returns an HTML-string containing the participants of the task and the first hidden elements for adding/deleting new participants when the task is being
+ * edited.
+ */
+function reRenderParticipantsBlockIntoOverlay(index) {
+    return /* HTML */ `
+    <div class="flex flex-column hide-for-editing">
+        <p style="font-size: 20px;">Assigned to</p>
+        <ul class="chosen-list front flex-column">${reRenderChosenListFrontOverlay(index)}</ul>
+    </div>
+    <div id="assigned-container" class="flex flex-column show-for-editing disNone">
+        <p style="font-size: 20px;">Assigned to</p>
+        <div name="Select contacts to assign" class="select-container contacts" style="position: relative;" onclick="showHideContactListOverlay()">
+            <div class="flex flex-center contacts-inner">
+            <input class="search-contacts" placeholder="Select contacts to assign" onkeyup="searchForContactsOverlay(event)">
+                <svg class="triangle" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3.29998 4.3L0.699975 1.7C0.383309 1.38333 0.312475 1.02083 0.487475 0.6125C0.662475 0.204167 0.974975 0 1.42498 0H6.57498C7.02498 0 7.33747 0.204167 7.51248 0.6125C7.68748 1.02083 7.61664 1.38333 7.29997 1.7L4.69998 4.3C4.59998 4.4 4.49164 4.475 4.37498 4.525C4.25831 4.575 4.13331 4.6 3.99998 4.6C3.86664 4.6 3.74164 4.575 3.62498 4.525C3.50831 4.475 3.39998 4.4 3.29998 4.3Z" fill="#2A3647"/>
+                </svg>
+            </div>
+            <div class="flex flex-column contact-list disNone"></div>
+        </div>
+        <ul class="chosen-list back flex flex-center"></ul>
+    </div>`;
+}
 
 /**
  * When the input-field for searching contacts of the task-overlay is focused, the overlays contact-list is shown.
@@ -713,7 +849,7 @@ function showHideContactListOverlay() {
 
 
 /**
- * When the input-field for searching contacts of the add-new-task-overlay is focused, the overlays contact-list is shown.
+ * When the input-field for searching contacts of the add-task-overlay is focused, the overlays contact-list is shown.
  * When the input-field loses focus, the contact-list is hidden.
  */
 function showHideContactListAdd(event) {
@@ -727,14 +863,14 @@ function showHideContactListAdd(event) {
 }
 
 /**
- * This function renderes the contact-list for the add-new-task-overlay.
+ * This function renderes the contact-list for the add-task-overlay.
  */
 function renderSelectContactsAdd() {
     document.querySelector('.add-task-overlay-box .contact-list').innerHTML = /* HTML */ ``;
     allContactsObjects.forEach((elem, i)=>{
         document.querySelector('.add-task-overlay-box .contact-list').innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContactAdd(event)">
         <div class="flex flex-center contact-left">
-            <div class="flex flex-center circle"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
+            <div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
             <p class="contact-name">${elem.sureName} ${elem.lastName}</p>
         </div>
         <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -756,7 +892,7 @@ function renderSelectContactsOverlay() {
     allContactsObjects.forEach((elem, i)=>{
         document.querySelector('.overlay-card .contact-list').innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContactOverlay(event)">
         <div class="flex flex-center contact-left">
-            <div class="flex flex-center circle"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
+            <div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
             <p class="contact-name">${elem.sureName} ${elem.lastName}</p>
         </div>
         <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/></svg>
@@ -766,9 +902,7 @@ function renderSelectContactsOverlay() {
         </svg>
     </div>`;
     })
-    if(allTaskObjects[+document.querySelector('.overlay-card').getAttribute('data-taskindex')].participants) {
-        preSelectContactsOverlay();
-    }
+    preSelectContactsOverlay();
 }
 
 /**
@@ -789,7 +923,7 @@ function searchForContactsOverlay(event) {
 
 /**
  * 
- * This function takes the value of the search-input-field and checks each contact in the add-new-task-overlays contact-list if it includes the input-value.
+ * This function takes the value of the search-input-field and checks each contact in the add-task-overlays contact-list if it includes the input-value.
  * If not, the contact gets hidden by adding the class disNone (for display-none) to it.
  */
 function searchForContactsAdd(event) {
@@ -822,7 +956,7 @@ function selectContactOverlay(event) {
 /**
  * 
  * @param {event} event is a click-event.
- * This function adds the class chosen to the contact in the add-new-task-overlay that is being clicked.
+ * This function adds the class chosen to the contact in the add-task-overlay that is being clicked.
  * The stopProgation-function is called, to only click on the contact, not the entire overlay.
  */
 function selectContactAdd(event) {
@@ -835,63 +969,106 @@ function selectContactAdd(event) {
     getParticipantsAdd();
 }
 
+/**
+ * 
+ * @param {number} i is the index of the Participant
+ * This function shows the name-block of the participant in the task-overlay
+ */
 function showNameOverlay(i) {
     document.querySelector(`.name-block${i}`).classList.remove('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the Participant
+ * This function hides the name-block of the participant in the task-overlay
+ */
 function hideNameOverlay(i) {
     document.querySelector(`.name-block${i}`).classList.add('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the Participant
+ * This function shows the name-block of the participant in the add-task-overlay
+ */
 function showNameAdd(i) {
     document.querySelector(`.name-block${i}`).classList.remove('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the Participant
+ * This function hides the name-block of the participant in the add-task-overlay
+ */
 function hideNameAdd(i) {
     document.querySelector(`.name-block${i}`).classList.add('disNone');
 }
 
+/**
+ * 
+ * This function puts the added participants of a newly created task in an array @param {array} participantsArrayAdd
+ */
 function getParticipantsAdd() {
     participantsArrayAdd = [];
     document.querySelectorAll('.add-task-overlay-box .contact.chosen').forEach((elem)=>{
-        participantsArrayAdd.push({
-            sureName: allContactsObjects[+elem.getAttribute('data-selectindex')].sureName,
-            lastName: allContactsObjects[+elem.getAttribute('data-selectindex')].lastName
-        })
+        participantsArrayAdd.push(allContactsObjects[+elem.getAttribute('data-selectindex')]);
     })
     renderChosenListAdd();
 }
 
+/**
+ * 
+ * This function puts the participants of a task in an array @param {array} participantsArrayOverlay
+ */
 function getParticipantsOverlay() {
     participantsArrayOverlay = [];
     document.querySelectorAll('.overlay-card .contact.chosen').forEach((elem)=>{
-        participantsArrayOverlay.push({
-            sureName: allContactsObjects[+elem.getAttribute('data-selectindex')].sureName,
-            lastName: allContactsObjects[+elem.getAttribute('data-selectindex')].lastName
-        })
+        participantsArrayOverlay.push(allContactsObjects[+elem.getAttribute('data-selectindex')])
     })
     renderChosenListOverlay();
 }
 
+/**
+ * 
+ * This function loads the already chosen participants into @param {array} participantsArrayOverlay
+ */
+function loadParticipantArrayOverlayBack() {
+    participantsArrayOverlay = [];
+    document.querySelectorAll('.overlay-card .contact.chosen').forEach((elem)=>{
+        participantsArrayOverlay.push(allContactsObjects[+elem.getAttribute('data-selectindex')]);
+    })
+}
+
+/**
+ * 
+ * This function renders the list of newly chosen participants into the back of the task-overlay.
+ */
 function renderChosenListOverlay() {
+    //participantsArrayOverlay = allTaskObjects[+document.querySelector('.overlay-card').getAttribute('data-taskindex')].participants;
     document.querySelector('.overlay-card .chosen-list.back').innerHTML = '';
     participantsArrayOverlay.forEach((elem, i)=>{
-        //let index = +elem.getAttribute('data-selectindex');
-        document.querySelector('.overlay-card .chosen-list.back').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${i})" onmouseover="showNameOverlay(${i})" onmouseleave="hideNameOverlay(${i})">
+        console.log(elem.color);
+        document.querySelector('.overlay-card .chosen-list.back').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" style="background-color: ${elem.color};" onclick="removeParticipantOverlay(${i})" onmouseover="showNameOverlay(${i})" onmouseleave="hideNameOverlay(${i})">
             <p>${elem.sureName[0]}${elem.lastName[0]}</p>
             <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
         </div>
     </li>`;
     })
+    allTaskObjects[+document.querySelector('.overlay-card').getAttribute('data-taskindex')].participants = participantsArrayOverlay;
     document.querySelector('.overlay-card .chosen-list').classList.remove('disNone');
 }
 
+/**
+ * 
+ * This function renders the list of newly chosen participants into the front of the task-overlay.
+ */
 function renderChosenListFrontOverlay(index) {
     let list = "";
     if(allTaskObjects[index].participants) {
         let elem = allTaskObjects[index].participants;
         for(let i=0; i<allParticipantsKeys[index].length; i++) {
-            list += /* HTML */ `<li class="flex flex-center"><div class="flex flex-center circle" onmouseover="showNameOverlay(${i})" onmouseleave="hideNameOverlay(${i})">
+            list += /* HTML */ `<li class="flex flex-center"><div class="flex flex-center circle" style="background-color: ${elem.color};" onmouseover="showNameOverlay(${i})" onmouseleave="hideNameOverlay(${i})">
                 <p>${elem[allParticipantsKeys[index][i]].sureName[0]}${elem[allParticipantsKeys[index][i]].lastName[0]}</p>
                 <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem[allParticipantsKeys[index][i]].sureName} ${elem[allParticipantsKeys[index][i]].lastName}<br>Click icon to remove</p></div>
             </div>
@@ -901,21 +1078,37 @@ function renderChosenListFrontOverlay(index) {
     }
     return list;
 }
-
-function loadParticipantArrayOverlayBack() {
-    participantsArrayOverlay = [];
-    document.querySelectorAll('.overlay-card .contact.chosen').forEach((elem)=>{
-        participantsArrayOverlay.push(allContactsObjects[+elem.getAttribute('data-selectindex')]);
-    })
+/**
+ * 
+ * This function  renders the list of newly chosen participants into the front of the task-overlay.
+ */
+function reRenderChosenListFrontOverlay(index) {
+    let list = "";
+    if(allTaskObjects[index].participants) {
+        let elem = allTaskObjects[index].participants;
+        for(let i=0; i<participantsArrayOverlay.length; i++) {
+            list += /* HTML */ `<li class="flex flex-center"><div class="flex flex-center circle" style="background-color: ${elem.color};" onmouseover="showNameOverlay(${i})" onmouseleave="hideNameOverlay(${i})">
+                <p>${allTaskObjects[index].participants[i].sureName[0]}${allTaskObjects[index].participants[i].lastName[0]}</p>
+                <div class="name-block${i} name-block disNone"><p style="text-align: center;">${allTaskObjects[index].participants[i].sureName} ${allTaskObjects[index].participants[i].lastName}<br>Click icon to remove</p></div>
+            </div>
+            <p>${allTaskObjects[index].participants[i].sureName} ${allTaskObjects[index].participants[i].lastName}</p>
+        </li>`;
+        }
+    }
+    return list;
 }
 
+/**
+ * 
+ * This function goes threw the contact-list and checks which participants the task already has and gives these contacts the class 'chosen'.
+ */
 function preSelectContactsOverlay() {
     participantsArrayOverlay = [];
     let index = +document.querySelector('.overlay-card').getAttribute('data-taskindex');
     for(let i=0; i<allTaskObjects[index].participants.length; i++) {
-        for(let j=0; j<document.querySelectorAll('.contact-name').length; j++) {
-            if(allTaskObjects[index].participants[i].sureName+" "+allTaskObjects[index].participants[i].lastName === document.querySelectorAll('.contact-name')[j].innerHTML) {
-                document.querySelectorAll('.contact-name')[j].closest('.contact').classList.add('chosen');
+        for(let j=0; j<document.querySelectorAll('.overlay-card .contact-name').length; j++) {
+            if(allTaskObjects[index].participants[i].sureName+" "+allTaskObjects[index].participants[i].lastName === document.querySelectorAll('.overlay-card .contact-name')[j].innerHTML) {
+                document.querySelectorAll('.overlay-card .contact-name')[j].closest('.overlay-card .contact').classList.add('chosen');
             }
         }
     }
@@ -923,10 +1116,15 @@ function preSelectContactsOverlay() {
     renderChosenListOverlay();
 }
 
+/**
+ * 
+ * This function renders the list of chosen participants into the add-task-overlay
+ */
 function renderChosenListAdd() {
+    console.log(participantsArrayAdd);
     document.querySelector('.add-task-overlay-box .chosen-list').innerHTML = '';
     participantsArrayAdd.forEach((elem, i)=>{
-        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})">
+        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" style="background-color: ${elem.color};" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})">
             <p>${elem.sureName[0]}${elem.lastName[0]}</p>
             <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
         </div>
@@ -935,12 +1133,22 @@ function renderChosenListAdd() {
     document.querySelector('.add-task-overlay-box .chosen-list').classList.remove('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the chosen participant in the add-task-overlay
+ * This function removes the chosen participant from the add-task-overlay.
+ */
 function removeParticipantAdd(i) {
     participantsArrayAdd.splice(i, 1);
     document.querySelectorAll('.add-task-overlay-box .contact.chosen')[i].classList.remove('chosen');
     renderChosenListAdd();
 }
 
+/**
+ * 
+ * @param {number} i is the index of the chosen participant in the add-task-overlay
+ * This function removes the chosen participant from the task-overlay.
+ */
 function removeParticipantOverlay(i) {
     participantsArrayOverlay.splice(i, 1);
     allParticipantsKeys[+document.querySelector('.overlay-card').getAttribute('data-taskindex')].splice(i, 1);
@@ -948,6 +1156,13 @@ function removeParticipantOverlay(i) {
     renderChosenListOverlay();
 }
 
+/**
+ * 
+ * @param {event} event is the click-event. It is given to the function to prevent default.
+ * @param {string} prio is a sting with the three values 'low', 'medium' or 'high'.
+ * When no button is clicked (or one button is clicked for the second time) the default value of 'medium' is set to the
+ * globally defined @param {string} selectedPrio variable
+ */
 function choosePrioAdd(event, prio) {
     event.preventDefault();
     if(event.target.closest('.choose-prio-button').classList.contains(`prio-${prio}-button-bg-color`)) {
@@ -962,6 +1177,11 @@ function choosePrioAdd(event, prio) {
     selectedPrio = prio;
 }
 
+/**
+ * 
+ * @param {event} event is the click-event fired to the top-bar of the catagory-list of the add-task-overlay to prevent default.
+ * This function shows or hides the list of possible categories.
+ */
 function showHideCategoriesList(event) {
     if(document.querySelector('.categories-list').classList.contains('disNone')) {
         document.querySelector('.categories-list').classList.remove('disNone');
@@ -972,36 +1192,51 @@ function showHideCategoriesList(event) {
     }
 }
 
-function setCategory(event) {
-    event.preventDefault();
-    document.querySelector('.category-name').innerHTML = event.target.innerHTML;
-    categoryType = event.target.closest('.category').querySelector('p').innerHTML;
-}
-
+/**
+ * 
+ * Shows the cross (for removing) and tic (for adding) elements for adding a new subtask to the task in the task-overlay.
+ */
 function showCrossTicOverlay() {
     document.querySelector('.overlay-card .subtask-input .add').classList.add('disNone');
     document.querySelector('.overlay-card .cross-tic').classList.remove('disNone');
     document.querySelector('.overlay-card .subtask-input').style.border = "1px solid blue";
 }
 
+/**
+ * 
+ * Shows the cross (for removing) and tic (for adding) elements for adding a subtask to the task in the add-task-overlay.
+ */
 function showCrossTicAdd() {
     document.querySelector('.add-task-overlay-box .subtask-input .add').classList.add('disNone');
     document.querySelector('.add-task-overlay-box .cross-tic').classList.remove('disNone');
     document.querySelector('.add-task-overlay-box .subtask-input').style.border = "1px solid blue";
 }
 
+/**
+ * 
+ * Shows the cross (for removing) and tic (for adding) elements for adding a subtask to the task in the task-overlay.
+ */
 function hideCrossTicOverlay() {
     document.querySelector('.overlay-card .subtask-input').style.border = "1px solid #d1d1d1";
     document.querySelector('.overlay-card .subtask-input .add').classList.remove('disNone');
     document.querySelector('.overlay-card .cross-tic').classList.add('disNone');
 }
 
+/**
+ * 
+ * Shows the cross (for removing) and tic (for adding) elements for adding a subtask to the task in the add-task-overlay.
+ */
 function hideCrossTicAdd() {
     document.querySelector('.add-task-overlay-box .subtask-input').style.border = "1px solid #d1d1d1";
     document.querySelector('.add-task-overlay-box .subtask-input .add').classList.remove('disNone');
     document.querySelector('.add-task-overlay-box .cross-tic').classList.add('disNone');
 }
 
+/**
+ * 
+ * @returns an HTML-string with all the contacts of the @param {array} allContactsObjects as <option>-tag.
+ * This function is for both the task-overlay and add-task-overlay.
+ */
 function renderAllContactsToSelect() {
     let options = "";
     allContactsObjects.forEach((el, i)=>{
@@ -1010,45 +1245,62 @@ function renderAllContactsToSelect() {
     return options;
 }
 
-function addParticipant(index) {
-    if(isParticipantYet(index)) {
-        return;
-    }else {
-        let pIndex = +document.querySelector('#participantsSelectOverlay').options[document.querySelector('#participantsSelectOverlay').selectedIndex].getAttribute('data-participantIndex');
-        if(!allTaskObjects[index].participants) {
-            allTaskObjects[index].participants = [];
-        }
-        allTaskObjects[index].participants.push({sureName: allContactsObjects[pIndex].sureName, lastName: allContactsObjects[pIndex].lastName});
-        actualizeTaskOnRemote(index);
-        renderTaskOverlay(index);
-        reRenderTask(index);
-    }
-}
+// /**
+//  * 
+//  * @param {number} index is the index of the task in @param {array} allTaskObjects
+//  * @returns when a participant is already in that task.
+//  * When at
+//  */
+// function addParticipant(index) {
+//     if(isParticipantYet(index)) {
+//         return;
+//     }else {
+//         let pIndex = +document.querySelector('#participantsSelectOverlay').options[document.querySelector('#participantsSelectOverlay').selectedIndex].getAttribute('data-participantIndex');
+//         if(!allTaskObjects[index].participants) {
+//             allTaskObjects[index].participants = [];
+//         }
+//         allTaskObjects[index].participants.push({sureName: allContactsObjects[pIndex].sureName, lastName: allContactsObjects[pIndex].lastName});
+//         actualizeTaskOnRemote(index);
+//         renderTaskIntoOverlay(index);
+//         reRenderTask(index);
+//     }
+// }
 
-function isParticipantYet(index) {
-    pName = "";
-    if(allTaskObjects[index].participants) {
-        for(let i=0; i<allTaskObjects[index].participants.length; i++) {
-            pName = allTaskObjects[index].participants[i].sureName + " " + allTaskObjects[index].participants[i].lastName;
-            if(pName === document.querySelector('#participantsSelectOverlay').options[document.querySelector('#participantsSelectOverlay').selectedIndex].value) {
-                return true;
-            }else if(pName != document.querySelector('#participantsSelectOverlay').options[document.querySelector('#participantsSelectOverlay').selectedIndex].value){
-                if(i+1 === allTaskObjects[index].participants.length) {
-                    return false;
-                }
-            }
-        }
-    }else {return false;}
-}
 
+// function isParticipantYet(index) {
+//     pName = "";
+//     if(allTaskObjects[index].participants) {
+//         for(let i=0; i<allTaskObjects[index].participants.length; i++) {
+//             pName = allTaskObjects[index].participants[i].sureName + " " + allTaskObjects[index].participants[i].lastName;
+//             if(pName === document.querySelector('#participantsSelectOverlay').options[document.querySelector('#participantsSelectOverlay').selectedIndex].value) {
+//                 return true;
+//             }else if(pName != document.querySelector('#participantsSelectOverlay').options[document.querySelector('#participantsSelectOverlay').selectedIndex].value){
+//                 if(i+1 === allTaskObjects[index].participants.length) {
+//                     return false;
+//                 }
+//             }
+//         }
+//     }else {return false;}
+// }
+
+/**
+ * 
+ * @param {event} event is the click-event fired to the the participant to remove it.
+ * This function is called when the task is edited and the clicked participant is meant to be removed.
+ */
 function removeOverlayParticipant(event) {
-    let index = +document.querySelector('.overlay-card').getAttribute('data-subtaskindex');
+    let index = +document.querySelector('.overlay-card').getAttribute('data-taskindex');
     allTaskObjects[index].participants.splice(+event.target.closest('.participant-block').getAttribute('data-participantOverlayIndex'), 1);
     actualizeTaskOnRemote(index);
-    renderTaskOverlay(index);
+    renderTaskIntoOverlay(index);
     reRenderTask(index);
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function actualizes the edited task on the ftp-server via receiving the tasks key from @param {array} allTaskKeys at the given index.
+ */
 async function actualizeTaskOnRemote(index) {
     response = await fetch(tasksURL+`/${allTaskKeys[index]}.json`, {
         method: 'PUT',
@@ -1059,7 +1311,12 @@ async function actualizeTaskOnRemote(index) {
     })
 }
 
-function getOverlaySubtasks(index) {
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * @returns an HTML-string with all the Subtasks and their at the beginning invisible edeting-elements to the task-overlay.
+ */
+function getSubtasksOverlay(index) {
     let input = "";
     let inputLabel = "";
     if(allTaskObjects[index].hasOwnProperty('subTasks')) {
@@ -1067,7 +1324,7 @@ function getOverlaySubtasks(index) {
             if(elem.subTaskDone == 1) {
                 input = `<input id="checkbox${index}${j}" type="checkbox" checked>`;
             }else {input = `<input id="checkbox${index}${j}" type="checkbox">`;}
-            inputLabel += /* HTML */ `<div class="flex-center" style="column-gap: 10px;"><div class="subtask-check flex" onclick="actualizeSubtaskStatus(${index}, ${j})">${input}<label for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</label></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" style="width: 18px; height: 18px;" onclick="deleteSubtask(${index}, ${j})"></div>`;
+            inputLabel += /* HTML */ `<div class="flex-center" style="width: 100%; justify-content: flex-start;"><div class="subtask-check flex" onclick="actualizeSubtaskStatus(${index}, ${j})">${input}<label for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</label></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" style="width: 18px; height: 18px;" onclick="deleteSubtask(${index}, ${j})"></div>`;
         })
         inputLabel = `<div class="hide-for-editing"><p>Subtasks</p><div class="subtasks"><div class="flex flex-center show-for-editing disNone" style="column-gap: 20px;"></div>${inputLabel}</div></div>`;
     }
@@ -1099,13 +1356,25 @@ function getOverlaySubtasks(index) {
     </div>`+inputLabel;
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects 
+ * @param {number} j is the index of the tasks subtask-array.
+ */
 function deleteSubtask(index, j) {
     allTaskObjects[index].subTasks.splice(j, 1);
-    renderTaskOverlay(index);
+    renderTaskIntoOverlay(index);
     actualizeTaskOnRemote(index);
     checkIfSubtasksExist();
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function renders editing and delete button at the bottom right of the task-overlay.
+ * The @param index is given so that the @function deleteTask knows which task to be removed.
+ * 
+ */
 function renderEditDelete(index) {
     document.querySelector('.overlay-card .edit-delete').innerHTML = /* HTML */ `
     <div class="delete flex hide-for-editing" onclick="deleteTask(${index})">
@@ -1113,7 +1382,7 @@ function renderEditDelete(index) {
         <p>Delete</p>
     </div>
     <div class="separator hide-for-editing"></div>
-    <div class="edit hide-for-editing flex" onclick="showEditingElements(${index})">
+    <div class="edit hide-for-editing flex" onclick="showEditingElements()">
         <img src="./assets/img/pen.svg" alt="">
         <p>Edit</p>
     </div>
@@ -1123,12 +1392,24 @@ function renderEditDelete(index) {
     </div> `;
 }
 
-function resetUrgency(index, prio) {
+/**
+ * 
+ * @param {event} event click-event fired to the urgency-button.
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * @param {string} prio contains the string that defines the new urgency of the task ('low', 'medium', 'high')
+ * The function sets the new urgency for the task at index @param index
+ */
+function resetUrgency(event, index, prio) {
     newUrgency = prio;
     restyleUrgencyButtons(event.target.closest('.choose-prio-button'), prio);
     allTaskObjects[index].urgency = prio;
 }
 
+/**
+ * 
+ * @param {HTMLElement} elem is the clicked urgency-button
+ * @param {string} prio is the string containing the new priority of the task. Its needed to set the correct prio-button-bg-color class
+ */
 function restyleUrgencyButtons(elem, prio) {
     if(document.querySelector('.prio-low-button-bg-color')){
         document.querySelector('.prio-low-button-bg-color').classList.remove('prio-low-button-bg-color');
@@ -1140,19 +1421,72 @@ function restyleUrgencyButtons(elem, prio) {
     elem.classList.add(`prio-${prio}-button-bg-color`);
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function deletes the task.
+ */
 function deleteTask(index) {
+    document.querySelectorAll('.task')[index].classList.add('disNone');
+    pushTaskArrayToTaskPuffer();
     allTaskObjects.splice(index, 1);
-    allTaskKeys.splice(index, 1);
-    document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('disNone');
-    deleteTaskOnRemote(index);
-    closeOverlay();
+    deleteTaskOnRemote();
+    pushTaskPufferToTaskArray();
+    checkForEmptyColumns();
+    document.querySelector('.tasks-overlay').classList.add('disNone');
 }
 
-function showEditingElements(index) {
+/**
+ * This function puffers @var {array} allTaskObjects into the globally defined @var {array} taskArrayPuffer.
+ * Because then, the @var allTaskObjects get spliced on @var index and the new Task-Array is pushed to the ftp.
+ * The reason is that every other task, that would have wrong indeces without the puffering, are still working.
+ */
+function pushTaskArrayToTaskPuffer() {
+    for(let i=0; i<allTaskObjects.length; i++) {
+        taskArrayPuffer.push(allTaskObjects[i]);
+    }
+}
+/**
+ * 
+ * It does the exact oppoisite of the @function pushTaskArrayToTaskPuffer function.
+ */
+function pushTaskPufferToTaskArray() {
+    allTaskObjects = [];
+    for(let i=0; i<taskArrayPuffer.length; i++) {
+        allTaskObjects.push(taskArrayPuffer[i]);
+    }
+    taskArrayPuffer = [];
+}
+
+function resetCardDummies() {
+    if(document.querySelectorAll('#toDo .task').length === document.querySelectorAll('#toDo .task.disNone').length) {
+        document.querySelector('.card.no-task-to-do').classList.remove('disNOne');
+    }
+    if(document.querySelectorAll('#inProgress .task').length === document.querySelectorAll('#inProgress .task.disNone').length) {
+        document.querySelector('.card.no-task-in-progress').classList.remove('disNOne');
+    }
+    if(document.querySelectorAll('#awaitFeedback .task').length === document.querySelectorAll('#awaitFeedback .task.disNone').length) {
+        document.querySelector('.card.no-feedback-awaited').classList.remove('disNOne');
+    }
+    if(document.querySelectorAll('#done .task').length === document.querySelectorAll('#done .task.disNone').length) {
+        document.querySelector('.card.no-task-done').classList.remove('disNOne');
+    }
+    
+}
+
+/**
+ * 
+ * This function shows all editing elements in the task-overlay.
+ */
+function showEditingElements() {
     document.querySelectorAll('.hide-for-editing').forEach((el)=>{el.classList.add('disNone')});
     document.querySelectorAll('.show-for-editing').forEach((el)=>{el.classList.remove('disNone')});
 }
 
+/**
+ * 
+ * This function shows all editing elements in the task-overlay.
+ */
 function hideEditingElements() {
     document.querySelectorAll('.show-for-editing').forEach((el)=>{
         el.classList.add('disNone');
@@ -1162,7 +1496,11 @@ function hideEditingElements() {
     })
 }
 
-async function deleteTaskOnRemote(index) {
+/**
+ * 
+ * This function deletes the task on the ftp-server.
+ */
+async function deleteTaskOnRemote() {
     let response = await fetch(tasksURL+'.json', {
         method: 'PUT',
         header: {
@@ -1172,38 +1510,37 @@ async function deleteTaskOnRemote(index) {
     })
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * @param {nunber} j is the index of the subtask
+ * This function sets the new state of the clicked subtask.
+ */
 function actualizeSubtaskStatus(index, j) {
     if(document.querySelector(`#checkbox${index}${j}`).checked) {
         allTaskObjects[index].subTasks[j].subTaskDone = 1;
     }else {
         allTaskObjects[index].subTasks[j].subTaskDone = 0;
     }
-    postActualizedSubtaskStatus(index, j);
-}
-
-async function postActualizedSubtaskStatus(index, j) {
-    let link = `https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks/${index}/subTasks/${allSubtasksArray[index][j][0]}/subTaskDone.json`;
-    let response = await fetch(link, {
-        method: 'PUT',
-        header: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(allSubtasksArray[index][j][1].subTaskDone)
-    })
     checkDoneSubTasks(index);
 }
 
-function checkForSubtasks(index) {
-    if(allTaskObjects[index].subTasks.length > 0) {
-        return;
-    }else {
-        document.querySelector(`.task[data-taskindex="${index}"] .subtasks`).classList.add('disNone');
-    }
-}
+// function checkForSubtasks(index) {
+//     if(allTaskObjects[index].subTasks.length > 0) {
+//         return;
+//     }else {
+//         document.querySelector(`.task[data-taskindex="${index}"] .subtasks`).classList.add('disNone');
+//     }
+// }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function rerenders the task-card on the board.
+ */
 function reRenderTask(index) {
     let elem = allTaskObjects[index];
-    let cardInner = /* HTML */ `<div class="task-category flex-center"><p>User Story</p></div>
+    let cardInner = /* HTML */ `<div class="task-category flex-center"><p>${allTaskObjects[index].category}</p></div>
     <div class="headlineDescription flex-column">
         <h2>${elem.taskTitle}</h2>
         <div class="task-description"><p>${elem.taskDescrip}</p></div>
@@ -1213,59 +1550,161 @@ function reRenderTask(index) {
         <p class="subtasks-count"><span class="count"></span>/<span class="total"></span> Subtasks</p>
     </div>
     <div class="participants-and-urgency flex">
-        <div class="participants flex">${getParticipantsHtml(index)}</div>
+        <div class="participants flex">${reGetParticipantsHtml(index)}</div>
         <div class="menu flex">${getUrgencyHtml(elem.urgency)}</div>
     </div>`;
     document.querySelectorAll('.task')[index].innerHTML = cardInner;
+    document.querySelectorAll('.task')[index].setAttribute('onclick', `renderTaskIntoOveray(${index})`);
     checkIfSubtasksExist();
     shiftParticipants();
 }
-
-function closeOverlay() {
-    document.querySelector('.tasks-overlay').classList.add('disNone');
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function rerenders the newly created task on the board.
+ */
+function renderNewTask(index) {
+    let elem = allTaskObjects[index];
+    let card = /* HTML */ `<div class="task flex flex-column" draggable="true" data-tasktype="toDo" data-taskindex="${index}" onclick="renderTaskIntoOverlay(${index})">
+        <div class="task-category flex-center"><p>${allTaskObjects[index].category}</p></div>
+        <div class="headlineDescription flex-column">
+            <h2>${elem.taskTitle}</h2>
+            <div class="task-description"><p>${elem.taskDescrip}</p></div>
+        </div>
+        <div class="subtasks flex-center">
+            <div class="subtasks-bar"><div class="inner"></div></div>
+            <p class="subtasks-count"><span class="count">0</span>/<span class="total">${allTaskObjects[index].subTasks.length}</span> Subtasks</p>
+        </div>
+        <div class="participants-and-urgency flex">
+            <div class="participants flex">${getHtmlOfNewParticipants(index)}</div>
+            <div class="menu flex">${getUrgencyHtml(elem.urgency)}</div>
+        </div>
+    </div>`;
+    document.querySelector('#toDo').innerHTML += card;
+    getNewParticpantKeys(index);
+    setLengthOfSubtaskBar(index, 0);
+    shiftParticipants();
 }
 
+/**
+ * 
+ * 
+ */
+
+function getNewParticpantKeys(index) {
+    let participantKeyPuffer = [];
+    for(let i=0; i<allTaskObjects[index].participants.length; i++) {
+        participantKeyPuffer.push(i);
+    }
+    allParticipantsKeys.push(participantKeyPuffer);
+}
+
+/**
+ * 
+ * This function hides the task-overlay.
+ */
+function closeOverlay() {
+    let index = +document.querySelector('.overlay-card').getAttribute('data-taskindex');
+    document.querySelector('.tasks-overlay').classList.add('disNone');
+    actualizeTaskOnRemote(index);
+}
+
+/**
+ * 
+ * This function opens the add-task-overlay.
+ */
 function openAddTaskOverlay() {
     document.querySelector('.add-task-overlay').classList.remove('disNone');
 }
 
+/**
+ * 
+ * This function hides the add-task-overlay.
+ */
 function closeOverlayAdd() {
     document.querySelector('.add-task-overlay').classList.add('disNone');
+    clearOverlayAdd();
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * It creates a new task-object @var recreatedTask and takes its values from the task-overlay editing elements and the globally defined
+ * variables belonging to them.
+ */
 function createTaskOverlay(index) {
     recreatedTask = {
-        category: categoryType,
-        date: getDate(),
+        category: allTaskObjects[index].category,
+        date: document.querySelector('#date-input-overlay').value,
         participants: participantsArrayOverlay,
         subTasks: allTaskObjects[index].subTasks,
         taskDescrip: document.querySelector('#new-taskdescrip-input').value,
         taskTitle: document.querySelector('#new-title-input').value,
         taskType: "toDo",
         urgency: newUrgency
-    }
-    repostTask(index);
+    };
     allTaskObjects[index] = recreatedTask;
-    reRenderTask(index);
+    repostTask(index);
     closeOverlay();
 }
 
+async function actualizeParticipantKeys(index) {
+    let keyPuffer = [];
+    let newKeys = await fetch(tasksURL+`/${allTaskKeys[allTaskKeys[index]]}/participants.json`);
+    newKeys = await newKeys.json();
+    for(let [key, value] of Object.entries(newKeys)) {
+        keyPuffer.push(key);
+    }
+    allParticipantsKeys[index] = keyPuffer;
+    reRenderTask(index);
+}
+
+/**
+ * 
+ * @param {event} event is the click-event fired to the create task button of the add-task-overlay.
+ * It creates the newly defined task.
+ */
 function createTaskAdd(event) {
     event.preventDefault();
     let newTaskObject = {
-        category: categoryType,
+        category: getCategoryAdd(),
         date: getDate(),
         participants: getNewParticipants(),
-        subTasks: newSubtasksArray,
+        subTasks: newSubtasksArrayAdd,
         taskDescrip: document.querySelector('#textarea-input').value,
         taskTitle: document.querySelector('#title-input').value,
         taskType: "toDo",
         urgency: newUrgency
     }
     allTaskObjects.push(newTaskObject);
+    allTaskKeys.push(`${allTaskObjects.length-1}`);
     postNewTask(event);
+    closeOverlayAdd();
 }
 
+function getCategoryAdd() {
+    if(document.querySelector('.add-task-overlay-box .category-name').innerHTML === "Technical Task") {
+        return "Technical Task";
+    }
+    return "User Story";
+}
+
+/**
+ * 
+ * @param {event} event is the click-event fired to the clicked element of the catagory-list.
+ * This function chooses the category of the new task.
+ */
+function setCategory(event) {
+    event.preventDefault();
+    document.querySelector('.category-name').innerHTML = event.target.innerHTML;
+    categoryType = event.target.closest('.category').querySelector('p').innerHTML;
+}
+
+/**
+ * 
+ * @param {event} event is the click-event fired to the create task button of the add-task-overlay.
+ * This function posts the new task on the ftp-server.
+ */
 async function postNewTask(event) {
     event.preventDefault();
     let response = await fetch(tasksURL+'.json', {
@@ -1273,8 +1712,13 @@ async function postNewTask(event) {
         header: {'Content-Type': 'application/json'},
         body: JSON.stringify(allTaskObjects)
     });
+    renderNewTask(allTaskObjects.length-1);
 }
 
+/**
+ * 
+ * @returns an array containing the clicked contacts of the contact-list of the add-task-overlay.
+ */
 function getNewParticipants() {
     let contactsArr = [];
     document.querySelectorAll('.add-task-overlay-box .contact.chosen').forEach((elem)=>{
@@ -1283,26 +1727,37 @@ function getNewParticipants() {
     return contactsArr;
 }
 
+/**
+ * 
+ * This function deletes the input of the subtask input-field of the add-task-overlay
+ */
 function clearSubtaskInputAdd() {
     document.querySelector('.add-task-overlay-box .subtask-input input').value = "";
     hideCrossTicAdd();
 }
 
+/**
+ * 
+ * @returns the value of the date-input-field of the add-task-overlay.
+ */
 function getNewDate() {
     let yearMonthDay = document.querySelector('#new-date').value.split('-');
     return yearMonthDay[2]+'/'+yearMonthDay[1]+'/'+yearMonthDay[0];
 }
 
+/**
+ * 
+ * This function pushes the defined subtasks into a globally defined array @var newSubtasksArrayAdd
+ */
 function addSubtaskAdd() {
     let subtaskInput = document.querySelector('.add-task-overlay-box .subtask-input input');
     if(subtaskInput.value === "") {
         hideCrossTicAdd();
-        return;
     }else {
         if(checkIfSubtaskExistsAdd()) {
             subtaskInput.value = '';
         }else {
-            newSubtasksArray.push({subTaskDone: 0, subTaskTitle: subtaskInput.value})
+            newSubtasksArrayAdd.push({subTaskDone: 0, subTaskTitle: subtaskInput.value})
             renderSubtaskListAdd();
             subtaskInput.value = '';
         }
@@ -1310,11 +1765,15 @@ function addSubtaskAdd() {
     }
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function adds a new Subtask to the task
+ */
 function addSubtaskOverlay(index) {
     let subtaskInput = document.querySelector('.overlay-card .subtask-input input');
     if(subtaskInput.value === "") {
         hideCrossTicOverlay();
-        return;
     }else {
         if(checkIfSubtaskExistsOverlay()) {
             subtaskInput.value = '';
@@ -1323,6 +1782,7 @@ function addSubtaskOverlay(index) {
                 allTaskObjects[index].subTasks = [];
             }
             allTaskObjects[index].subTasks.push({subTaskDone: 0, subTaskTitle: subtaskInput.value});
+            //allSubtasksArray[index].push(allTaskObjects[index].subTasks.length)
             renderSubtaskListOverlay(index);
             subtaskInput.value = '';
         }
@@ -1330,47 +1790,62 @@ function addSubtaskOverlay(index) {
     }
 }
 
+/**
+ * 
+ * @returns a boolean value
+ * This function checks whether a subtask already exists in the task.
+ */
 function checkIfSubtaskExistsOverlay() {
     let subtaskInput = document.querySelector('.add-task-overlay-box .subtask-input input');
-    for(let i=0; i<newSubtasksArray.length; i++) {
-        if(newSubtasksArray[i].subTaskTitle === subtaskInput.value) {
+    for(let i=0; i<newSubtasksArrayOverlay.length; i++) {
+        if(newSubtasksArrayOverlay[i].subTaskTitle === subtaskInput.value) {
             return true;
-        }else if(newSubtasksArray[i].subTaskTitle != subtaskInput.value) {
-            if(i+1 === newSubtasksArray.length) {
+        }else if(newSubtasksArrayOverlay[i].subTaskTitle != subtaskInput.value) {
+            if(i+1 === newSubtasksArrayOverlay.length) {
                 return false;
             }
         }
     }
 }
 
+/**
+ * 
+ * @returns a boolean value
+ * This function checks whether a subtask already exists in the new task.
+ */
 function checkIfSubtaskExistsAdd() {
     let subtaskInput = document.querySelector('.add-task-overlay-box .subtask-input input');
-    for(let i=0; i<newSubtasksArray.length; i++) {
-        if(newSubtasksArray[i].subTaskTitle === subtaskInput.value) {
+    for(let i=0; i<newSubtasksArrayAdd.length; i++) {
+        if(newSubtasksArrayAdd[i].subTaskTitle === subtaskInput.value) {
             return true;
-        }else if(newSubtasksArray[i].subTaskTitle != subtaskInput.value) {
-            if(i+1 === newSubtasksArray.length) {
+        }else if(newSubtasksArrayAdd[i].subTaskTitle != subtaskInput.value) {
+            if(i+1 === newSubtasksArrayAdd.length) {
                 return false;
             }
         }
     }
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function renders the subtask-list of the task-overlay.
+ */
 function renderSubtaskListOverlay(index) {
     document.querySelector('.overlay-card .subtask-list').innerHTML = '';
-    newSubtasksArray = [];
+    newSubtasksArrayOverlay = [];
     for(let [key, value] of Object.entries(allTaskObjects[index].subTasks)) {
-        newSubtasksArray.push(value);
+        newSubtasksArrayOverlay.push(value);
     }
-    newSubtasksArray.forEach((elem, i)=>{
+    newSubtasksArrayOverlay.forEach((elem, i)=>{
         document.querySelector('.overlay-card .subtask-list').innerHTML += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
             <p class="subtask-title-p-overlay-${i}">${elem.subTaskTitle}</p>
             <div class="pen-bin-subtask-overlay pen-bin-subtask flex flex-center" id="pen-bin-subtask-overlay-${i}">
-                <img src="./assets/img/pen.svg" alt="" onclick="editSubtaskOverlay(${index}, ${i})">
+                <img src="./assets/img/pen.svg" alt="" onclick="editSubtaskOverlay(${i})">
                 <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${i})">
             </div>
             <div class="edit-subtask flex flex-center disNone" id="edit-subtask-overlay-${i}" style="justify-content: space-between;">
-                <input type="text" id="edit-subtask-input-overlay-${i}" value="${elem.subTaskTitle}">
+                <input type="text" id="edit-subtask-input-overlay-${i}" value="${elem.subTaskTitle}" onkeyup="changeSubtaskByKeypressOverlay(event, ${index}, ${i})">
                 <div class="bin-check flex flex-center">
                     <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverly(${index}, ${i})">
                     <img src="./assets/img/check-icon-black.svg" alt="" onclick="changeSubtaskOverlay(${index}, ${i})">
@@ -1381,20 +1856,24 @@ function renderSubtaskListOverlay(index) {
     document.querySelector('.subtask-list').classList.remove('disNone');
 }
 
+/**
+ * 
+ * This function renders the subtask-list of the add-task-overlay.
+ */
 function renderSubtaskListAdd() {
     document.querySelector('.add-task-overlay-box .subtask-list').innerHTML = '';
-    newSubtasksArray.forEach((elem, i)=>{
+    newSubtasksArrayAdd.forEach((elem, i)=>{
         document.querySelector('.add-task-overlay-box .subtask-list').innerHTML += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
             <p class="subtask-title-p-add-${i}">${elem.subTaskTitle}</p>
             <div class="pen-bin-subtask-add pen-bin-subtask flex flex-center" id="pen-bin-subtask-add-${i}">
                 <img src="./assets/img/pen.svg" alt="" onclick="editSubtaskAdd(${i})">
                 <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskAdd(${i})">
             </div>
-            <div class="edit-subtask flex flex-center disNone" id="edit-subtask-${i}" style="justify-content: space-between;">
+            <div class="edit-subtask flex flex-center disNone" id="edit-subtask-add-${i}" style="justify-content: space-between;">
                 <input type="text" id="edit-subtask-input-add-${i}" value="${elem.subTaskTitle}">
                 <div class="bin-check flex flex-center">
                     <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskAdd(${i})">
-                    <img src="./assets/img/check-icon-black.svg" alt="" onclick="changeSubtask(${i})">
+                    <img src="./assets/img/check-icon-black.svg" alt="" onclick="changeSubtaskAdd(${i})">
                 </div>
             </div>
         </li>`
@@ -1402,59 +1881,108 @@ function renderSubtaskListAdd() {
     document.querySelector('.subtask-list').classList.remove('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the subtask
+ * This function fades in the pen and bin button of the subtask the cursor is hovering over.
+ */
 function fadeInPenBin(i) {
     let liTag = document.querySelector(`#subtask-li-${i}`);
     liTag.classList.remove('fade-out-pen-bin');
     liTag.classList.add('fade-in-pen-bin');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the subtask
+ * This function fades out the pen and bin button of the subtask the cursor is hovering over.
+ */
 function fadeOutPenBin(i) {
     let liTag = document.querySelector(`#subtask-li-${i}`);
     liTag.classList.add('fade-out-pen-bin');
     liTag.classList.remove('fade-in-pen-bin');
 }
 
-function editSubtaskOverlay(i, j) {
-    let editElem = document.querySelector(`#edit-subtask-overlay-${j}`);
-    document.querySelector(`.subtask-title-p-overlay-${j}`).classList.add('disNone');
-    document.querySelector(`#pen-bin-subtask-overlay-${j}`).classList.add('disNone');
+/**
+ * 
+ * @param {*} j is the subtasks index
+ * This function shows the input-field of that particular subtask and hides its <p>-tag that contains its title
+ */
+function editSubtaskOverlay(i) {
+    let editElem = document.querySelector(`#edit-subtask-overlay-${i}`);
+    document.querySelector(`.subtask-title-p-overlay-${i}`).classList.add('disNone');
+    document.querySelector(`#pen-bin-subtask-overlay-${i}`).classList.add('disNone');
     editElem.classList.remove('disNone');
     editElem.querySelector('input').focus();
 }
 
-function changeSubtaskOverlay(i, j) {
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * @param {number} j is the index of the subtask
+ * This function sets the new title of the subtask to the @var allTaskObjects and @var newSubtasksArrayOverlay
+ */
+function changeSubtaskOverlay(index, j) {
     if(document.querySelector(`#edit-subtask-input-overlay-${j}`).value === "") {
         return;
     }
-    newSubtasksArray[j].subTaskTitle = document.querySelector(`#edit-subtask-input-overlay-${j}`).value;
-    renderSubtaskListOverlay(i);
+    newSubtasksArrayOverlay[j].subTaskTitle = document.querySelector(`#edit-subtask-input-overlay-${j}`).value;
+    renderSubtaskListOverlay(index);
     document.querySelector(`#edit-subtask-overlay-${j}`).classList.add('disNone');
 }
 
-function removeSubtaskOverlay(i) {
-    newSubtasksArray.splice(i, 1);
-    renderSubtaskListOverlay(i);
+function changeSubtaskByKeypressOverlay(event, index, i) {
+    if(event.key === 'Enter'){
+        changeSubtaskOverlay(index, i)
+    }
 }
 
+
+function removeSubtaskOverlay(i) {
+    let index = +document.querySelector('.overlay-card').getAttribute('data-taskindex');
+    newSubtasksArrayOverlay.splice(i, 1);
+    allTaskObjects[index].subTasks.splice(i, 1);
+    renderSubtaskListOverlay(index);
+}
+
+/**
+ * 
+ * @param {number} i is the index of the newly created subtask
+ * This function shows the input-field of that particular subtask and hides its <p>-tag that contains its title
+ */
 function editSubtaskAdd(i) {
     let editElem = document.querySelector(`#edit-subtask-add-${i}`);
     document.querySelector(`.subtask-title-p-add-${i}`).classList.add('disNone');
     document.querySelector(`#pen-bin-subtask-add-${i}`).classList.add('disNone');
     editElem.classList.remove('disNone');
-    editElem.querySelector('input').focus();
+    document.querySelector(`#edit-subtask-input-add-${i}`).focus();
 }
 
+/**
+ * 
+ * @param {number} i is the index of the newly defined subtask
+ * This function changes the title of the newly defined subtask.
+ */
 function changeSubtaskAdd(i) {
-    newSubtasksArray[i].subTaskTitle = document.querySelector(`#edit-subtask-input-overlay-${i}`).value;
+    newSubtasksArrayAdd[i].subTaskTitle = document.querySelector(`#edit-subtask-input-add-${i}`).value;
     renderSubtaskListAdd();
     document.querySelector(`#edit-subtask-add-${i}`).classList.add('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the newly defined subtask.
+ * This function removes the new subtask.
+ */
 function removeSubtaskAdd(i) {
-    newSubtasksArray.splice(i, 1);
+    newSubtasksArrayAdd.splice(i, 1);
     renderSubtaskListAdd();
 }
 
+/**
+ * 
+ * This function clears and resets all input-fields and variables belonging to the editing elements of the add-task-overlay.
+ */
 function clearOverlayAdd() {
     document.querySelector('#title-input').value = "";
     document.querySelector('#textarea-input').value = "";
@@ -1468,6 +1996,10 @@ function clearOverlayAdd() {
     document.querySelectorAll('.add-task-overlay-box .contact-list .contact.chosen').forEach((elem)=>{elem.classList.remove('chosen');});
 }
 
+/**
+ * 
+ * This function resets the urgency of the new task.
+ */
 function resetUrgencyAdd() {
     document.querySelectorAll('.add-task-overlay-box .choose-prio-button')[0].classList.remove('prio-high-button-bg-color');
     document.querySelectorAll('.add-task-overlay-box .choose-prio-button')[1].classList.remove('prio-medium-button-bg-color');
@@ -1476,6 +2008,11 @@ function resetUrgencyAdd() {
     newUrgency = "medium";
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function reposts the task with its newly defined values to the ftp-server.
+ */
 async function repostTask(index) {
     let response = fetch(tasksURL+`/${allTaskKeys[index]}.json`, {
         method: 'PUT',
@@ -1484,4 +2021,9 @@ async function repostTask(index) {
         },
         body: JSON.stringify(recreatedTask)
     });
+    actualizeParticipantKeys(index);
+}
+
+function setNewTaskintoBoard() {
+
 }

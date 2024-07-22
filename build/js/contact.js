@@ -227,7 +227,7 @@ function createContact(email,number,name,sureLastName) {
     sureLastName.push("");
   }
   convertNames();
-  newContact = {sureName: sureLastName[0],lastName: sureLastName[1],email: email.value,number: number.value,};
+  newContact = {sureName: sureLastName[0],lastName: sureLastName[1],email: email.value,number: number.value, color: `#${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}`, contactId: Math.random()};
   contacts.push([contacts.length + 1, newContact]);
   resetValue(email,number,name)
   postData("/contacts", newContact);
