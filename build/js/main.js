@@ -17,6 +17,8 @@ async function includeHTML() {
 
 
 /**
+ *
+ * Toggle Usermenu 
  * 
  */
 function showUserMenu (){
@@ -25,6 +27,8 @@ function showUserMenu (){
 }
 
 /**
+ * 
+ * Put the initails into the button
  * 
  */
 function loadUserInitials() {
@@ -39,8 +43,10 @@ setTimeout(() => {
 
 /**
  * 
- * @param {*} name 
- * @returns 
+ * Get the initails from the current user for header
+ * 
+ * @param {*} name - User-name
+ * @returns - returns the initails from the user
  */
 function getInitials(name) {
     let parts = name.split(' ')
@@ -55,6 +61,8 @@ function getInitials(name) {
 
 /**
  * 
+ * Log the user out
+ * 
  */
 function logout() {
     localStorage.setItem('User', '');
@@ -62,6 +70,8 @@ function logout() {
 
 
 /**
+ * 
+ * Check if user is loged in
  * 
  */
 function checkLogin(){
@@ -82,6 +92,8 @@ function extractFilename(url) {
   
 
   /**
+   * 
+   * Check the active Link to hover it
    * 
    */
   function activeLink() {

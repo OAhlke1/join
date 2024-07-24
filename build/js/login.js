@@ -82,6 +82,8 @@ function showSignUpForm() {
 
 /**
  * 
+ * Load users from database to check it
+ * 
  * @returns 
  */
 async function loadUser() {
@@ -92,6 +94,8 @@ async function loadUser() {
 }
 
 /**
+ * 
+ * Checks if the user exists
  * 
  */
 async function checkLogin() {
@@ -127,6 +131,8 @@ async function checkLogin() {
 
 /**
  * 
+ * Load guest user without log in
+ * 
  */
 function checkLoginGuest() {
     localStorage.setItem('User', 'Guest');
@@ -135,6 +141,8 @@ function checkLoginGuest() {
 
 
 /**
+ * 
+ * If clicked on remember me by log in put an value to local storage
  * 
  */
 function rememberMe() {
@@ -146,10 +154,6 @@ function rememberMe() {
     }
 }
 
-
-/**
- * 
- */
 async function checkSignUp() {
     document.getElementById('sign-error-message').innerHTML = '';
     if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
@@ -184,6 +188,8 @@ async function checkSignUp() {
 
 /**
  * 
+ * Post the new User to the database
+ * 
  * @param {*} data 
  * @returns 
  */
@@ -199,6 +205,8 @@ async function signUp(data = {}) {
 }
 
 /**
+ * 
+ * Enable the button if policy is accepted and if not disabled it
  * 
  */
 function acceptPolicy() {
