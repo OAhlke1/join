@@ -1,3 +1,20 @@
+.pos-rel {
+  position: relative;
+}
+
+.pos-abs50 {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+}
+
+.close-overlay {
+  position: absolute;
+  top: 10px;
+  right: 8px;
+}
+
 .fixed {
   position: fixed;
 }
@@ -6,7 +23,7 @@ header {
   width: 100%;
 }
 
-.mainContainer{
+.mainContainer {
   height: 928px;
 }
 
@@ -160,7 +177,6 @@ header {
   align-items: center;
   gap: 36px;
   margin: 54px;
-
 }
 
 .contactInformations {
@@ -193,21 +209,34 @@ header {
 }
 
 /* Edit Contact */
-
-.editContactMainContainer {
+.overlay-parent {
   position: absolute;
-  top: 25%;
-  left: 4%;
-  /* right:5%; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 1;
+  background-color: rgba(0 0 0 / 0.2);
 }
 
-.addContactMainContainer{
+.overlayEdit-parent {
   position: absolute;
-  top: 25%;
-  left: 4%;
-  /* right:5%; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 1;
+  background-color: rgba(0 0 0 / 0.2);
+}
+
+.editContactMainContainer {
+  background-color: white;
+  border-radius: 12px;
+}
+
+.addContactMainContainer {
+  background-color: white;
+  border-radius: 12px;
 }
 
 .editContactMainContainer img {
@@ -220,10 +249,10 @@ header {
 
 .editContactLeftContainer {
   background-color: #2a3647;
-  width: 450px;
   height: 600px;
+  margin-right: 50px;
   padding: 66px, 46px, 66px, 46px;
-  border-radius: 12px;
+  border-radius: 12px 0 0 12px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -244,7 +273,7 @@ header {
 
 .rightContainer {
   background-color: white;
-  width: 45em;
+  width: 540px;
   justify-content: space-evenly;
   align-items: center;
 }
@@ -257,6 +286,7 @@ header {
 
 .rightContainer img {
   width: 24px;
+  margin-left: 12px;
   cursor: pointer;
 }
 
@@ -276,7 +306,11 @@ header {
 .editContactButton button:last-child {
   align-items: center;
   justify-content: center;
+  width: 110px;
+  width: 140px;
+
 }
+
 
 .editContactButton button:last-child {
   background-color: #2a3647;
@@ -287,21 +321,21 @@ header {
   flex-direction: column;
 }
 
-.inputContainer input{
-  padding: 12px 20px; 
+.inputContainer input {
+  padding: 12px 20px;
   margin: 8px 0;
   border-radius: 10px;
   border-color: #d1d1d1;
 }
 
 .nonePerson img {
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-.nonePerson img{
-  width:120px;
-  height:120px;
+.nonePerson img {
+  width: 120px;
+  height: 120px;
 }
 
 /* Responsive */
@@ -324,15 +358,16 @@ align-items: center;
     display: none;
   }
 
-  .personAdd p {
+  .personAdd img {
     position: fixed;
     bottom: 115px;
     right: 24px;
     cursor: pointer;
+    width: 60px;
+    height: 60px;
   }
 
   .informationPopUp {
-
   }
 }
 
@@ -344,19 +379,70 @@ align-items: center;
 
 @media (max-width: 720px) {
   .showContactName span {
-font-size: 32px
+    font-size: 32px;
   }
 
-#profileImage{
-
+  #profileImage {
+  }
 }
 
-}
+@media (max-width: 1110px) {
+  .addContactMainContainer {
+    flex-direction: column;
+  }
 
-@media (max-width: 1135px) {
+  .addButton button:first-child{
+   display: none;
+  }  
 
+  .addButton button:last-child{
+   width: 202px;
+   } 
 
+  .addContactLeftContainer p {
+    font-size: 47px;
+  }
+  .editContactMainContainer {
+    flex-direction: column;
+  }
+  .editContactLeftContainer img {
+    display: none;
+  }
 
+  .editContactLeftContainer p {
+    font-size: 47px;
+  }
+
+  .editContactLeftContainer {
+    height: 350px;
+    width: 400px;
+    align-items: flex-start;
+    border-radius: 12px 12px 0 0;
+    margin: 0;
+  }
+
+  .inputContainer input {
+    width: 360px;
+    height: 40px;
+  }
+
+  .editContactButton button {
+    width: 80px;
+    height: 50px;
+  }
+
+  .rightContainer {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 70px;
+  }
+  .rightContainer img {
+    margin-left: 8px;
+  }
+
+  .bigSize {
+    margin-top: -70px !important;
+  }
 }
 
 @keyframes slidein {

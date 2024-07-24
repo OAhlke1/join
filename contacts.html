@@ -39,7 +39,7 @@
                 
                     <div  id="showContact"></div>
                 
-                    <div class="personAdd"> <img src="./assets/img/person_add.png" alt=""></div>
+                    <div class="personAdd" onclick="addContactToggle()"> <img src="./assets/img/person_add.png" alt=""></div>
             </div>
           </div>
 
@@ -59,55 +59,60 @@
         <!-- <div class="personAdd"> <img src="./assets/img/person_add.png" alt=""></div> -->
   
 
-
-<div class="editContactMainContainer flex d-none" >
+<div class="overlayEdit-parent flex flex-center d-none">
   
-    <div class="editContactLeftContainer flex">
-      <img src="./assets/img/capa 2.png" alt="">
-      <p>Edit contact</p>
-    </div>
- 
-
-  <div class="flex rightContainer">
-      <img src="./assets/img/close.png" alt="" onclick="editContactToggle()">
-      <div id="profileImage" class="flex-center bigSize editContactImg" onclick=" editContactImg()">AM</div>
-   <div class="flex inputContainer" onsubmit="forceInput()">
-       <input type="text" placeholder="name" class="inputEditName" required>
-       <input type="email" placeholder="email" class="inputEditEmail"required>
-       <input type="number" placeholder="number" class="inputEditNumber"required>
+  <div class="editContactMainContainer flex pos-rel flex-center " >
     
-    <div class="flex editContactButton"> <button onclick="deleteContact(presentlyIndexContacts);editContactToggle();">Delete</button> <button class="flex" onclick="editContact()">Save <img src="./assets/img/check.png" alt=""></button></div>
+      <div class="editContactLeftContainer flex">
+        <img src="./assets/img/capa 2.png" alt="">
+        <p>Edit contact</p>
+      </div>
    
+      <div id="profileImage" class="flex-center bigSize editContactImg" onclick=" editContactImg()">AM</div>
+    <div class="flex rightContainer">
+        <img class="close-overlay"src="./assets/img/close.png" alt="" onclick="editContactToggle()">
 
-   </div>
-   </div>
-  </div>
+     <div class="flex inputContainer" onsubmit="forceInput()">
+      <div class="pos-rel"><input type="text" placeholder="name" class="inputEditName" required><img src="./assets/img/person.png" alt="" class="pos-abs50"></div>
+      <div class="pos-rel"><input type="email" placeholder="email" class="inputEditEmail"required><img src="./assets/img/mail.png" alt="" class="pos-abs50"></div>
+        <div class="pos-rel"> <input type="number" placeholder="number" class="inputEditNumber"required><img src="./assets/img/call.png" alt="" class="pos-abs50"></div>
+      
+      <div class="flex editContactButton"> <button onclick="deleteContact(presentlyIndexContacts);editContactToggle();">Delete</button> <button class="flex" onclick="editContact()">Save <img src="./assets/img/save.png" alt=""></button></div>
+     
+  
+     </div>
+     </div>
+    </div>
+</div>
 
 
-    <div class="addContactMainContainer flex d-none" >
+ <div class="overlay-parent  flex flex-center d-none" >
+
+    <div class="addContactMainContainer flex pos-rel flex-center" >
   
       <div class="editContactLeftContainer flex">
        <img src="./assets/img/capa 2.png" alt="">
         <p>Add contact</p>
        </div>
       
-     
+       <div class="flex-center bigSize nonePerson"><img src="./assets/img/personNone.png" alt=""></div>
+
        <div class="flex rightContainer">
-         <img src="./assets/img/close.png" alt="" onclick="addContactToggle()">
-        <div class="flex-center bigSize nonePerson"><img src="./assets/img/personNone.png" alt=""></div>
+         <img class="close-overlay" src="./assets/img/close.png" alt="" onclick="addContactToggle()">
+       
      <form class="flex inputContainer" onsubmit="forceInput()">
-      <span><input type="text" placeholder="name" class="inputName" required><img src="./assets/img/person.png" alt=""></span>
-      <span> <input type="email" placeholder="email" class="inputEmail" required><img src="./assets/img/mail.png" alt=""></span>
-      <div><input type="number" placeholder="number" class="inputNumber" required><img src="./assets/img/call.png" alt=""></div>
+      <div class="pos-rel"><input type="text" placeholder="name" class="inputName" required><img src="./assets/img/person.png" alt="" class="pos-abs50"></div>
+      <div class="pos-rel"> <input type="email" placeholder="email" class="inputEmail" required><img src="./assets/img/mail.png" alt="" class="pos-abs50"></div>
+      <div class="pos-rel"><input type="number" placeholder="number" class="inputNumber" required><img src="./assets/img/call.png" alt="" class="pos-abs50"></div>
       
-     <div class="flex editContactButton"> <button onclick="addContactToggle()">Cancel</button> <button class="flex" onclick="createContactValue()">Create contact <img src="./assets/img/check.png" alt=""></button></div>
+     <div class="flex editContactButton addButton"> <button onclick="addContactToggle()">Cancel</button> <button class="flex" onclick="createContactValue()">Create contact <img src="./assets/img/save.png" alt=""></button></div>
         
      
      </form>
      </div>
      
     </div>
-  
+  </div>
 
       </main>
     </div>

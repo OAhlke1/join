@@ -18,6 +18,7 @@ let newContact;
 let q = 0;
 let presentlyIndexContacts;
 let information = document.querySelector(".informationPopUp");
+let color;
 
 function init() {
   includeHTML();
@@ -96,8 +97,6 @@ function contactHTML(contactsIndex, q) {
       </div>
     </div>`;
 }
-
-let color;
 
 function getRandomColor() {
   const letters = '0123456789ABCDEF';
@@ -279,7 +278,7 @@ function setContactsAsArray() {
 }
 
 function editContactToggle() {
-  let editContact = document.querySelector(".editContactMainContainer");
+  let editContact = document.querySelector(".overlayEdit-parent");
   if (toggleEditContact) {
     editContact.classList.remove("d-none");
     toggleEditContact = false;
@@ -290,7 +289,7 @@ function editContactToggle() {
 }
 
 function addContactToggle() {
-  let addContact = document.querySelector(".addContactMainContainer");
+  let addContact = document.querySelector(".overlay-parent");
   if (toggleAddContact) {
     addContact.classList.remove("d-none");
     toggleAddContact = false;
