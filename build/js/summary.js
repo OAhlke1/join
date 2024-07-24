@@ -78,6 +78,8 @@ function getCount(data, title) {
             }
         });
         return count;
+    } else {
+        return 0;
     }
 }
 
@@ -96,6 +98,8 @@ function getUrgentTask(data) {
             }
         });
         return count;
+    } else {
+        return 0;
     }
 }
 
@@ -111,5 +115,7 @@ function getUrgentDate(data) {
             dateTasks.push(Date.parse(task.date));
         });
         return new Date(Math.min(...dateTasks)).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    } else {
+        return 'No appointments';
     }
 }

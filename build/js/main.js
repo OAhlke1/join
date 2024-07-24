@@ -15,11 +15,18 @@ async function includeHTML() {
     }
 }
 
+
+/**
+ * 
+ */
 function showUserMenu (){
     let userMenu = document.getElementById('user-menu');
     userMenu.classList.toggle('d-none');
 }
 
+/**
+ * 
+ */
 function loadUserInitials() {
     let user = localStorage.getItem('User');
     let initials = document.getElementById('user-button-initials');
@@ -30,6 +37,11 @@ setTimeout(() => {
     loadUserInitials();
 }, 150);
 
+/**
+ * 
+ * @param {*} name 
+ * @returns 
+ */
 function getInitials(name) {
     let parts = name.split(' ')
     let initials = ''
@@ -41,10 +53,17 @@ function getInitials(name) {
     return initials;
 }
 
+/**
+ * 
+ */
 function logout() {
     localStorage.setItem('User', '');
 }
 
+
+/**
+ * 
+ */
 function checkLogin(){
     let user = localStorage.getItem('User');
     if(!user){
