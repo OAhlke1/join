@@ -32,6 +32,14 @@ async function getContacts() {
   sorter();
 }
 
+function setContactsAsArray() {
+  let contacsKeysArray = [];
+  for (let [key, value] of Object.entries(contacts)) {
+    contacsKeysArray.push([key, value]);
+  }
+  contacts = contacsKeysArray;
+}
+
 function sorter() {
   contacts.sort((a, b) => {
     if (a[1].lastName > b[1].lastName) {
@@ -166,7 +174,6 @@ email.value= contacts[index][1]["email"];
 number.value= contacts[index][1]["number"];
 letters.innerHTML = contacts[index][1]["sureName"][0] + contacts[index][1]["lastName"][0];
 
-
 editContactToggle()
 }
 
@@ -181,8 +188,6 @@ deleteContact(presentlyIndexContacts);
 setTimeout(function() {
   createContact(email, number, name, sureLastName);
 }, 100);
-
-
 }
 
 function deleteContact(index) {
@@ -269,13 +274,6 @@ function hasNameSuffix() {
   sureLastName = [sureLastName[0], sureLastName[1] + " " + sureLastName[2]];
 }
 
-function setContactsAsArray() {
-  let contacsKeysArray = [];
-  for (let [key, value] of Object.entries(contacts)) {
-    contacsKeysArray.push([key, value]);
-  }
-  contacts = contacsKeysArray;
-}
 
 function editContactToggle() {
   let editContact = document.querySelector(".overlayEdit-parent");

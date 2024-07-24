@@ -1,4 +1,4 @@
 git pull
 git add .
-git commit -m "finish responsive"
+git commit -m "clean code"
 git push
