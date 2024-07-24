@@ -16,6 +16,8 @@ function init() {
 
 /**
  * 
+ * Check time to greet the User or the guest
+ * 
  * @param {*} user 
  */
 function getGreetingTime(user) {
@@ -39,6 +41,8 @@ function getGreetingTime(user) {
 
 /**
  * 
+ * Load user Name from local storage
+ * 
  */
 function getGreetingName() {
     let user = localStorage.getItem('User');
@@ -48,6 +52,8 @@ function getGreetingName() {
 }
 
 /**
+ * 
+ * A function to load all counts and dates from the database
  * 
  */
 async function getValues() {
@@ -65,9 +71,11 @@ async function getValues() {
 
 /**
  * 
- * @param {*} data 
- * @param {*} title 
- * @returns 
+ * Load counts from database
+ * 
+ * @param {*} data - Data from the database
+ * @param {*} title - check the title for count
+ * @returns - returns the count 
  */
 function getCount(data, title) {
     let count = 0
@@ -86,8 +94,10 @@ function getCount(data, title) {
 
 /**
  * 
- * @param {*} data 
- * @returns 
+ * Load urgent tasks from database
+ * 
+ * @param {*} data - Data from the database
+ * @returns - returns the count 
  */
 function getUrgentTask(data) {
     let count = 0
@@ -105,8 +115,10 @@ function getUrgentTask(data) {
 
 /**
  * 
- * @param {*} data 
- * @returns 
+ * Load last date from urgent tasks
+ * 
+ * @param {*} data - Data from the database
+ * @returns - returns the count 
  */
 function getUrgentDate(data) {
     let dateTasks = [];
