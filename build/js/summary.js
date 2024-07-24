@@ -14,6 +14,10 @@ function init() {
     getValues();
 }
 
+/**
+ * 
+ * @param {*} user 
+ */
 function getGreetingTime(user) {
     let sign = ',';
     let actualHours = new Date(Date.now()).getHours();
@@ -33,6 +37,9 @@ function getGreetingTime(user) {
     }
 }
 
+/**
+ * 
+ */
 function getGreetingName() {
     let user = localStorage.getItem('User');
     if (user !== 'Guest') {
@@ -40,6 +47,9 @@ function getGreetingName() {
     }
 }
 
+/**
+ * 
+ */
 async function getValues() {
     let response = await fetch('https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks.json');
     let data = await response.json();
@@ -53,6 +63,12 @@ async function getValues() {
     tileDate.innerHTML = getUrgentDate(data);
 }
 
+/**
+ * 
+ * @param {*} data 
+ * @param {*} title 
+ * @returns 
+ */
 function getCount(data, title) {
     let count = 0
     if (data && data.length > 0) {
@@ -65,6 +81,12 @@ function getCount(data, title) {
     }
 }
 
+
+/**
+ * 
+ * @param {*} data 
+ * @returns 
+ */
 function getUrgentTask(data) {
     let count = 0
     if (data && data.length > 0) {
@@ -77,7 +99,11 @@ function getUrgentTask(data) {
     }
 }
 
-
+/**
+ * 
+ * @param {*} data 
+ * @returns 
+ */
 function getUrgentDate(data) {
     let dateTasks = [];
     if (data && data.length > 0) {

@@ -80,6 +80,10 @@ function showSignUpForm() {
     }
 }
 
+/**
+ * 
+ * @returns 
+ */
 async function loadUser() {
     let res = await fetch(userUrl + '.json');
     let data = await res.json();
@@ -87,6 +91,9 @@ async function loadUser() {
     return data;
 }
 
+/**
+ * 
+ */
 async function checkLogin() {
     let data = await loadUser();
     let loginSuccess = false;
@@ -117,11 +124,19 @@ async function checkLogin() {
     }
 }
 
+
+/**
+ * 
+ */
 function checkLoginGuest() {
     localStorage.setItem('User', 'Guest');
     window.location.href = 'summary.html';
 }
 
+
+/**
+ * 
+ */
 function rememberMe() {
     let status = localStorage.getItem('Remember');
     if (status) {
@@ -131,6 +146,10 @@ function rememberMe() {
     }
 }
 
+
+/**
+ * 
+ */
 async function checkSignUp() {
     document.getElementById('sign-error-message').innerHTML = '';
     if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
@@ -163,6 +182,11 @@ async function checkSignUp() {
     }
 }
 
+/**
+ * 
+ * @param {*} data 
+ * @returns 
+ */
 async function signUp(data = {}) {
     let res = await fetch(userUrl + ".json", {
         method: "POST",
@@ -174,6 +198,9 @@ async function signUp(data = {}) {
     return resToJson = await res.json();
 }
 
+/**
+ * 
+ */
 function acceptPolicy() {
     let checkBox = document.getElementById('acceptPp');
     let button = document.getElementById('signInButton');
