@@ -1,4 +1,4 @@
 git pull
 git add .
-git commit -m "clean code"
+git commit -m "animation first look"
 git push

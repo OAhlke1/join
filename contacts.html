@@ -68,10 +68,10 @@
         <p>Edit contact</p>
       </div>
    
-      <div id="profileImage" class="flex-center bigSize editContactImg" onclick=" editContactImg()">AM</div>
+      <div id="profileImage" class="flex-center bigSize editContactImg merge" onclick=" editContactImg()">AM</div>
     <div class="flex rightContainer">
         <img class="close-overlay"src="./assets/img/close.png" alt="" onclick="editContactToggle()">
-
+        <img class="close-overlay  mobileClose" src="./assets/img/closeWhite.png" alt="" onclick="editContactToggle()">
      <div class="flex inputContainer" onsubmit="forceInput()">
       <div class="pos-rel"><input type="text" placeholder="name" class="inputEditName" required><img src="./assets/img/person.png" alt="" class="pos-abs50"></div>
       <div class="pos-rel"><input type="email" placeholder="email" class="inputEditEmail"required><img src="./assets/img/mail.png" alt="" class="pos-abs50"></div>
@@ -95,11 +95,11 @@
         <p>Add contact</p>
        </div>
       
-       <div class="flex-center bigSize nonePerson"><img src="./assets/img/personNone.png" alt=""></div>
+       <div class="flex-center bigSize nonePerson merge"><img src="./assets/img/personNone.png" alt=""></div>
 
        <div class="flex rightContainer">
          <img class="close-overlay" src="./assets/img/close.png" alt="" onclick="addContactToggle()">
-       
+         <img class="close-overlay mobileClose" src="./assets/img/closeWhite.png" alt="" onclick="addContactToggle()">
      <form class="flex inputContainer" onsubmit="forceInput()">
       <div class="pos-rel"><input type="text" placeholder="name" class="inputName" required><img src="./assets/img/person.png" alt="" class="pos-abs50"></div>
       <div class="pos-rel"> <input type="email" placeholder="email" class="inputEmail" required><img src="./assets/img/mail.png" alt="" class="pos-abs50"></div>

@@ -154,6 +154,10 @@ header {
 }
 
 /* Contact information Pop-up */
+.informationPopUp div{
+animation: move 0.5s linear;
+}
+
 .showContactName img {
   cursor: pointer;
 }
@@ -232,11 +236,13 @@ header {
 .editContactMainContainer {
   background-color: white;
   border-radius: 12px;
+  animation: move 0.5s linear;
 }
 
 .addContactMainContainer {
   background-color: white;
   border-radius: 12px;
+  animation: move 0.5s linear;
 }
 
 .editContactMainContainer img {
@@ -441,19 +447,26 @@ color: white;
     margin-left: 8px;
   }
 
-  .bigSize {
+  .merge {
     margin-top: -70px !important;
   }
 }
 
-@keyframes slidein {
-  from {
-    translate: 150vw 0;
-    scale: 200% 1;
-  }
+@media (min-width: 1110px) {
+.mobileClose{
+  display: none;
+}
 
-  to {
-    translate: 0 0;
-    scale: 100% 1;
+}
+
+
+@keyframes move {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
