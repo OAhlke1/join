@@ -338,6 +338,13 @@ header {
   height: 120px;
 }
 
+.contact:hover{
+background-color: #2a3647;
+border-radius: 10px;
+color: white;
+
+}
+
 /* Responsive */
 
 @media (max-width: 950px) {
@@ -366,9 +373,6 @@ header {
     width: 60px;
     height: 60px;
   }
-
-  .informationPopUp {
-  }
 }
 
 @media (min-width: 950px) {
@@ -380,9 +384,6 @@ header {
 @media (max-width: 720px) {
   .showContactName span {
     font-size: 32px;
-  }
-
-  #profileImage {
   }
 }
 
