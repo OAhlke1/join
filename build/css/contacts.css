@@ -155,7 +155,7 @@ header {
 
 /* Contact information Pop-up */
 .informationPopUp div{
-animation: move 0.5s linear;
+animation: move 0.5s ;
 }
 
 .showContactName img {
@@ -276,6 +276,17 @@ animation: move 0.5s linear;
   font-size: 60px;
   padding: 16px;
 }
+
+.editContactLeftContainer p:last-child {
+  font-size: 27px;
+  font-weight: 400;
+
+}
+
+/* .seperator{
+  border: 2px solid #29abe2;
+  width: 90px;
+} */
 
 .rightContainer {
   background-color: white;
@@ -420,6 +431,11 @@ color: white;
     font-size: 47px;
   }
 
+  .editContactLeftContainer p:last-child {
+    font-size: 24px;
+    font-weight: 400;
+  }
+
   .editContactLeftContainer {
     height: 350px;
     width: 400px;
@@ -456,7 +472,6 @@ color: white;
 .mobileClose{
   display: none;
 }
-
 }
 
 
