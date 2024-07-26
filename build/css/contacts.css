@@ -407,6 +407,8 @@ color: white;
 @media (max-width: 1110px) {
   .addContactMainContainer {
     flex-direction: column;
+    max-width: 100%;
+    width: 360px;
   }
 
   .addButton button:first-child{
@@ -438,7 +440,7 @@ color: white;
 
   .editContactLeftContainer {
     height: 350px;
-    width: 400px;
+    width: 100%;
     align-items: flex-start;
     border-radius: 12px 12px 0 0;
     margin: 0;
@@ -473,6 +475,17 @@ color: white;
   display: none;
 }
 }
+
+.showContactName img:hover{
+  color: #29ABE2;
+  filter: invert(53%) sepia(96%) saturate(406%) hue-rotate(155deg) brightness(92%) contrast(92%);
+}
+
+/* .newContactButton button:hover{
+  background-color: #29ABE2;
+  filter: invert(53%) sepia(96%) saturate(406%) hue-rotate(155deg) brightness(92%) contrast(92%);
+} */
+
 
 
 @keyframes move {

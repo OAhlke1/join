@@ -6,6 +6,7 @@ let puffer;
 let newChar;
 let letterBlock = ``;
 let contactsString = "";
+let contactList = document.querySelector(".contactList");
 let contactsIndex = 0;
 let showContacts = document.querySelector("#showContact");
 let toggleEditContact = true;
@@ -47,14 +48,16 @@ function sorter() {
     } else if (a[1].lastName < b[1].lastName) {
       return -1;
     } else {
-      return a[1].sureName > b[1].sureName ? 1 : (a[1].sureName < b[1].sureName ? -1 : 0);
+      return a[1].sureName > b[1].sureName
+        ? 1
+        : a[1].sureName < b[1].sureName
+        ? -1
+        : 0;
     }
   });
-  
 
   renderIntoLetterBox();
 }
-
 
 function renderIntoLetterBox() {
   if (contacts.length === 0) {
@@ -81,17 +84,14 @@ function getContactsHtml() {
     contactsIndex = q;
     if (newChar != contacts[q][1].lastName[0]) {
       return;
-
     }
 
     contactsString += contactHTML(contactsIndex, q);
-
   }
-  
 }
 
 function contactHTML(contactsIndex, q) {
-  getRandomColor(); 
+  getRandomColor();
   return ` <div
       class="flex contact"
       onclick="clickContact(event)"
@@ -107,23 +107,34 @@ function contactHTML(contactsIndex, q) {
 }
 
 function getRandomColor() {
-  const letters = '0123456789ABCDEF';
-   color = '#0';
+  const letters = "0123456789ABCDEF";
+  color = "#0";
   for (let i = 0; i < 5; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
 }
 
-
 function clickContact(event) {
-
+  if (window.innerWidth < 600) {
+    showHideContactNames();
+  }
   event.stopPropagation();
-   presentlyIndexContacts = +event.target
+  presentlyIndexContacts = +event.target
     .closest(".contact")
     .getAttribute("data-contactIndex");
 
   information.innerHTML = clickContactHTML(presentlyIndexContacts);
+}
+
+function showHideContactNames() {
+if(contactList.classList.contains("d-none")){
+  contactList.classList.remove("d-none");
+}else if(!contactList.classList.contains("d-none")){
+  contactList.classList.add("d-none");
+  }
+
+
 }
 
 function clickContactHTML(index) {
@@ -160,34 +171,35 @@ function clickContactHTML(index) {
         <span> ${contacts[index][1]["number"]}</span>
       </div>
     </div>`;
-   
 }
 
-function startingValueEditContact(index){
-let name = document.querySelector(".inputEditName");
-let email= document.querySelector(".inputEditEmail");
-let number = document.querySelector(".inputEditNumber");
-let letters = document.querySelector(".editContactImg")
+function startingValueEditContact(index) {
+  let name = document.querySelector(".inputEditName");
+  let email = document.querySelector(".inputEditEmail");
+  let number = document.querySelector(".inputEditNumber");
+  let letters = document.querySelector(".editContactImg");
 
-name.value= contacts[index][1]["sureName"] +" "+ contacts[index][1]["lastName"];
-email.value= contacts[index][1]["email"];
-number.value= contacts[index][1]["number"];
-letters.innerHTML = contacts[index][1]["sureName"][0] + contacts[index][1]["lastName"][0];
+  name.value =
+    contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
+  email.value = contacts[index][1]["email"];
+  number.value = contacts[index][1]["number"];
+  letters.innerHTML =
+    contacts[index][1]["sureName"][0] + contacts[index][1]["lastName"][0];
 
-editContactToggle()
+  editContactToggle();
 }
 
-function editContact(){
-let name = document.querySelector(".inputEditName");
-let email= document.querySelector(".inputEditEmail");
-let number = document.querySelector(".inputEditNumber");
-sureLastName = document.querySelector(".inputEditName").value.split(" ");
+function editContact() {
+  let name = document.querySelector(".inputEditName");
+  let email = document.querySelector(".inputEditEmail");
+  let number = document.querySelector(".inputEditNumber");
+  sureLastName = document.querySelector(".inputEditName").value.split(" ");
 
-editContactToggle();
-deleteContact(presentlyIndexContacts);
-setTimeout(function() {
-  createContact(email, number, name, sureLastName);
-}, 100);
+  editContactToggle();
+  deleteContact(presentlyIndexContacts);
+  setTimeout(function () {
+    createContact(email, number, name, sureLastName);
+  }, 100);
 }
 
 function deleteContact(index) {
@@ -196,7 +208,7 @@ function deleteContact(index) {
   letterBlock = "";
   contactsIndex = 0;
   q = 0;
-  information.innerHTML="";
+  information.innerHTML = "";
   renderIntoLetterBox();
 }
 
@@ -218,37 +230,45 @@ async function postData(path = "", data = {}) {
   return (responseToJson = await response.json());
 }
 
-function createContactValue(){
+function createContactValue() {
   let email = document.querySelector(".inputEmail");
   let number = document.querySelector(".inputNumber");
-  let name =  document.querySelector(".inputName");
+  let name = document.querySelector(".inputName");
   sureLastName = document.querySelector(".inputName").value.split(" ");
-  createContact(email,number,name,sureLastName);
+  createContact(email, number, name, sureLastName);
   addContactToggle();
 }
 
-function createContact(email,number,name,sureLastName) {
+function createContact(email, number, name, sureLastName) {
   if (sureLastName.length == 1) {
     sureLastName.push("");
   }
   convertNames();
-  newContact = {sureName: sureLastName[0],lastName: sureLastName[1],email: email.value,number: number.value, color: `#${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}`, contactId: Math.random()};
+  newContact = {
+    sureName: sureLastName[0],
+    lastName: sureLastName[1],
+    email: email.value,
+    number: number.value,
+    color: `#${Math.round(255 * Math.random()).toString(16)}${Math.round(
+      255 * Math.random()
+    ).toString(16)}${Math.round(255 * Math.random()).toString(16)}`,
+    contactId: Math.random(),
+  };
   contacts.push([contacts.length + 1, newContact]);
-  resetValue(email,number,name)
+  resetValue(email, number, name);
   postData("/contacts", newContact);
   getContacts();
 }
 
-function resetValue(email,number,name){
-  email.value="";
-  number.value="";
-  name.value="";
+function resetValue(email, number, name) {
+  email.value = "";
+  number.value = "";
+  name.value = "";
   showContacts.innerHTML = "";
   contactsIndex = 0;
   q = 0;
   letterBlock = "";
   newChar = "A";
-
 }
 
 function convertNames() {
@@ -273,7 +293,6 @@ function hasNameSuffix() {
 
   sureLastName = [sureLastName[0], sureLastName[1] + " " + sureLastName[2]];
 }
-
 
 function editContactToggle() {
   let editContact = document.querySelector(".overlayEdit-parent");
