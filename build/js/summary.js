@@ -65,10 +65,11 @@ async function getValues() {
     urgent.innerHTML = getUrgentTask(data);
     taskProgress.innerHTML = getCount(data, 'inProgress');
     feedback.innerHTML = getCount(data, 'awaitFeedback');
-    if (data.length > 0) {
-        taskBoard.innerHTML = data.length;
-    } else {
-        taskBoard.innerHTML = 0;
+    taskBoard.innerHTML = 0;
+    if (data) {
+        if (data.length > 0) {
+            taskBoard.innerHTML = data.length;
+        } 
     }
     tileDate.innerHTML = getUrgentDate(data);
 }
