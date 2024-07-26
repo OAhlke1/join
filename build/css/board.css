@@ -1028,6 +1028,45 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     margin: 30px 0 0 0 !important;
 }
 
+.task-added {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5000;
+    opacity: 0;
+    user-select: none;
+}
+
+.task-added.added {
+    animation: taskAddedFadeIn 0.3s linear;
+}
+
+.task-added.not-added {
+    animation: taskAddedFadeOut 0.3s linear;
+}
+
+@keyframes taskAddedFadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes taskAddedFadeIn {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 1220px) {
     .board-hl-add-task-mobile h1 {
         width: fit-content;

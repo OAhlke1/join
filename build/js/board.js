@@ -26,6 +26,7 @@ let newUrgency = "low";
 let selectedPrio = "medium";
 let categoryType;
 let recreatedTask;
+let taskAddedElem = document.querySelector('.task-added');
 
 document.querySelector('body').addEventListener('keyup', (event)=>{
     if(event.key === 'Escape'){
@@ -853,7 +854,7 @@ function showHideContactListOverlay() {
  * When the input-field for searching contacts of the add-task-overlay is focused, the overlays contact-list is shown.
  * When the input-field loses focus, the contact-list is hidden.
  */
-function showHideContactListAdd(event) {
+function showHideContactListAdd() {
     if(document.querySelector('.add-task-overlay-box .contact-list').classList.contains('disNone')) {
         document.querySelector('.add-task-overlay-box .contact-list').classList.remove('disNone');
         document.querySelector('.add-task-overlay-box .contacts .contacts-inner .triangle').classList.add('rotated');
@@ -1309,7 +1310,7 @@ async function actualizeTaskOnRemote(index = -1) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(allTaskObjects[index])
-        })
+        }).then(()=>{fadeInTaskAdded()});
     }else {
         response = await fetch(tasksURL+`/.json`, {
             method: 'PUT',
@@ -1317,7 +1318,7 @@ async function actualizeTaskOnRemote(index = -1) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(notDeletedTasks)
-        })
+        }).then(()=>{fadeInTaskAdded()});
     }
 }
 
@@ -1582,11 +1583,13 @@ function renderNewTask(index) {
             <div class="menu flex">${getUrgencyHtml(elem.urgency)}</div>
         </div>
     </div>`;
+    console.log(card);
     document.querySelector('#toDo').innerHTML += card;
     getNewParticpantKeys(index);
     setLengthOfSubtaskBar(index, 0);
     selectTaskCategoryColor(index);
     shiftParticipants();
+    userTasks = document.querySelectorAll('.taks');
 }
 
 /**
@@ -1686,7 +1689,7 @@ function createTaskAdd(event) {
     allTaskKeys.push(`${allTaskObjects.length-1}`);
     collectDeletedTasks();
     renderNewTask(allTaskObjects.length-1);
-    actualizeTaskOnRemote()
+    actualizeTaskOnRemote();
     closeOverlayAdd();
 }
 
@@ -2032,6 +2035,23 @@ async function repostTask(index) {
     actualizeParticipantKeys(index);
 }
 
-function setNewTaskintoBoard() {
+/**
+ * 
+ *  @function fadeInTaskAdded adds the class 'added' to @var taskAddedElem to fade it in via CSS.
+ */
+function fadeInTaskAdded() {
+    taskAddedElem.classList.remove('dis-None');
+    taskAddedElem.classList.remove('added');
+    taskAddedElem.classList.add('not-added');
+    setTimeout(fadeOutTaskAdded, 1500);
+}
 
+/**
+ * 
+ *  @function fadeInTaskAdded removes the class 'added' and adds the class 'not-added' to @var taskAddedElem to fade it out via CSS.
+ */
+function fadeOutTaskAdded() {
+    taskAddedElem.classList.add('added');
+    taskAddedElem.classList.remove('not-added');
+    taskAddedElem.classList.add('dis-None');
 }
