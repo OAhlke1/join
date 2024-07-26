@@ -116,7 +116,7 @@ function getRandomColor() {
 }
 
 function clickContact(event) {
-  if (window.innerWidth < 600) {
+  if (window.innerWidth < 900) {
     showHideContactNames();
   }
   event.stopPropagation();
@@ -133,21 +133,26 @@ if(contactList.classList.contains("d-none")){
 }else if(!contactList.classList.contains("d-none")){
   contactList.classList.add("d-none");
   }
+}
 
-
+function hideContact(){
+let back = document.querySelector(".backArrow");
+  contactList.classList.remove("d-none");
+back.classList.add("d-none");
 }
 
 function clickContactHTML(index) {
   getRandomColor();
   return ` <div class="flex showContactName">
+    
       <div id="profileImage" class="flex-center bigSize"  style="background-color: ${color};">
         ${contacts[index][1]["sureName"][0]}${contacts[index][1]["lastName"][0]}
       </div>
       <div>
         <span>
           ${contacts[index][1]["sureName"]}
-          ${contacts[index][1]["lastName"]}</span
-        >
+          ${contacts[index][1]["lastName"]}
+        </span>
         <div>
           <img
             src="./assets/img/editContacts.png"
@@ -161,7 +166,9 @@ function clickContactHTML(index) {
           />
         </div>
       </div>
+      <img class="backArrow" onclick="hideContact()" src="./assets/img/backArrow.png" alt="">
     </div>
+     
     <div class="contactInformations">
       <p>Contact Information</p>
       <div>
