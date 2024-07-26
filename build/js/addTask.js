@@ -288,3 +288,14 @@ function setCategory(event) {
     document.querySelector('.category-name').innerHTML = event.target.innerHTML;
     categoryType = event.target.closest('.category').querySelector('p').innerHTML;
 }
+
+function resetForm(){
+     document.getElementById('content-box-container').reset();
+     document.querySelector('.chosen-list').innerHTML = '';
+     document.querySelector('.subtask-list').innerHTML = '';
+     document.querySelector('.category-name').innerHTML = 'Select task category';
+     document.getElementById("prio-high-button").classList.remove("prio-high-button-bg-color");
+     document.getElementById("prio-medium-button").classList.remove("prio-medium-button-bg-color");
+     document.getElementById("prio-low-button").classList.remove("prio-low-button-bg-color");
+     selectedPrio = "low";
+}
