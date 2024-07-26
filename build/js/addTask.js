@@ -180,7 +180,7 @@ async function postNewTask(event) {
     event.preventDefault();
     addTask();
     let response = await fetch(BASE_URL+"/tasks.json", {
-        method: 'POST',
+        method: 'PUT',
         header: {'Content-Type': 'application/json'},
         body: JSON.stringify(allTaskObjects)
     });
