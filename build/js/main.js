@@ -34,7 +34,9 @@ function showUserMenu (){
 function loadUserInitials() {
     let user = localStorage.getItem('User');
     let initials = document.getElementById('user-button-initials');
-    initials.innerHTML = getInitials(user);
+    if(initials) {
+        initials.innerHTML = getInitials(user);
+    }
 }
 
 setTimeout(() => {
@@ -100,7 +102,9 @@ function extractFilename(url) {
       setTimeout(() => {
         const url = window.location.href;
         const filename = extractFilename(url);
-        document.getElementById(filename).classList.add('active');
+        if(filename) {
+            document.getElementById(filename).classList.add('active');
+        }
     }, 150);
  
 }
