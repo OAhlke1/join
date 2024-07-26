@@ -359,7 +359,11 @@ animation: move 0.5s ;
 background-color: #2a3647;
 border-radius: 10px;
 color: white;
+}
 
+.backArrow{
+width: 32px !important;
+height: 32px !important;
 }
 
 /* Responsive */
