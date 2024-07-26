@@ -61,7 +61,6 @@ async function getTasks() {
 
 function checkIfParticipantsExist() {
     allTaskObjects.forEach((elem, index)=>{
-        console.log(elem);
         if(!elem.participants) {
             allTaskObjects[index].participants = [];
         }
@@ -872,7 +871,7 @@ function renderSelectContactsAdd() {
     allContactsObjects.forEach((elem, i)=>{
         document.querySelector('.add-task-overlay-box .contact-list').innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContactAdd(event)">
         <div class="flex flex-center contact-left">
-            <div class="flex flex-center circle"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
+            <div class="flex flex-center circle" style="background-color: ${allContactsObjects[i].color};"}><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
             <p class="contact-name">${elem.sureName} ${elem.lastName}</p>
         </div>
         <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -894,7 +893,7 @@ function renderSelectContactsOverlay() {
     allContactsObjects.forEach((elem, i)=>{
         document.querySelector('.overlay-card .contact-list').innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContactOverlay(event)">
         <div class="flex flex-center contact-left">
-            <div class="flex flex-center circle"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
+            <div class="flex flex-center circle" style="background-color: ${allContactsObjects[i].color};"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
             <p class="contact-name">${elem.sureName} ${elem.lastName}</p>
         </div>
         <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/></svg>
@@ -1123,7 +1122,6 @@ function preSelectContactsOverlay() {
  * This function renders the list of chosen participants into the add-task-overlay
  */
 function renderChosenListAdd() {
-    console.log(participantsArrayAdd);
     document.querySelector('.add-task-overlay-box .chosen-list').innerHTML = '';
     participantsArrayAdd.forEach((elem, i)=>{
         document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})">
@@ -1506,12 +1504,10 @@ function collectDeletedTasks() {
             notDeletedTasks.push(allTaskObjects[i]);
         }
     }
-    console.log(notDeletedTasks);
 }
 
 function reRenderAllTasks() {
     for(let i=0; i<allTaskKeys.length; i++) {
-        console.log('Hi');
         reRenderTask(i);
     }
 }

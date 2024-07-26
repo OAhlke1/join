@@ -224,6 +224,7 @@ main .tasks-overlay .overlay-card .inner {
     overflow-y: scroll;
     user-select: none;
     position: relative;
+    margin-bottom: 30px;
 }
 
 main .tasks-overlay .overlay-card .inner h2 {
@@ -444,6 +445,7 @@ main .tasks-overlay .overlay-card .edit-delete {
     position: absolute;
     right: 40px;
     bottom: 24px;
+    z-index: 5000;
 }
 
 main .tasks-overlay .overlay-card .edit-delete .delete, main .tasks-overlay .overlay-card .edit-delete .edit, main .tasks-overlay .overlay-card .edit-delete .delete, main .tasks-overlay .overlay-card .edit-delete .stop-editing {
