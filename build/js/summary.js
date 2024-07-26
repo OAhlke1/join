@@ -27,15 +27,15 @@ function getGreetingTime(user) {
         sign = '!';
     }
     if (actualHours >= 6 && actualHours <= 10) {
-            greetTime.innerHTML = "Good morning"+sign;     
+        greetTime.innerHTML = "Good morning" + sign;
     } else if (actualHours >= 11 && actualHours <= 13) {
-        greetTime.innerHTML = "Good day"+sign;
+        greetTime.innerHTML = "Good day" + sign;
     } else if (actualHours >= 14 && actualHours <= 18) {
-        greetTime.innerHTML = "Good afternoon"+sign;
+        greetTime.innerHTML = "Good afternoon" + sign;
     } else if (actualHours >= 19 && actualHours <= 21) {
-        greetTime.innerHTML = "Good evening"+sign;
+        greetTime.innerHTML = "Good evening" + sign;
     } else {
-        greetTime.innerHTML = "Good night"+sign;
+        greetTime.innerHTML = "Good night" + sign;
     }
 }
 
@@ -65,7 +65,11 @@ async function getValues() {
     urgent.innerHTML = getUrgentTask(data);
     taskProgress.innerHTML = getCount(data, 'inProgress');
     feedback.innerHTML = getCount(data, 'awaitFeedback');
-    taskBoard.innerHTML = data.length;
+    if (data.length > 0) {
+        taskBoard.innerHTML = data.length;
+    } else {
+        taskBoard.innerHTML = 0;
+    }
     tileDate.innerHTML = getUrgentDate(data);
 }
 
