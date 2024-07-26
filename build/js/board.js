@@ -61,6 +61,7 @@ async function getTasks() {
 
 function checkIfParticipantsExist() {
     allTaskObjects.forEach((elem, index)=>{
+        console.log(elem);
         if(!elem.participants) {
             allTaskObjects[index].participants = [];
         }
@@ -1588,6 +1589,7 @@ function renderNewTask(index) {
     document.querySelector('#toDo').innerHTML += card;
     getNewParticpantKeys(index);
     setLengthOfSubtaskBar(index, 0);
+    selectTaskCategoryColor(index);
     shiftParticipants();
 }
 
@@ -1619,6 +1621,7 @@ function closeOverlay() {
  * This function opens the add-task-overlay.
  */
 function openAddTaskOverlay() {
+    newSubtasksArrayAdd = [];
     document.querySelector('.add-task-overlay').classList.remove('disNone');
 }
 
@@ -1650,6 +1653,7 @@ function createTaskOverlay(index) {
     };
     allTaskObjects[index] = recreatedTask;
     repostTask(index);
+    reRenderTask(index);
     closeOverlay();
 }
 
