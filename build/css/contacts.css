@@ -478,6 +478,9 @@ height: 32px !important;
 .mobileClose{
   display: none;
 }
+.backArrow{
+display: none;
+  }
 }
 
 .showContactName img:hover{

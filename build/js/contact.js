@@ -137,8 +137,10 @@ if(contactList.classList.contains("d-none")){
 
 function hideContact(){
 let back = document.querySelector(".backArrow");
+if (window.innerWidth < 900) {
   contactList.classList.remove("d-none");
 back.classList.add("d-none");
+}
 }
 
 function clickContactHTML(index) {
