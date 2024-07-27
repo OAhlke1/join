@@ -116,7 +116,7 @@ function getRandomColor() {
 }
 
 function clickContact(event) {
-  if (window.innerWidth < 900) {
+  if (window.innerWidth < 1100) {
     showHideContactNames();
   }
   event.stopPropagation();
@@ -137,7 +137,7 @@ if(contactList.classList.contains("d-none")){
 
 function hideContact(){
 let back = document.querySelector(".backArrow");
-if (window.innerWidth < 900) {
+if (window.innerWidth < 1100) {
   contactList.classList.remove("d-none");
 back.classList.add("d-none");
 }

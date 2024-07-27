@@ -63,6 +63,7 @@ header {
   height: 928px;
   background-color: white;
   box-shadow: 4px 0px 4px 0px #0000001a;
+  animation: moveLeft 0.5s linear;
 }
 
 .contactNames h3 {
@@ -502,6 +503,17 @@ display: none;
   }
   100% {
     transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes moveLeft {
+  0% {
+    transform:translateX(0);
+    opacity: 0;
+  }
+  100% {
+    transform:  translateX(0);
     opacity: 1;
   }
 }
