@@ -186,13 +186,13 @@ function setTasksHtml() {
             </div>
         </div>`;
         renderTask(card, elem.taskType);
-        selectTaskCategoryColor(index);
     });
     userTasks = document.querySelectorAll('.task');
     checkIfSubtasksExist();
     checkForEmptyColumns();
     checkForFilledColumns();
     shiftParticipants();
+    renderCategoryColor();
     setDragDrop();
 }
 
@@ -611,7 +611,7 @@ function renderTaskIntoOverlay(index) {
     if(allTaskObjects[index].subTasks) {
         renderSubtaskListOverlay(index);
     }
-    selectTaskCategoryColor(index);
+    renderCategoryColor();
     renderSelectContactsOverlay();
     renderEditDelete(index);
     document.querySelector('.tasks-overlay').classList.remove('disNone');
@@ -635,7 +635,7 @@ function renderTaskIntoOveray(index) {
     if(allTaskObjects[index].subTasks) {
         renderSubtaskListOverlay(index);
     }
-    selectTaskCategoryColor(index);
+    renderCategoryColor();
     renderSelectContactsOverlay();
     renderEditDelete(index);
     document.querySelector('.tasks-overlay').classList.remove('disNone');
@@ -647,14 +647,25 @@ function renderTaskIntoOveray(index) {
  * @returns a string of HTML including the tag for the task-category and the clsosing x.
  */
 function renderTaskCategoryIntoOverlay(index) {
-    return `<div class="task-category flex-center" style="background-color: ${document.querySelectorAll('.task .task-category')[index].style.backgroundColor};"><p>${allTaskObjects[index].category}</p></div>`;
+    return `<div class="task-category flex-center" style="background-color: ${getCategoryColorOverlay(index)};"><p>${allTaskObjects[index].category}</p></div>`;
 }
 
-function selectTaskCategoryColor(index) {
-    if(document.querySelectorAll('.task')[index].querySelector('.task-category p').innerHTML === "User Story") {
-        document.querySelectorAll('.task .task-category')[index].style.backgroundColor = '#0038ff';
+function getCategoryColorOverlay(index) {
+    if(allTaskObjects[index].category === "User Story") {
+        return '#00338f';
     }else {
-        document.querySelectorAll('.task')[index].querySelector('.task-category').style.backgroundColor = '#1fd7c1';
+        return '#1fd7c1';
+    }
+}
+
+function renderCategoryColor() {
+    for(let index=0; index<allTaskObjects.length; index++) {
+        if(allTaskObjects[index].category === "User Story") {
+            console.log(true);
+            document.querySelector(`.task[data-taskindex="${index}"] .task-category`).style.backgroundColor = '#00338f';
+        }else {
+            document.querySelector(`.task[data-taskindex="${index}"] .task-category`).style.backgroundColor = '#1fd7c1';
+        }
     }
 }
 
@@ -757,7 +768,7 @@ function renderUrgencyButtons(index) {
                     <path d="M19.6528 9.50568C19.4182 9.50609 19.1896 9.43124 19.0007 9.29214L10.7487 3.20898L2.49663 9.29214C2.26266 9.46495 1.96957 9.5378 1.68184 9.49468C1.39412 9.45155 1.13532 9.29597 0.962385 9.06218C0.789449 8.82838 0.716541 8.53551 0.7597 8.24799C0.802859 7.96048 0.95855 7.70187 1.19252 7.52906L10.0966 0.958588C10.2853 0.818997 10.5139 0.743652 10.7487 0.743652C10.9835 0.743652 11.212 0.818997 11.4007 0.958588L20.3048 7.52906C20.4908 7.66598 20.6286 7.85809 20.6988 8.07797C20.769 8.29785 20.7678 8.53426 20.6955 8.75344C20.6232 8.97262 20.4834 9.16338 20.2962 9.29847C20.1089 9.43356 19.8837 9.50608 19.6528 9.50568Z" fill="#FF3D00"></path>
                 </svg>  
             </div>
-            <div class="choose-prio-button flex flex-center" class="prio-medium-button" onclick="resetUrgency(event, ${index}, 'medium')" data-resetUrgency="medium">
+            <div class="choose-prio-button flex flex-center prio-medium-button" onclick="resetUrgency(event, ${index}, 'medium')" data-resetUrgency="medium">
                 <span id="prio-medium" class="flex flex-center">Medium</span>
                 <svg width="21" height="8" viewBox="0 0 21 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_200223_4295)">
@@ -854,7 +865,7 @@ function showHideContactListOverlay() {
  * When the input-field for searching contacts of the add-task-overlay is focused, the overlays contact-list is shown.
  * When the input-field loses focus, the contact-list is hidden.
  */
-function showHideContactListAdd() {
+function showHideContactListAdd(event) {
     if(document.querySelector('.add-task-overlay-box .contact-list').classList.contains('disNone')) {
         document.querySelector('.add-task-overlay-box .contact-list').classList.remove('disNone');
         document.querySelector('.add-task-overlay-box .contacts .contacts-inner .triangle').classList.add('rotated');
@@ -872,7 +883,7 @@ function renderSelectContactsAdd() {
     allContactsObjects.forEach((elem, i)=>{
         document.querySelector('.add-task-overlay-box .contact-list').innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContactAdd(event)">
         <div class="flex flex-center contact-left">
-            <div class="flex flex-center circle" style="background-color: ${allContactsObjects[i].color};"}><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
+            <div class="flex flex-center circle"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
             <p class="contact-name">${elem.sureName} ${elem.lastName}</p>
         </div>
         <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -894,7 +905,7 @@ function renderSelectContactsOverlay() {
     allContactsObjects.forEach((elem, i)=>{
         document.querySelector('.overlay-card .contact-list').innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContactOverlay(event)">
         <div class="flex flex-center contact-left">
-            <div class="flex flex-center circle" style="background-color: ${allContactsObjects[i].color};"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
+            <div class="flex flex-center circle"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
             <p class="contact-name">${elem.sureName} ${elem.lastName}</p>
         </div>
         <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/></svg>
@@ -1051,7 +1062,7 @@ function renderChosenListOverlay() {
     document.querySelector('.overlay-card .chosen-list.back').innerHTML = '';
     participantsArrayOverlay.forEach((elem, i)=>{
         //let index = +elem.getAttribute('data-selectindex');
-        document.querySelector('.overlay-card .chosen-list.back').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${i})" onmouseover="showNameOverlay(${i})" onmouseleave="hideNameOverlay(${i})">
+        document.querySelector('.overlay-card .chosen-list.back').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${i})">
             <p>${elem.sureName[0]}${elem.lastName[0]}</p>
             <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
         </div>
@@ -1070,7 +1081,7 @@ function renderChosenListFrontOverlay(index) {
     if(allTaskObjects[index].participants) {
         let elem = allTaskObjects[index].participants;
         for(let i=0; i<allParticipantsKeys[index].length; i++) {
-            list += /* HTML */ `<li class="flex flex-center"><div class="flex flex-center circle" onmouseover="showNameOverlay(${i})" onmouseleave="hideNameOverlay(${i})">
+            list += /* HTML */ `<li class="flex flex-center"><div class="flex flex-center circle">
                 <p>${elem[allParticipantsKeys[index][i]].sureName[0]}${elem[allParticipantsKeys[index][i]].lastName[0]}</p>
                 <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem[allParticipantsKeys[index][i]].sureName} ${elem[allParticipantsKeys[index][i]].lastName}<br>Click icon to remove</p></div>
             </div>
@@ -1303,7 +1314,7 @@ function removeOverlayParticipant(event) {
  * This function actualizes the edited task on the ftp-server via receiving the tasks key from @param {array} allTaskKeys at the given index.
  */
 async function actualizeTaskOnRemote(index = -1) {
-    if(index > 0) {
+    if(index >= 0) {
         response = await fetch(tasksURL+`/${allTaskKeys[index]}.json`, {
             method: 'PUT',
             header: {
@@ -1439,9 +1450,8 @@ function restyleUrgencyButtons(elem, prio) {
  */
 function deleteTask(index) {
     allTaskObjects[allTaskKeys[index]].deleted = 1;
-    document.querySelectorAll('.task')[index].classList.add('disNone');
+    document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('disNone');
     deleteTaskOnRemote();
-    //checkForEmptyColumns();
     document.querySelector('.tasks-overlay').classList.add('disNone');
 }
 
@@ -1488,7 +1498,7 @@ function hideEditingElements() {
  * This function deletes the task on the ftp-server.
  */
 async function deleteTaskOnRemote() {
-    collectDeletedTasks();
+    collectNotDeletedTasks();
     let response = await fetch(tasksURL+`.json`, {
         method: 'PUT',
         header: {
@@ -1498,10 +1508,10 @@ async function deleteTaskOnRemote() {
     })
 }
 
-function collectDeletedTasks() {
+function collectNotDeletedTasks() {
     notDeletedTasks = [];
     for(let i=0; i<allTaskObjects.length; i++) {
-        if(!allTaskObjects[i].deleted) {
+        if(allTaskObjects[i].deleted == 0) {
             notDeletedTasks.push(allTaskObjects[i]);
         }
     }
@@ -1583,13 +1593,13 @@ function renderNewTask(index) {
             <div class="menu flex">${getUrgencyHtml(elem.urgency)}</div>
         </div>
     </div>`;
-    console.log(card);
     document.querySelector('#toDo').innerHTML += card;
     getNewParticpantKeys(index);
     setLengthOfSubtaskBar(index, 0);
-    selectTaskCategoryColor(index);
+    renderCategoryColor();
+    userTasks = document.querySelectorAll('.task');
+    setDragDrop();
     shiftParticipants();
-    userTasks = document.querySelectorAll('.taks');
 }
 
 /**
@@ -1687,9 +1697,10 @@ function createTaskAdd(event) {
     }
     allTaskObjects.push(newTaskObject);
     allTaskKeys.push(`${allTaskObjects.length-1}`);
-    collectDeletedTasks();
+    collectNotDeletedTasks();
+    console.log(newTaskObject.participants);
     renderNewTask(allTaskObjects.length-1);
-    actualizeTaskOnRemote();
+    actualizeTaskOnRemote()
     closeOverlayAdd();
 }
 
@@ -1994,7 +2005,7 @@ function removeSubtaskAdd(i) {
  * 
  * This function clears and resets all input-fields and variables belonging to the editing elements of the add-task-overlay.
  */
-function clearOverlayAdd() {
+function clearForm() {
     document.querySelector('#title-input').value = "";
     document.querySelector('#textarea-input').value = "";
     document.querySelector('.add-task-overlay-box .search-contacts').value = "";
@@ -2042,7 +2053,6 @@ async function repostTask(index) {
 function fadeInTaskAdded() {
     taskAddedElem.classList.remove('dis-None');
     taskAddedElem.classList.remove('added');
-    taskAddedElem.classList.add('not-added');
     setTimeout(fadeOutTaskAdded, 1500);
 }
 
@@ -2051,7 +2061,9 @@ function fadeInTaskAdded() {
  *  @function fadeInTaskAdded removes the class 'added' and adds the class 'not-added' to @var taskAddedElem to fade it out via CSS.
  */
 function fadeOutTaskAdded() {
-    taskAddedElem.classList.add('added');
-    taskAddedElem.classList.remove('not-added');
-    taskAddedElem.classList.add('dis-None');
+    taskAddedElem.classList.remove('added');
+    taskAddedElem.classList.add('not-added');
+    setTimeout(()=>{
+        taskAddedElem.classList.add('dis-None');
+    }, 500);
 }

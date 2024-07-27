@@ -24,6 +24,11 @@ ul {
     display: flex;
 }
 
+.form-center {
+    width: 100%;
+    column-gap: 48px;
+}
+
 #content-box-left {
     width: 440px;
     height: 376px;
@@ -44,7 +49,6 @@ ul {
     display: flex;
     justify-content: space-between;
     width: 976.25px;
-    height: 424px;
     top: 327px;
     left: 328px;
 }
@@ -646,7 +650,11 @@ h1 {
 }
 
 @media (max-width: 1024px) {
-    #content-box-container {
+    form {
+        height: fit-content;
+    }
+    
+    .form-center {
         flex-direction: column;
         align-items: center;
         height: auto;
@@ -664,9 +672,12 @@ h1 {
     }
 
     .bottom-bar {
-        justify-content: space-around;
-        flex-direction: column;
-        width: auto;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        width: 100vw;
+        row-gap: 30px;
+        margin-top: 36px;
     }
 
     .subtask-input input {
@@ -685,16 +696,23 @@ h1 {
     .select-container {
         width: auto;
     }
+
+    #interactives-buttons-container {
+        width: fit-content;
+    }
 }
 
 @media (max-width: 600px) {
-    #content-box-left, #content-box-right, #prio-container, #category-container, #substasks-container, #title-input, #textarea-input, #date-input, #choose-prio-container, .subtask-input, #title-container, #title-input-container   {
+    .form-center #content-box-left, .form-center #content-box-right, .form-center #prio-container, .form-center #category-container, .form-center #substasks-container, .form-center #title-input, .form-center #textarea-input, .form-center #date-input, .form-center #choose-prio-container, .form-center .subtask-input, .form-center #title-container, .form-center #title-input-container   {
         width: 90vw;
         height: auto;
     }
 
-    #choose-prio-container {
-        flex-direction: column;
+    .form-center #choose-prio-container {
         align-items: center;
+    }
+
+    #clear-button {
+        display: none;
     }
 }

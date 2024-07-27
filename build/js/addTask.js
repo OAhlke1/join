@@ -24,7 +24,15 @@ async function getTasks() {
         getContacts();
         return;
     }
+    setTasksArray(fetchedTasks);
     getContacts();
+}
+
+function setTasksArray(tasksJson) {
+    for(let [key, value] of Object.entries(tasksJson)) {
+        allTaskKeys.push(key);
+        allTaskObjects.push(value);
+    }
 }
 
 async function getContacts() {
@@ -83,7 +91,7 @@ function renderSelectContacts() {
     allContactsObjects.forEach((elem, i)=>{
         selectContacts.innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContact(event)">
         <div class="flex flex-center contact-left">
-            <div class="flex flex-center circle"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
+            <div class="flex flex-center circle" style="background-color: ${allContactsObjects[i].color};"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
             <p>${elem.sureName} ${elem.lastName}</p>
         </div>
         <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +108,7 @@ function renderSelectContacts() {
 function renderChosenList() {
     document.querySelector('.chosen-list').innerHTML = '';
     participantsArray.forEach((elem, i)=>{
-        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})">
+        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})" style="background-color: ${allContactsObjects[i].color};">
             <p>${elem.sureName[0]}${elem.lastName[0]}</p>
             <div class="name-block${i} name-block disNone"><p>${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
         </div>
@@ -144,7 +152,8 @@ function getParticipants() {
     renderChosenList();
 }
 
-function addTask() {
+function addTask(event) {
+    event.preventDefault();
     newTask = {
         taskTitle: document.getElementById("title-input").value,
         taskDescrip: document.getElementById("textarea-input").value,
@@ -152,12 +161,14 @@ function addTask() {
         date: document.getElementById("date-input").value,
         urgency: selectedPrio,
         category: categoryType,
-        taskType: 'toDo'
+        taskType: 'toDo',
+        deleted: 0
     }
     if(allSubtasksArray.length > 0) {
         newTask.subTasks =  allSubtasksArray;
     }
     allTaskObjects.push(newTask);
+    postNewTask();
 }
 
 
@@ -177,8 +188,7 @@ function choosePrio(event, prio) {
 }
 
 async function postNewTask(event) {
-    event.preventDefault();
-    addTask();
+    console.log(allTaskObjects.length);
     let response = await fetch(BASE_URL+"/tasks.json", {
         method: 'PUT',
         header: {'Content-Type': 'application/json'},
@@ -289,13 +299,34 @@ function setCategory(event) {
     categoryType = event.target.closest('.category').querySelector('p').innerHTML;
 }
 
-function resetForm(){
-     document.getElementById('content-box-container').reset();
-     document.querySelector('.chosen-list').innerHTML = '';
-     document.querySelector('.subtask-list').innerHTML = '';
-     document.querySelector('.category-name').innerHTML = 'Select task category';
-     document.getElementById("prio-high-button").classList.remove("prio-high-button-bg-color");
-     document.getElementById("prio-medium-button").classList.remove("prio-medium-button-bg-color");
-     document.getElementById("prio-low-button").classList.remove("prio-low-button-bg-color");
-     selectedPrio = "low";
+/**
+ * 
+ * This function clears and resets all input-fields and variables belonging to the editing elements of the add-task-overlay.
+ */
+function clearForm(event) {
+    event.preventDefault();
+    document.querySelector('#title-input').value = "";
+    document.querySelector('#textarea-input').value = "";
+    document.querySelector('.contacts-inner p').value = "";
+    document.querySelector('.chosen-list').innerHTML = "";
+    document.querySelector('#date-input').value = "";
+    resetUrgency();
+    document.querySelector('.category-name').innerHTML = "Select task category";
+    document.querySelector('#choose-subtasks').value = "";
+    document.querySelector('.subtask-list').innerHTML = "";
+    document.querySelectorAll('.contact-list .contact.chosen').forEach((elem)=>{elem.classList.remove('chosen');});
+    document.querySelector('.cross-tic').classList.add('disNone');
+    allSubtasksArray = [];
+}
+
+/**
+ * 
+ * This function resets the urgency of the new task.
+ */
+function resetUrgency() {
+    document.querySelectorAll('.choose-prio-button')[0].classList.remove('prio-high-button-bg-color');
+    document.querySelectorAll('.choose-prio-button')[1].classList.remove('prio-medium-button-bg-color');
+    document.querySelectorAll('.choose-prio-button')[2].classList.remove('prio-low-button-bg-color');
+    document.querySelectorAll('.choose-prio-button')[1].classList.add('prio-medium-button-bg-color');
+    newUrgency = "medium";
 }
