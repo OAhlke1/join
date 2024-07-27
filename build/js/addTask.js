@@ -11,6 +11,7 @@ let newTask;
 let selectContacts = document.querySelector('.contact-list');
 let subtaskInput = document.querySelector('#choose-subtasks');
 let categoryType = "medium";
+let taskAddedElem = document.querySelector('.task-added');
 const BASE_URL = "https://join-249-default-rtdb.europe-west1.firebasedatabase.app";
 const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks';
 
@@ -194,6 +195,7 @@ async function postNewTask(event) {
         header: {'Content-Type': 'application/json'},
         body: JSON.stringify(allTaskObjects)
     });
+    fadeInTaskAdded();
 }
 
 function showCrossTic() {
@@ -329,4 +331,28 @@ function resetUrgency() {
     document.querySelectorAll('.choose-prio-button')[2].classList.remove('prio-low-button-bg-color');
     document.querySelectorAll('.choose-prio-button')[1].classList.add('prio-medium-button-bg-color');
     newUrgency = "medium";
+}
+
+/**
+ * 
+ *  @function fadeInTaskAdded adds the class 'added' to @var taskAddedElem to fade it in via CSS.
+ */
+function fadeInTaskAdded() {
+    console.log('Hi!');
+    taskAddedElem.classList.remove('disNone');
+    taskAddedElem.classList.remove('not-added');
+    taskAddedElem.classList.add('added');
+    setTimeout(fadeOutTaskAdded, 1000);
+}
+
+/**
+ * 
+ *  @function fadeOutTaskAdded removes the class 'added' and adds the class 'not-added' to @var taskAddedElem to fade it out via CSS.
+ */
+function fadeOutTaskAdded() {
+    taskAddedElem.classList.remove('added');
+    taskAddedElem.classList.add('not-added');
+    setTimeout(()=>{
+        taskAddedElem.classList.add('disNone');
+    }, 700);
 }

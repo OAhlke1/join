@@ -1037,11 +1037,12 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 }
 
 .task-added.added {
-    animation: taskAddedFadeIn 0.3s linear;
+    animation: taskAddedFadeIn 0.7s linear;
 }
 
 .task-added.not-added {
-    animation: taskAddedFadeOut 0.3s linear;
+    animation: taskAddedFadeOut 0.7s linear;
+    opacity: 0;
 }
 
 @keyframes taskAddedFadeIn {
@@ -1054,7 +1055,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     }
 }
 
-@keyframes taskAddedFadeIn {
+@keyframes taskAddedFadeOut {
     0% {
         opacity: 1;
     }
