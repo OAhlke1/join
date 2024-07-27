@@ -324,3 +324,30 @@ function addContactToggle() {
     toggleAddContact = true;
   }
 }
+
+function backgroundClickedAdd(event) {
+  // Check if the clicked target is the overlay and not a child element
+  if (event.target === event.currentTarget) {
+      // Call your function here
+      addContactToggle()
+
+  }
+}
+
+function backgroundClickedEdit(event) {
+  // Check if the clicked target is the overlay and not a child element
+  if (event.target === event.currentTarget) {
+      // Call your function here
+      editContactToggle();
+
+  }
+}
+
+
+
+
+
+
+
+
+

@@ -264,6 +264,7 @@ animation: move 0.5s ;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 12px;
 }
 
 .editContactLeftContainer img {
@@ -300,6 +301,13 @@ animation: move 0.5s ;
   margin: 8px;
   width: 422px;
   height: 50px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.rightContainer input:focus {
+  outline-color: #29abe2;
 }
 
 .rightContainer img {
@@ -308,12 +316,18 @@ animation: move 0.5s ;
   cursor: pointer;
 }
 
+.editContactButton button:last-child:hover {
+  background-color:  #29abe2;
+  outline-color: #29abe2;
+}
+
 .editContactButton button {
   width: 110px;
   height: 50px;
   border: 1px solid #2a3647;
   margin-top: 32px;
   border-radius: 8px;
+  border: none;
 }
 
 .editContactButton {
@@ -412,8 +426,7 @@ height: 32px !important;
 @media (max-width: 1110px) {
   .addContactMainContainer {
     flex-direction: column;
-    max-width: 100%;
-    width: 360px;
+
   }
 
   .addButton button:first-child{
@@ -444,11 +457,12 @@ height: 32px !important;
   }
 
   .editContactLeftContainer {
-    height: 350px;
+    height: 370px;
     width: 100%;
     align-items: flex-start;
     border-radius: 12px 12px 0 0;
     margin: 0;
+    ;
   }
 
   .inputContainer input {
@@ -465,6 +479,7 @@ height: 32px !important;
     width: 100%;
     border-radius: 12px;
     margin-bottom: 70px;
+    
   }
   .rightContainer img {
     margin-left: 8px;
