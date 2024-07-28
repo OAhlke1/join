@@ -93,8 +93,8 @@ function getContactsHtml() {
 function contactHTML(contactsIndex, q) {
   getRandomColor();
   return ` <div
-      class="flex contact"
-      onclick="clickContact(event)"
+      class="flex contact c-${contactsIndex}"
+      onclick="clickContact(event)" 
       data-contactIndex="${contactsIndex}">
       <div id="profileImage" class="flex-center" style="background-color: ${color};" >
         ${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}
@@ -124,8 +124,20 @@ function clickContact(event) {
     .closest(".contact")
     .getAttribute("data-contactIndex");
 
+   focusContact();
   information.innerHTML = clickContactHTML(presentlyIndexContacts);
 }
+
+function focusContact(){
+let contact = document.querySelector(`.c-${presentlyIndexContacts}`);
+
+for(let i = 0; contacts.length > i ; i++){
+  let contact = document.querySelector(`.c-${i}`);
+  contact.classList.remove("contactFocus");
+}
+  contact.classList.add("contactFocus");
+}
+
 
 function showHideContactNames() {
 if(contactList.classList.contains("d-none")){
@@ -335,16 +347,10 @@ function backgroundClickedAdd(event) {
 }
 
 function backgroundClickedEdit(event) {
-  // Check if the clicked target is the overlay and not a child element
   if (event.target === event.currentTarget) {
-      // Call your function here
       editContactToggle();
-
   }
 }
-
-
-
 
 
 

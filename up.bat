@@ -1,4 +1,4 @@
 git pull
 git add .
-git commit -m "update css"
+git commit -m "improve"
 git push
