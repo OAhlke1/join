@@ -1981,6 +1981,7 @@ function clearForm() {
     document.querySelector('#choose-subtasks-add').value = "";
     document.querySelector('.add-task-overlay-box .subtask-list').innerHTML = "";
     document.querySelectorAll('.add-task-overlay-box .contact-list .contact.chosen').forEach((elem)=>{elem.classList.remove('chosen');});
+    document.querySelector('.add-task-overlay-box .contact-list').classList.add('disNone')
 }
 
 /**
