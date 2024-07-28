@@ -262,7 +262,7 @@ function createContactValue() {
 
 function createContact(email, number, name, sureLastName) {
   if (sureLastName.length == 1) {
-    sureLastName.push("");
+    sureLastName.unshift("");
   }
   convertNames();
   newContact = {
@@ -300,10 +300,11 @@ function convertNames() {
       nameSuffix = true;
       continue;
     }
+    if(sureLastName[i].length > 0){
     rest = sureLastName[i].slice(1, sureLastName[i].length);
     sureLastName[i] = sureLastName[i][0].toUpperCase() + rest;
   }
-
+  }
   hasNameSuffix();
 }
 
