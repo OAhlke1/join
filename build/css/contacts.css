@@ -1,0 +1,504 @@
+.pos-rel {
+  position: relative;
+}
+
+.pos-abs50 {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+}
+
+.close-overlay {
+  position: absolute;
+  top: 10px;
+  right: 8px;
+}
+
+.fixed {
+  position: fixed;
+}
+
+header {
+  width: 100%;
+}
+
+.mainContainer {
+  height: 928px;
+}
+
+/* Style button */
+
+.newContactButton {
+  margin-bottom: 22.5px;
+}
+
+.newContactButton button {
+  background-color: #2a3647;
+  color: rgb(255, 255, 255);
+  width: 352px;
+  height: 56px;
+  gap: 16px;
+  font-weight: 700;
+  border: 1px;
+  border-radius: 10px;
+  padding: 12px, 0px, 12px, 0px;
+  margin-top: 22.5px;
+}
+
+.newContactButton img {
+  width: 32px;
+  height: 32px;
+}
+
+.container {
+  max-width: 1440px;
+}
+
+/* Style contact list */
+
+.contactList {
+  justify-content: space-between;
+  width: 456px;
+  height: 928px;
+  background-color: white;
+  box-shadow: 4px 0px 4px 0px #0000001a;
+}
+
+.contactNames h3 {
+  font-weight: 400;
+  font-size: 20px;
+  border-bottom: 1px solid #ddd;
+  padding: 17px 36px 17px 36px;
+}
+
+.contactNames li {
+  list-style-type: none;
+  padding: 0;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.contactNames span {
+  color: #007cee;
+  cursor: pointer;
+}
+
+.contactNames {
+  margin-left: 28px;
+  padding: 32px 24px 32px 24px;
+  overflow-y: auto;
+  max-height: 728px;
+}
+
+#profileImage {
+  border-radius: 45px;
+  width: 42px;
+  height: 42px;
+  gap: 10px;
+  border-radius: 45px;
+  background-color: royalblue;
+  margin: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.gap {
+  margin: 10px;
+}
+
+.bigSize {
+  width: 120px !important;
+  height: 120px !important;
+  border-radius: 70px !important;
+  font-weight: 500;
+  font-size: 47px;
+}
+
+.headline {
+  gap: 30px;
+  margin-top: 130px;
+  margin-left: 42px;
+}
+
+.headline h1 {
+  font-weight: 650;
+}
+
+.headline span {
+  border-left: 4px solid #007cee;
+  height: 59px;
+  display: flex;
+  align-items: center;
+  padding-left: 30px;
+}
+/* scrollbar */
+
+.contactList::-webkit-scrollbar {
+  width: 6px;
+}
+.contactList::-webkit-scrollbar-track {
+  background: #f8f6f6;
+  border-radius: 5px;
+}
+
+.contactList::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+  border-radius: 5px;
+}
+.contactList::-webkit-scrollbar-thumb:hover {
+  background: #b9b6b6;
+}
+
+@media (max-width: 1000px) {
+}
+
+/* Contact information Pop-up */
+.informationPopUp div{
+animation: move 0.5s ;
+}
+
+.showContactName img {
+  cursor: pointer;
+}
+
+.showContactName img:last-child {
+  width: 81px;
+  height: 24px;
+}
+
+.showContactName img:first-child {
+  width: 62px;
+  height: 24px;
+}
+
+.showContactName span {
+  font-size: 47px;
+  font-weight: 500;
+}
+
+.showContactName {
+  align-items: center;
+  gap: 36px;
+  margin: 54px;
+}
+
+.contactInformations {
+  margin-left: 54px;
+}
+
+.contactInformations p {
+  width: 207px;
+  height: 74px;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.contactInformations h5 {
+  font-weight: 700;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.contactInformations span {
+  font-weight: 400;
+  font-size: 16px;
+  color: #007cee;
+  cursor: pointer;
+}
+
+.contactInformations span:last-child {
+  color: #000000 !important;
+}
+
+/* Edit Contact */
+.overlay-parent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0 0 0 / 0.2);
+}
+
+.overlayEdit-parent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0 0 0 / 0.2);
+}
+
+.editContactMainContainer {
+  background-color: white;
+  border-radius: 12px;
+  animation: move 0.5s linear;
+}
+
+.addContactMainContainer {
+  background-color: white;
+  border-radius: 12px;
+  animation: move 0.5s linear;
+}
+
+.editContactMainContainer img {
+  width: 240px;
+}
+
+.addContactMainContainer img {
+  width: 240px;
+}
+
+.editContactLeftContainer {
+  background-color: #2a3647;
+  height: 600px;
+  margin-right: 50px;
+  padding: 66px, 46px, 66px, 46px;
+  border-radius: 12px 0 0 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.editContactLeftContainer img {
+  width: 60px;
+  margin-right: 291px;
+}
+
+.editContactLeftContainer p {
+  color: white;
+  font-weight: 700;
+  font-size: 60px;
+  padding: 16px;
+}
+
+.editContactLeftContainer p:last-child {
+  font-size: 27px;
+  font-weight: 400;
+
+}
+
+/* .seperator{
+  border: 2px solid #29abe2;
+  width: 90px;
+} */
+
+.rightContainer {
+  background-color: white;
+  width: 540px;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.rightContainer input {
+  margin: 8px;
+  width: 422px;
+  height: 50px;
+}
+
+.rightContainer img {
+  width: 24px;
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+.editContactButton button {
+  width: 110px;
+  height: 50px;
+  border: 1px solid #2a3647;
+  margin-top: 32px;
+  border-radius: 8px;
+}
+
+.editContactButton {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.editContactButton button:last-child {
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  width: 140px;
+
+}
+
+
+.editContactButton button:last-child {
+  background-color: #2a3647;
+  color: white;
+}
+
+.inputContainer {
+  flex-direction: column;
+}
+
+.inputContainer input {
+  padding: 12px 20px;
+  margin: 8px 0;
+  border-radius: 10px;
+  border-color: #d1d1d1;
+}
+
+.nonePerson img {
+  display: flex;
+  align-items: center;
+}
+
+.nonePerson img {
+  width: 120px;
+  height: 120px;
+}
+
+.contact:hover{
+background-color: #2a3647;
+border-radius: 10px;
+color: white;
+}
+
+.backArrow{
+width: 32px !important;
+height: 32px !important;
+}
+
+/* Responsive */
+
+@media (max-width: 950px) {
+  .headline {
+    display: none;
+  }
+
+  .contactList {
+    width: 100%;
+  }
+
+  .contactNames {
+    max-height: 928px;
+    margin-right: 28px;
+  }
+
+  .newContactButton {
+    display: none;
+  }
+
+  .personAdd img {
+    position: fixed;
+    bottom: 115px;
+    right: 24px;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (min-width: 950px) {
+  .personAdd {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .showContactName span {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 1110px) {
+  .addContactMainContainer {
+    flex-direction: column;
+    max-width: 100%;
+    width: 360px;
+  }
+
+  .addButton button:first-child{
+   display: none;
+  }  
+
+  .addButton button:last-child{
+   width: 202px;
+   } 
+
+  .addContactLeftContainer p {
+    font-size: 47px;
+  }
+  .editContactMainContainer {
+    flex-direction: column;
+  }
+  .editContactLeftContainer img {
+    display: none;
+  }
+
+  .editContactLeftContainer p {
+    font-size: 47px;
+  }
+
+  .editContactLeftContainer p:last-child {
+    font-size: 24px;
+    font-weight: 400;
+  }
+
+  .editContactLeftContainer {
+    height: 350px;
+    width: 100%;
+    align-items: flex-start;
+    border-radius: 12px 12px 0 0;
+    margin: 0;
+  }
+
+  .inputContainer input {
+    width: 360px;
+    height: 40px;
+  }
+
+  .editContactButton button {
+    width: 80px;
+    height: 50px;
+  }
+
+  .rightContainer {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 70px;
+  }
+  .rightContainer img {
+    margin-left: 8px;
+  }
+
+  .merge {
+    margin-top: -70px !important;
+  }
+}
+
+@media (min-width: 1110px) {
+.mobileClose{
+  display: none;
+}
+}
+
+.showContactName img:hover{
+  color: #29ABE2;
+  filter: invert(53%) sepia(96%) saturate(406%) hue-rotate(155deg) brightness(92%) contrast(92%);
+}
+
+/* .newContactButton button:hover{
+  background-color: #29ABE2;
+  filter: invert(53%) sepia(96%) saturate(406%) hue-rotate(155deg) brightness(92%) contrast(92%);
+} */
+
+
+
+@keyframes move {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
