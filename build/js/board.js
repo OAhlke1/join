@@ -1422,7 +1422,7 @@ function deleteTask(index) {
     allTaskObjects[index].deleted = 1;
     document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('completely-hidden');
     document.querySelector('.tasks-overlay').classList.add('disNone');
-    if(checkForSubtaskOnRemote(allTaskObjects[index].taskId)) { deleteTaskOnRemote(); }
+    if(checkForSubtaskOnRemote(allTaskObjects[index].taskId)) { deleteTaskOnRemote(); }else { location.reload(); }
 }
 
 function resetCardDummies() {
@@ -1474,7 +1474,7 @@ async function deleteTaskOnRemote() {
         header: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(notDeletedTasks)
+        body: JSON.stringify(backgroundTasks)
     })
     location.reload();
 }
@@ -2056,7 +2056,8 @@ async function taskActualization() {
         }
     }
     backgroundTasks = puffer;
-    setTimeout(taskActualization, 1000);
+    console.log(backgroundTasks);
+    setTimeout(taskActualization, 100);
 }
 
 function checkForSubtaskOnRemote(id) {
