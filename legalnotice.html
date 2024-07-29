@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="./build/css/general.css">
 </head>
 
-<body onload="includeHTML(), init()">
+<body onload="includeHTML()">
     <div class="flex container">
         <nav w3-include-html="./build/templates/navigation.html"></nav>
         <!-- Platzhalter für die spätere Navigation (Nicht ändern) -->
@@ -20,8 +20,8 @@
             <div class="privacy-container">
                 <div class="privacy-head">
                     <h1>Legal Notice</h1>
-                    <svg class="back-button" onclick="javascript:history.back()" width="37" height="37" viewBox="0 0 37 37" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
+                    <svg class="back-button" onclick="javascript:history.back()" width="37" height="37"
+                        viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M12.9373 17.6667H27.8333C28.5696 17.6667 29.1666 18.2636 29.1666 19C29.1666 19.7364 28.5696 20.3333 27.8333 20.3333H12.9373L19.1466 26.5427C19.6672 27.0633 19.6672 27.9074 19.1466 28.428C18.626 28.9486 17.7819 28.9486 17.2613 28.428L9.24746 20.4142C8.46642 19.6332 8.46642 18.3668 9.24747 17.5858L17.2613 9.572C17.7819 9.05138 18.626 9.05138 19.1466 9.572C19.6672 10.0926 19.6672 10.9367 19.1466 11.4573L12.9373 17.6667Z"
                             fill="#29ABE2" />
@@ -39,7 +39,8 @@
                 <p>Email: [Email]</p>
                 <br>
                 <h3>Acceptance of terms</h3>
-                <p>By accessing and using <span class="join">Join</span> (Product), you acknowledge and agree to the following terms and
+                <p>By accessing and using <span class="join">Join</span> (Product), you acknowledge and agree to the
+                    following terms and
                     conditions,
                     and any policies, guidelines, or amendments thereto that may be presented to you from time to time.
                     We,
@@ -47,29 +48,36 @@
                 </p>
                 <br>
                 <h3>Scope and ownership of the product</h3>
-                <p><span class="join">Join</span> has been developed as part of a student group project in a web development bootcamp at the
+                <p><span class="join">Join</span> has been developed as part of a student group project in a web
+                    development bootcamp at the
                     Developer Akademie GmbH. It has an educational purpose and is not intended for extensive personal &
                     business usage. As such, we cannot guarantee consistent availability, reliability, accuracy, or any
                     other aspect of quality regarding this Product.</p>
                 <br>
-                <p>The design of <span class="join">Join</span> is owned by the Developer Akademie GmbH. Unauthorized use, reproduction,
+                <p>The design of <span class="join">Join</span> is owned by the Developer Akademie GmbH. Unauthorized
+                    use, reproduction,
                     modification, distribution, or replication of the design is strictly prohibited.</p>
                 <br>
                 <h3>Proprietary rights</h3>
                 <p>Aside from the design owned by Developer Akademie GmbH, we, the listed students, retain all
-                    proprietary rights in <span class="join">Join</span>, including any associated copyrighted material, trademarks, and other
+                    proprietary rights in <span class="join">Join</span>, including any associated copyrighted material,
+                    trademarks, and other
                     proprietary
                     information.</p>
                 <br>
                 <h3>Use of the product</h3>
-                <p><span class="join">Join</span> is intended to be used for lawful purposes only, in accordance with all applicable laws and
-                    regulations. Any use of <span class="join">Join</span> for illegal activities, or to harass, harm, threaten, or intimidate
+                <p><span class="join">Join</span> is intended to be used for lawful purposes only, in accordance with
+                    all applicable laws and
+                    regulations. Any use of <span class="join">Join</span> for illegal activities, or to harass, harm,
+                    threaten, or intimidate
                     another person, is strictly prohibited. You are solely responsible for your interactions with other
                     users of
-                    <span class="join">Join</span>.</p>
+                    <span class="join">Join</span>.
+                </p>
                 <br>
                 <h3>Disclaimer of warranties and limitation of liability</h3>
-                <p><span class="join">Join</span> is provided "as is" without warranty of any kind, whether express or implied, including but not
+                <p><span class="join">Join</span> is provided "as is" without warranty of any kind, whether express or
+                    implied, including but not
                     limited to the implied warranties of merchantability, fitness for a particular purpose, and
                     non-infringement. In no event will we, the listed students, or the Developer Akademie, be liable for
                     any direct, indirect, incidental, special, consequential or exemplary damages, including but not
@@ -95,7 +103,69 @@
         </main>
     </div>
 
-    <script src="./build/js/main.js"></script>
+    <script>
+        async function includeHTML() {
+            let includeElements = document.querySelectorAll('[w3-include-html]');
+            for (let i = 0; i < includeElements.length; i++) {
+                const element = includeElements[i];
+                let file = element.getAttribute("w3-include-html");
+                let resp = await fetch(file);
+                if (resp.ok) {
+                    element.innerHTML = await resp.text();
+                }
+
+                else {
+                    element.innerHTML = 'Page not found';
+                }
+            }
+            if (typeof callback === 'function') {
+                callback();
+
+            }
+            let user = localStorage.getItem('User');
+            if (!user) {
+                document.getElementById('nav-links').classList.add('d-none');
+                document.getElementById('user-information').classList.add('d-none');
+            }
+            document.getElementById('legal').classList.add('active');
+            loadUserInitials();
+
+        }
+
+        /**
+ * 
+ * Put the initails into the button
+ * 
+ */
+        function loadUserInitials() {
+            let user = localStorage.getItem('User');
+            let initials = document.getElementById('user-button-initials');
+            console.log(initials);
+            if (initials) {
+                console.log(getInitials(user));
+                initials.innerHTML = getInitials(user);
+            }
+        }
+
+        /**
+         * 
+         * Get the initails from the current user for header
+         * 
+         * @param {*} name - User-name
+         * @returns - returns the initails from the user
+         */
+        function getInitials(name) {
+            let parts = name.split(' ')
+            let initials = ''
+            for (let i = 0; i < parts.length; i++) {
+                if (parts[i].length > 0 && parts[i] !== '') {
+                    initials += parts[i][0]
+                }
+            }
+            return initials;
+        }
+
+    </script>
 </body>
 
 </html>
