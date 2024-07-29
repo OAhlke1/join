@@ -21,10 +21,24 @@ async function includeHTML() {
         document.getElementById('nav-links').classList.add('d-none');
         document.getElementById('user-information').classList.add('d-none');
     }
-    document.getElementById('legal').classList.add('active');
+    if(extractFilename(window.location.href) == 'legalnotice'){
+        document.getElementById('legal').classList.add('active');
+    } else {
+        document.getElementById('privacy').classList.add('active');
+    }
+    
     loadUserInitials();
 
 }
+
+function extractFilename(url) {
+    const urlObj = new URL(url);
+    const pathname = urlObj.pathname;
+    const filenameWithExtension = pathname.substring(pathname.lastIndexOf('/') + 1);
+    const filename = filenameWithExtension.split('.').slice(0, -1).join('.');
+    
+    return filename;
+  }
 
 /**
 * 
