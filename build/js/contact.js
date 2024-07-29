@@ -276,9 +276,24 @@ function createContact(email, number, name, sureLastName) {
     contactId: Math.random(),
   };
   contacts.push([contacts.length + 1, newContact]);
+  contactSuccessfullyCreated()
   resetValue(email, number, name);
   postData("/contacts", newContact);
   getContacts();
+}
+
+function contactSuccessfullyCreated(){
+let mainContainer = document.querySelector(".mainContainer");
+mainContainer.innerHTML +=`
+<div class="contactSuccessfullyCreated">
+
+<img src="./assets/img/contactSuccessfullyCreated.png" alt="">
+
+</div>
+`;
+
+
+
 }
 
 function resetValue(email, number, name) {
