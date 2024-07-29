@@ -156,6 +156,7 @@ function getParticipants() {
 function addTask(event) {
     event.preventDefault();
     newTask = {
+        taskId: Math.random(),
         taskTitle: document.getElementById("title-input").value,
         taskDescrip: document.getElementById("textarea-input").value,
         participants: participantsArray,
