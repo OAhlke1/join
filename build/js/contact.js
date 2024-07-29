@@ -211,13 +211,15 @@ function startingValueEditContact(index) {
 }
 
 function editContact() {
+  deleteContact(presentlyIndexContacts);
   let name = document.querySelector(".inputEditName");
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
-  sureLastName = document.querySelector(".inputEditName").value.split(" ");
-
+ sureLastName = document.querySelector(".inputEditName").value.trimStart().split(" ");
+  // sureLastName = sureLastName
+  // sureLastName.split(" ");
   editContactToggle();
-  deleteContact(presentlyIndexContacts);
+
   setTimeout(function () {
     createContact(email, number, name, sureLastName);
   }, 100);
@@ -258,6 +260,7 @@ function createContactValue() {
   sureLastName = document.querySelector(".inputName").value.split(" ");
   createContact(email, number, name, sureLastName);
   addContactToggle();
+  contactSuccessfullyCreated();
 }
 
 function createContact(email, number, name, sureLastName) {
@@ -276,7 +279,6 @@ function createContact(email, number, name, sureLastName) {
     contactId: Math.random(),
   };
   contacts.push([contacts.length + 1, newContact]);
-  contactSuccessfullyCreated()
   resetValue(email, number, name);
   postData("/contacts", newContact);
   getContacts();
@@ -286,13 +288,9 @@ function contactSuccessfullyCreated(){
 let mainContainer = document.querySelector(".mainContainer");
 mainContainer.innerHTML +=`
 <div class="contactSuccessfullyCreated">
-
-<img src="./assets/img/contactSuccessfullyCreated.png" alt="">
-
+  <img src="./assets/img/contactSuccessfullyCreated.png" alt="contactSuccessfullyCreated">
 </div>
 `;
-
-
 
 }
 
