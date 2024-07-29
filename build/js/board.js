@@ -1422,7 +1422,7 @@ function deleteTask(index) {
     allTaskObjects[index].deleted = 1;
     document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('completely-hidden');
     document.querySelector('.tasks-overlay').classList.add('disNone');
-    if(checkForSubtaskOnRemote(allTaskObjects[index].taskId)) { deleteTaskOnRemote(); }else { location.reload(); }
+    deleteTaskOnRemote();
 }
 
 function resetCardDummies() {
@@ -1468,13 +1468,13 @@ function hideEditingElements() {
  * This function deletes the task on the ftp-server.
  */
 async function deleteTaskOnRemote() {
-    //collectNotDeletedTasks();
+    collectNotDeletedTasks();
     let response = await fetch(tasksURL+`.json`, {
         method: 'PUT',
         header: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(backgroundTasks)
+        body: JSON.stringify(notDeletedTasks)
     })
     location.reload();
 }
@@ -2057,7 +2057,7 @@ async function taskActualization() {
     }
     backgroundTasks = puffer;
     console.log(backgroundTasks);
-    setTimeout(taskActualization, 100);
+    setTimeout(taskActualization, 1000);
 }
 
 function checkForSubtaskOnRemote(id) {
