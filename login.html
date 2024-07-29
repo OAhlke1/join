@@ -71,10 +71,10 @@
     </button>
     <h1>Sign In</h1>
     <form class="flex-column">
-        <input type="text" id="name-signin" placeholder="Name">
-        <input type="email" id="mail-signin" placeholder="Email">
-        <input type="password" id="password-signin" placeholder="Password">
-        <input type="password" id="confirm-passwordsignin" placeholder="Confirm Password">
+        <input type="text" id="name-signin" pattern="[A-Za-z]" placeholder="Name" required>
+        <input type="email" id="mail-signin" placeholder="Email" required >
+        <input type="password" id="password-signin" placeholder="Password" required>
+        <input type="password" id="confirm-passwordsignin" placeholder="Confirm Password" required>
         <div id="sign-error-message"></div>
 
         <div class="acceptPp">
@@ -83,7 +83,7 @@
         </div>
 
         <div class="login-btns flex-center">
-            <button onclick="checkSignUp()" class="signin-btn flex-center" type="button" id="signInButton" disabled>Sign up</button>
+            <button onclick="checkSignUp()" class="signin-btn flex-center" type="submit" id="signInButton" disabled>Sign up</button>
         </div>
     </form>
   </div>

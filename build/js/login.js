@@ -57,11 +57,13 @@ function focused() {
 function setPlaceholder(elem) {
     if (elem.id === "mail-login" || elem.id === "mail-signin") {
         elem.setAttribute('placeholder', 'Email');
-    } else if (elem.id === "password-login" || elem.id === "password-signin" || elem.id === "confirm-password-signin") {
+    } else if (elem.id === "password-login" || elem.id === "password-signin") {
         elem.setAttribute('placeholder', 'Password');
+    } else if (elem.id === "confirm-passwordsignin") {
+        elem.setAttribute('placeholder', 'Confirm Password');
     } else if (elem.id === "name-signin") {
         elem.setAttribute('placeholder', 'Name');
-    }
+    } 
 }
 
 function showLogInForm() {
@@ -124,7 +126,7 @@ async function checkLogin() {
         }
         window.location.href = 'summary.html';
     } else {
-        error.innerHTML = 'Wrong password Ups! Try Again.';
+        error.innerHTML = 'Wrong user or password Ups! Try Again.';
     }
 }
 
@@ -179,7 +181,7 @@ async function checkSignUp() {
             }
 
         } else {
-            document.getElementById('sign-error-message').innerHTML = "Wrong password Ups! Try Again.";
+            document.getElementById('sign-error-message').innerHTML = "Passwords do not match. Ups! Try Again.";
         }
     } else {
         document.getElementById('sign-error-message').innerHTML = "Something missed! Please fill all fields";
