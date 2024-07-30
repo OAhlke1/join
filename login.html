@@ -71,7 +71,7 @@
     </button>
     <h1>Sign In</h1>
     <form class="flex-column">
-        <input type="text" id="name-signin" pattern="[A-Za-z]" placeholder="Name" required>
+        <input type="text" id="name-signin" pattern="^[A-Za-zÄÖÜäöüß\s]+$" placeholder="Name" required>
         <input type="email" id="mail-signin" placeholder="Email" required >
         <input type="password" id="password-signin" placeholder="Password" required>
         <input type="password" id="confirm-passwordsignin" placeholder="Confirm Password" required>

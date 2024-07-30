@@ -126,7 +126,7 @@ async function checkLogin() {
         }
         window.location.href = 'summary.html';
     } else {
-        error.innerHTML = 'Wrong user or password Ups! Try Again.';
+        error.innerHTML = 'Check your email and password. Please try again.';
     }
 }
 
@@ -171,8 +171,8 @@ async function checkSignUp() {
             for (const key in users) {
                 if (users[key].email === signUserEmail.value) {
                     document.getElementById('sign-error-message').innerHTML = "User already exists! Please try again.";
-                    userExistsFirebase = true; // Setze die Flagge auf true, wenn die E-Mail gefunden wurde
-                    break; // Beende die Schleife, da der Benutzer bereits existiert
+                    userExistsFirebase = true; 
+                    break; 
                 }
             }
             if (!userExistsFirebase) {
@@ -181,7 +181,7 @@ async function checkSignUp() {
             }
 
         } else {
-            document.getElementById('sign-error-message').innerHTML = "Passwords do not match. Ups! Try Again.";
+            document.getElementById('sign-error-message').innerHTML = "Your passwords don't match. Please try again.";
         }
     } else {
         document.getElementById('sign-error-message').innerHTML = "Something missed! Please fill all fields";
