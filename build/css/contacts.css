@@ -520,11 +520,24 @@ display: none;
   filter: invert(53%) sepia(96%) saturate(406%) hue-rotate(155deg) brightness(92%) contrast(92%);
 }
 
-/* .newContactButton button:hover{
-  background-color: #29ABE2;
-  filter: invert(53%) sepia(96%) saturate(406%) hue-rotate(155deg) brightness(92%) contrast(92%);
-} */
+@media (max-width: 420px){
+  .addContactMainContainer {
+    width: 26vh;
+}
 
+.editContactMainContainer {
+  width: 26vh;
+}
+
+  .inputContainer input{
+  width: 95%;
+  }
+ .pos-abs50{
+  right: 15px;
+ }   
+
+
+}
 
 
 @keyframes move {
