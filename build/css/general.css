@@ -364,6 +364,8 @@ button {
         font-weight: 400;
         line-height: 16.8px;
         text-align: left;
+        padding: 16px;
+        border-radius: 16px;
     }
 
     .sub-nav {

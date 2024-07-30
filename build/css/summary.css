@@ -257,16 +257,16 @@
     }
 
     .greet {
-        width: 100vw;
+        width: 100vw; 
         height: 100vh;
         margin: 0;
         padding-bottom: 128px;
-        animation: hideGreet 1s forwards;
+        animation: hideGreet 1.5s forwards;
     }
 
     .greet span {
         width: 100vw;
-        text-align: left;
+        text-align: center;
         font-size: 48px;
     }
 
@@ -275,9 +275,10 @@
         opacity: 0;
         height: 0;
         width: 0;
-        animation: showOverview 1s forwards;
+        animation: showOverview 1.5s forwards;
         flex-direction: column;
         align-items: flex-start;
+        justify-content: center;
         gap: 8px;
         margin-top: 48px;
     }
@@ -302,7 +303,7 @@
         opacity: 0;
         height: 0;
         width: 0;
-        animation: showOverview 1s forwards;
+        animation: showOverview 1.5s forwards;
         padding: 16px;
         gap: 0;
         margin-top: 0;
@@ -322,6 +323,7 @@
     .tiles2,
     .tiles3 {
         width: 90vw;
+        max-width: 800px;
     }
 
     .tiles1 {
@@ -343,6 +345,10 @@
     .tile-todo,
     .tile-done {
         width: 50%;
+    }
+
+    .tile-done svg, .tile-todo svg {
+        width: 20px;
     }
 
     .tile-state {
@@ -416,6 +422,7 @@
             opacity: 0;
             height: 0;
             width: 0;
+            display: none;
         }
 
         99% {
@@ -423,6 +430,7 @@
             opacity: 0;
             height: 0;
             width: 0;
+            display: none;
         }
 
         100% {
@@ -430,8 +438,50 @@
             opacity: 1;
             height: auto;
             width: auto;
+            display: flex;
         }
     }
 
 
+}
+
+@media (max-width: 740px) {
+    .summary-headline {
+        margin-left: 32px;
+    }
+}
+
+@media (max-width: 428px) {
+    .summary-headline {
+        margin-left: 24px;
+    }
+
+    .tiles3 {
+        gap: 8px;
+    }
+
+}
+
+@media (max-width: 400px) {
+    .upcoming {
+        font-size: 12px;
+    }
+
+    .tile-date {
+        font-size: 14px;
+    }
+
+    .tiles2 {
+        padding: 14px 24px;
+    }
+}
+
+@media (max-width: 380px) {
+    .count {
+        font-size: 40px;
+    }
+
+    .tile-text {
+        font-size: 12px;
+    }
 }
