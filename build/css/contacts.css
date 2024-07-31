@@ -165,6 +165,17 @@ header {
 animation: move 0.5s ;
 }
 
+.meunContactOptions {
+display: flex;
+justify-content: end;
+align-items: end;
+}
+
+.meunContactOptions img{
+width: 55px;
+height: 55px;
+}
+
 .showContactName img {
   cursor: pointer;
 }
@@ -432,6 +443,13 @@ height: 32px !important;
   .personAdd {
     display: none;
   }
+
+  .backArrow{
+    display: none;
+      }
+  .meunContactOptions{
+    display: none;
+  }    
 }
 
 @media (max-width: 720px) {
@@ -510,9 +528,7 @@ height: 32px !important;
 .mobileClose{
   display: none;
 }
-.backArrow{
-display: none;
-  }
+
 }
 
 .showContactName img:hover{

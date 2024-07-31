@@ -11,7 +11,7 @@ let contactsIndex = 0;
 let showContacts = document.querySelector("#showContact");
 let toggleEditContact = true;
 let toggleAddContact = true;
-let toggleInfoContact = true;
+let toggleInfoContact = false;
 let contactKeys = [];
 let sureLastName;
 let nameSuffix = false;
@@ -130,6 +130,7 @@ function getRandomColor() {
 }
 
 function clickContact(event) {
+  toggleInfoContact= true;
   if (window.innerWidth < 1100) {
     showHideContactNames();
   }
@@ -154,24 +155,31 @@ for(let i = 0; contacts.length > i ; i++){
 
 
 function showHideContactNames() {
-if(contactList.classList.contains("d-none")){
-  contactList.classList.remove("d-none");
-}else if(!contactList.classList.contains("d-none")){
-  contactList.classList.add("d-none");
+  if (window.innerWidth <= 950 && toggleInfoContact ) {
+    contactList.classList.add("d-none");
+    information.classList.remove("d-none");
+  }
+  else if (window.innerWidth > 950 && toggleInfoContact ) {
+    contactList.classList.remove("d-none");
   }
 }
 
+// Funktion beim Ändern der Fenstergröße aufrufen
+window.onresize = function() {
+  showHideContactNames();
+};
+
 function hideContact(){
-let back = document.querySelector(".backArrow");
-if (window.innerWidth < 1100) {
+if (window.innerWidth < 950) {
   contactList.classList.remove("d-none");
-back.classList.add("d-none");
+information.classList.add("d-none")
 }
 }
 
 function clickContactHTML(index) {
   getRandomColor();
-  return ` <div class="flex showContactName">
+  return ` 
+  <div class="flex showContactName">
     
       <div id="profileImage" class="flex-center bigSize"  style="background-color: ${color};">
         ${profileName(index)}
@@ -205,7 +213,9 @@ function clickContactHTML(index) {
         <h5>Phone</h5>
         <span> ${contacts[index][1]["number"]}</span>
       </div>
-    </div>`;
+      </div>
+      <div class="meunContactOptions"> <img src="./assets/img/menuContactOptions.png" alt=""></div>
+      `;
 }
 
 function startingValueEditContact(index) {
@@ -345,23 +355,23 @@ function hasNameSuffix() {
 
 function editContactToggle() {
   let editContact = document.querySelector(".overlayEdit-parent");
-  if (toggleEditContact) {
-    editContact.classList.remove("d-none");
-    toggleEditContact = false;
-  } else {
+  if (!toggleEditContact) {
     editContact.classList.add("d-none");
     toggleEditContact = true;
+  } else {
+    editContact.classList.remove("d-none");
+    toggleEditContact = false;
   }
 }
 
 function addContactToggle() {
   let addContact = document.querySelector(".overlay-parent");
-  if (toggleAddContact) {
-    addContact.classList.remove("d-none");
-    toggleAddContact = false;
-  } else {
+  if (!toggleAddContact) {
     addContact.classList.add("d-none");
     toggleAddContact = true;
+  } else {
+    addContact.classList.remove("d-none");
+    toggleAddContact = false;
   }
 }
 
