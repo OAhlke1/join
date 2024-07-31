@@ -214,7 +214,7 @@ function clickContactHTML(index) {
         <span> ${contacts[index][1]["number"]}</span>
       </div>
       </div>
-      <div class="meunContactOptions"> <img src="./assets/img/menuContactOptions.png" alt=""></div>
+       <img class="meunContactOptions" src="./assets/img/menuContactOptions.png" alt="">
       `;
 }
 
