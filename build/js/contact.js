@@ -97,7 +97,7 @@ function contactHTML(contactsIndex, q) {
       onclick="clickContact(event)" 
       data-contactIndex="${contactsIndex}">
       <div id="profileImage" class="flex-center" style="background-color: ${color};" >
-        ${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}
+       ${profileName(q)}
       </div>
       <div class="gap"> 
         <li>${contacts[q][1].sureName} ${contacts[q][1].lastName}</li>
@@ -105,6 +105,20 @@ function contactHTML(contactsIndex, q) {
       </div>
     </div>`;
 }
+
+function profileName(q){
+if(contacts[q][1].sureName == "" ){
+  return`
+   ${contacts[q][1].lastName[0]}
+  `
+}else{
+  return`
+ ${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}`
+}
+
+}
+
+
 
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
@@ -160,7 +174,7 @@ function clickContactHTML(index) {
   return ` <div class="flex showContactName">
     
       <div id="profileImage" class="flex-center bigSize"  style="background-color: ${color};">
-        ${contacts[index][1]["sureName"][0]}${contacts[index][1]["lastName"][0]}
+        ${profileName(index)}
       </div>
       <div>
         <span>
@@ -205,7 +219,7 @@ function startingValueEditContact(index) {
   email.value = contacts[index][1]["email"];
   number.value = contacts[index][1]["number"];
   letters.innerHTML =
-    contacts[index][1]["sureName"][0] + contacts[index][1]["lastName"][0];
+  profileName(index);
 
   editContactToggle();
 }
