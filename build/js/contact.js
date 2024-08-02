@@ -173,6 +173,7 @@ function hideContact(){
 if (window.innerWidth < 950) {
   contactList.classList.remove("d-none");
 information.classList.add("d-none")
+
 }
 }
 
@@ -211,7 +212,7 @@ function clickContactHTML(index) {
         <h5>Email</h5>
         <span> ${contacts[index][1]["email"]}</span>
         <h5>Phone</h5>
-        <span> ${contacts[index][1]["number"]}</span>
+        <a  href="tel:${contacts[index][1]["number"]}"> ${contacts[index][1]["number"]}</a>
       </div>
       </div>
        <img class="meunContactOptions" src="./assets/img/menuContactOptions.png" alt="">
@@ -235,18 +236,16 @@ function startingValueEditContact(index) {
 }
 
 function editContact() {
-  deleteContact(presentlyIndexContacts);
   let name = document.querySelector(".inputEditName");
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
  sureLastName = document.querySelector(".inputEditName").value.trimStart().split(" ");
-  // sureLastName = sureLastName
-  // sureLastName.split(" ");
-  editContactToggle();
 
-  setTimeout(function () {
-    createContact(email, number, name, sureLastName);
-  }, 100);
+  editContactToggle();
+  deleteContact(presentlyIndexContacts)
+ createContact(email, number, name, sureLastName);
+  
+
 }
 
 function deleteContact(index) {
@@ -256,7 +255,9 @@ function deleteContact(index) {
   contactsIndex = 0;
   q = 0;
   information.innerHTML = "";
+  toggleInfoContact= false;
   renderIntoLetterBox();
+
 }
 
 async function deleteData(path = "") {
@@ -277,17 +278,18 @@ async function postData(path = "", data = {}) {
   return (responseToJson = await response.json());
 }
 
-function createContactValue() {
+ function createContactValue() {
   let email = document.querySelector(".inputEmail");
   let number = document.querySelector(".inputNumber");
   let name = document.querySelector(".inputName");
   sureLastName = document.querySelector(".inputName").value.split(" ");
-  createContact(email, number, name, sureLastName);
+  createContact(email, number, name, sureLastName)
+  // contactSuccessfullyCreated();
   addContactToggle();
-  contactSuccessfullyCreated();
+
 }
 
-function createContact(email, number, name, sureLastName) {
+async function createContact(email, number, name, sureLastName) {
   if (sureLastName.length == 1) {
     sureLastName.unshift("");
   }
@@ -304,9 +306,14 @@ function createContact(email, number, name, sureLastName) {
   };
   contacts.push([contacts.length + 1, newContact]);
   resetValue(email, number, name);
-  postData("/contacts", newContact);
-  getContacts();
-}
+  //  postData("/contacts", newContact).then(() => {
+
+  //   getContacts();
+  //  }) 
+
+ await postData("/contacts", newContact)
+ await getContacts();
+};
 
 function contactSuccessfullyCreated(){
 let mainContainer = document.querySelector(".mainContainer");
