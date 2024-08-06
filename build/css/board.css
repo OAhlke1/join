@@ -15,6 +15,10 @@ img {
     display: none;
 }
 
+.completely-hidden {
+    display: none !important;
+}
+
 label {
     line-height: 0;
 }
@@ -205,7 +209,8 @@ main .boardCont .board .board-column .column-card-cont .pseudo-task {
 }
 
 main .tasks-overlay .overlay-card {
-    width: 525px;
+    width: 80%;
+    max-width: 525px;
     max-height: 811px;
     background-color: white;
     border-radius: 30px;
@@ -215,7 +220,7 @@ main .tasks-overlay .overlay-card {
 }
 
 main .tasks-overlay .overlay-card .inner {
-    width: 100%;
+    width: calc(100% - 10px);
     max-width: 429px;
     height: 100%;
     max-height: 731px;
@@ -225,6 +230,10 @@ main .tasks-overlay .overlay-card .inner {
     user-select: none;
     position: relative;
     margin-bottom: 30px;
+}
+
+main .tasks-overlay .overlay-card .inner > div {
+    width: 100%;
 }
 
 main .tasks-overlay .overlay-card .inner h2 {
@@ -335,10 +344,17 @@ main .tasks-overlay .overlay-card .inner .participants-block p {
     font-size: 20px;
 }
 
-main .tasks-overlay .overlay-card .inner .participants-block .participants {
+
+
+.participants-outer {
+    width: 50%;
+    overflow: scroll hidden;
+}
+
+main .tasks-overlay .overlay-card .inner .participants-block .participants-outer .participants {
     row-gap: 18px;
     margin-left: 16px;
-    width: 100%;
+    width: fit-content;
     max-height: 168px;
     overflow-y: scroll;
 }
@@ -448,6 +464,10 @@ main .tasks-overlay .overlay-card .edit-delete {
     z-index: 5000;
 }
 
+.edit-delete .edit, .edit-delete .separator, .edit-delete .delete {
+    width: fit-content;
+}
+
 main .tasks-overlay .overlay-card .edit-delete .delete, main .tasks-overlay .overlay-card .edit-delete .edit, main .tasks-overlay .overlay-card .edit-delete .delete, main .tasks-overlay .overlay-card .edit-delete .stop-editing {
     align-items: center;
     justify-content: center;
@@ -536,8 +556,13 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     justify-content: space-between;
 }
 
+main .boardCont .board .board-column .column-card-cont .task .participants-and-urgency .participants {
+    width: 50%;
+    overflow: scroll hidden;
+}
+
 main .boardCont .board .board-column .column-card-cont .task .participants-and-urgency .participants .participant {
-    width: 32px;
+    Min-width: 32px;
     height: 32px;
     border: 2px solid white;
     border-radius: 45px;
@@ -619,7 +644,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 }
 
 .overlay-card .inner .select-container {
-    width: 440px;
+    width: 100%;
     height: 48px;
     padding: 12px 16px 12px 16px;
     gap: 0px;
@@ -685,11 +710,12 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 }
 
 .circle, .contact-list .contact .circle {
-    width: 32px;
+    width: 32px !important;
     height: 32px;
     aspect-ratio: 1 / 1;
     border-radius: 100%;
     background-color: green;
+    overflow: hidden;
 }
 
 .add-task-overlay-box .contact-list .contact .circle {
@@ -789,6 +815,10 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     position: relative;
     user-select: none;
     cursor: pointer;
+}
+
+.overlay-card .chosen-list .circle {
+    cursor: default;
 }
 
 .chosen-list .circle .name-block {
@@ -896,7 +926,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     height: 100%;
 }
 
-#new-title-input, #new-taskdescrip-input {
+#title-input-overlay, #task-descrip-overlay {
     width: 100%;
     height: 48px;
 }
@@ -1009,7 +1039,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     height: fit-content !important;
 }
 
-#choose-subtasks-add {
+#choose-subtasks-overlay {
     padding: 0 !important;
 }
 
@@ -1158,6 +1188,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
         height: fit-content;
         overflow-x: hidden;
         overflow-y: scroll;
+        padding-bottom: 80px;
     }
 
     main .boardCont .board .board-column {
@@ -1195,11 +1226,11 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
         width: fit-content;
     }
 
-    #title-container, #description-container, .add-task-overlay textarea, .add-task-overlay #date-container, .add-task-overlay #assigned-container, #category-container, #prio-container, #substasks-container {
+    #title-container, #description-container, .add-task-overlay textarea, .add-task-overlay #date-container, .overlay-card .assigned-container, .add-task-overlay #assigned-container, #category-container, #prio-container, #substasks-container {
         width: calc(100% - 10px) !important;
     }
 
-    .add-task-overlay-box input, .add-task-overlay .subtitle, .add-task-overlay #title-input-container, .add-task-overlay #title-input, .add-task-overlay #textarea-container, .add-task-overlay #textarea-container textarea, #calender, .add-task-overlay-box #search-contacts, .add-task-overlay-box .select-categories, #choose-prio-container, #substasks-container .subtask-input {
+    .add-task-overlay-box input, .add-task-overlay .subtitle, .add-task-overlay #title-input-container, .add-task-overlay #title-input-add, .add-task-overlay #textarea-container, .add-task-overlay #textarea-container textarea, #calender, .add-task-overlay-box #search-contacts, .add-task-overlay-box .select-categories, #choose-prio-container, #substasks-container .subtask-input {
         width: 100% !important;
     }
 
