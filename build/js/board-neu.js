@@ -1104,7 +1104,6 @@ async function repostTasks() {
 }
 
 document.querySelector('body').addEventListener('keyup', (event)=>{
-    console.log(event.key);
     if(event.key === "Escape") {
         closeOverlay();
         closeOverlayAdd();

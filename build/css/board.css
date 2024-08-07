@@ -855,6 +855,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     position: absolute;
     top: 30px;
     right: 30px;
+    cursor: pointer;
 }
 
 .subtask-list {
@@ -1038,6 +1039,10 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     height: fit-content !important;
 }
 
+#content-box-left, #content-box-right {
+    height: fit-content !important;
+}
+
 #choose-subtasks-overlay {
     padding: 0 !important;
 }
@@ -1047,9 +1052,8 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     height: fit-content;
     align-items: flex-start;
     justify-content: center;
-    column-gap: 48px;
-    overflow-x: hidden;
-    overflow-y: hidden;
+    column-gap: 40px;
+    overflow-x: hidden scroll;
 }
 
 .bottom-bar {
