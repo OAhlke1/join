@@ -263,6 +263,7 @@ function deleteContact(index) {
   contactsIndex = 0;
   q = 0;
   information.innerHTML = "";
+  // showContacts.innerHTML = "";
   toggleInfoContact = false;
   renderIntoLetterBox();
 }
