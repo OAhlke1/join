@@ -101,7 +101,7 @@ header {
   max-height: 728px;
 }
 
-#profileImage {
+.profileImage {
   border-radius: 45px;
   width: 42px;
   height: 42px;

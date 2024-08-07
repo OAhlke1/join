@@ -36,9 +36,9 @@ async function getContacts() {
 }
 
 async function getTasks() {
-  let response = await fetch(BASE_URL+'/tasks.json');
+  let response = await fetch(BASE_URL + "/tasks.json");
   response = await response.json();
-  for(let [key, value] of Object.entries(response)) {
+  for (let [key, value] of Object.entries(response)) {
     tasks.push(value);
   }
 }
@@ -106,7 +106,9 @@ function contactHTML(contactsIndex, q) {
       class="flex contact c-${contactsIndex}"
       onclick="clickContact(event)" 
       data-contactIndex="${contactsIndex}">
-      <div id="profileImage" class="flex-center" style="background-color: ${contacts[contactsIndex][1].color};" >
+      <div class="flex-center profileImage" style="background-color: ${
+        contacts[contactsIndex][1].color
+      };" >
        ${profileName(q)}
       </div>
       <div class="gap"> 
@@ -116,16 +118,15 @@ function contactHTML(contactsIndex, q) {
     </div>`;
 }
 
-function profileName(q){
-if(contacts[q][1].sureName == "" ){
-  return`
+function profileName(q) {
+  if (contacts[q][1].sureName == "") {
+    return `
    ${contacts[q][1].lastName[0]}
-  `
-}else{
-  return`
- ${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}`
-}
-
+  `;
+  } else {
+    return `
+ ${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}`;
+  }
 }
 
 function getRandomColor() {
@@ -138,7 +139,7 @@ function getRandomColor() {
 }
 
 function clickContact(event) {
-  toggleInfoContact= true;
+  toggleInfoContact = true;
   if (window.innerWidth < 1100) {
     showHideContactNames();
   }
@@ -147,50 +148,46 @@ function clickContact(event) {
     .closest(".contact")
     .getAttribute("data-contactIndex");
 
-   focusContact();
+  focusContact();
   information.innerHTML = clickContactHTML(presentlyIndexContacts);
 }
 
-function focusContact(){
-let contact = document.querySelector(`.c-${presentlyIndexContacts}`);
+function focusContact() {
+  let contact = document.querySelector(`.c-${presentlyIndexContacts}`);
 
-for(let i = 0; contacts.length > i ; i++){
-  let contact = document.querySelector(`.c-${i}`);
-  contact.classList.remove("contactFocus");
-}
+  for (let i = 0; contacts.length > i; i++) {
+    let contact = document.querySelector(`.c-${i}`);
+    contact.classList.remove("contactFocus");
+  }
   contact.classList.add("contactFocus");
 }
 
-
 function showHideContactNames() {
-  if (window.innerWidth <= 950 && toggleInfoContact ) {
+  if (window.innerWidth <= 950 && toggleInfoContact) {
     contactList.classList.add("d-none");
     information.classList.remove("d-none");
-  }
-  else if (window.innerWidth > 950 && toggleInfoContact ) {
+  } else if (window.innerWidth > 950 && toggleInfoContact) {
     contactList.classList.remove("d-none");
   }
 }
 
 // Funktion beim Ändern der Fenstergröße aufrufen
-window.onresize = function() {
+window.onresize = function () {
   showHideContactNames();
 };
 
-function hideContact(){
-if (window.innerWidth < 950) {
-  contactList.classList.remove("d-none");
-information.classList.add("d-none")
-
-}
+function hideContact() {
+  if (window.innerWidth < 950) {
+    contactList.classList.remove("d-none");
+    information.classList.add("d-none");
+  }
 }
 
 function clickContactHTML(index) {
-  getRandomColor();
   return ` 
   <div class="flex showContactName">
     
-      <div id="profileImage" class="flex-center bigSize"  style="background-color: ${color};">
+      <div class="flex-center bigSize profileImage"  style="background-color: ${contacts[index][1]["color"]};">
         ${profileName(index)}
       </div>
       <div>
@@ -220,7 +217,9 @@ function clickContactHTML(index) {
         <h5>Email</h5>
         <span> ${contacts[index][1]["email"]}</span>
         <h5>Phone</h5>
-        <a  href="tel:${contacts[index][1]["number"]}"> ${contacts[index][1]["number"]}</a>
+        <a  href="tel:${contacts[index][1]["number"]}"> ${
+    contacts[index][1]["number"]
+  }</a>
       </div>
       </div>
        <img class="meunContactOptions" src="./assets/img/menuContactOptions.png" alt="">
@@ -237,8 +236,7 @@ function startingValueEditContact(index) {
     contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
   email.value = contacts[index][1]["email"];
   number.value = contacts[index][1]["number"];
-  letters.innerHTML =
-  profileName(index);
+  letters.innerHTML = profileName(index);
 
   editContactToggle();
 }
@@ -247,13 +245,14 @@ function editContact() {
   let name = document.querySelector(".inputEditName");
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
- sureLastName = document.querySelector(".inputEditName").value.trimStart().split(" ");
+  sureLastName = document
+    .querySelector(".inputEditName")
+    .value.trimStart()
+    .split(" ");
 
   editContactToggle();
-  deleteContact(presentlyIndexContacts)
- createContact(email, number, name, sureLastName);
-  
-
+  deleteContact(presentlyIndexContacts);
+  createContact(email, number, name, sureLastName);
 }
 
 function deleteContact(index) {
@@ -264,16 +263,16 @@ function deleteContact(index) {
   contactsIndex = 0;
   q = 0;
   information.innerHTML = "";
-  toggleInfoContact= false;
+  toggleInfoContact = false;
   renderIntoLetterBox();
 }
 
 function deleteContactFromAllTasks(id) {
   let puffer = [];
-  for(let i=0; i<tasks.length; i++) {
-    if(tasks[i].participants) {
-      for(let j=0; j<tasks[i].participants; j++) {
-        if(tasks[i].participants[j].contactId === id) {
+  for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i].participants) {
+      for (let j = 0; j < tasks[i].participants; j++) {
+        if (tasks[i].participants[j].contactId === id) {
           puffer = tasks[i].participants[j];
           puffer.splice(j, 1);
           tasks[i].participants[j] = puffer;
@@ -285,12 +284,12 @@ function deleteContactFromAllTasks(id) {
 }
 
 async function repostTasks() {
-  let response = await fetch(BASE_URL+'/tasks.json', {
-    method: 'PUT',
+  let response = await fetch(BASE_URL + "/tasks.json", {
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(tasks)
+    body: JSON.stringify(tasks),
   });
 }
 
@@ -312,15 +311,15 @@ async function postData(path = "", data = {}) {
   return (responseToJson = await response.json());
 }
 
- function createContactValue() {
+function createContactValue(event) {
+  event.preventDefault();
   let email = document.querySelector(".inputEmail");
   let number = document.querySelector(".inputNumber");
   let name = document.querySelector(".inputName");
   sureLastName = document.querySelector(".inputName").value.split(" ");
-  createContact(email, number, name, sureLastName)
+  createContact(email, number, name, sureLastName);
   // contactSuccessfullyCreated();
   addContactToggle();
-
 }
 
 async function createContact(email, number, name, sureLastName) {
@@ -343,20 +342,19 @@ async function createContact(email, number, name, sureLastName) {
   //  postData("/contacts", newContact).then(() => {
 
   //   getContacts();
-  //  }) 
+  //  })
 
- await postData("/contacts", newContact)
- await getContacts();
-};
+  await postData("/contacts", newContact);
+  await getContacts();
+}
 
-function contactSuccessfullyCreated(){
-let mainContainer = document.querySelector(".mainContainer");
-mainContainer.innerHTML +=`
+function contactSuccessfullyCreated() {
+  let mainContainer = document.querySelector(".mainContainer");
+  mainContainer.innerHTML += `
 <div class="contactSuccessfullyCreated">
   <img src="./assets/img/contactSuccessfullyCreated.png" alt="contactSuccessfullyCreated">
 </div>
 `;
-
 }
 
 function resetValue(email, number, name) {
@@ -378,10 +376,10 @@ function convertNames() {
       nameSuffix = true;
       continue;
     }
-    if(sureLastName[i].length > 0){
-    rest = sureLastName[i].slice(1, sureLastName[i].length);
-    sureLastName[i] = sureLastName[i][0].toUpperCase() + rest;
-  }
+    if (sureLastName[i].length > 0) {
+      rest = sureLastName[i].slice(1, sureLastName[i].length);
+      sureLastName[i] = sureLastName[i][0].toUpperCase() + rest;
+    }
   }
   hasNameSuffix();
 }
@@ -419,18 +417,13 @@ function addContactToggle() {
 function backgroundClickedAdd(event) {
   // Check if the clicked target is the overlay and not a child element
   if (event.target === event.currentTarget) {
-      // Call your function here
-      addContactToggle()
-
+    // Call your function here
+    addContactToggle();
   }
 }
 
 function backgroundClickedEdit(event) {
   if (event.target === event.currentTarget) {
-      editContactToggle();
+    editContactToggle();
   }
 }
-
-
-
-
