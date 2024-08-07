@@ -17,6 +17,7 @@ let doneCount = 0;
 let selectedPrio = "medium";
 
 async function getTasks() {
+    includeHTML();
     let response = await fetch(tasksURL+'.json');
     response = await response.json();
     for(let i=0; i<response.length; i++) {
