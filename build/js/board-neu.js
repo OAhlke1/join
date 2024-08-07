@@ -387,7 +387,7 @@ function getSubtasksOverlay(index) {
     if(allTaskObjects[index].subTasks) {
         allTaskObjects[index].subTasks.forEach((elem, j)=>{
             input = `<input id="checkbox${index}${j}" type="checkbox" ${elem.subTaskDone === 1 ? 'checked' : ''} onmouseup="actualizeSubtaskStatus(event, ${index}, ${j})">`;
-            inputLabel += /* HTML */ `<div class="flex-center" style="width: 100%; justify-content: flex-start;"><div class="subtask-check flex">${input}<label for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</label></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" style="width: 18px; height: 18px;" onclick="deleteSubtask(${index}, ${j})"></div>`;
+            inputLabel += /* HTML */ `<div class="flex-center" style="width: 100%; justify-content: flex-start;"><div class="subtask-check flex">${input}<p for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</p></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" style="width: 18px; height: 18px;" onclick="deleteSubtask(${index}, ${j})"></div>`;
         })
         inputLabel = `<div class="hide-for-editing"><p>Subtasks</p><div class="subtasks"><div class="flex flex-center show-for-editing disNone" style="column-gap: 20px;"></div>${inputLabel}</div></div>`;
     }
@@ -717,7 +717,7 @@ function actualizeTask(index) {
         taskTitle: document.querySelector('#title-input-overlay').value,
         taskType: allTaskObjects[index].taskType,
         urgency: document.querySelector('.overlay-card .chosen-urgency').getAttribute('data-resetUrgency'),
-        amountsOfEditing: allTaskObjects[index].amountsOfEditing ? allTaskObjects[index].amountsOfEditing+1 : 0
+        amountOfEditing: allTaskObjects[index].amountOfEditing ? allTaskObjects[index].amountOfEditing+1 : 0
     };
     allTaskObjects[index] = structuredClone(newTaskObject);
     reRenderTasks();
@@ -1009,7 +1009,7 @@ function addNewTask(event) {
         taskTitle: document.querySelector('#title-input-add').value,
         taskType: 'toDo',
         urgency: selectedPrio,
-        amountsOfEditing: 0
+        amountOfEditing: 0
     };
     allTaskObjects.push(newTask);
     renderNewTask(allTaskObjects.length-1);
@@ -1063,7 +1063,7 @@ function actualizeNotDeletedTasks() {
     for(let i=0; i<actualTasksOnRemote.length; i++) {
         for(let j=0; j<notDeletedTasks.length; j++) {
             if(actualTasksOnRemote[i].taskId === notDeletedTasks[j].taskId) {
-                if(actualTasksOnRemote[i].amountsOfEditing > notDeletedTasks[j].amountsOfEditing) {
+                if(actualTasksOnRemote[i].amountOfEditing > notDeletedTasks[j].amountOfEditing) {
                     notDeletedTasks[j] = actualTasksOnRemote[i];
                 }
             }
