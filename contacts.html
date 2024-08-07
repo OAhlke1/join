@@ -103,12 +103,12 @@
        <div class="flex rightContainer">
          <img class="close-overlay" src="./assets/img/close.png" alt="" onclick="addContactToggle()">
          <img class="close-overlay mobileClose" src="./assets/img/closeWhite.png" alt="" onclick="addContactToggle()">
-     <form class="flex inputContainer" onsubmit="forceInput()">
+     <form class="flex inputContainer" onsubmit="createContact(email, number, name, sureLastName)">
       <div class="pos-rel"><input type="text" placeholder="name" class="inputName" required><img src="./assets/img/person.png" alt="" class="pos-abs50"></div>
       <div class="pos-rel"> <input type="email" placeholder="email" class="inputEmail" required><img src="./assets/img/mail.png" alt="" class="pos-abs50"></div>
       <div class="pos-rel"><input type="number" placeholder="number" class="inputNumber" required><img src="./assets/img/call.png" alt="" class="pos-abs50"></div>
       
-     <div class="flex editContactButton addButton"> <button onclick="addContactToggle()">Cancel</button> <button class="flex" onclick="createContactValue()">Create contact <img src="./assets/img/save.png" alt=""></button></div>
+     <div class="flex editContactButton addButton"> <button  onclick="addContactToggle()">Cancel</button> <button type="button" class="flex" onclick="createContactValue()">Create contact <img src="./assets/img/save.png" alt=""></button></div>
         
      
      </form>

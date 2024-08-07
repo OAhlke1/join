@@ -434,5 +434,3 @@ function backgroundClickedEdit(event) {
 
 
 
-
-
