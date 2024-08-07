@@ -211,7 +211,6 @@ main .boardCont .board .board-column .column-card-cont .pseudo-task {
 main .tasks-overlay .overlay-card {
     width: 80%;
     max-width: 525px;
-    max-height: 811px;
     background-color: white;
     border-radius: 30px;
     overflow: hidden;
@@ -223,10 +222,10 @@ main .tasks-overlay .overlay-card .inner {
     width: calc(100% - 10px);
     max-width: 429px;
     height: 100%;
-    max-height: 731px;
+    max-height: 669px;
     row-gap: 24px;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: hidden;
     user-select: none;
     position: relative;
     margin-bottom: 30px;
@@ -307,7 +306,7 @@ main .tasks-overlay .overlay-card .inner h2 {
 }
 
 main .tasks-overlay .overlay-card .inner .top-texts {
-    width: 100%;
+    width: calc(100% - 10px);
     row-gap: 24px;
 }
 
@@ -1221,9 +1220,17 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 }
 
 @media only screen and (max-width: 1100px) {
-
     .add-task-overlay-box {
         width: fit-content;
+    }
+
+    form {
+        margin: 0 auto;
+    }
+
+    #choose-prio-container {
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     #title-container, #description-container, .add-task-overlay textarea, .add-task-overlay #date-container, .overlay-card .assigned-container, .add-task-overlay #assigned-container, #category-container, #prio-container, #substasks-container {
@@ -1239,10 +1246,16 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
         align-items: center;
         justify-content: flex-start;
         row-gap: 24px;
-        width: 100%;
+        width: fit-content;
         height: 300px;
+        margin: 0 auto;
         overflow-x: hidden;
         overflow-y: scroll;
+    }
+
+    .bottom-bar {
+        width: fit-content !important;
+        margin: 30px auto 0 auto !important;
     }
 
     #border-container {
