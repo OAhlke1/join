@@ -36,6 +36,25 @@ async function getContacts() {
     for(let [key, value] of Object.entries(response)) {
         allContactsObjects.push(value);
     }
+    sortContacts();
+}
+
+function sortContacts() {
+    for (let i = 0; i < allContactsObjects.length - 1; i++) {
+        for (let j = i + 1; j < allContactsObjects.length; j++) {
+            if (allContactsObjects[i]["lastName"] > allContactsObjects[j]["lastName"]) {
+                puffer = allContactsObjects[i];
+                allContactsObjects[i] = allContactsObjects[j];
+                allContactsObjects[j] = puffer;
+            } else if (allContactsObjects[i]["lastName"] === allContactsObjects[i]["lastName"]) {
+                if (allContactsObjects[i]["sureName"] > allContactsObjects[j]["sureName"]) {
+                    puffer = allContactsObjects[i];
+                    allContactsObjects[i] = allContactsObjects[j];
+                    allContactsObjects[j] = puffer;
+                }
+            }
+        }   
+    }
     renderContactListAdd();
 }
 

@@ -2,6 +2,7 @@ const BASE_URL =
   "https://join-249-default-rtdb.europe-west1.firebasedatabase.app";
 
 let contacts = [];
+let tasks = [];
 let puffer;
 let newChar;
 let letterBlock = ``;
@@ -29,8 +30,17 @@ function init() {
 async function getContacts() {
   contacts = await fetch(BASE_URL + "/contacts.json");
   contacts = await contacts.json();
+  getTasks();
   setContactsAsArray();
   sorter();
+}
+
+async function getTasks() {
+  let response = await fetch(BASE_URL+'/tasks.json');
+  response = await response.json();
+  for(let [key, value] of Object.entries(response)) {
+    tasks.push(value);
+  }
 }
 
 function setContactsAsArray() {
@@ -96,7 +106,7 @@ function contactHTML(contactsIndex, q) {
       class="flex contact c-${contactsIndex}"
       onclick="clickContact(event)" 
       data-contactIndex="${contactsIndex}">
-      <div id="profileImage" class="flex-center" style="background-color: ${color};" >
+      <div id="profileImage" class="flex-center" style="background-color: ${contacts[contactsIndex][1].color};" >
        ${profileName(q)}
       </div>
       <div class="gap"> 
@@ -117,8 +127,6 @@ if(contacts[q][1].sureName == "" ){
 }
 
 }
-
-
 
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
@@ -249,6 +257,7 @@ function editContact() {
 }
 
 function deleteContact(index) {
+  deleteContactFromAllTasks(contacts[index][1].contactId);
   deleteData("/contacts/" + contacts[index][0]);
   contacts.splice(index, 1);
   letterBlock = "";
@@ -257,7 +266,32 @@ function deleteContact(index) {
   information.innerHTML = "";
   toggleInfoContact= false;
   renderIntoLetterBox();
+}
 
+function deleteContactFromAllTasks(id) {
+  let puffer = [];
+  for(let i=0; i<tasks.length; i++) {
+    if(tasks[i].participants) {
+      for(let j=0; j<tasks[i].participants; j++) {
+        if(tasks[i].participants[j].contactId === id) {
+          puffer = tasks[i].participants[j];
+          puffer.splice(j, 1);
+          tasks[i].participants[j] = puffer;
+        }
+      }
+    }
+  }
+  repostTasks();
+}
+
+async function repostTasks() {
+  let response = await fetch(BASE_URL+'/tasks.json', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(tasks)
+  });
 }
 
 async function deleteData(path = "") {
