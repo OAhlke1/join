@@ -1102,3 +1102,11 @@ async function repostTasks() {
         body: JSON.stringify(notDeletedTasks)
     });
 }
+
+document.querySelector('body').addEventListener('keyup', (event)=>{
+    console.log(event.key);
+    if(event.key === "Escape") {
+        closeOverlay();
+        closeOverlayAdd();
+    }
+})
