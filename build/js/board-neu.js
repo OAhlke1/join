@@ -1065,6 +1065,7 @@ function deleteTask(index) {
     allTaskObjects[index].deleted = 1;
     document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('completely-hidden');
     closeOverlay();
+    showHideGreyTaskCards();
 }
 
 /**
@@ -1472,6 +1473,7 @@ function addNewTask(event) {
     allTaskObjects.push(newTask);
     renderNewTask(allTaskObjects.length-1);
     closeOverlayAdd();
+    fadeInTaskAdded();
 }
 
 /**
@@ -1577,6 +1579,18 @@ function fadeInTaskAdded() {
     taskAddedElem.classList.remove('not-added');
     taskAddedElem.classList.add('added');
     setTimeout(fadeOutTaskAdded, 1000);
+}
+
+/**
+ * 
+ *  @function fadeOutTaskAdded removes the class 'added' and adds the class 'not-added' to @var taskAddedElem to fade it out via CSS.
+ */
+function fadeOutTaskAdded() {
+    taskAddedElem.classList.remove('added');
+    taskAddedElem.classList.add('not-added');
+    setTimeout(()=>{
+        taskAddedElem.classList.add('disNone');
+    }, 700);
 }
 
 /**
