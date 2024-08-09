@@ -399,6 +399,7 @@ main .tasks-overlay .overlay-card .inner .subtasks-block {
 
 main .tasks-overlay .overlay-card .inner .subtasks-block p {
     font-size: 20px;
+    white-space: wrap;
 }
 
 main .tasks-overlay .overlay-card .inner .subtasks-block .subtasks {
@@ -414,8 +415,8 @@ main .tasks-overlay .overlay-card .inner .subtask-check {
 }
 
 main .tasks-overlay .overlay-card .inner .subtask-check input {
-    width: 24px;
-    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
     border: none;
     border-radius: 0px;
     outline: none;
@@ -1053,7 +1054,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     align-items: flex-start;
     justify-content: center;
     column-gap: 40px;
-    overflow-x: hidden scroll;
+    overflow: hidden scroll;
 }
 
 .bottom-bar {

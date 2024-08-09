@@ -109,7 +109,8 @@ function renderSelectContacts() {
 function renderChosenList() {
     document.querySelector('.chosen-list').innerHTML = '';
     participantsArray.forEach((elem, i)=>{
-        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})" style="background-color: ${allContactsObjects[i].color};">
+        console.log(elem);
+        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" style="background-color: ${elem.color};" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})" style="background-color: ${allContactsObjects[i].color};">
             <p>${elem.sureName[0]}${elem.lastName[0]}</p>
             <div class="name-block${i} name-block disNone"><p>${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
         </div>
@@ -145,10 +146,7 @@ function selectContact(event) {
 function getParticipants() {
     participantsArray = [];
     document.querySelectorAll('.contact.chosen').forEach((elem)=>{
-        participantsArray.push({
-            sureName: allContactsObjects[+elem.getAttribute('data-selectindex')].sureName,
-            lastName: allContactsObjects[+elem.getAttribute('data-selectindex')].lastName
-        })
+        participantsArray.push(allContactsObjects[+elem.getAttribute('data-selectindex')])
     })
     renderChosenList();
 }
@@ -156,8 +154,8 @@ function getParticipants() {
 function addTask(event) {
     event.preventDefault();
     newTask = {
-        taskTitle: document.getElementById("title-input").value,
-        taskDescrip: document.getElementById("textarea-input").value,
+        taskTitle: document.getElementById("title-input-add").value,
+        taskDescrip: document.getElementById("task-descrip-add").value,
         participants: participantsArray,
         date: document.getElementById("date-input").value,
         urgency: selectedPrio,
@@ -195,7 +193,7 @@ async function postNewTask(event) {
         header: {'Content-Type': 'application/json'},
         body: JSON.stringify(allTaskObjects)
     });
-    fadeInTaskAdded();
+    document.querySelector('#board-link').click();
 }
 
 function showCrossTic() {
