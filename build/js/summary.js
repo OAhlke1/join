@@ -9,6 +9,7 @@ let greetTime = document.getElementById('greetTime');
 let greetName = document.getElementById('greetName');
 
 function init() {
+    loadPageMobile();
     getGreetingTime(localStorage.getItem('User'));
     getGreetingName();
     getValues();
@@ -69,7 +70,7 @@ async function getValues() {
     if (data) {
         if (data.length > 0) {
             taskBoard.innerHTML = data.length;
-        } 
+        }
     }
     tileDate.innerHTML = getUrgentDate(data);
 }
@@ -136,3 +137,66 @@ function getUrgentDate(data) {
         return 'No appointments';
     }
 }
+
+function toggleDivs() {
+    let headline = document.getElementById('summary-headline');
+    let overview = document.getElementById('overview');
+    let greet = document.getElementById('greet');
+    let screenWidth = window.innerWidth;
+
+    if (screenWidth <= 1280) {
+        headline.style.display = 'none'; // Div 1 wird ins Layout gebracht
+        overview.style.display = 'none'; // Div 1 wird ins Layout gebracht
+        setTimeout(function () {
+            greet.style.opacity = '0';     // Div 2 wird ausgeblendet
+            greet.style.visibility = 'hidden';
+            greet.style.display = 'none';  // Div 2 wird aus dem Layout entfernt
+            headline.style.display = 'flex'; // Div 1 wird ins Layout gebracht
+            overview.style.display = 'flex'; // Div 1 wird ins Layout gebracht
+
+        }, 2000); // Warte 3 Sekunden bevor Div 2 ausgeblendet wird
+    } else {
+        // Wenn Bildschirm größer wird, beide divs wieder anzeigen
+        headline.style.display = 'flex';
+        overview.style.display = 'flex';
+        greet.style.display = 'flex';
+        greet.style.opacity = '1';     // Div 2 wird ausgeblendet
+        greet.style.visibility = 'visible';
+
+    }
+}
+
+function loadPageMobile() {
+    let headline = document.getElementById('summary-headline');
+    let overview = document.getElementById('overview');
+    let greet = document.getElementById('greet');
+    let screenWidth = window.innerWidth;
+
+    if (screenWidth <= 1280) {
+        greet.style = '';
+        headline.style = '';
+        overview.style = '';
+
+        setTimeout(function () {
+            greet.style.opacity = '0';
+            greet.style.visibility = 'hidden';
+            greet.style.display = 'none';
+            headline.style.display = 'flex';
+            overview.style.display = 'flex';
+        }, 1000);
+    }
+
+    if (screenWidth > 1280) {
+        greet.style = '';
+        headline.style = '';
+        overview.style = '';
+        greet.style.opacity = '1';
+        greet.style.visibility = 'visible';
+        greet.style.display = 'flex';
+    }
+
+
+
+}
+
+window.onresize = loadPageMobile;
