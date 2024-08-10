@@ -70,17 +70,20 @@ async function getContacts() {
  * This function sorts the contact objects by the last names
  */
 function sortContacts() {
+    let puffer;
     for (let i = 0; i < allContactsObjects.length - 1; i++) {
         for (let j = i + 1; j < allContactsObjects.length; j++) {
-            if (allContactsObjects[i]["lastName"] > allContactsObjects[j]["lastName"]) {
-                puffer = allContactsObjects[i];
-                allContactsObjects[i] = allContactsObjects[j];
-                allContactsObjects[j] = puffer;
-            } else if (allContactsObjects[i]["lastName"] === allContactsObjects[i]["lastName"]) {
-                if (allContactsObjects[i]["sureName"] > allContactsObjects[j]["sureName"]) {
-                    puffer = allContactsObjects[i];
-                    allContactsObjects[i] = allContactsObjects[j];
-                    allContactsObjects[j] = puffer;
+            if (allContactsObjects[i].lastName > allContactsObjects[j].lastName) {
+                puffer = structuredClone(allContactsObjects[i]);
+                allContactsObjects[i] = structuredClone(allContactsObjects[j]);
+                allContactsObjects[j] = structuredClone(puffer);
+            }else if (allContactsObjects[i].lastName === allContactsObjects[i].lastName) {
+                if(allContactsObjects[i].sureName != "" && allContactsObjects[j].sureName != "") {
+                    if (allContactsObjects[i].sureName > allContactsObjects[j].sureName) {
+                        puffer = structuredClone(allContactsObjects[i]);
+                        allContactsObjects[i] = structuredClone(allContactsObjects[j]);
+                        allContactsObjects[j] = structuredClone(puffer);
+                    }
                 }
             }
         }   
@@ -654,7 +657,7 @@ function renderContactListOverlay(index) {
     let list = "";
     allContactsObjects.forEach((elem, i)=>{
         list += `<div class="flex flex-center contact ${preselectParticipantsinContactListOverlay(index, elem.contactId) ? 'chosen' : ''}" data-contactindex="${i}" onmousedown="selectContactOverlay(event, ${index})">
-            <div class="flex flex-center contact-left">${checkIfOneNameIsMissingContactList(elem)}</div>
+            <div class="flex flex-center contact-left">${checkIfFirstOrLastNameIsMissingInContactList(elem)}</div>
             <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/></svg>
             <svg class="is-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17 8V14C17 15.6569 15.6569 17 14 17H4C2.34315 17 1 15.6569 1 14V4C1 2.34315 2.34315 1 4 1H12" stroke="#2A3647" stroke-width="2" stroke-linecap="round" fill="white"/>
@@ -990,8 +993,10 @@ function addSubtaskOverlay(index) {
         });
         document.querySelector('#choose-subtasks-overlay').value = "";
     }
-    reRenderSubtaskListOverlay(index, subtaskList);
-    hideCrossTicOverlay();
+    if(!checkIfSubtaskExistsOverlay()){
+        reRenderSubtaskListOverlay(index, subtaskList);
+        hideCrossTicOverlay();
+    }
 }
 
 /**
@@ -1052,7 +1057,29 @@ function editSubtaskOverlay(index, j) {
 function changeSubtaskOverlay(index, j) {
     let subtaskList = structuredClone(allTaskObjects[index].subTasks)
     subtaskList[j].subTaskTitle = document.querySelector(`#edit-subtask-input-overlay-${index}${j}`).value;
-    reRenderSubtaskListOverlay(index, subtaskList);
+    if(!checkIfSubtaskExistsOverlay()) {
+        reRenderSubtaskListOverlay(index, subtaskList);
+    }else {
+        alert('Subtask already exists');
+    }
+}
+
+/**
+ * 
+ * @returns {boolean}
+ * @function checkIfSubtaskExists controlls if the value of the subtask inputfield is the same as the title of an
+ * already existing task. If so, @bool true is returned. Else @bool false is given back.
+ */
+function checkIfSubtaskExistsOverlay() {
+    for(let i=0; i<allSubtasksArray.length; i++) {
+        if(allSubtasksArray[i].subTaskTitle.toLowerCase() === subtaskInput.value.toLowerCase()) {
+            return true;
+        }else if(allSubtasksArray[i].subTaskTitle.toLowerCase() != subtaskInput.value.toLowerCase()) {
+            if(i+1 === allSubtasksArray.length) {
+                return false;
+            }
+        }
+    }
 }
 
 /**
@@ -1265,7 +1292,7 @@ function renderContactListAdd() {
     let list = "";
     allContactsObjects.forEach((elem, index)=>{
         list += `<div class="flex flex-center contact" onmousedown="selectContactAdd(event, ${index})" data-selectindex="${index}">
-            <div class="flex flex-center contact-left">${checkIfOneNameIsMissingContactList(elem)}</div>
+            <div class="flex flex-center contact-left">${checkIfFirstOrLastNameIsMissingInContactList(elem)}</div>
             <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/></svg>
             <svg class="is-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17 8V14C17 15.6569 15.6569 17 14 17H4C2.34315 17 1 15.6569 1 14V4C1 2.34315 2.34315 1 4 1H12" stroke="#2A3647" stroke-width="2" stroke-linecap="round" fill="white"/>
@@ -1281,7 +1308,7 @@ function renderContactListAdd() {
  * @param {string} elem is the name of a participant
  * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
  */
-function checkIfOneNameIsMissingContactList(elem) {
+function checkIfFirstOrLastNameIsMissingInContactList(elem) {
     if(!elem.sureName) {
         return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p></div><p class="contact-name">${elem.lastName}</p>`;
     }else if(!elem.lastName) {
@@ -1341,9 +1368,9 @@ function renderSubtaskListAdd() {
     document.querySelector('.add-task-overlay-box .subtask-list').innerHTML = '';
     newSubtasksArrayAdd.forEach((elem, i)=>{
         document.querySelector('.add-task-overlay-box .subtask-list').innerHTML += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
-            <p class="subtask-title-p-add-${i}">${elem.subTaskTitle}</p>
+            <p class="subtask-title-p-add subtask-title-p-add-${i}">${elem.subTaskTitle}</p>
             <div class="pen-bin-subtask-add pen-bin-subtask flex flex-center" id="pen-bin-subtask-add-${i}">
-                <img src="./assets/img/pen.svg" alt="" onclick="editSubtaskAdd(${i})">
+                <img src="./assets/img/pen.svg" alt="" onclick="showEditingElementsSubtaskAdd(${i})">
                 <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskAdd(${i})">
             </div>
             <div class="edit-subtask flex flex-center disNone" id="edit-subtask-add-${i}" style="justify-content: space-between;">
@@ -1383,18 +1410,20 @@ function hideCrossTicAdd() {
  * This function pushes the defined subtasks into a globally defined array @var newSubtasksArrayAdd
  */
 function addSubtaskAdd() {
-    let subtaskInput = document.querySelector('.add-task-overlay-box .subtask-input input');
-    if(subtaskInput.value === "") {
+    let subtaskInput = document.querySelector('#choose-subtasks-add').value;
+    console.log(subtaskInput);
+    if(subtaskInput === "") {
         hideCrossTicAdd();
     }else {
-        if(checkIfSubtaskExistsAdd()) {
-            subtaskInput.value = '';
-        }else {
-            newSubtasksArrayAdd.push({subTaskDone: 0, subTaskTitle: subtaskInput.value})
+        if(!checkIfSubtaskExistsAdd(subtaskInput)) {
+            newSubtasksArrayAdd.push({subTaskDone: 0, subTaskTitle: subtaskInput})
             renderSubtaskListAdd();
-            subtaskInput.value = '';
+            hideCrossTicAdd();
+            clearSubtaskInputAdd();
+        }else {
+            hideCrossTicAdd();
+            clearSubtaskInputAdd();
         }
-        hideCrossTicAdd();
     }
 }
 
@@ -1403,16 +1432,21 @@ function addSubtaskAdd() {
  * @returns a boolean value
  * This function checks whether a subtask already exists in the new task.
  */
-function checkIfSubtaskExistsAdd() {
-    let subtaskInput = document.querySelector('.add-task-overlay-box .subtask-input input');
-    for(let i=0; i<newSubtasksArrayAdd.length; i++) {
-        if(newSubtasksArrayAdd[i].subTaskTitle === subtaskInput.value) {
-            return true;
-        }else if(newSubtasksArrayAdd[i].subTaskTitle != subtaskInput.value) {
-            if(i+1 === newSubtasksArrayAdd.length) {
-                return false;
+function checkIfSubtaskExistsAdd(subtaskInput) {
+    console.log(subtaskInput);
+    if(newSubtasksArrayAdd.length > 0) {
+        for(let i=0; i<document.querySelectorAll('.subtask-title-p-add').length; i++) {
+            if(document.querySelectorAll('.subtask-title-p-add')[i].innerHTML === subtaskInput) {
+                alert('Subtask already exists');
+                return true;
+            }else if(document.querySelectorAll('.subtask-title-p-add')[i].innerHTML != subtaskInput) {
+                if(i+1 === document.querySelectorAll('.subtask-title-p-add').length) {
+                    return false;
+                }
             }
         }
+    }else {
+        return false;
     }
 }
 
@@ -1421,7 +1455,7 @@ function checkIfSubtaskExistsAdd() {
  * @param {number} i is the index of the newly created subtask
  * This function shows the input-field of that particular subtask and hides its <p>-tag that contains its title
  */
-function editSubtaskAdd(i) {
+function showEditingElementsSubtaskAdd(i) {
     let editElem = document.querySelector(`#edit-subtask-add-${i}`);
     document.querySelector(`.subtask-title-p-add-${i}`).classList.add('disNone');
     document.querySelector(`#pen-bin-subtask-add-${i}`).classList.add('disNone');
@@ -1435,9 +1469,14 @@ function editSubtaskAdd(i) {
  * This function changes the title of the newly defined subtask.
  */
 function changeSubtaskAdd(i) {
-    newSubtasksArrayAdd[i].subTaskTitle = document.querySelector(`#edit-subtask-input-add-${i}`).value;
-    renderSubtaskListAdd();
-    document.querySelector(`#edit-subtask-add-${i}`).classList.add('disNone');
+    if(!checkIfSubtaskExistsAdd(document.querySelector(`#edit-subtask-input-add-${i}`).value)) {
+        newSubtasksArrayAdd[i].subTaskTitle = document.querySelector(`#edit-subtask-input-add-${i}`).value;
+        renderSubtaskListAdd();
+        document.querySelector(`#edit-subtask-add-${i}`).classList.add('disNone');
+    }else {
+        document.querySelector(`#edit-subtask-input-add-${i}`).value = "";
+        document.querySelector(`#edit-subtask-input-add-${i}`).focus();
+    }
 }
 
 /**

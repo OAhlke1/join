@@ -119,10 +119,7 @@ function renderContactList() {
     selectContacts.innerHTML = /* HTML */ ``;
     allContactsObjects.forEach((elem, i)=>{
         selectContacts.innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContact(event)">
-        <div class="flex flex-center contact-left">
-            <div class="flex flex-center circle" style="background-color: ${allContactsObjects[i].color};"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
-            <p>${elem.sureName} ${elem.lastName}</p>
-        </div>
+        <div class="flex flex-center contact-left">${checkIfFirstOrLastNameIsMissingInContactList(elem)}</div>
         <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/>
         </svg>
@@ -132,6 +129,20 @@ function renderContactList() {
         </svg>
     </div>`;
     })
+}
+/**
+ * 
+ * @param {string} elem is the name of a participant
+ * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
+ */
+function checkIfFirstOrLastNameIsMissingInContactList(elem) {
+    if(!elem.sureName) {
+        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p></div><p class="contact-name">${elem.lastName}</p>`;
+    }else if(!elem.lastName) {
+        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p></div><p class="contact-name">${elem.sureName}</p>`;
+    }else {
+        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div><p class="contact-name">${elem.sureName} ${elem.lastName}</p>`;
+    }
 }
 
 /**
@@ -151,20 +162,40 @@ function renderChosenList() {
     document.querySelector('.chosen-list').classList.remove('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the contact.
+ * When the mouseover-event is fired a toggle-box with the name of the contact is shown.
+ */
 function showName(i) {
     document.querySelector(`.name-block${i}`).classList.remove('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the contact.
+ * when the mouseleave-event is fired, the toggle-box with the contact name in it is hidden.
+ */
 function hideName(i) {
     document.querySelector(`.name-block${i}`).classList.add('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the contact.
+ * @function removeParticipant removes the clicked participant out of the list of chosen contacts.
+ */
 function removeParticipant(i) {
     participantsArray.splice(i, 1);
     document.querySelectorAll('.contact.chosen')[i].classList.remove('chosen');
     renderChosenList();
 }
 
+/**
+ * 
+ * @param {even} event is the click-event fired on a contact.
+ * @function selectContact adds the class "chosen" to the clicked contact to mark it as chosen.
+ */
 function selectContact(event) {
     event.stopPropagation();
     if(event.target.closest('.contact').classList.contains('chosen')) {
@@ -175,6 +206,12 @@ function selectContact(event) {
     getParticipants();
 }
 
+/**
+ * 
+ * @function getParticipants pushes all chosen contacts to the array @var participantsArray
+ * To know the exact index of the contact in the @var allContactsObjects each contact has an
+ * attribute "data-selectindex".
+ */
 function getParticipants() {
     participantsArray = [];
     document.querySelectorAll('.contact.chosen').forEach((elem)=>{
@@ -183,6 +220,12 @@ function getParticipants() {
     renderChosenList();
 }
 
+/**
+ * 
+ * @param {event} event is the click event fired to the button to add a task.
+ * @function addTask has an object @var newTask containing all the keys of a task.
+ * Then @var newTask is pushed to the array of all tasks @var allTaskObjects
+ */
 function addTask(event) {
     event.preventDefault();
     newTask = {
@@ -202,8 +245,14 @@ function addTask(event) {
     postNewTask();
 }
 
-
-
+/**
+ * 
+ * @param {event} event is the click-event fired to one of the three priority-buttons in the priority-list.
+ * @param {string} prio contains the value of the urgency given to the function at function call.
+ * @returns the priority given to the function.
+ * @function choosePrio unmarks every priority-button by removing "prio-low-button-bg-color", "prio-medium-button-bg-color",
+ * and "prio-high-button-bg-color" and then give that destinct class back to the clicked button.
+ */
 function choosePrio(event, prio) {
     event.preventDefault();
     if(event.target.closest('.choose-prio-button').classList.contains(`prio-${prio}-button-bg-color`)) {
@@ -218,8 +267,11 @@ function choosePrio(event, prio) {
     selectedPrio = prio;
 }
 
+/**
+ *
+ * @function postNewTask puts @var allTaskObjects (that now contains the new task) to the FTP-server.
+ */
 async function postNewTask(event) {
-    console.log(allTaskObjects.length);
     let response = await fetch(BASE_URL+"/tasks.json", {
         method: 'PUT',
         header: {'Content-Type': 'application/json'},
@@ -228,22 +280,38 @@ async function postNewTask(event) {
     document.querySelector('#board-link').click();
 }
 
+/**
+ * 
+ * @function showCrossTic shows the cross- and tic-button of the task inputfield.
+ */
 function showCrossTic() {
     document.querySelector('.subtask-input .add').classList.add('disNone');
     document.querySelector('.cross-tic').classList.remove('disNone');
 }
 
+/**
+ * 
+ * @function hideCrossTic hides the cross- and tic-button oft the task inputfield.
+ */
 function hideCrossTic() {
     document.querySelector('.subtask-input .add').classList.remove('disNone');
     document.querySelector('.cross-tic').classList.add('disNone');
 }
 
-document.querySelector('.clear-subtask-input').addEventListener('click', (event)=>{
-    subtaskInput.removeEventListener('focusout', hideCrossTic);
+/**
+ * 
+ * Here a click-event is added to the inner function that 
+ */
+function clearSubtaskInput() {
     subtaskInput.focus();
     subtaskInput.value = '';
-});
+}
 
+/**
+ * 
+ * @returns nothing
+ * @function addSubtask pushes a new subtask to @var allSubtasksArray
+ */
 function addSubtask() {
     if(subtaskInput.value === "") {
         hideCrossTic();
@@ -261,6 +329,12 @@ function addSubtask() {
     }
 }
 
+/**
+ * 
+ * @returns {boolean}
+ * @function checkIfSubtaskExists controlls if the value of the subtask inputfield is the same as the title of an
+ * already existing task. If so, @bool true is returned. Else @bool false is given back.
+ */
 function checkIfSubtaskExists() {
     for(let i=0; i<allSubtasksArray.length; i++) {
         if(allSubtasksArray[i].subTaskTitle.toLowerCase() === subtaskInput.value.toLowerCase()) {
