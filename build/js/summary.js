@@ -187,12 +187,11 @@ function loadPageMobile() {
     }
 
     if (screenWidth > 1280) {
-        greet.style = '';
         headline.style = '';
         overview.style = '';
-        greet.style.opacity = '1';
-        greet.style.visibility = 'visible';
-        greet.style.display = 'flex';
+        setTimeout(function () {
+            greet.style = '';
+        }, 1000);
     }
 
 
