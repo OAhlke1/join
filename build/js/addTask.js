@@ -14,6 +14,7 @@ let categoryType = "medium";
 let taskAddedElem = document.querySelector('.task-added');
 const BASE_URL = "https://join-249-default-rtdb.europe-west1.firebasedatabase.app";
 const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks'
+
 /**
  * 
  * gets the tasks from the FTP-server
@@ -60,36 +61,6 @@ async function getContacts() {
 
 /**
  * 
- * @param {event} event is the event fired to call the function.
- * @function showHideContactList shows or hides the contact-list, wether it is hidden or not.
- */
-function showHideContactList(event) {
-    if(document.querySelector('.contact-list').classList.contains('disNone')) {
-        document.querySelector('.contact-list').classList.remove('disNone');
-        document.querySelector('.contacts .contacts-inner .triangle').classList.add('rotated');
-    }else {
-        document.querySelector('.contact-list').classList.add('disNone');
-        document.querySelector('.contacts .contacts-inner .triangle').classList.remove('rotated');
-    }
-}
-
-/**
- * 
- * @param {event} event is the event fired to call the function.
- * @function showHideCategoriesList shows or hides the list of task-categories.
- */
-function showHideCategoriesList(event) {
-    if(document.querySelector('.categories-list').classList.contains('disNone')) {
-        document.querySelector('.categories-list').classList.remove('disNone');
-        document.querySelector('.categories .categories-inner .triangle').classList.add('rotated');
-    }else {
-        document.querySelector('.categories-list').classList.add('disNone');
-        document.querySelector('.categories .categories-inner .triangle').classList.remove('rotated');
-    }
-}
-
-/**
- * 
  * @function sortContacts sorts the contacts alphabetically.
  * At first it looks for the lastnames, and then, when both contacts share the same lastname, fore the firstname.
  */
@@ -130,6 +101,48 @@ function renderContactList() {
     </div>`;
     })
 }
+
+/**
+ * 
+ * @param {event} event is the event fired to call the function.
+ * @function showHideContactList shows or hides the contact-list, wether it is hidden or not.
+ */
+function showHideContactList(event) {
+    if(document.querySelector('.contact-list').classList.contains('disNone')) {
+        document.querySelector('.contact-list').classList.remove('disNone');
+        document.querySelector('.contacts .contacts-inner .triangle').classList.add('rotated');
+    }else {
+        document.querySelector('.contact-list').classList.add('disNone');
+        document.querySelector('.contacts .contacts-inner .triangle').classList.remove('rotated');
+    }
+}
+
+/**
+ * 
+ * @param {number} i is the index of the contact.
+ * @function removeParticipant removes the clicked participant out of the list of chosen contacts.
+ */
+function removeParticipant(i) {
+    participantsArray.splice(i, 1);
+    document.querySelectorAll('.contact.chosen')[i].classList.remove('chosen');
+    renderChosenList();
+}
+
+/**
+ * 
+ * @param {even} event is the click-event fired on a contact.
+ * @function selectContact adds the class "chosen" to the clicked contact to mark it as chosen.
+ */
+function selectContact(event) {
+    event.stopPropagation();
+    if(event.target.closest('.contact').classList.contains('chosen')) {
+        event.target.closest('.contact').classList.remove('chosen');
+    }else {
+        event.target.closest('.contact').classList.add('chosen');
+    }
+    getParticipants();
+}
+
 /**
  * 
  * @param {string} elem is the name of a participant
@@ -182,32 +195,6 @@ function hideName(i) {
 
 /**
  * 
- * @param {number} i is the index of the contact.
- * @function removeParticipant removes the clicked participant out of the list of chosen contacts.
- */
-function removeParticipant(i) {
-    participantsArray.splice(i, 1);
-    document.querySelectorAll('.contact.chosen')[i].classList.remove('chosen');
-    renderChosenList();
-}
-
-/**
- * 
- * @param {even} event is the click-event fired on a contact.
- * @function selectContact adds the class "chosen" to the clicked contact to mark it as chosen.
- */
-function selectContact(event) {
-    event.stopPropagation();
-    if(event.target.closest('.contact').classList.contains('chosen')) {
-        event.target.closest('.contact').classList.remove('chosen');
-    }else {
-        event.target.closest('.contact').classList.add('chosen');
-    }
-    getParticipants();
-}
-
-/**
- * 
  * @function getParticipants pushes all chosen contacts to the array @var participantsArray
  * To know the exact index of the contact in the @var allContactsObjects each contact has an
  * attribute "data-selectindex".
@@ -218,31 +205,6 @@ function getParticipants() {
         participantsArray.push(allContactsObjects[+elem.getAttribute('data-selectindex')])
     })
     renderChosenList();
-}
-
-/**
- * 
- * @param {event} event is the click event fired to the button to add a task.
- * @function addTask has an object @var newTask containing all the keys of a task.
- * Then @var newTask is pushed to the array of all tasks @var allTaskObjects
- */
-function addTask(event) {
-    event.preventDefault();
-    newTask = {
-        taskTitle: document.getElementById("title-input-add").value,
-        taskDescrip: document.getElementById("task-descrip-add").value,
-        participants: participantsArray,
-        date: document.getElementById("date-input").value,
-        urgency: selectedPrio,
-        category: categoryType,
-        taskType: 'toDo',
-        deleted: 0
-    }
-    if(allSubtasksArray.length > 0) {
-        newTask.subTasks =  allSubtasksArray;
-    }
-    allTaskObjects.push(newTask);
-    postNewTask();
 }
 
 /**
@@ -268,43 +230,43 @@ function choosePrio(event, prio) {
 }
 
 /**
- *
- * @function postNewTask puts @var allTaskObjects (that now contains the new task) to the FTP-server.
+ * 
+ * This function resets the urgency of the new task.
  */
-async function postNewTask(event) {
-    let response = await fetch(BASE_URL+"/tasks.json", {
-        method: 'PUT',
-        header: {'Content-Type': 'application/json'},
-        body: JSON.stringify(allTaskObjects)
-    });
-    document.querySelector('#board-link').click();
+function resetUrgency() {
+    document.querySelectorAll('.choose-prio-button')[0].classList.remove('prio-high-button-bg-color');
+    document.querySelectorAll('.choose-prio-button')[1].classList.remove('prio-medium-button-bg-color');
+    document.querySelectorAll('.choose-prio-button')[2].classList.remove('prio-low-button-bg-color');
+    document.querySelectorAll('.choose-prio-button')[1].classList.add('prio-medium-button-bg-color');
+    newUrgency = "medium";
 }
 
 /**
  * 
- * @function showCrossTic shows the cross- and tic-button of the task inputfield.
+ * @param {event} event is the event fired to call the function.
+ * @function showHideCategoriesList shows or hides the list of task-categories.
  */
-function showCrossTic() {
-    document.querySelector('.subtask-input .add').classList.add('disNone');
-    document.querySelector('.cross-tic').classList.remove('disNone');
+function showHideCategoriesList(event) {
+    if(document.querySelector('.categories-list').classList.contains('disNone')) {
+        document.querySelector('.categories-list').classList.remove('disNone');
+        document.querySelector('.categories .categories-inner .triangle').classList.add('rotated');
+    }else {
+        document.querySelector('.categories-list').classList.add('disNone');
+        document.querySelector('.categories .categories-inner .triangle').classList.remove('rotated');
+    }
 }
 
 /**
  * 
- * @function hideCrossTic hides the cross- and tic-button oft the task inputfield.
+ * @param {event} event is the event fired to the respective element of the categories-list.
+ * @function setCategory takes the inner HTML of the clicked element, sets this value
+ *  1. into the element that
+ *  2. to the variable @var categoryType
  */
-function hideCrossTic() {
-    document.querySelector('.subtask-input .add').classList.remove('disNone');
-    document.querySelector('.cross-tic').classList.add('disNone');
-}
-
-/**
- * 
- * Here a click-event is added to the inner function that 
- */
-function clearSubtaskInput() {
-    subtaskInput.focus();
-    subtaskInput.value = '';
+function setCategory(event) {
+    event.preventDefault();
+    document.querySelector('.category-name').innerHTML = event.target.innerHTML;
+    categoryType = event.target.closest('.category').querySelector('p').innerHTML;
 }
 
 /**
@@ -347,6 +309,59 @@ function checkIfSubtaskExists() {
     }
 }
 
+/**
+ * 
+ * @function showCrossTic shows the cross- and tic-button of the task inputfield.
+ */
+function showCrossTic() {
+    document.querySelector('.subtask-input .add').classList.add('disNone');
+    document.querySelector('.cross-tic').classList.remove('disNone');
+}
+
+/**
+ * 
+ * @function hideCrossTic hides the cross- and tic-button oft the task inputfield.
+ */
+function hideCrossTic() {
+    document.querySelector('.subtask-input .add').classList.remove('disNone');
+    document.querySelector('.cross-tic').classList.add('disNone');
+}
+
+/**
+ * 
+ * Here a click-event is added to the inner function that 
+ */
+function clearSubtaskInput() {
+    subtaskInput.focus();
+    subtaskInput.value = '';
+}
+
+/**
+ * 
+ * @param {number} i is the index of the subtask.
+ * @function fadeInPenBin fades in the pen- and bin-button of the subtask the cursor is laying over.
+ */
+function fadeInPenBin(i) {
+    let liTag = document.querySelector(`#subtask-li-${i}`);
+    liTag.classList.remove('fade-out-pen-bin');
+    liTag.classList.add('fade-in-pen-bin');
+}
+
+/**
+ * 
+ * @param {number} i is the index of the subtask.
+ * @function fadeInPenBin fades in the pen- and bin-button of the subtask the cursor is laying over.
+ */
+function fadeOutPenBin(i) {
+    let liTag = document.querySelector(`#subtask-li-${i}`);
+    liTag.classList.add('fade-out-pen-bin');
+    liTag.classList.remove('fade-in-pen-bin');
+}
+
+/**
+ * 
+ * @function renderSubtaskList renders the list of created subtasks
+ */
 function renderSubtaskList() {
     document.querySelector('.subtask-list').innerHTML = '';
     allSubtasksArray.forEach((elem, i)=>{
@@ -368,18 +383,11 @@ function renderSubtaskList() {
     document.querySelector('.subtask-list').classList.remove('disNone');
 }
 
-function fadeInPenBin(i) {
-    let liTag = document.querySelector(`#subtask-li-${i}`);
-    liTag.classList.remove('fade-out-pen-bin');
-    liTag.classList.add('fade-in-pen-bin');
-}
-
-function fadeOutPenBin(i) {
-    let liTag = document.querySelector(`#subtask-li-${i}`);
-    liTag.classList.add('fade-out-pen-bin');
-    liTag.classList.remove('fade-in-pen-bin');
-}
-
+/**
+ * 
+ * @param {number} i is the index of the subtask that needs to be added.
+ * @function editSubtask shows the elements for editing the respective subtask.
+ */
 function editSubtask(i) {
     let editElem = document.querySelector(`#edit-subtask-${i}`);
     document.querySelector(`.subtask-title-p-${i}`).classList.add('disNone');
@@ -388,21 +396,25 @@ function editSubtask(i) {
     editElem.querySelector('input').focus();
 }
 
+/**
+ * 
+ * @param {number} i is the index of the subtask.
+ * @function changeSubtask changes the title of the respective subtask.
+ */
 function changeSubtask(i) {
     allSubtasksArray[i].subTaskTitle = document.querySelector(`#edit-subtask-input-${i}`).value;
     renderSubtaskList();
     document.querySelector(`#edit-subtask-${i}`).classList.add('disNone');
 }
 
+/**
+ * 
+ * @param {number} i is the index of the subtask.
+ * @function removeSubtask removes the respective subtask.
+ */
 function removeSubtask(i) {
     allSubtasksArray.splice(i, 1);
     renderSubtaskList();
-}
-
-function setCategory(event) {
-    event.preventDefault();
-    document.querySelector('.category-name').innerHTML = event.target.innerHTML;
-    categoryType = event.target.closest('.category').querySelector('p').innerHTML;
 }
 
 /**
@@ -427,14 +439,40 @@ function clearForm(event) {
 
 /**
  * 
- * This function resets the urgency of the new task.
+ * @param {event} event is the click event fired to the button to add a task.
+ * @function addTask has an object @var newTask containing all the keys of a task.
+ * Then @var newTask is pushed to the array of all tasks @var allTaskObjects
  */
-function resetUrgency() {
-    document.querySelectorAll('.choose-prio-button')[0].classList.remove('prio-high-button-bg-color');
-    document.querySelectorAll('.choose-prio-button')[1].classList.remove('prio-medium-button-bg-color');
-    document.querySelectorAll('.choose-prio-button')[2].classList.remove('prio-low-button-bg-color');
-    document.querySelectorAll('.choose-prio-button')[1].classList.add('prio-medium-button-bg-color');
-    newUrgency = "medium";
+function addTask(event) {
+    event.preventDefault();
+    newTask = {
+        taskTitle: document.getElementById("title-input-add").value,
+        taskDescrip: document.getElementById("task-descrip-add").value,
+        participants: participantsArray,
+        date: document.getElementById("date-input").value,
+        urgency: selectedPrio,
+        category: categoryType,
+        taskType: 'toDo',
+        deleted: 0
+    }
+    if(allSubtasksArray.length > 0) {
+        newTask.subTasks =  allSubtasksArray;
+    }
+    allTaskObjects.push(newTask);
+    postNewTask();
+}
+
+/**
+ *
+ * @function postNewTask puts @var allTaskObjects (that now contains the new task) to the FTP-server.
+ */
+async function postNewTask(event) {
+    let response = await fetch(BASE_URL+"/tasks.json", {
+        method: 'PUT',
+        header: {'Content-Type': 'application/json'},
+        body: JSON.stringify(allTaskObjects)
+    });
+    document.querySelector('#board-link').click();
 }
 
 /**
