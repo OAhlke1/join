@@ -13,10 +13,11 @@ let subtaskInput = document.querySelector('#choose-subtasks');
 let categoryType = "medium";
 let taskAddedElem = document.querySelector('.task-added');
 const BASE_URL = "https://join-249-default-rtdb.europe-west1.firebasedatabase.app";
-const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks';
-
-
-/* This functions are mainly from Oscar Ahlke */
+const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks'
+/**
+ * 
+ * gets the tasks from the FTP-server
+ */
 async function getTasks() {
     includeHTML();
     let fetchedTasks = await fetch(tasksURL+'.json');
@@ -29,6 +30,11 @@ async function getTasks() {
     getContacts();
 }
 
+/**
+ * 
+ * @param {JSON} tasksJson the tasks-JSON from the server.
+ * @function setTasksArray stores all these Tasks in an Array.
+ */
 function setTasksArray(tasksJson) {
     for(let [key, value] of Object.entries(tasksJson)) {
         allTaskKeys.push(key);
@@ -36,6 +42,10 @@ function setTasksArray(tasksJson) {
     }
 }
 
+/**
+ * 
+ * @function getContacts gets the Contacts from the FTP-server.
+ */
 async function getContacts() {
     allContactsObjects = await fetch(BASE_URL+'/contacts.json');
     allContactsObjects = await allContactsObjects.json();
@@ -48,6 +58,11 @@ async function getContacts() {
     sortContacts();
 }
 
+/**
+ * 
+ * @param {event} event is the event fired to call the function.
+ * @function showHideContactList shows or hides the contact-list, wether it is hidden or not.
+ */
 function showHideContactList(event) {
     if(document.querySelector('.contact-list').classList.contains('disNone')) {
         document.querySelector('.contact-list').classList.remove('disNone');
@@ -58,6 +73,11 @@ function showHideContactList(event) {
     }
 }
 
+/**
+ * 
+ * @param {event} event is the event fired to call the function.
+ * @function showHideCategoriesList shows or hides the list of task-categories.
+ */
 function showHideCategoriesList(event) {
     if(document.querySelector('.categories-list').classList.contains('disNone')) {
         document.querySelector('.categories-list').classList.remove('disNone');
@@ -68,6 +88,11 @@ function showHideCategoriesList(event) {
     }
 }
 
+/**
+ * 
+ * @function sortContacts sorts the contacts alphabetically.
+ * At first it looks for the lastnames, and then, when both contacts share the same lastname, fore the firstname.
+ */
 function sortContacts() {
     for (let i = 0; i < allContactsObjects.length - 1; i++) {
         for (let j = i + 1; j < allContactsObjects.length; j++) {
@@ -84,10 +109,13 @@ function sortContacts() {
             }
         }   
     }
-    renderSelectContacts();
+    renderContactList();
 }
 
-function renderSelectContacts() {
+/**
+ * @function renderContactList renders the contact list which at first is inivisible.
+ */
+function renderContactList() {
     selectContacts.innerHTML = /* HTML */ ``;
     allContactsObjects.forEach((elem, i)=>{
         selectContacts.innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContact(event)">
@@ -106,6 +134,10 @@ function renderSelectContacts() {
     })
 }
 
+/**
+ * 
+ * @function renderChosenList renderes the list of chosen contacts.
+ */
 function renderChosenList() {
     document.querySelector('.chosen-list').innerHTML = '';
     participantsArray.forEach((elem, i)=>{
