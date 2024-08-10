@@ -484,7 +484,7 @@ h1 {
 }
 
 .clear-subtask-input, .add-task {
-    width: fit-content !important;
+    width: fit-content;
 }
 
 .subtask-input input {

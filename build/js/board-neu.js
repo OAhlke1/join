@@ -536,7 +536,7 @@ function renderParticipantsBlockIntoOverlay(index) {
                     <path d="M3.29998 4.3L0.699975 1.7C0.383309 1.38333 0.312475 1.02083 0.487475 0.6125C0.662475 0.204167 0.974975 0 1.42498 0H6.57498C7.02498 0 7.33747 0.204167 7.51248 0.6125C7.68748 1.02083 7.61664 1.38333 7.29997 1.7L4.69998 4.3C4.59998 4.4 4.49164 4.475 4.37498 4.525C4.25831 4.575 4.13331 4.6 3.99998 4.6C3.86664 4.6 3.74164 4.575 3.62498 4.525C3.50831 4.475 3.39998 4.4 3.29998 4.3Z" fill="#2A3647"/>
                 </svg>
             </div>
-            <div class="contact-list disNone">${renderContactListOverlay(index)}</div>
+            <div class="contact-list flex disNone">${renderContactListOverlay(index)}</div>
         </div>
         <ul class="chosen-list back flex flex-center">${renderChosenListBackOverlay(index)}</ul>
     </div>`;
@@ -818,6 +818,10 @@ function showContactListOverlay(event) {
  */
 function hideContactListOverlay(event) {
     event.stopPropagation();
+    document.querySelector('.overlay-card .search-contacts').value = "";
+    document.querySelectorAll('.overlay-card .contact').forEach((elem)=>{
+        elem.classList.remove('disNone');
+    })
     document.querySelector('.overlay-card .contact-list').classList.add('disNone');
 }
 
@@ -955,6 +959,7 @@ function showCrossTicOverlay() {
  * Hides the cross (for removing) and tic (for adding) elements for adding a subtask to the task in the task-overlay.
  */
 function hideCrossTicOverlay() {
+    document.querySelector('#choose-subtasks-overlay').value = "";
     document.querySelector('.overlay-card .subtask-input .add').classList.remove('disNone');
     document.querySelector('.overlay-card .cross-tic').classList.add('disNone');
     document.querySelector('.overlay-card .subtask-input').style.border = "1px solid black";
