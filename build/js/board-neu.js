@@ -31,7 +31,7 @@ async function getTasks() {
     response = await response.json();
     if(response) {
         for(let i=0; i<response.length; i++) {
-            allTaskObjects.push(response[i])
+            allTaskObjects.push(response[i]);
         }
     }
     getContacts();
@@ -1411,11 +1411,10 @@ function hideCrossTicAdd() {
  */
 function addSubtaskAdd() {
     let subtaskInput = document.querySelector('#choose-subtasks-add').value;
-    console.log(subtaskInput);
     if(subtaskInput === "") {
         hideCrossTicAdd();
     }else {
-        if(!checkIfSubtaskExistsAdd(subtaskInput)) {
+        if(!checkIfSubtaskExistsAdd(subtaskInput, -1)) {
             newSubtasksArrayAdd.push({subTaskDone: 0, subTaskTitle: subtaskInput})
             renderSubtaskListAdd();
             hideCrossTicAdd();
@@ -1432,16 +1431,19 @@ function addSubtaskAdd() {
  * @returns a boolean value
  * This function checks whether a subtask already exists in the new task.
  */
-function checkIfSubtaskExistsAdd(subtaskInput) {
-    console.log(subtaskInput);
-    if(newSubtasksArrayAdd.length > 0) {
-        for(let i=0; i<document.querySelectorAll('.subtask-title-p-add').length; i++) {
-            if(document.querySelectorAll('.subtask-title-p-add')[i].innerHTML === subtaskInput) {
-                alert('Subtask already exists');
-                return true;
-            }else if(document.querySelectorAll('.subtask-title-p-add')[i].innerHTML != subtaskInput) {
-                if(i+1 === document.querySelectorAll('.subtask-title-p-add').length) {
-                    return false;
+function checkIfSubtaskExistsAdd(subtaskInput, i) {
+    if(document.querySelectorAll('.subtask-title-p-add').length > 0) {
+        for(let k=0; k<document.querySelectorAll('.subtask-title-p-add').length; k++) {
+            console.log(document.querySelectorAll('.subtask-title-p-add')[k].innerHTML);
+            if(k === i) {
+                continue;
+            }else {
+                if(document.querySelectorAll('.subtask-title-p-add')[k].innerHTML === subtaskInput) {
+                    alert('Subtask already exists');
+                    document.querySelector(`#edit-subtask-input-add-${i}`).focus();
+                    return true;
+                }else if(document.querySelectorAll('.subtask-title-p-add')[k].innerHTML != subtaskInput) {
+                    if(k+1 === document.querySelectorAll('.subtask-title-p-add').length) { return false; }
                 }
             }
         }
@@ -1469,7 +1471,7 @@ function showEditingElementsSubtaskAdd(i) {
  * This function changes the title of the newly defined subtask.
  */
 function changeSubtaskAdd(i) {
-    if(!checkIfSubtaskExistsAdd(document.querySelector(`#edit-subtask-input-add-${i}`).value)) {
+    if(!checkIfSubtaskExistsAdd(document.querySelector(`#edit-subtask-input-add-${i}`).value), i) {
         newSubtasksArrayAdd[i].subTaskTitle = document.querySelector(`#edit-subtask-input-add-${i}`).value;
         renderSubtaskListAdd();
         document.querySelector(`#edit-subtask-add-${i}`).classList.add('disNone');
