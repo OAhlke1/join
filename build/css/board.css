@@ -374,6 +374,10 @@ main .tasks-overlay .overlay-card .inner .participants-block .participants .over
     background-color: #6e52ff;
 }
 
+main .tasks-overlay .overlay-card .inner .participants-block .participants .overlay-participant .chosen-list.back .circle {
+    cursor: pointer;
+}
+
 main .tasks-overlay .overlay-card .inner .participants-block .participants .overlay-participant .circle p {
     font-size: 12px;
     color: white;
@@ -438,7 +442,6 @@ main .tasks-overlay .overlay-card .inner input.subtask-check label {
 main .tasks-overlay .overlay-card .inner .show-for-editing {
     align-items: flex-start;
     row-gap: 16px;
-    cursor: pointer;
 }
 
 main .tasks-overlay .overlay-card .inner img.show-for-editing {
@@ -655,7 +658,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     font-weight: 400;
     line-height: 24px;
     text-align: left;
-    cursor: pointer;
+    cursor: default;
 }
 
 .contacts, .categories {
@@ -817,7 +820,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     cursor: pointer;
 }
 
-.overlay-card .chosen-list .circle {
+.overlay-card .chosen-list.front .circle {
     cursor: default;
 }
 
@@ -936,6 +939,10 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     width: 100%;
 }
 
+#title-container, #description-container, .add-task-overlay textarea, .add-task-overlay #date-container, .overlay-card .assigned-container, .add-task-overlay #assigned-container, #category-container, #prio-container, #substasks-container {
+    width: calc(100% - 10px) !important;
+}
+
 @keyframes fade-in-li-bg {
     0% {
         background-color: rgba(209 209 209 / 0);
@@ -992,10 +999,12 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     outline: none;
     width: 100%;
     height: 36px;
+    padding: 8px 16px 8px 0;
 }
 
 .subtask-list .edit-subtask .bin-check {
     column-gap: 10px;
+    width: fit-content;
 }
 
 .search-contacts {

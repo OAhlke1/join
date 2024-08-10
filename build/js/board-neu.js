@@ -54,6 +54,12 @@ async function getContacts() {
     response = await response.json();
     if(response) {
         for(let [key, value] of Object.entries(response)) {
+            if(!value.sureName) {
+                value.sureName = '';
+            }
+            if(!value.lastName) {
+                value.lastName = '';
+            }
             allContactsObjects.push(value);
         }
         sortContacts();
@@ -456,14 +462,14 @@ function renderUrgencyButtons(index) {
     return /* HTML */ `<div class="reset-urgency flex show-for-editing disNone">
         <div class="choose-prio-container">
             <div class="choose-prio-button flex flex-center prio-high-button ${allTaskObjects[index].urgency === "high" ? "prio-high-button-bg-color chosen-urgency" : ""}" onclick="chooseUrgencyOverlay(event)" data-resetUrgency="high">
-                <span id="prio-high" class="flex flex-center" onclick="chooseUrgencyOverlay(event)">Urgent</span>
+                <span id="prio-high-overlay" class="flex flex-center">Urgent</span>
                 <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M19.6528 15.2547C19.4182 15.2551 19.1896 15.1803 19.0007 15.0412L10.7487 8.958L2.49663 15.0412C2.38078 15.1267 2.24919 15.1887 2.10939 15.2234C1.96959 15.2582 1.82431 15.2651 1.68184 15.2437C1.53937 15.2223 1.40251 15.1732 1.27906 15.099C1.15562 15.0247 1.04801 14.927 0.96238 14.8112C0.876751 14.6954 0.814779 14.5639 0.780002 14.4243C0.745226 14.2846 0.738325 14.1394 0.759696 13.997C0.802855 13.7095 0.958545 13.4509 1.19252 13.2781L10.0966 6.70761C10.2853 6.56802 10.5139 6.49268 10.7487 6.49268C10.9835 6.49268 11.212 6.56802 11.4007 6.70761L20.3048 13.2781C20.4908 13.415 20.6286 13.6071 20.6988 13.827C20.7689 14.0469 20.7678 14.2833 20.6955 14.5025C20.6232 14.7216 20.4834 14.9124 20.2962 15.0475C20.1089 15.1826 19.8837 15.2551 19.6528 15.2547Z" fill="#FF3D00"></path>
                     <path d="M19.6528 9.50568C19.4182 9.50609 19.1896 9.43124 19.0007 9.29214L10.7487 3.20898L2.49663 9.29214C2.26266 9.46495 1.96957 9.5378 1.68184 9.49468C1.39412 9.45155 1.13532 9.29597 0.962385 9.06218C0.789449 8.82838 0.716541 8.53551 0.7597 8.24799C0.802859 7.96048 0.95855 7.70187 1.19252 7.52906L10.0966 0.958588C10.2853 0.818997 10.5139 0.743652 10.7487 0.743652C10.9835 0.743652 11.212 0.818997 11.4007 0.958588L20.3048 7.52906C20.4908 7.66598 20.6286 7.85809 20.6988 8.07797C20.769 8.29785 20.7678 8.53426 20.6955 8.75344C20.6232 8.97262 20.4834 9.16338 20.2962 9.29847C20.1089 9.43356 19.8837 9.50608 19.6528 9.50568Z" fill="#FF3D00"></path>
                 </svg>  
             </div>
             <div class="choose-prio-button flex flex-center prio-medium-button ${allTaskObjects[index].urgency === "medium" ? "prio-medium-button-bg-color chosen-urgency" : ""}" onclick="chooseUrgencyOverlay(event)" data-resetUrgency="medium">
-                <span id="prio-medium" class="flex flex-center" onclick="chooseUrgencyOverlay(event)">Medium</span>
+                <span id="prio-medium-overlay" class="flex flex-center">Medium</span>
                 <svg width="21" height="8" viewBox="0 0 21 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_200223_4295)">
                         <path d="M19.1526 7.72528H1.34443C1.05378 7.72528 0.775033 7.60898 0.569514 7.40197C0.363995 7.19495 0.248535 6.91419 0.248535 6.62143C0.248535 6.32867 0.363995 6.0479 0.569514 5.84089C0.775033 5.63388 1.05378 5.51758 1.34443 5.51758H19.1526C19.4433 5.51758 19.722 5.63388 19.9276 5.84089C20.1331 6.0479 20.2485 6.32867 20.2485 6.62143C20.2485 6.91419 20.1331 7.19495 19.9276 7.40197C19.722 7.60898 19.4433 7.72528 19.1526 7.72528Z" fill="#FFA800"></path>
@@ -477,7 +483,7 @@ function renderUrgencyButtons(index) {
                 </svg>
             </div>
             <div class="choose-prio-button flex flex-center prio-low-button ${allTaskObjects[index].urgency === "low" ? "prio-low-button-bg-color chosen-urgency" : ""}" onclick="chooseUrgencyOverlay(event)" data-resetUrgency="low">
-                <span id="prio-low" class="flex flex-center" onclick="chooseUrgencyOverlay(event)">Low</span>
+                <span id="prio-low-overlay" class="flex flex-center">Low</span>
                 <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.2485 9.50589C10.0139 9.5063 9.7854 9.43145 9.59655 9.29238L0.693448 2.72264C0.57761 2.63708 0.47977 2.52957 0.405515 2.40623C0.33126 2.28289 0.282043 2.14614 0.260675 2.00379C0.217521 1.71631 0.290421 1.42347 0.463337 1.1897C0.636253 0.955928 0.895022 0.800371 1.18272 0.757248C1.47041 0.714126 1.76347 0.786972 1.99741 0.95976L10.2485 7.04224L18.4997 0.95976C18.6155 0.874204 18.7471 0.812285 18.8869 0.777538C19.0266 0.742791 19.1719 0.735896 19.3144 0.757248C19.4568 0.7786 19.5937 0.82778 19.7171 0.901981C19.8405 0.976181 19.9481 1.07395 20.0337 1.1897C20.1194 1.30545 20.1813 1.43692 20.2161 1.57661C20.2509 1.71629 20.2578 1.86145 20.2364 2.00379C20.215 2.14614 20.1658 2.28289 20.0916 2.40623C20.0173 2.52957 19.9195 2.63708 19.8036 2.72264L10.9005 9.29238C10.7117 9.43145 10.4831 9.5063 10.2485 9.50589Z" fill="#7AE229"></path>
                     <path d="M10.2485 15.2544C10.0139 15.2548 9.7854 15.18 9.59655 15.0409L0.693448 8.47117C0.459502 8.29839 0.30383 8.03981 0.260675 7.75233C0.217521 7.46485 0.290421 7.17201 0.463337 6.93824C0.636253 6.70446 0.895021 6.54891 1.18272 6.50578C1.47041 6.46266 1.76347 6.53551 1.99741 6.7083L10.2485 12.7908L18.4997 6.7083C18.7336 6.53551 19.0267 6.46266 19.3144 6.50578C19.602 6.54891 19.8608 6.70446 20.0337 6.93824C20.2066 7.17201 20.2795 7.46485 20.2364 7.75233C20.1932 8.03981 20.0376 8.29839 19.8036 8.47117L10.9005 15.0409C10.7117 15.18 10.4831 15.2548 10.2485 15.2544Z" fill="#7AE229"></path>
@@ -521,16 +527,16 @@ function renderParticipantsBlockIntoOverlay(index) {
         <p style="font-size: 20px;">Assigned to</p>
         <ul class="chosen-list front flex-column">${renderChosenListFrontOverlay(index)}</ul>
     </div>
-    <div class="assigned-container flex flex-column show-for-editing disNone" onmousedown="hideContactListOverlay(event)">
+    <div class="assigned-container flex flex-column show-for-editing disNone">
         <p style="font-size: 20px;">Assigned to</p>
         <div name="Select contacts to assign" class="select-container contacts" style="position: relative;">
             <div class="flex flex-center contacts-inner">
-            <input class="search-contacts" placeholder="Select contacts to assign" onkeyup="searchForContactsOverlay(event)" onmouseup="showContactListOverlay(event)">
+            <input class="search-contacts" placeholder="Select contacts to assign" onkeyup="searchForContactsOverlay(event)" onfocus="showContactListOverlay(event)" onfocusout="hideContactListOverlay(event)">
                 <svg class="triangle" width="8" height="5" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M3.29998 4.3L0.699975 1.7C0.383309 1.38333 0.312475 1.02083 0.487475 0.6125C0.662475 0.204167 0.974975 0 1.42498 0H6.57498C7.02498 0 7.33747 0.204167 7.51248 0.6125C7.68748 1.02083 7.61664 1.38333 7.29997 1.7L4.69998 4.3C4.59998 4.4 4.49164 4.475 4.37498 4.525C4.25831 4.575 4.13331 4.6 3.99998 4.6C3.86664 4.6 3.74164 4.575 3.62498 4.525C3.50831 4.475 3.39998 4.4 3.29998 4.3Z" fill="#2A3647"/>
                 </svg>
             </div>
-            <div class="contact-list disNone">${renderContactList(index)}</div>
+            <div class="contact-list disNone">${renderContactListOverlay(index)}</div>
         </div>
         <ul class="chosen-list back flex flex-center">${renderChosenListBackOverlay(index)}</ul>
     </div>`;
@@ -545,15 +551,26 @@ function renderChosenListFrontOverlay(index) {
     if(allTaskObjects[index].participants) {
         let elem = allTaskObjects[index].participants;
         for(let i=0; i<allTaskObjects[index].participants.length; i++) {
-            list += /* HTML */ `<li class="flex flex-center"><div class="flex flex-center circle" style="background-color: ${elem[i].color}">
-                <p>${elem[i].sureName[0]}${elem[i].lastName[0]}</p>
-                <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem[i].sureName} ${elem[i].lastName}<br>Click icon to remove</p></div>
-            </div>
-            <p>${elem[i].sureName} ${elem[i].lastName}</p>
-        </li>`;
+            list += /* HTML */ `<li class="flex flex-center">${checkIfOneNameIsMissingFrontOverlay(elem[i], i)}</li>`;
         }
     }
     return list;
+}
+
+/**
+ * 
+ * @param {string} elem is the name of a participant
+ * @param {*} i is the participants index
+ * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
+ */
+function checkIfOneNameIsMissingFrontOverlay(elem, i) {
+    if(!elem.sureName) {
+        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.lastName}<br>Click icon to remove</p></div></div><p>${elem.lastName}</p>`;
+    }else if(!elem.lastName) {
+        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName}}<br>Click icon to remove</p></div></div><p>${elem.sureName}</p>`
+    }else {
+        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div></div><p>${elem.sureName} ${elem.lastName}</p>`;
+    }
 }
 
 /**
@@ -576,7 +593,7 @@ function getSubtasksOverlay(index) {
             <div id="substasks-container" class="flex-column">
                 <span class="subtitle">Subtasks</span>
                 <div class="flex flex-center subtask-input">
-                    <input type="text" id="choose-subtasks-overlay" placeholder="Add new subtask" onkeyup="if(event.key === 'Enter'){showCrossTicOverlay()}" onfocus="showCrossTicOverlay()">
+                    <input type="text" id="choose-subtasks-overlay" placeholder="Add new subtask" onfocus="showCrossTicOverlay()" onfocusout="hideCrossTicOverlay()">
                     <svg class="add" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.24854 8H1.24854C0.965202 8 0.727702 7.90417 0.536035 7.7125C0.344368 7.52083 0.248535 7.28333 0.248535 7C0.248535 6.71667 0.344368 6.47917 0.536035 6.2875C0.727702 6.09583 0.965202 6 1.24854 6H6.24854V1C6.24854 0.716667 6.34437 0.479167 6.53604 0.2875C6.7277 0.0958333 6.9652 0 7.24854 0C7.53187 0 7.76937 0.0958333 7.96104 0.2875C8.1527 0.479167 8.24854 0.716667 8.24854 1V6H13.2485C13.5319 6 13.7694 6.09583 13.961 6.2875C14.1527 6.47917 14.2485 6.71667 14.2485 7C14.2485 7.28333 14.1527 7.52083 13.961 7.7125C13.7694 7.90417 13.5319 8 13.2485 8H8.24854V13C8.24854 13.2833 8.1527 13.5208 7.96104 13.7125C7.76937 13.9042 7.53187 14 7.24854 14C6.9652 14 6.7277 13.9042 6.53604 13.7125C6.34437 13.5208 6.24854 13.2833 6.24854 13V8Z" fill="#2A3647"></path>
                     </svg>
@@ -614,7 +631,7 @@ function renderSubtaskListOverlay(index) {
                 <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
             </div>
             <div class="edit-subtask flex flex-center disNone" id="edit-subtask-overlay-${index}${i}" style="justify-content: space-between;">
-                <input type="text" id="edit-subtask-input-overlay-${index}${i}" value="${elem.subTaskTitle}">
+                <input type="text" id="edit-subtask-input-overlay-${index}${i}" value="${elem.subTaskTitle}" onfocusout="closeEditSubtask(${index}, ${i})">
                 <div class="bin-check flex flex-center">
                     <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
                     <img src="./assets/img/check-icon-black.svg" alt="" onclick="changeSubtaskOverlay(${index}, ${i})">
@@ -631,15 +648,12 @@ function renderSubtaskListOverlay(index) {
  * @returns an HTML-string of each contact so that you get the clickable contact-object of
  * the contact-list in each the editing- and adding-overlay.
  */
-function renderContactList(index) {
+function renderContactListOverlay(index) {
     //document.querySelector('.overlay-card .contact-list').innerHTML = '';
     let list = "";
     allContactsObjects.forEach((elem, i)=>{
         list += `<div class="flex flex-center contact ${preselectParticipantsinContactListOverlay(index, elem.contactId) ? 'chosen' : ''}" data-contactindex="${i}" onmousedown="selectContactOverlay(event, ${index})">
-            <div class="flex flex-center contact-left">
-                <div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
-                <p class="contact-name">${elem.sureName} ${elem.lastName}</p>
-            </div>
+            <div class="flex flex-center contact-left">${checkIfOneNameIsMissingContactList(elem)}</div>
             <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/></svg>
             <svg class="is-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17 8V14C17 15.6569 15.6569 17 14 17H4C2.34315 17 1 15.6569 1 14V4C1 2.34315 2.34315 1 4 1H12" stroke="#2A3647" stroke-width="2" stroke-linecap="round" fill="white"/>
@@ -786,7 +800,7 @@ function chooseUrgencyOverlay(event) {
         document.querySelectorAll('.overlay-card .choose-prio-button')[i].classList.remove(classes[i]);
         document.querySelectorAll('.overlay-card .choose-prio-button')[i].classList.remove('chosen-urgency');
     }
-    event.target.closest('.choose-prio-button').classList.add(`prio-${event.target.getAttribute('data-resetUrgency')}-button-bg-color`);
+    event.target.closest('.choose-prio-button').classList.add(`prio-${event.target.closest('.choose-prio-button').getAttribute('data-resetUrgency')}-button-bg-color`);
     event.target.closest('.choose-prio-button').classList.add('chosen-urgency');
 }
 
@@ -814,7 +828,8 @@ function hideContactListOverlay(event) {
 function searchForContactsOverlay(event) {
     let input = document.querySelector('.overlay-card .search-contacts');
     document.querySelectorAll('.overlay-card .contact-name').forEach((elem)=>{
-        if(elem.innerHTML.includes(input.value)) {
+        let lowercased = elem.innerHTML.toLowerCase()
+        if(lowercased.includes(input.value.toLowerCase())) {
             elem.closest('.contact').classList.remove('disNone');
         }else {
             elem.closest('.contact').classList.add('disNone');
@@ -831,13 +846,26 @@ function searchForContactsOverlay(event) {
 function renderChosenListBackOverlay(index) {
     let list = "";
     allTaskObjects[index].participants.forEach((elem, i)=>{
-        list += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}">
-            <p>${elem.sureName[0]}${elem.lastName[0]}</p>
-            <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
-        </div>
-    </li>`;
+        list += /* HTML */ `<li>${checkIfOneNameIsMissingBackOverlay(elem, index, i)}</li>`;
     })
     return list;
+}
+
+/**
+ * 
+ * @param {string} elem is the name of a participant
+ * @param {number} index is the index of the task
+ * @param {*} i is the participants index
+ * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
+ */
+function checkIfOneNameIsMissingBackOverlay(elem, index, i) {
+    if(!elem.sureName) {
+        return `<div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.lastName}<br>Click icon to remove</p></div></div>`;
+    }else if(!elem.lastName) {
+        return `<div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName}<br>Click icon to remove</p></div></div>`;
+    }else {
+        return `<div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div></div>`;
+    }
 }
 
 /**
@@ -872,11 +900,7 @@ function selectContactOverlay(event, index) {
 function reRenderChosenListBackOverlay(index) {
     let list = "";
     allTaskObjects[index].participants.forEach((elem, i)=>{
-        list += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}">
-            <p>${elem.sureName[0]}${elem.lastName[0]}</p>
-                <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
-            </div>
-        </li>`;
+        list += /* HTML */ `<li>${checkIfOneNameIsMissingBackOverlay(elem, index, i)}</li>`;
     })
     document.querySelector('.overlay-card .chosen-list.back').innerHTML = list;
 }
@@ -951,16 +975,16 @@ function clearSubtaskInputOverlay() {
  * This function adds a new Subtask to the task
  */
 function addSubtaskOverlay(index) {
+    let subtaskList = structuredClone(allTaskObjects[index].subTasks);
     if(document.querySelector('#choose-subtasks-overlay').value != "") {
-        newSubtaskList = allTaskObjects[index].subTasks;
-        newSubtaskList.push({
+        subtaskList = structuredClone(allTaskObjects[index].subTasks);
+        subtaskList.push({
             subTaskDone: 0,
             subTaskTitle: document.querySelector('#choose-subtasks-overlay').value
         });
         document.querySelector('#choose-subtasks-overlay').value = "";
-        allTaskObjects[index].subTasks = newSubtaskList;
     }
-    reRenderSubtaskListOverlay(index);
+    reRenderSubtaskListOverlay(index, subtaskList);
     hideCrossTicOverlay();
 }
 
@@ -969,9 +993,9 @@ function addSubtaskOverlay(index) {
  * @param {number} index is the index of the task.
  * @function reRenderSubtaskListOverlay rerenders the the subtask-list in the editing-overlay.
  */
-function reRenderSubtaskListOverlay(index) {
+function reRenderSubtaskListOverlay(index, subtaskList) {
     let list = "";
-    allTaskObjects[index].subTasks.forEach((elem, i)=>{
+    subtaskList.forEach((elem, i)=>{
         list += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
             <p class="subtask-title-p-overlay-${i}">${elem.subTaskTitle}</p>
             <div class="pen-bin-subtask-overlay pen-bin-subtask flex flex-center" id="pen-bin-subtask-overlay-${i}">
@@ -979,7 +1003,7 @@ function reRenderSubtaskListOverlay(index) {
                 <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
             </div>
             <div class="edit-subtask flex flex-center disNone" id="edit-subtask-overlay-${index}${i}" style="justify-content: space-between;">
-                <input type="text" id="edit-subtask-input-overlay-${index}${i}" value="${elem.subTaskTitle}">
+                <input type="text" id="edit-subtask-input-overlay-${index}${i}" value="${elem.subTaskTitle}" onfocusout="closeEditSubtask(${index}, ${i})">
                 <div class="bin-check flex flex-center">
                     <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
                     <img src="./assets/img/check-icon-black.svg" alt="" onclick="changeSubtaskOverlay(${index}, ${i})">
@@ -989,6 +1013,18 @@ function reRenderSubtaskListOverlay(index) {
     })
     document.querySelector('#subtask-list-overlay').innerHTML = "";
     document.querySelector('#subtask-list-overlay').innerHTML = list;
+    newSubtaskList = structuredClone(subtaskList);
+}
+
+/**
+ * 
+ * @param {number} index is the index of the task
+ * @param {number} j is the index of the subtask
+ * Both parameters are needed to get the correct input-id.
+ * @function closeEditSubtask closes the subtask editing.
+ */
+function closeEditSubtask(index, j) {
+    document.querySelector(`#edit-subtask-overlay-${index}${j}`).classList.add('disNone');
 }
 
 /**
@@ -997,7 +1033,6 @@ function reRenderSubtaskListOverlay(index) {
  * This function shows the input-field of that particular subtask and hides its <p>-tag that contains its title
  */
 function editSubtaskOverlay(index, j) {
-    newSubtaskList = allTaskObjects[index].subTasks;
     document.querySelector(`#edit-subtask-overlay-${index}${j}`).classList.remove('disNone');
     document.querySelector(`#edit-subtask-input-overlay-${index}${j}`).focus();
 }
@@ -1009,24 +1044,23 @@ function editSubtaskOverlay(index, j) {
  * This function sets the new title of the subtask to the @var allTaskObjects and @var newSubtasksArrayOverlay
  */
 function changeSubtaskOverlay(index, j) {
-    newSubtaskList[j].subTaskTitle = document.querySelector(`#edit-subtask-input-overlay-${index}${j}`).value;
-    allTaskObjects[index].subTasks = newSubtaskList;
-    reRenderSubtaskListOverlay(index);
+    let subtaskList = structuredClone(allTaskObjects[index].subTasks)
+    subtaskList[j].subTaskTitle = document.querySelector(`#edit-subtask-input-overlay-${index}${j}`).value;
+    reRenderSubtaskListOverlay(index, subtaskList);
 }
 
 /**
  * 
  * @param {number} index is the task of the index.
  * @param {number} j is the index of the subtask.
- * @function removeSubtaskOverlay loads the subtaks into the @var newSubtaskList array.
+ * @function removeSubtaskOverlay loads the subtaks into the @var subtaskList array.
  * Then the subtask at index j gets spliced out of that array and then the array is loaded to
  * participants of the task.
  */
 function removeSubtaskOverlay(index, j) {
-    newSubtaskList = allTaskObjects[index].subTasks;
-    newSubtaskList.splice(j, 1);
-    allTaskObjects[index].subTasks = newSubtaskList;
-    reRenderSubtaskListOverlay(index);
+    let subtaskList = structuredClone(allTaskObjects[index].subTasks);
+    subtaskList.splice(j, 1);
+    reRenderSubtaskListOverlay(index, subtaskList);
 }
 
 /**
@@ -1041,7 +1075,7 @@ function actualizeTask(index) {
         category: allTaskObjects[index].category,
         date: document.querySelector('#date-input-overlay').value,
         deleted: 0,
-        subTasks: allTaskObjects[index].subTasks,
+        subTasks: newSubtaskList.length === 0 ? allTaskObjects[index].subTasks : newSubtaskList,
         participants: allTaskObjects[index].participants,
         taskDescrip: document.querySelector('#task-descrip-overlay').value,
         taskTitle: document.querySelector('#title-input-overlay').value,
@@ -1153,13 +1187,25 @@ function getParticipantsAdd() {
 function renderChosenListAdd() {
     document.querySelector('.add-task-overlay-box .chosen-list').innerHTML = '';
     participantsArrayAdd.forEach((elem, i)=>{
-        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}">
-            <p>${elem.sureName[0]}${elem.lastName[0]}</p>
-            <div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
-        </div>
-    </li>`;
+        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li>${checkIfOneNameIsMissingChosenListAdd(elem, i)}</li>`;
     })
     document.querySelector('.add-task-overlay-box .chosen-list').classList.remove('disNone');
+}
+
+/**
+ * 
+ * @param {string} elem is the name of a participant
+ * @param {*} i is the participants index
+ * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
+ */
+function checkIfOneNameIsMissingChosenListAdd(elem, i) {
+    if(!elem.sureName) {
+        return `<div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.lastName}<br>Click icon to remove</p></div></div>`;
+    }else if(!elem.lastName) {
+        return `<div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName}<br>Click icon to remove</p></div></div>`;
+    }else {
+        return `<div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div></div>`;
+    }
 }
 
 /**
@@ -1213,10 +1259,7 @@ function renderContactListAdd() {
     let list = "";
     allContactsObjects.forEach((elem, index)=>{
         list += `<div class="flex flex-center contact" onmousedown="selectContactAdd(event, ${index})" data-selectindex="${index}">
-            <div class="flex flex-center contact-left">
-                <div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div>
-                <p class="contact-name">${elem.sureName} ${elem.lastName}</p>
-            </div>
+            <div class="flex flex-center contact-left">${checkIfOneNameIsMissingContactList(elem)}</div>
             <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/></svg>
             <svg class="is-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17 8V14C17 15.6569 15.6569 17 14 17H4C2.34315 17 1 15.6569 1 14V4C1 2.34315 2.34315 1 4 1H12" stroke="#2A3647" stroke-width="2" stroke-linecap="round" fill="white"/>
@@ -1225,6 +1268,21 @@ function renderContactListAdd() {
         </div>`;
     })
     document.querySelector('.add-task-overlay-box .contact-list').innerHTML = list;
+}
+
+/**
+ * 
+ * @param {string} elem is the name of a participant
+ * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
+ */
+function checkIfOneNameIsMissingContactList(elem) {
+    if(!elem.sureName) {
+        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p></div><p class="contact-name">${elem.lastName}</p>`;
+    }else if(!elem.lastName) {
+        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p></div><p class="contact-name">${elem.sureName}</p>`;
+    }else {
+        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div><p class="contact-name">${elem.sureName} ${elem.lastName}</p>`;
+    }
 }
 
 /**
