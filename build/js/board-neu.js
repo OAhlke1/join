@@ -85,6 +85,7 @@ function sortContacts() {
             }
         }   
     }
+
     renderContactListAdd();
 }
 
