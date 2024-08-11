@@ -3,9 +3,9 @@ main {
 }
 
 .headline-form {
-    align-items: center;
     justify-content: center;
     overflow-x: hidden;
+    margin-left: 96px;
 }
 
 input:focus {

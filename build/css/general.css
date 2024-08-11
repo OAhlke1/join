@@ -62,7 +62,6 @@ img {
 .container {
     background: #F6F7F8;
     width: 100vw;
-    max-width: 1440px;
 }
 
 nav {
@@ -213,7 +212,6 @@ header {
 main {
     flex-direction: column;
     width: 100%;
-    max-width: 1440px;
 }
 
 .flex {
