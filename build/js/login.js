@@ -156,6 +156,12 @@ function rememberMe() {
     }
 }
 
+
+/**
+ * 
+ * Check if the user already exists and prove the data that put in the fields
+ * 
+ */
 async function checkSignUp() {
     document.getElementById('sign-error-message').innerHTML = '';
     if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
