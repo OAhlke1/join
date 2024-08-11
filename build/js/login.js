@@ -184,9 +184,8 @@ async function checkSignUp() {
                 }
             }
             if (!userExistsFirebase) {
-                fadeInConfirmationSign();
                 signUp(data);
-                showLogInForm();
+                fadeInConfirmationSign();
             }
 
         } else {
@@ -244,6 +243,7 @@ function fadeOutConfirmationSign() {
     confirmationSign.classList.add('not-added');
     setTimeout(()=>{
         confirmationSign.classList.add('d-none');
+        showLogInForm();
     }, 700);
 }
 
