@@ -10,6 +10,8 @@ let signUserName = document.getElementById('name-signin');
 let signUserEmail = document.getElementById('mail-signin');
 let signUserPassword = document.getElementById('password-signin');
 let signUserPasswordConfirm = document.getElementById('confirm-passwordsignin');
+let confirmationSign = document.getElementById('confirmation_sign');
+
 
 function init() {
     toStartAtBeginning();
@@ -182,6 +184,7 @@ async function checkSignUp() {
                 }
             }
             if (!userExistsFirebase) {
+                fadeInConfirmationSign();
                 signUp(data);
                 showLogInForm();
             }
@@ -228,5 +231,20 @@ function acceptPolicy() {
 }
 
 
+function fadeInConfirmationSign() {
+    confirmationSign.classList.remove('d-none');
+    confirmationSign.classList.remove('not-added');
+    confirmationSign.classList.add('added');
+    setTimeout(fadeOutConfirmationSign, 1000);
+}
+
+
+function fadeOutConfirmationSign() {
+    confirmationSign.classList.remove('added');
+    confirmationSign.classList.add('not-added');
+    setTimeout(()=>{
+        confirmationSign.classList.add('d-none');
+    }, 700);
+}
 
 
