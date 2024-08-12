@@ -629,7 +629,7 @@ function renderSubtaskListOverlay(index) {
     let list = "";
     allTaskObjects[index].subTasks.forEach((elem, i)=>{
         list += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
-            <p class="subtask-title-p-overlay-${i}">${elem.subTaskTitle}</p>
+            <p class="subtask-title-p-overlay subtask-title-p-overlay-${i}">${elem.subTaskTitle}</p>
             <div class="pen-bin-subtask-overlay pen-bin-subtask flex flex-center" id="pen-bin-subtask-overlay-${i}">
                 <img src="./assets/img/pen.svg" alt="" onclick="editSubtaskOverlay(${index}, ${i})">
                 <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
@@ -986,16 +986,17 @@ function clearSubtaskInputOverlay() {
 function addSubtaskOverlay(index) {
     let subtaskList = structuredClone(allTaskObjects[index].subTasks);
     if(document.querySelector('#choose-subtasks-overlay').value != "") {
-        subtaskList = structuredClone(allTaskObjects[index].subTasks);
-        subtaskList.push({
-            subTaskDone: 0,
-            subTaskTitle: document.querySelector('#choose-subtasks-overlay').value
-        });
+        if(!checkIfSubtaskExistsOverlay(document.querySelector('#choose-subtasks-overlay').value, index, -1)){
+            reRenderSubtaskListOverlay(index, subtaskList);
+            hideCrossTicOverlay();
+            document.querySelector('#choose-subtasks-overlay').focus();
+            subtaskList = structuredClone(allTaskObjects[index].subTasks);
+            subtaskList.push({
+                subTaskDone: 0,
+                subTaskTitle: document.querySelector('#choose-subtasks-overlay').value
+            });
+        }
         document.querySelector('#choose-subtasks-overlay').value = "";
-    }
-    if(!checkIfSubtaskExistsOverlay()){
-        reRenderSubtaskListOverlay(index, subtaskList);
-        hideCrossTicOverlay();
     }
 }
 
@@ -1057,7 +1058,7 @@ function editSubtaskOverlay(index, j) {
 function changeSubtaskOverlay(index, j) {
     let subtaskList = structuredClone(allTaskObjects[index].subTasks)
     subtaskList[j].subTaskTitle = document.querySelector(`#edit-subtask-input-overlay-${index}${j}`).value;
-    if(!checkIfSubtaskExistsOverlay()) {
+    if(!checkIfSubtaskExistsOverlay(document.querySelector('#choose-subtasks-overlay').value, index, j)) {
         reRenderSubtaskListOverlay(index, subtaskList);
     }else {
         alert('Subtask already exists');
@@ -1070,15 +1071,38 @@ function changeSubtaskOverlay(index, j) {
  * @function checkIfSubtaskExists controlls if the value of the subtask inputfield is the same as the title of an
  * already existing task. If so, @bool true is returned. Else @bool false is given back.
  */
-function checkIfSubtaskExistsOverlay() {
+/* function checkIfSubtaskExistsOverlay() {
     for(let i=0; i<allSubtasksArray.length; i++) {
         if(allSubtasksArray[i].subTaskTitle.toLowerCase() === subtaskInput.value.toLowerCase()) {
+            alert('Subtask already exists');
             return true;
         }else if(allSubtasksArray[i].subTaskTitle.toLowerCase() != subtaskInput.value.toLowerCase()) {
             if(i+1 === allSubtasksArray.length) {
                 return false;
             }
         }
+    }
+} */
+
+
+function checkIfSubtaskExistsOverlay(subtaskInput, index, i) {
+    console.log('Hi');
+    if(document.querySelectorAll('.subtask-title-p-overlay').length > 0) {
+        for(let k=0; k<document.querySelectorAll('.subtask-title-p-overlay').length; k++) {
+            if(k === i) {
+                continue;
+            }else {
+                if(document.querySelectorAll('.subtask-title-p-overlay')[k].innerHTML === subtaskInput) {
+                    alert('Subtask already exists');
+                    document.querySelector(`#edit-subtask-input-overlay-${index}${i}`).focus();
+                    return true;
+                }else if(document.querySelectorAll('.subtask-title-p-overlay')[k].innerHTML != subtaskInput) {
+                    if(k+1 === document.querySelectorAll('.subtask-title-p-overlay').length) { return false; }
+                }
+            }
+        }
+    }else {
+        return false;
     }
 }
 
@@ -1176,8 +1200,9 @@ function selectContactAdd(event) {
  */
 function searchForContactsAdd(event) {
     let input = document.querySelector('.add-task-overlay-box .search-contacts');
+    document.querySelector('.add-task-overlay-box .contact-list').classList.remove('disNone');
     document.querySelectorAll('.add-task-overlay-box .contact-name').forEach((elem)=>{
-        if(elem.innerHTML.includes(input.value)) {
+        if(elem.innerHTML.toLowerCase().includes(input.value.toLowerCase())) {
             elem.closest('.contact').classList.remove('disNone');
         }else {
             elem.closest('.contact').classList.add('disNone');
@@ -1434,7 +1459,6 @@ function addSubtaskAdd() {
 function checkIfSubtaskExistsAdd(subtaskInput, i) {
     if(document.querySelectorAll('.subtask-title-p-add').length > 0) {
         for(let k=0; k<document.querySelectorAll('.subtask-title-p-add').length; k++) {
-            console.log(document.querySelectorAll('.subtask-title-p-add')[k].innerHTML);
             if(k === i) {
                 continue;
             }else {
@@ -1471,7 +1495,7 @@ function showEditingElementsSubtaskAdd(i) {
  * This function changes the title of the newly defined subtask.
  */
 function changeSubtaskAdd(i) {
-    if(!checkIfSubtaskExistsAdd(document.querySelector(`#edit-subtask-input-add-${i}`).value), i) {
+    if(!checkIfSubtaskExistsAdd(document.querySelector(`#edit-subtask-input-add-${i}`).value, i)) {
         newSubtasksArrayAdd[i].subTaskTitle = document.querySelector(`#edit-subtask-input-add-${i}`).value;
         renderSubtaskListAdd();
         document.querySelector(`#edit-subtask-add-${i}`).classList.add('disNone');

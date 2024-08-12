@@ -686,7 +686,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 .contact-list {
     flex-direction: column;
     width: 100% !important;
-    max-height: 200px;
+    max-height: 100px;
     position: absolute;
     top: 100%;
     left: 0;
@@ -872,6 +872,11 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     padding-left: 0;
 }
 
+.add-task-overlay-box .subtask-list {
+    max-height: 64px;
+    overflow-y: scroll;
+}
+
 .subtask-list li {
     width: 100%;
     justify-content: space-between;
@@ -947,6 +952,15 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 
 #title-container, #description-container, .add-task-overlay textarea, .add-task-overlay #date-container, .overlay-card .assigned-container, .add-task-overlay #assigned-container, #category-container, #prio-container, #substasks-container {
     width: calc(100% - 10px) !important;
+}
+
+#substasks-container {
+    height: fit-content !important;
+    max-height: 152px;
+}
+
+.add-task-overlay-box #task-descrip-add {
+    width: 100% !important;
 }
 
 @keyframes fade-in-li-bg {
@@ -1071,7 +1085,6 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     align-items: flex-start;
     justify-content: center;
     column-gap: 40px;
-    overflow: hidden scroll;
 }
 
 .bottom-bar {
@@ -1261,6 +1274,10 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 
     .add-task-overlay-box input, .add-task-overlay .subtitle, .add-task-overlay #title-input-container, .add-task-overlay #title-input-add, .add-task-overlay #textarea-container, .add-task-overlay #textarea-container textarea, #calender, .add-task-overlay-box #search-contacts, .add-task-overlay-box .select-categories, #choose-prio-container, #substasks-container .subtask-input {
         width: 100% !important;
+    }
+
+    .add-task-overlay-box .subtask-input {
+        padding: 0 16px;
     }
 
     .overlay-add-center-block {
