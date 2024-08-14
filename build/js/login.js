@@ -1,7 +1,7 @@
-var allInputs = document.querySelectorAll('input');
-var logoBig = document.querySelector('.logo-big');
-var logoBigWidth = logoBig.offsetWidth;
-var logoBigHeight = logoBig.offsetHeight;
+let allInputs = document.querySelectorAll('input');
+let logoBig = document.querySelector('.logo-big');
+let logoBigWidth = logoBig.offsetWidth;
+let logoBigHeight = logoBig.offsetHeight;
 let userUrl = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/user';
 let userValue = document.getElementById('mail-login');
 let password = document.getElementById('password-login');
@@ -12,7 +12,11 @@ let signUserPassword = document.getElementById('password-signin');
 let signUserPasswordConfirm = document.getElementById('confirm-passwordsignin');
 let confirmationSign = document.getElementById('confirmation_sign');
 
-
+/**
+ * 
+ * Initialization, Load Logo animation and check if somebody to remember
+ * 
+ */
 function init() {
     toStartAtBeginning();
     rememberMe();
@@ -56,6 +60,12 @@ function focused() {
     })
 }
 
+/**
+ * 
+ * Set the placeholder for sign up inputs
+ * 
+ * @param {string} elem 
+ */
 function setPlaceholder(elem) {
     if (elem.id === "mail-login" || elem.id === "mail-signin") {
         elem.setAttribute('placeholder', 'Email');
@@ -68,6 +78,11 @@ function setPlaceholder(elem) {
     } 
 }
 
+/**
+ * 
+ * Show login form
+ * 
+ */
 function showLogInForm() {
     document.querySelector('#login').classList.remove('disNone');
     document.querySelector('#signup').classList.add('disNone');
@@ -76,6 +91,11 @@ function showLogInForm() {
     }
 }
 
+/**
+ * 
+ * Show sign up form
+ * 
+ */
 function showSignUpForm() {
     document.querySelector('#login').classList.add('disNone');
     document.querySelector('#signup').classList.remove('disNone');
@@ -99,7 +119,7 @@ async function loadUser() {
 
 /**
  * 
- * Checks if the user exists
+ * Checks if user exists
  * 
  */
 async function checkLogin() {
@@ -107,7 +127,6 @@ async function checkLogin() {
     let loginSuccess = false;
     let userName;
     let userEmail;
-    let remember = document.getElementById('rememberMe').checked;
 
     for (const property in data) {
         if (data[property].email === userValue.value && data[property].password === password.value) {
@@ -117,7 +136,19 @@ async function checkLogin() {
             break;
         }
     }
+    logInOk(userName, userEmail, loginSuccess); 
+}
 
+/**
+ * 
+ * Load user and switch to summary or show error message
+ * 
+ * @param {string} userName 
+ * @param {string} userEmail 
+ * @param {boolean} loginSuccess 
+ */
+function logInOk(userName, userEmail, loginSuccess){
+    let remember = document.getElementById('rememberMe').checked;
     if (loginSuccess) {
         localStorage.setItem('User', userName);
         localStorage.setItem('Email', userEmail);
@@ -167,32 +198,36 @@ function rememberMe() {
 async function checkSignUp() {
     document.getElementById('sign-error-message').innerHTML = '';
     if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
-        if (signUserPassword.value === signUserPasswordConfirm.value) {
-            let data = {
-                "email": signUserEmail.value,
-                "name": signUserName.value,
-                "password": signUserPassword.value
-            }
-            let users = await loadUser();
-            let userExistsFirebase = false;
-
-            for (const key in users) {
-                if (users[key].email === signUserEmail.value) {
-                    document.getElementById('sign-error-message').innerHTML = "User already exists! Please try again.";
-                    userExistsFirebase = true; 
-                    break; 
-                }
-            }
-            if (!userExistsFirebase) {
-                signUp(data);
-                fadeInConfirmationSign();
-            }
-
-        } else {
-            document.getElementById('sign-error-message').innerHTML = "Your passwords don't match. Please try again.";
-        }
+        await checkPassword();
     } else {
         document.getElementById('sign-error-message').innerHTML = "Something missed! Please fill all fields";
+    }
+}
+
+async function checkPassword() {
+    if (signUserPassword.value === signUserPasswordConfirm.value) {
+        let data = {
+            "email": signUserEmail.value,
+            "name": signUserName.value,
+            "password": signUserPassword.value
+        }
+        let users = await loadUser();
+        let userExistsFirebase = false;
+
+        for (const key in users) {
+            if (users[key].email === signUserEmail.value) {
+                document.getElementById('sign-error-message').innerHTML = "User already exists! Please try again.";
+                userExistsFirebase = true; 
+                break; 
+            }
+        }
+        if (!userExistsFirebase) {
+            signUp(data);
+            fadeInConfirmationSign();
+        }
+
+    } else {
+        document.getElementById('sign-error-message').innerHTML = "Your passwords don't match. Please try again.";
     }
 }
 
@@ -200,7 +235,7 @@ async function checkSignUp() {
  * 
  * Post the new User to the database
  * 
- * @param {*} data 
+ * @param {object} data 
  * @returns 
  */
 async function signUp(data = {}) {
@@ -229,7 +264,11 @@ function acceptPolicy() {
     }
 }
 
-
+/**
+ * 
+ * Show Sign up succesfully
+ * 
+ */
 function fadeInConfirmationSign() {
     confirmationSign.classList.remove('d-none');
     confirmationSign.classList.remove('not-added');
@@ -237,7 +276,11 @@ function fadeInConfirmationSign() {
     setTimeout(fadeOutConfirmationSign, 1000);
 }
 
-
+/**
+ * 
+ * Hide Sign up succesfully
+ * 
+ */
 function fadeOutConfirmationSign() {
     confirmationSign.classList.remove('added');
     confirmationSign.classList.add('not-added');
