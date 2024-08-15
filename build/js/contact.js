@@ -168,6 +168,8 @@ function showHideContactNames() {
     information.classList.remove("d-none");
   } else if (window.innerWidth > 950 && toggleInfoContact) {
     contactList.classList.remove("d-none");
+  }else{
+    contactList.classList.remove("d-none");
   }
 }
 
@@ -253,6 +255,7 @@ function editContact() {
   editContactToggle();
   deleteContact(presentlyIndexContacts);
   createContact(email, number, name, sureLastName);
+ 
 }
 
 function deleteContact(index) {
@@ -262,10 +265,13 @@ function deleteContact(index) {
   letterBlock = "";
   contactsIndex = 0;
   q = 0;
+  // if()
   information.innerHTML = "";
   // showContacts.innerHTML = "";
   toggleInfoContact = false;
+  // getContacts()
   renderIntoLetterBox();
+  showHideContactNames()
 }
 
 function deleteContactFromAllTasks(id) {

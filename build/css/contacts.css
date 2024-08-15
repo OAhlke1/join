@@ -442,7 +442,12 @@ height: 32px !important;
     width: 60px;
     height: 60px;
   }
+
+  .informationPopUp{
+    margin: -30px;
+  }
 }
+
 
 @media (min-width: 950px) {
   .personAdd {
@@ -556,6 +561,14 @@ height: 32px !important;
  .pos-abs50{
   right: 15px;
  }   
+
+
+}
+
+@media (max-width: 380px){
+.backArrow{
+  margin-left: -62px;
+}
 
 
 }
