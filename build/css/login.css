@@ -278,8 +278,10 @@ input:focus {
     display: none;
 }
 
-#sign-error-message {
+.error-message {
     color: red;
+    display: flex;
+    padding-left: 16px;
 }
 
 .signin-btn:disabled {
