@@ -6,6 +6,9 @@ async function includeHTML() {
         let resp = await fetch(file);
         if (resp.ok) {
             element.innerHTML = await resp.text();
+            setTimeout(() => {
+                loadUserInitials();
+            }, 150);
         } else {
             element.innerHTML = 'Page not found';
         }
@@ -39,9 +42,7 @@ function loadUserInitials() {
     }
 }
 
-setTimeout(() => {
-    loadUserInitials();
-}, 150);
+
 
 /**
  * 
