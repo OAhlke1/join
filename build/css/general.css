@@ -398,10 +398,12 @@ button {
 
     .help-container {
         padding: 24px;
+        margin-bottom: 96px;
     }
 
     .privacy-container {
         padding: 24px;
+        margin-bottom: 96px;
     }
 }
 
