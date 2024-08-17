@@ -83,8 +83,6 @@ input:focus {
     width: 100vw;
     height: 100vh;
     position: absolute;
-    top: 80px;
-    left: 77px;
     z-index: 5000;
     background-color: white;
 }
@@ -98,10 +96,8 @@ input:focus {
 .logo-big .svgCont .svgCont-inner {
     width: 274px;
     height: 335px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    aspect-ratio: 274/335;
 }
 
 @keyframes shrinkOverlay {

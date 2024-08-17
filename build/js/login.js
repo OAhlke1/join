@@ -1,5 +1,4 @@
 var allInputs = document.querySelectorAll('input');
-var logoBig = document.querySelector('.logo-big');
 let userUrl = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/user';
 let userValue = document.getElementById('mail-login');
 let password = document.getElementById('password-login');
@@ -28,6 +27,9 @@ function init() {
 function toStartAtBeginning() {
     logoBigWidth = logoBig.offsetWidth;
     logoBigHeight = logoBig.offsetHeight;
+    logoBig.style.position = "absolute";
+    logoBig.style.top = `${(window.innerHeight - logoBigHeight)/2}px`;
+    logoBig.style.left = `${(window.innerWidth - logoBigWidth)/2}px`;
     logoBigTop = logoBig.getBoundingClientRect().top;
     logoBigLeft = logoBig.getBoundingClientRect().left;
     logoSmallWidth = logoSmall.offsetWidth;
@@ -43,16 +45,17 @@ function toStartAtBeginning() {
 }
 
 function shrinkLogoBig(p = 1000) {
-    logoBig.style.top = `${(logoBigTop - logoSmallTop)*p/1000}px`;
-    logoBig.style.left = `${(logoBigLeft - logoSmallLeft)*p/1000}px`;
-    logoBig.style.width = `${logoSmallWidth + (logoBigWidth-logoSmallWidth)*p/1000}`;
-    logoBig.style.width = `${logoSmallHeight + (logoBigHeight-logoSmallHeight)*p/1000}`;
-    if(p === 0) {
+    logoBig.style.top = `${logoSmallTop + (logoBigTop - logoSmallTop)*p/1000}px`;
+    logoBig.style.left = `${logoSmallLeft + (logoBigLeft - logoSmallLeft)*p/1000}px`;
+    logoBig.style.width = `${logoSmallWidth + (logoBigWidth-logoSmallWidth)*p/1000}px`;
+    logoBig.style.height = `${logoSmallHeight + (logoBigHeight-logoSmallHeight)*p/1000}px`;
+    if(logoBig.offsetWidth <= logoSmallWidth) {
+        document.querySelector('.logo-big').classList.add('disNone');
         focused();
         return;
     }
-    p -= 10;
-    setTimeout(()=>{shrinkLogoBig(p)}, 1);
+    p -= 20;
+    setTimeout(()=>{shrinkLogoBig(p)}, 10);
 }
 
 function focused() {
