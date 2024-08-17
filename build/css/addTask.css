@@ -84,7 +84,6 @@ h1 {
     padding: 12px 21px 12px 21px;
     gap: 10px;
     border-radius: 10px;
-    border: 1px 0px 0px 0px;
     border: 1px solid #d1d1d1;
     font-size: 20px;
     font-weight: 400;
@@ -267,6 +266,20 @@ h1 {
     gap: 8px;
 }
 
+.category-name {
+    height: 100%;
+    color: black;
+    border: none;
+}
+
+.category-name:focus {
+    outline: none;
+}
+
+.category-name[placeholder] {
+    font-size: 20px;
+}
+
 #substasks-container {
     width: 440px;
     height: 80px;
@@ -392,6 +405,12 @@ h1 {
 
 .triangle.rotated {
     transform: rotateZ(180deg);
+}
+
+.search-contacts {
+    height: 100%;
+    border: none;
+    font-size: 20px;
 }
 
 .contact-list, .categories-list {
@@ -691,7 +710,12 @@ h1 {
 }
 
 @media (max-width: 1024px) {
-    form {
+    .headline-form {
+        margin-left: 0;
+    }
+
+    form#content-box-container {
+        width: fit-content;
         height: fit-content;
     }
     
@@ -700,7 +724,7 @@ h1 {
         align-items: center;
         height: auto;
         gap: 32px;
-        width: 80vh;
+        width: 80vw;
     }
 
     #border-container {
@@ -714,7 +738,8 @@ h1 {
 
     .bottom-bar {
         display: flex;
-        align-items: flex-end;
+        flex-direction: column-reverse;
+        align-items: center;
         justify-content: space-between;
         width: 100vw;
         row-gap: 30px;
@@ -749,8 +774,22 @@ h1 {
         height: auto;
     }
 
+    input[placeholder] {
+        font-size: 16px !important;
+    }
+
+    input, textarea {
+        font-size: 16px !important;
+    }
+
+    .contacts-inner p {
+        font-size: 16px;
+    }
+
     .form-center #choose-prio-container {
         align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
     }
 
     #clear-button {

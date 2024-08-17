@@ -555,26 +555,10 @@ function renderChosenListFrontOverlay(index) {
     if(allTaskObjects[index].participants) {
         let elem = allTaskObjects[index].participants;
         for(let i=0; i<allTaskObjects[index].participants.length; i++) {
-            list += /* HTML */ `<li class="flex flex-center">${checkIfOneNameIsMissingFrontOverlay(elem[i], i)}</li>`;
+            list += /* HTML */ `<li class="flex flex-center"><div class="flex flex-center circle" style="background-color: ${elem[i].color}"><p>${elem[i].sureName ? elem[i].sureName[0] : ""}${elem[i].lastName ? elem[i].lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem[i].sureName ? elem[i].sureName : ""} ${elem[i].lastName ? elem[i].lastName : ""}<br>Click icon to remove</p></div></div><p>${elem[i].sureName ? elem[i].sureName : ""} ${elem[i].lastName ? elem[i].lastName : ""}</p></li>`;
         }
     }
     return list;
-}
-
-/**
- * 
- * @param {string} elem is the name of a participant
- * @param {*} i is the participants index
- * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
- */
-function checkIfOneNameIsMissingFrontOverlay(elem, i) {
-    if(!elem.sureName) {
-        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.lastName}<br>Click icon to remove</p></div></div><p>${elem.lastName}</p>`;
-    }else if(!elem.lastName) {
-        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName}}<br>Click icon to remove</p></div></div><p>${elem.sureName}</p>`
-    }else {
-        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div></div><p>${elem.sureName} ${elem.lastName}</p>`;
-    }
 }
 
 /**
@@ -657,7 +641,7 @@ function renderContactListOverlay(index) {
     let list = "";
     allContactsObjects.forEach((elem, i)=>{
         list += `<div class="flex flex-center contact ${preselectParticipantsinContactListOverlay(index, elem.contactId) ? 'chosen' : ''}" data-contactindex="${i}" onmousedown="selectContactOverlay(event, ${index})">
-            <div class="flex flex-center contact-left">${checkIfFirstOrLastNameIsMissingInContactList(elem)}</div>
+            <div class="flex flex-center contact-left"><div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.lastName ? elem.lastName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p></div><p class="contact-name">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}</p></div>
             <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/></svg>
             <svg class="is-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17 8V14C17 15.6569 15.6569 17 14 17H4C2.34315 17 1 15.6569 1 14V4C1 2.34315 2.34315 1 4 1H12" stroke="#2A3647" stroke-width="2" stroke-linecap="round" fill="white"/>
@@ -854,26 +838,9 @@ function searchForContactsOverlay(event) {
 function renderChosenListBackOverlay(index) {
     let list = "";
     allTaskObjects[index].participants.forEach((elem, i)=>{
-        list += /* HTML */ `<li>${checkIfOneNameIsMissingBackOverlay(elem, index, i)}</li>`;
+        list += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
     })
     return list;
-}
-
-/**
- * 
- * @param {string} elem is the name of a participant
- * @param {number} index is the index of the task
- * @param {*} i is the participants index
- * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
- */
-function checkIfOneNameIsMissingBackOverlay(elem, index, i) {
-    if(!elem.sureName) {
-        return `<div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.lastName}<br>Click icon to remove</p></div></div>`;
-    }else if(!elem.lastName) {
-        return `<div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName}<br>Click icon to remove</p></div></div>`;
-    }else {
-        return `<div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div></div>`;
-    }
 }
 
 /**
@@ -908,7 +875,7 @@ function selectContactOverlay(event, index) {
 function reRenderChosenListBackOverlay(index) {
     let list = "";
     allTaskObjects[index].participants.forEach((elem, i)=>{
-        list += /* HTML */ `<li>${checkIfOneNameIsMissingBackOverlay(elem, index, i)}</li>`;
+        list += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
     })
     document.querySelector('.overlay-card .chosen-list.back').innerHTML = list;
 }
@@ -1245,25 +1212,9 @@ function getParticipantsAdd() {
 function renderChosenListAdd() {
     document.querySelector('.add-task-overlay-box .chosen-list').innerHTML = '';
     participantsArrayAdd.forEach((elem, i)=>{
-        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li>${checkIfOneNameIsMissingChosenListAdd(elem, i)}</li>`;
+        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName[0] ? elem.lastName : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
     })
     document.querySelector('.add-task-overlay-box .chosen-list').classList.remove('disNone');
-}
-
-/**
- * 
- * @param {string} elem is the name of a participant
- * @param {*} i is the participants index
- * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
- */
-function checkIfOneNameIsMissingChosenListAdd(elem, i) {
-    if(!elem.sureName) {
-        return `<div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.lastName}<br>Click icon to remove</p></div></div>`;
-    }else if(!elem.lastName) {
-        return `<div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName}<br>Click icon to remove</p></div></div>`;
-    }else {
-        return `<div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div></div>`;
-    }
 }
 
 /**
@@ -1317,7 +1268,7 @@ function renderContactListAdd() {
     let list = "";
     allContactsObjects.forEach((elem, index)=>{
         list += `<div class="flex flex-center contact" onmousedown="selectContactAdd(event, ${index})" data-selectindex="${index}">
-            <div class="flex flex-center contact-left">${checkIfFirstOrLastNameIsMissingInContactList(elem)}</div>
+            <div class="flex flex-center contact-left"><div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.lastName ? elem.lastName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p></div><p class="contact-name">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}</p></div>
             <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/></svg>
             <svg class="is-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17 8V14C17 15.6569 15.6569 17 14 17H4C2.34315 17 1 15.6569 1 14V4C1 2.34315 2.34315 1 4 1H12" stroke="#2A3647" stroke-width="2" stroke-linecap="round" fill="white"/>
@@ -1326,21 +1277,6 @@ function renderContactListAdd() {
         </div>`;
     })
     document.querySelector('.add-task-overlay-box .contact-list').innerHTML = list;
-}
-
-/**
- * 
- * @param {string} elem is the name of a participant
- * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
- */
-function checkIfFirstOrLastNameIsMissingInContactList(elem) {
-    if(!elem.sureName) {
-        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p></div><p class="contact-name">${elem.lastName}</p>`;
-    }else if(!elem.lastName) {
-        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p></div><p class="contact-name">${elem.sureName}</p>`;
-    }else {
-        return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div><p class="contact-name">${elem.sureName} ${elem.lastName}</p>`;
-    }
 }
 
 /**
@@ -1360,8 +1296,8 @@ function showHideCategoriesList(event) {
 
 function setCategory(event) {
     event.preventDefault();
-    document.querySelector('.category-name').innerHTML = event.target.innerHTML;
-    categoryType = event.target.closest('.category').querySelector('p').innerHTML;
+    document.querySelector('.category-name').value = event.target.closest('.category').getAttribute('data-tasktype');
+    categoryType = event.target.closest('.category').getAttribute('data-tasktype');
 }
 
 /**

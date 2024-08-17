@@ -130,6 +130,23 @@ function removeParticipant(i) {
 
 /**
  * 
+ * This function takes the value of the search-input-field and checks each contact in the add-task-overlays contact-list if it includes the input-value.
+ * If not, the contact gets hidden by adding the class disNone (for display-none) to it.
+ */
+function searchForContacts(event) {
+    let input = document.querySelector('.search-contacts');
+    document.querySelector('.contact-list').classList.remove('disNone');
+    document.querySelectorAll('.contact-name').forEach((elem)=>{
+        if(elem.innerHTML.toLowerCase().includes(input.value.toLowerCase())) {
+            elem.closest('.contact').classList.remove('disNone');
+        }else {
+            elem.closest('.contact').classList.add('disNone');
+        }
+    })
+}
+
+/**
+ * 
  * @param {even} event is the click-event fired on a contact.
  * @function selectContact adds the class "chosen" to the clicked contact to mark it as chosen.
  */
@@ -167,8 +184,8 @@ function renderChosenList() {
     participantsArray.forEach((elem, i)=>{
         console.log(elem);
         document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" style="background-color: ${elem.color};" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})" style="background-color: ${allContactsObjects[i].color};">
-            <p>${elem.sureName[0]}${elem.lastName[0]}</p>
-            <div class="name-block${i} name-block disNone"><p>${elem.sureName} ${elem.lastName}<br>Click icon to remove</p></div>
+            <p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p>
+            <div class="name-block${i} name-block disNone"><p>${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div>
         </div>
     </li>`;
     })
@@ -265,8 +282,8 @@ function showHideCategoriesList(event) {
  */
 function setCategory(event) {
     event.preventDefault();
-    document.querySelector('.category-name').innerHTML = event.target.innerHTML;
-    categoryType = event.target.closest('.category').querySelector('p').innerHTML;
+    document.querySelector('.category-name').value = event.target.closest('.category').getAttribute('data-tasktype');
+    categoryType = event.target.closest('.category').getAttribute('data-tasktype');
 }
 
 /**
@@ -286,8 +303,8 @@ function addSubtask() {
             allSubtasksArray.push({subTaskDone: 0, subTaskTitle: subtaskInput.value})
             renderSubtaskList();
             subtaskInput.value = '';
+            hideCrossTic();
         }
-        hideCrossTic();
     }
 }
 
@@ -480,7 +497,6 @@ async function postNewTask(event) {
  *  @function fadeInTaskAdded adds the class 'added' to @var taskAddedElem to fade it in via CSS.
  */
 function fadeInTaskAdded() {
-    console.log('Hi!');
     taskAddedElem.classList.remove('disNone');
     taskAddedElem.classList.remove('not-added');
     taskAddedElem.classList.add('added');

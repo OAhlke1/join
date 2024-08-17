@@ -844,6 +844,10 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     white-space: nowrap;
 }
 
+.add-task-overlay-box .category-name:focus {
+    outline: none !important;
+}
+
 .add-task-overlay-box .cross-tic {
     width: fit-content;
 }

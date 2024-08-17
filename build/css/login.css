@@ -2,6 +2,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
     padding: 80px 77px;
     position: relative;
 }
@@ -261,7 +262,7 @@ input:focus {
 .terms-and-cond {
     column-gap: 24px;
     position: absolute;
-    bottom: -80px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     height: 35px;
@@ -278,10 +279,8 @@ input:focus {
     display: none;
 }
 
-.error-message {
+#sign-error-message {
     color: red;
-    display: flex;
-    padding-left: 16px;
 }
 
 .signin-btn:disabled {
@@ -393,13 +392,4 @@ input:focus {
     }
 }
 
-@media (max-width: 540px) {
-    .form-block {
-        width: 95vw;
-        min-width: auto;
-    }
-
-    input{
-        width: 90vw;
-    }
-}
+/* ölsakjfljdsaflksaflkdsaf */
