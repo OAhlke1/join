@@ -1,7 +1,5 @@
-let allInputs = document.querySelectorAll('input');
-let logoBig = document.querySelector('.logo-big');
-let logoBigWidth = logoBig.offsetWidth;
-let logoBigHeight = logoBig.offsetHeight;
+var allInputs = document.querySelectorAll('input');
+var logoBig = document.querySelector('.logo-big');
 let userUrl = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/user';
 let userValue = document.getElementById('mail-login');
 let password = document.getElementById('password-login');
@@ -11,38 +9,50 @@ let signUserEmail = document.getElementById('mail-signin');
 let signUserPassword = document.getElementById('password-signin');
 let signUserPasswordConfirm = document.getElementById('confirm-passwordsignin');
 let confirmationSign = document.getElementById('confirmation_sign');
+let logoBig = document.querySelector('.logo-big .svgCont .svgCont-inner');
+let logoBigWidth;
+let logoBigHeight;
+let logoBigTop;
+let logoBigLeft;
+let logoSmall = document.querySelector('#logo-desktop');
+let logoSmallWidth;
+let logoSmallHeight;
+let logoSmallTop;
+let logoSmallLeft;
 
-/**
- * 
- * Initialization, Load Logo animation and check if somebody to remember
- * 
- */
 function init() {
     toStartAtBeginning();
     rememberMe();
 }
 
 function toStartAtBeginning() {
-    document.querySelector('.logo-big').style.aspectRatio = window.innerWidth / window.innerHeight;
+    logoBigWidth = logoBig.offsetWidth;
+    logoBigHeight = logoBig.offsetHeight;
+    logoBigTop = logoBig.getBoundingClientRect().top;
+    logoBigLeft = logoBig.getBoundingClientRect().left;
+    logoSmallWidth = logoSmall.offsetWidth;
+    logoSmallHeight = logoSmall.offsetHeight;
+    logoSmallTop = logoSmall.getBoundingClientRect().top;
+    logoSmallLeft = logoSmall.getBoundingClientRect().left;
     if (window.innerWidth > 825) {
-        setTimeout(() => { shrinkLogoBig() }, 250);
+        setTimeout(shrinkLogoBig, 250);
     } else {
         logoBig.classList.add('disNone');
-        document.querySelector('.topBar').classList.remove('disNone');
-        document.querySelector('.form-block').classList.remove('disNone');
-        document.querySelector('.terms-and-cond').classList.remove('disNone');
+        focused();
     }
-    focused();
 }
 
-function shrinkLogoBig() {
-    logoBig.classList.add('shrinking');
-    setTimeout(() => {
-        logoBig.classList.add('disNone');
-        document.querySelector('.topBar').classList.remove('disNone');
-        document.querySelector('.form-block').classList.remove('disNone');
-        document.querySelector('.terms-and-cond').classList.remove('disNone');
-    }, 720)
+function shrinkLogoBig(p = 1000) {
+    logoBig.style.top = `${(logoBigTop - logoSmallTop)*p/1000}px`;
+    logoBig.style.left = `${(logoBigLeft - logoSmallLeft)*p/1000}px`;
+    logoBig.style.width = `${logoSmallWidth + (logoBigWidth-logoSmallWidth)*p/1000}`;
+    logoBig.style.width = `${logoSmallHeight + (logoBigHeight-logoSmallHeight)*p/1000}`;
+    if(p === 0) {
+        focused();
+        return;
+    }
+    p -= 10;
+    setTimeout(()=>{shrinkLogoBig(p)}, 1);
 }
 
 function focused() {
@@ -60,12 +70,6 @@ function focused() {
     })
 }
 
-/**
- * 
- * Set the placeholder for sign up inputs
- * 
- * @param {string} elem 
- */
 function setPlaceholder(elem) {
     if (elem.id === "mail-login" || elem.id === "mail-signin") {
         elem.setAttribute('placeholder', 'Email');
@@ -78,11 +82,6 @@ function setPlaceholder(elem) {
     } 
 }
 
-/**
- * 
- * Show login form
- * 
- */
 function showLogInForm() {
     document.querySelector('#login').classList.remove('disNone');
     document.querySelector('#signup').classList.add('disNone');
@@ -91,11 +90,6 @@ function showLogInForm() {
     }
 }
 
-/**
- * 
- * Show sign up form
- * 
- */
 function showSignUpForm() {
     document.querySelector('#login').classList.add('disNone');
     document.querySelector('#signup').classList.remove('disNone');
@@ -119,7 +113,7 @@ async function loadUser() {
 
 /**
  * 
- * Checks if user exists
+ * Checks if the user exists
  * 
  */
 async function checkLogin() {
@@ -127,6 +121,7 @@ async function checkLogin() {
     let loginSuccess = false;
     let userName;
     let userEmail;
+    let remember = document.getElementById('rememberMe').checked;
 
     for (const property in data) {
         if (data[property].email === userValue.value && data[property].password === password.value) {
@@ -136,19 +131,7 @@ async function checkLogin() {
             break;
         }
     }
-    logInOk(userName, userEmail, loginSuccess); 
-}
 
-/**
- * 
- * Load user and switch to summary or show error message
- * 
- * @param {string} userName 
- * @param {string} userEmail 
- * @param {boolean} loginSuccess 
- */
-function logInOk(userName, userEmail, loginSuccess){
-    let remember = document.getElementById('rememberMe').checked;
     if (loginSuccess) {
         localStorage.setItem('User', userName);
         localStorage.setItem('Email', userEmail);
@@ -198,36 +181,32 @@ function rememberMe() {
 async function checkSignUp() {
     document.getElementById('sign-error-message').innerHTML = '';
     if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
-        await checkPassword();
+        if (signUserPassword.value === signUserPasswordConfirm.value) {
+            let data = {
+                "email": signUserEmail.value,
+                "name": signUserName.value,
+                "password": signUserPassword.value
+            }
+            let users = await loadUser();
+            let userExistsFirebase = false;
+
+            for (const key in users) {
+                if (users[key].email === signUserEmail.value) {
+                    document.getElementById('sign-error-message').innerHTML = "User already exists! Please try again.";
+                    userExistsFirebase = true; 
+                    break; 
+                }
+            }
+            if (!userExistsFirebase) {
+                signUp(data);
+                fadeInConfirmationSign();
+            }
+
+        } else {
+            document.getElementById('sign-error-message').innerHTML = "Your passwords don't match. Please try again.";
+        }
     } else {
         document.getElementById('sign-error-message').innerHTML = "Something missed! Please fill all fields";
-    }
-}
-
-async function checkPassword() {
-    if (signUserPassword.value === signUserPasswordConfirm.value) {
-        let data = {
-            "email": signUserEmail.value,
-            "name": signUserName.value,
-            "password": signUserPassword.value
-        }
-        let users = await loadUser();
-        let userExistsFirebase = false;
-
-        for (const key in users) {
-            if (users[key].email === signUserEmail.value) {
-                document.getElementById('sign-error-message').innerHTML = "User already exists! Please try again.";
-                userExistsFirebase = true; 
-                break; 
-            }
-        }
-        if (!userExistsFirebase) {
-            signUp(data);
-            fadeInConfirmationSign();
-        }
-
-    } else {
-        document.getElementById('sign-error-message').innerHTML = "Your passwords don't match. Please try again.";
     }
 }
 
@@ -235,7 +214,7 @@ async function checkPassword() {
  * 
  * Post the new User to the database
  * 
- * @param {object} data 
+ * @param {*} data 
  * @returns 
  */
 async function signUp(data = {}) {
@@ -264,11 +243,7 @@ function acceptPolicy() {
     }
 }
 
-/**
- * 
- * Show Sign up succesfully
- * 
- */
+
 function fadeInConfirmationSign() {
     confirmationSign.classList.remove('d-none');
     confirmationSign.classList.remove('not-added');
@@ -276,11 +251,7 @@ function fadeInConfirmationSign() {
     setTimeout(fadeOutConfirmationSign, 1000);
 }
 
-/**
- * 
- * Hide Sign up succesfully
- * 
- */
+
 function fadeOutConfirmationSign() {
     confirmationSign.classList.remove('added');
     confirmationSign.classList.add('not-added');
@@ -289,5 +260,3 @@ function fadeOutConfirmationSign() {
         showLogInForm();
     }, 700);
 }
-
-
