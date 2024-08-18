@@ -355,7 +355,7 @@ position: fixed;
 .editContactButton button:last-child {
   align-items: center;
   justify-content: center;
-  width: 140px;
+  margin-left: 10px;
   background-color: #2a3647;
   color: white;
 }
@@ -376,6 +376,7 @@ position: fixed;
 
 .inputContainer {
   flex-direction: column;
+  margin: 10px;
 }
 
 .inputContainer input {
@@ -548,11 +549,11 @@ height: 32px !important;
 
 @media (max-width: 420px){
   .addContactMainContainer {
-    width: 26vh;
+    width: 256px;
 }
 
 .editContactMainContainer {
-  width: 26vh;
+  width: 256px;
 }
 
   .inputContainer input{
