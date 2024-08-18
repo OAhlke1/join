@@ -20,7 +20,14 @@ input {
     border-radius: 8px;
     padding: 0px 21px;
     background-color: white;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat !important;
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 1200px) {
+    input {
+        font-size: 16px;
+    }
 }
 
 input::placeholder {
@@ -96,7 +103,6 @@ input:focus {
 .logo-big .svgCont .svgCont-inner {
     width: 274px;
     height: 335px;
-    position: relative;
     aspect-ratio: 274/335;
 }
 
@@ -177,6 +183,7 @@ input:focus {
     background-image: url('../../assets/img/mail-icon.png');
     background-size: 24px auto;
     background-position: calc(100% - 23px) center;
+    background-repeat: no-repeat;
 }
 
 #password-login, #password-signin, #confirm-password-signin {

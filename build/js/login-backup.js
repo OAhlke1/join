@@ -1,77 +1,71 @@
 var allInputs = document.querySelectorAll('input');
+var logoBig = document.querySelector('.logo-big');
+var logoBigWidth = logoBig.offsetWidth;
+var logoBigHeight = logoBig.offsetHeight;
 let userUrl = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/user';
 let userValue = document.getElementById('mail-login');
-let userName;
-let userEmail;
 let password = document.getElementById('password-login');
-let loginSuccess = false;
 let error = document.getElementById('error-message');
 let signUserName = document.getElementById('name-signin');
 let signUserEmail = document.getElementById('mail-signin');
 let signUserPassword = document.getElementById('password-signin');
 let signUserPasswordConfirm = document.getElementById('confirm-passwordsignin');
 let confirmationSign = document.getElementById('confirmation_sign');
-let logoBig = document.querySelector('.logo-big .svgCont .svgCont-inner');
-let logoBigWidth = logoBig.offsetWidth;
-let logoBigHeight = logoBig.offsetHeight;
-let logoBigTop = logoBig.getBoundingClientRect().top;
-let logoBigPositionLeft = logoBig.getBoundingClientRect().left;
-let logoSmall = document.querySelector('#logo-desktop');
-let logoSmallWidth = logoSmall.offsetWidth;
-let logoSmallHeight = logoSmall.offsetHeight;
-let logoSmallPositionTop = logoSmall.getBoundingClientRect().top;
-let logoSmallPositionLeft = logoSmall.getBoundingClientRect().left;
+
 
 function init() {
-    setupShrinking();
+    toStartAtBeginning();
     rememberMe();
 }
 
-/**
- * 
- * @function setupShrinking sets the top and left position of the big logo.
- * At first it was not absolutely positioned, so that its parents display flex centeres it.
- * That ensures, that the big logo is not flickering at first from the upper left corner to the center, but is set to the viewports
- * center right at the beginning.
- * But after function call gets that position type for making the effect work properly.
- * Then, after a quater of a second, it calls the @function shrinkLogoBig if the width of the viewport is greater than 825 pixels.
- */
-function setupShrinking() {
-    logoBig.style.top = `${(window.innerHeight - logoBigHeight)/2}px`;
-    logoBig.style.left = `${(window.innerWidth - logoBigWidth)/2}px`;
-    logoBig.style.position = "absolute";
+function toStartAtBeginning() {
+    document.querySelector('.logo-big').style.aspectRatio = window.innerWidth / window.innerHeight;
     if (window.innerWidth > 825) {
-        setTimeout(shrinkLogoBig, 250);
+        setTimeout(() => { shrinkLogoBig() }, 250);
     } else {
         logoBig.classList.add('disNone');
-        focused();
+        document.querySelector('.topBar').classList.remove('disNone');
+        document.querySelector('.form-block').classList.remove('disNone');
+        document.querySelector('.terms-and-cond').classList.remove('disNone');
     }
+    focused();
 }
 
-/**
- * 
- * @param {number} p is the the amount of promille for each the difference in
- *      width and height
- *      and the top and left position
- * of the big and small logo.
- * At the beginning, p = 1000, and therefore 1000 promille of each differences are added to the width, height, top and left position
- * of the small logo. 
- * But then, p gets smaller, and therefore only a fraction of the entire differences is added to the widht, height top and left position
- * of the small logo until eventually, the big logo is at the same spot as the small logo an of the same size.
- * Then, when the big logo is of the same width as the small logo, the big logo is hidden.
- * @returns 
- */
-function shrinkLogoBig(p = 1000) {
-    logoBig.style.top = `${logoSmallPositionTop + (logoBigTop - logoSmallPositionTop)*p/1000}px`;
-    logoBig.style.left = `${logoSmallPositionLeft + (logoBigPositionLeft - logoSmallPositionLeft)*p/1000}px`;
-    logoBig.style.width = `${logoSmallWidth + (logoBigWidth-logoSmallWidth)*p/1000}px`;
-    logoBig.style.height = `${logoSmallHeight + (logoBigHeight-logoSmallHeight)*p/1000}px`;
-    if(logoBig.offsetWidth <= logoSmallWidth) {
-        document.querySelector('.logo-big').classList.add('disNone');
-        return;
-    }
-    p -= 20;
-    setTimeout(()=>{shrinkLogoBig(p)}, 10);
+function shrinkLogoBig() {
+    logoBig.classList.add('shrinking');
+    setTimeout(() => {
+        logoBig.classList.add('disNone');
+        document.querySelector('.topBar').classList.remove('disNone');
+        document.querySelector('.form-block').classList.remove('disNone');
+        document.querySelector('.terms-and-cond').classList.remove('disNone');
+    }, 720)
+}
+
+function focused() {
+    allInputs.forEach((elem) => {
+        if (elem.type != "checkbox") {
+            elem.addEventListener('focus', () => {
+                elem.classList.add('noBg');
+                elem.setAttribute('placeholder', '');
+            })
+            elem.addEventListener('focusout', () => {
+                elem.classList.remove('noBg');
+                setPlaceholder(elem);
+            })
+        }
+    })
+}
+
+function setPlaceholder(elem) {
+    if (elem.id === "mail-login" || elem.id === "mail-signin") {
+        elem.setAttribute('placeholder', 'Email');
+    } else if (elem.id === "password-login" || elem.id === "password-signin") {
+        elem.setAttribute('placeholder', 'Password');
+    } else if (elem.id === "confirm-passwordsignin") {
+        elem.setAttribute('placeholder', 'Confirm Password');
+    } else if (elem.id === "name-signin") {
+        elem.setAttribute('placeholder', 'Name');
+    } 
 }
 
 function showLogInForm() {
@@ -92,52 +86,52 @@ function showSignUpForm() {
 
 /**
  * 
- * Load users from database for checking them.
+ * Load users from database to check it
  * 
  * @returns 
  */
 async function loadUser() {
-    let data = await fetch(userUrl + '.json');
-    return await data.json();
+    let res = await fetch(userUrl + '.json');
+    let data = await res.json();
+
+    return data;
 }
 
 /**
  * 
- * @function checkLogin checks if the user exists
+ * Checks if the user exists
  * 
  */
 async function checkLogin() {
     let data = await loadUser();
+    let loginSuccess = false;
+    let userName;
+    let userEmail;
+    let remember = document.getElementById('rememberMe').checked;
+
     for (const property in data) {
         if (data[property].email === userValue.value && data[property].password === password.value) {
             userName = data[property].name;
             userEmail = data[property].email;
             loginSuccess = true;
-            setLocalStorageForUser();
             break;
         }
     }
+
     if (loginSuccess) {
-        setLocalStorageForUser();
+        localStorage.setItem('User', userName);
+        localStorage.setItem('Email', userEmail);
+        if (remember) {
+            localStorage.setItem('Remember', true);
+        } else {
+            localStorage.setItem('Remember', '');
+        }
+        window.location.href = 'summary.html';
     } else {
         error.innerHTML = 'Check your email and password. Please try again.';
     }
 }
 
-/**
- * 
- * @function setLocalStorageForUser sets the name and mail-adress of the found user to the browsers local storage.
- */
-function setLocalStorageForUser() {
-    localStorage.setItem('User', userName);
-    localStorage.setItem('Email', userEmail);
-    if (document.getElementById('rememberMe').checked) {
-        localStorage.setItem('Remember', true);
-    } else {
-        localStorage.setItem('Remember', '');
-    }
-    window.location.href = 'summary.html';
-}
 
 /**
  * 
