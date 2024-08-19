@@ -278,11 +278,10 @@ function deleteContactFromAllTasks(id) {
   let puffer = [];
   for (let i = 0; i < tasks.length; i++) {
     if (tasks[i].participants) {
-      for (let j = 0; j < tasks[i].participants; j++) {
+      for (let j = 0; j < tasks[i].participants.length; j++) {
         if (tasks[i].participants[j].contactId === id) {
           puffer = tasks[i].participants[j];
-          puffer.splice(j, 1);
-          tasks[i].participants[j] = puffer;
+          tasks[i].participants.splice(j, 1);
         }
       }
     }
