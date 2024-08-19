@@ -1150,7 +1150,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
         display: flex;
         flex-direction: column;
         align-items: center;
-        min-width: 428px;
+        min-width: 320px;
         width: 80%;
         height: calc(100% - 80px);
         margin: 0 auto;
@@ -1161,7 +1161,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     main .boardCont .top-bar {
         flex-direction: column;
         align-items: center;
-        width: 392px;
+        width: 100%;
         padding: 46px 0px 24px 0px;
     }
 
@@ -1220,7 +1220,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
         flex-direction: column;
         align-items: flex-start;
         row-gap: 19px;
-        min-width: 396px;
+        min-width: 320px;
         width: 100%;
         min-height: unset;
         height: fit-content;
