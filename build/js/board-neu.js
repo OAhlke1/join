@@ -123,7 +123,9 @@ function checkIfParticipantsExist() {
 function renderTasks() {
     allTaskObjects.forEach((elem, index)=>{
         let card = /* HTML */ `<div class="task flex-column" draggable="true" data-taskType="${elem.taskType}" data-taskIndex="${index}" onclick="renderTaskIntoOverlay(${index})">
-            <div class="task-category flex-center" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
+            <div class="flex flex-center" style="justify-content: space-between;">
+            <div class="task-category flex-center flex-column" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
+            ${renderDropDownShiftTask(index)}</div>
             <div class="headlineDescription flex-column">
                 <h2>${elem.taskTitle}</h2>
                 <div class="task-description"><p>${elem.taskDescrip}</p></div>
@@ -142,6 +144,22 @@ function renderTasks() {
     });
 }
 
+function renderDropDownShiftTask(index) {
+    return `<select class="select-state">
+        <option class="${allTaskObjects[index].taskType === "toDo" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'toDo')">To Do</option>
+        <option class="${allTaskObjects[index].taskType === "inProgress" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'inProgress')">In Progress</option>
+        <option class="${allTaskObjects[index].taskType === "awaitFeedback" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'awaitFeedback')">Await Feedback</option>
+        <option class="${allTaskObjects[index].taskType === "done" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'done')">Done</option>
+    </select>`;
+}
+
+function resetTaskStatus(event, index, statusName) {
+    event.stopPropagation();
+    allTaskObjects[index].taskType = statusName;
+    reRenderTasks();
+    collectNotDeletedTasks();
+}
+
 /**
  * 
  * @param {number} index is the index of the task in @param {array} allTaskObjects
@@ -151,7 +169,8 @@ function reRenderTasks() {
     allTaskObjects.forEach((elem, index)=>{
         if(!elem.deleted) {
             document.querySelector(`.task[data-taskindex="${index}"]`).innerHTML = /* HTML */ `
-            <div class="task-category flex-center" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
+            <div class="flex flex-center flex-column" style="justify-content: space-between;"><div class="task-category flex-center" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
+            ${renderDropDownShiftTask(index)}</div>
                 <div class="headlineDescription flex-column">
                     <h2>${elem.taskTitle}</h2>
                     <div class="task-description"><p>${elem.taskDescrip}</p></div>
