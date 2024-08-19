@@ -234,8 +234,7 @@ function startingValueEditContact(index) {
   let number = document.querySelector(".inputEditNumber");
   let letters = document.querySelector(".editContactImg");
 
-  name.value =
-    contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
+  name.value = contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
   email.value = contacts[index][1]["email"];
   number.value = contacts[index][1]["number"];
   letters.innerHTML = profileName(index);

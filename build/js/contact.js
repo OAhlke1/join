@@ -247,15 +247,10 @@ function editContact() {
   let name = document.querySelector(".inputEditName");
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
-  sureLastName = document
-    .querySelector(".inputEditName")
-    .value.trimStart()
-    .split(" ");
-
+  sureLastName = document.querySelector(".inputEditName").value.trimStart().split(" ");
   editContactToggle();
   deleteContact(presentlyIndexContacts);
   createContact(email, number, name, sureLastName);
- 
 }
 
 function deleteContact(index) {
@@ -275,14 +270,11 @@ function deleteContact(index) {
 }
 
 function deleteContactFromAllTasks(id) {
-  let puffer = [];
   for (let i = 0; i < tasks.length; i++) {
     if (tasks[i].participants) {
-      for (let j = 0; j < tasks[i].participants; j++) {
+      for (let j = 0; j < tasks[i].participants.length; j++) {
         if (tasks[i].participants[j].contactId === id) {
-          puffer = tasks[i].participants[j];
-          puffer.splice(j, 1);
-          tasks[i].participants[j] = puffer;
+          tasks[i].participants.splice(j, 1);
         }
       }
     }
