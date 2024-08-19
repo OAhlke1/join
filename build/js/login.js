@@ -252,3 +252,38 @@ function fadeOutConfirmationSign() {
         showLogInForm();
     }, 700);
 }
+
+function validateName() {
+    let error = document.getElementById('error-message-name');
+    let name = document.getElementById('name-signin').value;
+    let nameRegex = /^[A-Za-zÄÖÜäöüß\s]+$/;
+    if (!nameRegex.test(name)) {
+      error.classList.remove('disNone');
+    } else {
+      error.classList.add('disNone');
+    }
+  }
+
+  function validateEmail() {
+    let error = document.getElementById('error-message-email');
+    let email = document.getElementById('mail-signin').value;
+    let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      error.classList.remove('disNone');
+    } else {
+      error.classList.add('disNone');
+    }
+  }
+
+  function checkPasswordInput() {
+    let password = document.getElementById('password-signin');
+    let passwordConfirm = document.getElementById('confirm-passwordsignin');
+    let error = document.getElementById('sign-error-message');
+    if (!password.value !== '') {
+      if (password.value !== passwordConfirm.value) {
+        error.innerHTML = "Your passwords don't match. Please try again.";
+      } else {
+        error.innerHTML = "";
+      }
+    }
+  }

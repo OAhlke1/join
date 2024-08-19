@@ -95,12 +95,22 @@
     </button>
     <h1>Sign In</h1>
     <form onsubmit="return false;" class="flex-column">
-      <input type="text" id="name-signin" pattern="^[A-Za-zÄÖÜäöüß\s]+$" placeholder="Name" required>
-      <input type="email" id="mail-signin" placeholder="Email" required>
+      <div>
+        <input type="text" id="name-signin" pattern="^[A-Za-zÄÖÜäöüß\s]+$" placeholder="Name" required
+          onblur="validateName()">
+        <span id="error-message-name" class="disNone error-message">Please choose a correct Name without Numbers or
+          other character</span>
+      </div>
+      <div>
+        <input type="email" id="mail-signin" placeholder="Email" required onblur="validateEmail()">
+        <span id="error-message-email" class="disNone error-message">Please choose a correct email address</span>
+      </div>
       <input type="password" id="password-signin" placeholder="Password" required>
-      <input type="password" id="confirm-passwordsignin" placeholder="Confirm Password" required>
-      <div id="sign-error-message"></div>
-
+      <div>
+        <input type="password" id="confirm-passwordsignin" placeholder="Confirm Password" required
+          onblur="checkPasswordInput()">
+        <div id="sign-error-message" class="error-message"></div>
+      </div>
       <div class="acceptPp">
         <input onchange="acceptPolicy()" type="checkbox" id="acceptPp">
         <label for="acceptPp">I accept the <a>Privacy policy</a></label>
