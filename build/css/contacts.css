@@ -570,8 +570,15 @@ height: 32px !important;
 .backArrow{
   margin-left: -62px;
 }
+}
 
-
+@media (max-height: 420px) {
+  .mainContainer{
+    height: 620px;
+  }
+  .editContactLeftContainer{
+    height: 270px;
+  }
 }
 
 
