@@ -596,15 +596,17 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 }
 
 .overlay-card .choose-prio-container {
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
     gap: 16px;
-    display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
 .choose-prio-button {
     min-width: calc(100%/3 - 16px) !important;
+    max-width: 125px;
     height: 56px;
     padding: 16px 10px 16px 10px;
     border-radius: 10px;
