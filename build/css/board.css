@@ -597,10 +597,10 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 
 .overlay-card .choose-prio-container {
     width: 100%;
-    height: 56px;
     gap: 16px;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .choose-prio-button {
@@ -971,6 +971,11 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 .select-state {
     display: none;
     width: 30%;
+    font-family: 'inter', sans-serif;
+    background-color: white;
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 @keyframes fade-in-li-bg {

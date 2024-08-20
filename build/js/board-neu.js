@@ -144,20 +144,82 @@ function renderTasks() {
     });
 }
 
+/**
+ * 
+ * @param {number} index is the index of the task 
+ * @returns a drop-down menue for rendering it into the task-card.
+ */
 function renderDropDownShiftTask(index) {
     return `<select class="select-state">
-        <option class="${allTaskObjects[index].taskType === "toDo" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'toDo')">To Do</option>
-        <option class="${allTaskObjects[index].taskType === "inProgress" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'inProgress')">In Progress</option>
-        <option class="${allTaskObjects[index].taskType === "awaitFeedback" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'awaitFeedback')">Await Feedback</option>
-        <option class="${allTaskObjects[index].taskType === "done" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'done')">Done</option>
+        <option>Status</option>
+        <option class="${allTaskObjects[index].taskType === "toDo" ? "disNone" : ""}" onselect="resetTaskStatus(event, ${index}, 'toDo')">To Do</option>
+        <option class="${allTaskObjects[index].taskType === "inProgress" ? "disNone" : ""}" onselect="resetTaskStatus(event, ${index}, 'inProgress')">In Progress</option>
+        <option class="${allTaskObjects[index].taskType === "awaitFeedback" ? "disNone" : ""}" onselect="resetTaskStatus(event, ${index}, 'awaitFeedback')">Await Feedback</option>
+        <option class="${allTaskObjects[index].taskType === "done" ? "disNone" : ""}" onselect="resetTaskStatus(event, ${index}, 'done')">Done</option>
     </select>`;
 }
 
+/**
+ * 
+ * @param {evemt} event the click-event fired to the option of the tasks drop-down-menue
+ * @param {number} index is the tasks index.
+ * @param {string} statusName is the name of the status.
+ * @var oldStatus is the name of the tasks old status.
+ * @function resetTaskStatus sets a new status to the task.
+ */
 function resetTaskStatus(event, index, statusName) {
     event.stopPropagation();
+    let oldStatus = allTaskObjects[index].taskType;
+    document.querySelector(`.task[data-taskindex="${index}"]`).innerHTML = "";
     allTaskObjects[index].taskType = statusName;
-    reRenderTasks();
+    hideShiftedTask(index);
+    reRenderTask(index);
+    showHideGreyTaskCards();
+    showGreyCardOfOldStatus(oldStatus);
     collectNotDeletedTasks();
+}
+
+/**
+ * 
+ * @param {number} index is the index of the task.
+ * @function hideShiftedTask setsthe tasks old card to completely hidden and removes its data-taskindex value.
+ */
+function hideShiftedTask(index) {
+    document.querySelector(`.task[data-taskindex='${index}']`).classList.add('completely-hidden');
+    document.querySelector(`.task[data-taskindex='${index}']`).setAttribute('data-taskindex', '');
+}
+
+function showGreyCardOfOldStatus(oldStatus) {
+    if(document.querySelectorAll(`#${oldStatus} .task`).length === document.querySelectorAll(`#${oldStatus} .task.completely-hidden`).length) {
+        document.querySelector(`#${oldStatus} .card`).classList.remove('disNone');
+    }
+}
+
+/**
+ * 
+ * @function reRenderTask rerenders the replaced task
+ */
+function reRenderTask(index) {
+    let elem = allTaskObjects[index];
+    let card = /* HTML */ `<div class="task flex-column" draggable="true" data-taskType="${elem.taskType}" data-taskIndex="${index}" onclick="renderTaskIntoOverlay(${index})">
+        <div class="flex flex-center" style="justify-content: space-between;">
+        <div class="task-category flex-center flex-column" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
+        ${renderDropDownShiftTask(index)}</div>
+        <div class="headlineDescription flex-column">
+            <h2>${elem.taskTitle}</h2>
+            <div class="task-description"><p>${elem.taskDescrip}</p></div>
+        </div>
+        <div class="subtasks flex-center ${elem.subTasks.length === 0 ? 'disNone' : ''}" style="flex-direction: row-reverse;">
+            <p class="subtasks-count ${elem.subTasks ? "" : "disNone"}"><span class="count">${elem.subTasks ? countDoneSubtasks(index) : 0}</span>/<span class="total">${elem.subTasks.length}</span> Subtasks</p>
+            <div class="subtasks-bar"><div class="inner" style="width: ${100*doneCount/elem.subTasks.length}%;"></div></div>
+        </div>
+        <div class="participants-and-urgency flex">
+        <div class="participants flex">${getParticipantsHtml(index)}</div>
+            <div class="menu flex">${getUrgencyHtml(elem.urgency)}</div>
+        </div>
+    </div>`;
+    document.querySelector(`#${elem.taskType}`).innerHTML += card;
+    setDragDrop();
 }
 
 /**
@@ -169,7 +231,7 @@ function reRenderTasks() {
     allTaskObjects.forEach((elem, index)=>{
         if(!elem.deleted) {
             document.querySelector(`.task[data-taskindex="${index}"]`).innerHTML = /* HTML */ `
-            <div class="flex flex-center flex-column" style="justify-content: space-between;"><div class="task-category flex-center" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
+            <div class="flex flex-center" style="justify-content: space-between;"><div class="task-category flex-center" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
             ${renderDropDownShiftTask(index)}</div>
                 <div class="headlineDescription flex-column">
                     <h2>${elem.taskTitle}</h2>
@@ -1140,7 +1202,9 @@ function actualizeTask(index) {
  */
 function deleteTask(index) {
     allTaskObjects[index].deleted = 1;
-    document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('completely-hidden');
+    if(!document.querySelector(`.task[data-taskindex="${index}"]`).classList.contains('completely-hidden')) {
+        document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('completely-hidden');
+    }
     closeOverlay();
     showHideGreyTaskCards();
 }
@@ -1568,7 +1632,8 @@ function addNewTask(event) {
 function renderNewTask(index) {
     let elem = allTaskObjects[index];
     let card = /* HTML */ `<div class="task flex-column" draggable="true" data-taskType="${elem.taskType}" data-taskIndex="${index}" onclick="renderTaskIntoOverlay(${index})">
-        <div class="task-category flex-center" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
+        <div class="flex flex-center" style="justify-content: space-between;"><div class="task-category flex-center" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
+            ${renderDropDownShiftTask(index)}</div>
         <div class="headlineDescription flex-column">
             <h2>${elem.taskTitle}</h2>
             <div class="task-description"><p>${elem.taskDescrip}</p></div>
