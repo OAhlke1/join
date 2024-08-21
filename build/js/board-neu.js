@@ -150,10 +150,10 @@ function renderTasks() {
 function renderDropDownShiftTask(index) {
     return `<select class="select-state">
         <option>Shift Task</option>
-        <option class="${allTaskObjects[index].taskType === "toDo" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'toDo')">To Do</option>
-        <option class="${allTaskObjects[index].taskType === "inProgress" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'inProgress')">In Progress</option>
-        <option class="${allTaskObjects[index].taskType === "awaitFeedback" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'awaitFeedback')">Await Feedback</option>
-        <option class="${allTaskObjects[index].taskType === "done" ? "disNone" : ""}" onclick="resetTaskStatus(event, ${index}, 'done')">Done</option>
+        <option class="${allTaskObjects[index].taskType === 'toDo' ? 'disNone' : ''}" onclick="resetTaskStatus(event, ${index}, 'toDo')">To Do</option>
+        <option class="${allTaskObjects[index].taskType === 'inProgress' ? 'disNone' : ''}" onclick="resetTaskStatus(event, ${index}, 'inProgress')">In Progress</option>
+        <option class="${allTaskObjects[index].taskType === 'awaitFeedback' ? 'disNone' : ''}" onclick="resetTaskStatus(event, ${index}, 'awaitFeedback')">Await Feedback</option>
+        <option class="${allTaskObjects[index].taskType === 'done' ? 'disNone' : ''}" onclick="resetTaskStatus(event, ${index}, 'done')">Done</option>
     </select>`;
 }
 
@@ -173,7 +173,7 @@ function resetTaskStatus(event, index, statusName) {
     hideShiftedTask(index);
     reRenderTask(index);
     showHideGreyTaskCards();
-    showGreyCardOfOldStatus(oldStatus);
+    //showGreyCardOfOldStatus(oldStatus);
     collectNotDeletedTasks();
 }
 
@@ -290,24 +290,24 @@ function countDoneSubtasks(index) {
  * When every task in a column has that "completely-hidden"-class, or no task at all, the grey card with "No-task-to-do" etc. is shown in that column.
  */
 function showHideGreyTaskCards() {
-    if(document.querySelectorAll('#toDo .task').length > 0) {
+    if(document.querySelectorAll('#toDo .task').length != document.querySelectorAll('#toDo .task.completely-hidden').length) {
         document.querySelector('.no-task-to-do').classList.add('disNone');
     }else if(document.querySelectorAll('#toDo .task').length === document.querySelectorAll('#toDo .task.completely-hidden').length) {
         document.querySelector('.no-task-to-do').classList.remove('disNone');
     }
-    if(document.querySelectorAll('#inProgress .task').length > 0) {
+    if(document.querySelectorAll('#inProgress .task').length != document.querySelectorAll('#inProgress .task.completely-hidden').length) {
         document.querySelector('.no-task-in-progress').classList.add('disNone');
-    }else if(document.querySelectorAll('#inProgress .task').length === document.querySelectorAll('#toDo .task.completely-hidden').length) {
+    }else if(document.querySelectorAll('#inProgress .task').length === document.querySelectorAll('#inProgress .task.completely-hidden').length) {
         document.querySelector('.no-task-in-progress').classList.remove('disNone');
     }
-    if(document.querySelectorAll('#awaitFeedback .task').length > 0) {
+    if(document.querySelectorAll('#awaitFeedback .task').length != document.querySelectorAll('#awaitFeedback .task.completely-hidden').length) {
         document.querySelector('.no-feedback-awaited').classList.add('disNone');
-    }else if(document.querySelectorAll('#awaitFeedback .task').length === document.querySelectorAll('#toDo .task.completely-hidden').length) {
+    }else if(document.querySelectorAll('#awaitFeedback .task').length === document.querySelectorAll('#awaitFeedback .task.completely-hidden').length) {
         document.querySelector('.no-feedback-awaited').classList.remove('disNone');
     }
-    if(document.querySelectorAll('#done .task').length > 0) {
+    if(document.querySelectorAll('#done .task').length != document.querySelectorAll('#done .task.completely-hidden').length) {
         document.querySelector('.no-task-done').classList.add('disNone');
-    }else if(document.querySelectorAll('#done .task').length === document.querySelectorAll('#toDo .task.completely-hidden').length) {
+    }else if(document.querySelectorAll('#done .task').length === document.querySelectorAll('#done .task.completely-hidden').length) {
         document.querySelector('.no-task-done').classList.remove('disNone');
     }
 }
