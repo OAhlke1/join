@@ -76,23 +76,14 @@ function renderIntoLetterBox() {
   newChar = contacts[contactsIndex][1]["lastName"][0];
   getContactsHtml();
   if (contactsIndex < contacts.length) {
-    letterBlock += `<h3 class="sort" c-sortletter="${newChar}"> ${newChar}</h3>${contactsString}`;
+    letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
     contactsString = "";
   }
   if (contactsIndex === contacts.length) {
     showContacts.innerHTML = letterBlock;
-    showHideLetterBoxOfUser();
     return;
   }
   renderIntoLetterBox();
-}
-
-function showHideLetterBoxOfUser() {
-  let splittedUserName = localStorage.User.split(' ');
-  let letter = splittedUserName.length > 0 ? splittedUserName[splittedUserName.length-1][0] : splittedUserName[0][0];
-  if(document.querySelectorAll(`h3.sort[c-sortletter="${letter}"] .contact`).length === 0) {
-    document.querySelector(`h3.sort[c-sortletter="${letter}"]`).classList.add('d-none');
-  }
 }
 
 function getContactsHtml() {
@@ -111,11 +102,10 @@ function getContactsHtml() {
 
 function contactHTML(contactsIndex, q) {
   getRandomColor();
-  if(contacts[contactsIndex][1].contactId != localStorage.UserId) {
-    return ` <div
+  return ` <div
       class="flex contact c-${contactsIndex}"
       onclick="clickContact(event)" 
-      data-contactIndex="${contactsIndex} ${contacts[contactsIndex][1].UserId === localStorage.UserId ? 'd-None' : ''}">
+      data-contactIndex="${contactsIndex}">
       <div class="flex-center profileImage" style="background-color: ${
         contacts[contactsIndex][1].color
       };" >
@@ -126,9 +116,6 @@ function contactHTML(contactsIndex, q) {
         <span>${contacts[q][1].email}</span>
       </div>
     </div>`;
-  }else {
-    return '';
-  }
 }
 
 function profileName(q) {
@@ -169,7 +156,7 @@ function focusContact() {
   let contact = document.querySelector(`.c-${presentlyIndexContacts}`);
 
   for (let i = 0; contacts.length > i; i++) {
-    //let contact = document.querySelector(`.c-${i}`);
+    let contact = document.querySelector(`.c-${i}`);
     contact.classList.remove("contactFocus");
   }
   contact.classList.add("contactFocus");

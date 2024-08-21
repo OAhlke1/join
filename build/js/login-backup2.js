@@ -3,8 +3,6 @@ let userUrl = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/u
 let userValue = document.getElementById('mail-login');
 let userName;
 let userEmail;
-let userId;
-let userColor;
 let password = document.getElementById('password-login');
 let loginSuccess = false;
 let error = document.getElementById('error-message');
@@ -23,7 +21,6 @@ let logoSmallWidth = logoSmall.offsetWidth;
 let logoSmallHeight = logoSmall.offsetHeight;
 let logoSmallPositionTop = logoSmall.getBoundingClientRect().top;
 let logoSmallPositionLeft = logoSmall.getBoundingClientRect().left;
-let newContact;
 
 function init() {
     setupShrinking();
@@ -134,8 +131,6 @@ async function checkLogin() {
 function setLocalStorageForUser() {
     localStorage.setItem('User', userName);
     localStorage.setItem('Email', userEmail);
-    localStorage.setItem('UserId', userId);
-    localStorage.setItem('UserColor', userColor);
     if (document.getElementById('rememberMe').checked) {
         localStorage.setItem('Remember', true);
     } else {
@@ -179,21 +174,10 @@ async function checkSignUp() {
     document.getElementById('sign-error-message').innerHTML = '';
     if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
         if (signUserPassword.value === signUserPasswordConfirm.value) {
-            userId = Math.random();
-            userColor = `#${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}`;
             let data = {
                 "email": signUserEmail.value,
                 "name": signUserName.value,
-                "password": signUserPassword.value,
-                "userId": userId,
-                "userColor": userColor
-            }
-            newContact = {
-                contactId: userId,
-                sureName: signUserName.value.split(' ')[0],
-                lastName: signUserName.value.split(' ')[1],
-                email: signUserEmail.value,
-                color: userColor
+                "password": signUserPassword.value
             }
             let users = await loadUser();
             let userExistsFirebase = false;
@@ -206,7 +190,6 @@ async function checkSignUp() {
                 }
             }
             if (!userExistsFirebase) {
-                postNewContact();
                 signUp(data);
                 fadeInConfirmationSign();
             }
@@ -217,16 +200,6 @@ async function checkSignUp() {
     } else {
         document.getElementById('sign-error-message').innerHTML = "Something missed! Please fill all fields";
     }
-}
-
-async function postNewContact() {
-    let response = await fetch('https://join-249-default-rtdb.europe-west1.firebasedatabase.app/contacts.json', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newContact)
-    });
 }
 
 /**

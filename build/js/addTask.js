@@ -90,7 +90,9 @@ function renderContactList() {
     selectContacts.innerHTML = /* HTML */ ``;
     allContactsObjects.forEach((elem, i)=>{
         selectContacts.innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContact(event)">
-        <div class="flex flex-center contact-left">${checkIfFirstOrLastNameIsMissingInContactList(elem)}</div>
+        <div class="flex flex-center contact-left">
+            <div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p></div><p class="contact-name">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""} ${elem.contactId == localStorage.UserId ? '(You)' : ""}</p>
+        </div>
         <svg class="not-chosen" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/>
         </svg>
