@@ -235,7 +235,11 @@ function acceptPolicy() {
     }
 }
 
-
+/**
+ * 
+ * Shows succesfully Sign up information
+ * 
+ */
 function fadeInConfirmationSign() {
     confirmationSign.classList.remove('d-none');
     confirmationSign.classList.remove('not-added');
@@ -243,7 +247,11 @@ function fadeInConfirmationSign() {
     setTimeout(fadeOutConfirmationSign, 1000);
 }
 
-
+/**
+ * 
+ * Hides succesfully Sign up information
+ * 
+ */
 function fadeOutConfirmationSign() {
     confirmationSign.classList.remove('added');
     confirmationSign.classList.add('not-added');
@@ -253,6 +261,11 @@ function fadeOutConfirmationSign() {
     }, 700);
 }
 
+/**
+ * 
+ * Validate the input value fot the name
+ * 
+ */
 function validateName() {
     let error = document.getElementById('error-message-name');
     let name = document.getElementById('name-signin').value;
@@ -264,6 +277,11 @@ function validateName() {
     }
   }
 
+  /**
+ * 
+ * Validate the input value fot the email
+ * 
+ */
   function validateEmail() {
     let error = document.getElementById('error-message-email');
     let email = document.getElementById('mail-signin').value;
@@ -275,6 +293,11 @@ function validateName() {
     }
   }
 
+  /**
+ * 
+ * Checks if passwords match
+ * 
+ */
   function checkPasswordInput() {
     let password = document.getElementById('password-signin');
     let passwordConfirm = document.getElementById('confirm-passwordsignin');

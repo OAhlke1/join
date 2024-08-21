@@ -313,6 +313,10 @@ input:focus {
     opacity: 0;
 }
 
+.input-container {
+    flex-direction: column;
+}
+
 @keyframes confirmSignFadeIn {
     0% {
         opacity: 0;
