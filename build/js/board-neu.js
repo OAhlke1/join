@@ -1192,7 +1192,6 @@ function actualizeTask(index) {
         amountOfEditing: allTaskObjects[index].amountOfEditing ? allTaskObjects[index].amountOfEditing+1 : 0
     };
     allTaskObjects[index] = structuredClone(newTaskObject);
-    oldTaskVersion = structuredClone(newTaskObject);
     reRenderTasks();
     closeOverlay(index);
 }
@@ -1209,7 +1208,7 @@ function deleteTask(index) {
     if(!document.querySelector(`.task[data-taskindex="${index}"]`).classList.contains('completely-hidden')) {
         document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('completely-hidden');
     }
-    closeOverlay();
+    closeOverlay(index);
     showHideGreyTaskCards();
 }
 
@@ -1751,7 +1750,7 @@ function fadeOutTaskAdded() {
  */
 document.querySelector('body').addEventListener('keyup', (event)=>{
     if(event.key === "Escape") {
-        closeOverlay();
+        closeOverlay(+document.querySelector('.overlay-card').getAttribute('data-taskindex'));
         closeOverlayAdd();
     }
 })
