@@ -263,7 +263,7 @@ function editContact() {
   sureLastName = document.querySelector(".inputEditName").value.trimStart().split(" ");
   editContactToggle();
   deleteContact(presentlyIndexContacts);
-  createContact(email, number, name, sureLastName);
+  createContact(email, number, name, sureLastName, contacts[presentlyIndexContacts].color);
 }
 
 function deleteContact(index) {
@@ -334,7 +334,7 @@ function createContactValue(event) {
   addContactToggle();
 }
 
-async function createContact(email, number, name, sureLastName) {
+async function createContact(email, number, name, sureLastName, color) {
   if (sureLastName.length == 1) {
     sureLastName.unshift("");
   }
@@ -344,9 +344,9 @@ async function createContact(email, number, name, sureLastName) {
     lastName: sureLastName[1],
     email: email.value,
     number: number.value,
-    color: `#${Math.round(255 * Math.random()).toString(16)}${Math.round(
+    color: color === '' ? `#${Math.round(255 * Math.random()).toString(16)}${Math.round(
       255 * Math.random()
-    ).toString(16)}${Math.round(255 * Math.random()).toString(16)}`,
+    ).toString(16)}${Math.round(255 * Math.random()).toString(16)}` : contacts[presentlyIndexContacts].color,
     contactId: Math.random(),
   };
   contacts.push([contacts.length + 1, newContact]);

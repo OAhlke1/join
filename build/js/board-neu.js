@@ -16,6 +16,7 @@ let urgencyHigh = /* HTML */ `<div class="urgency-icon"><svg width="18" height="
 let doneCount = 0;
 let selectedPrio = "medium";
 let taskAddedElem = document.querySelector('.task-added');
+let oldTaskVersion;
 
 /**
  * This function fetches all task-objects from firebase
@@ -441,6 +442,7 @@ function shiftParticipantCirclesInTask() {
  * This function renders the subtask-overlay and fills it with the data of the task in @param allTaskObjects at index @param index
  */
 function renderTaskIntoOverlay(index) {
+    oldTaskVersion = structuredClone(allTaskObjects[index]);
     document.querySelector('.overlay-card').setAttribute('data-taskindex', index); //if no task-index is given to a function, the data-taskindex can be checked for the tasks index.
     document.querySelector('.tasks-overlay .overlay-card .inner').innerHTML = /* HTML */ `
         <div class="top-bar flex">
@@ -800,7 +802,8 @@ function actualizeSubtaskStatus(event, i, j) {
  * The @function closeOverlay closes the editing-overlay without setting the values
  * of the editing-elements to the clicked task. Therefore no data is sent to the FTP as well.
  */
-function closeOverlay() {
+function closeOverlay(index) {
+    allTaskObjects[index] = structuredClone(oldTaskVersion);
     hideEditingElements();
     document.querySelector('.tasks-overlay').classList.add('disNone');
     collectNotDeletedTasks();
@@ -1189,6 +1192,7 @@ function actualizeTask(index) {
         amountOfEditing: allTaskObjects[index].amountOfEditing ? allTaskObjects[index].amountOfEditing+1 : 0
     };
     allTaskObjects[index] = structuredClone(newTaskObject);
+    oldTaskVersion = structuredClone(newTaskObject);
     reRenderTasks();
     closeOverlay(index);
 }
