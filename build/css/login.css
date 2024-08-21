@@ -267,7 +267,7 @@ input:focus {
 .terms-and-cond {
     column-gap: 24px;
     position: absolute;
-    bottom: 40px;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     height: 35px;
@@ -288,6 +288,7 @@ input:focus {
     color: red;
     display: flex;
     padding-left: 16px;
+    white-space: wrap;
 }
 
 .signin-btn:disabled {
@@ -399,4 +400,21 @@ input:focus {
     }
 }
 
-/* ölsakjfljdsaflksaflkdsaf */
+@media (max-width: 420px) {
+    .form-block {
+        min-width: 300px;
+        max-width: 400px;
+    }
+
+    input {
+        width: 280px;
+    }
+
+    .sign-up-mobile {
+        margin-bottom: 52.5px;
+    }
+
+    .form-block .goBack {
+        left: 20px;
+    }
+}
