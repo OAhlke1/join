@@ -969,7 +969,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 
 .select-state {
     display: block;
-    width: 30%;
+    width: 80px;
     font-family: 'inter', sans-serif;
     font-size: 16px;
     background-color: white;
