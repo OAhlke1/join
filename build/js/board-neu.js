@@ -442,7 +442,6 @@ function shiftParticipantCirclesInTask() {
  * This function renders the subtask-overlay and fills it with the data of the task in @param allTaskObjects at index @param index
  */
 function renderTaskIntoOverlay(index) {
-    oldTaskVersion = structuredClone(allTaskObjects[index]);
     document.querySelector('.overlay-card').setAttribute('data-taskindex', index); //if no task-index is given to a function, the data-taskindex can be checked for the tasks index.
     document.querySelector('.tasks-overlay .overlay-card .inner').innerHTML = /* HTML */ `
         <div class="top-bar flex">
@@ -794,6 +793,7 @@ function actualizeSubtaskStatus(event, i, j) {
     }else {
         allTaskObjects[i].subTasks[j].subTaskDone = 1;
     }
+    collectNotDeletedTasks();
     reRenderTasks();
 }
 
@@ -803,10 +803,8 @@ function actualizeSubtaskStatus(event, i, j) {
  * of the editing-elements to the clicked task. Therefore no data is sent to the FTP as well.
  */
 function closeOverlay(index) {
-    allTaskObjects[index] = structuredClone(oldTaskVersion);
     hideEditingElements();
     document.querySelector('.tasks-overlay').classList.add('disNone');
-    collectNotDeletedTasks();
 }
 
 /**
@@ -1192,6 +1190,7 @@ function actualizeTask(index) {
         amountOfEditing: allTaskObjects[index].amountOfEditing ? allTaskObjects[index].amountOfEditing+1 : 0
     };
     allTaskObjects[index] = structuredClone(newTaskObject);
+    collectNotDeletedTasks();
     reRenderTasks();
     closeOverlay(index);
 }
@@ -1210,6 +1209,7 @@ function deleteTask(index) {
     }
     closeOverlay(index);
     showHideGreyTaskCards();
+    collectNotDeletedTasks();
 }
 
 /**
