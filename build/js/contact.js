@@ -31,8 +31,12 @@ async function getContacts() {
   contacts = await fetch(BASE_URL + "/contacts.json");
   contacts = await contacts.json();
   getTasks();
-  setContactsAsArray();
-  sorter();
+  if(contacts) {
+    setContactsAsArray();
+    sorter();
+  }else {
+    contacts = [];
+  }
 }
 
 async function getTasks() {
@@ -45,8 +49,10 @@ async function getTasks() {
 
 function setContactsAsArray() {
   let contacsKeysArray = [];
-  for (let [key, value] of Object.entries(contacts)) {
-    contacsKeysArray.push([key, value]);
+  if(contacts) {
+    for (let [key, value] of Object.entries(contacts)) {
+      contacsKeysArray.push([key, value]);
+    }
   }
   contacts = contacsKeysArray;
 }
@@ -90,8 +96,10 @@ function renderIntoLetterBox() {
 function showHideLetterBoxOfUser() {
   let splittedUserName = localStorage.User.split(' ');
   let letter = splittedUserName.length > 0 ? splittedUserName[splittedUserName.length-1][0] : splittedUserName[0][0];
-  if(document.querySelectorAll(`h3.sort[c-sortletter="${letter}"] .contact`).length === 0) {
-    document.querySelector(`h3.sort[c-sortletter="${letter}"]`).classList.add('d-none');
+  if(document.querySelector(`h3.sort[c-sortletter="${letter}"]`)) {
+    if(document.querySelectorAll(`h3.sort[c-sortletter="${letter}"] .contact`).length === 0) {
+      document.querySelector(`h3.sort[c-sortletter="${letter}"]`).classList.add('d-none');
+    }
   }
 }
 
@@ -334,7 +342,7 @@ function createContactValue(event) {
   addContactToggle();
 }
 
-async function createContact(email, number, name, sureLastName, color) {
+async function createContact(email, number, name, sureLastName, color = '') {
   if (sureLastName.length == 1) {
     sureLastName.unshift("");
   }
