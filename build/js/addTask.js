@@ -29,6 +29,7 @@ async function getTasks() {
     }
     setTasksArray(fetchedTasks);
     getContacts();
+    setOnfocusOut();
 }
 
 /**
@@ -57,6 +58,19 @@ async function getContacts() {
     }
     allContactsObjects = contactsArray;
     sortContacts();
+}
+
+function setOnfocusOut() {
+    document.querySelectorAll('input').forEach((elem)=>{
+        elem.addEventListener('focusout', ()=>{
+            document.querySelector('.contact-list').classList.add('disNone');
+            document.querySelector('.categories-list').classList.add('disNone');
+        })
+    });
+    document.querySelectorAll('.triangle').forEach((elem)=>{
+        console.log(elem);
+        elem.classList.remove('rotated');
+    });
 }
 
 /**
@@ -110,6 +124,7 @@ function renderContactList() {
  * @function showHideContactList shows or hides the contact-list, wether it is hidden or not.
  */
 function showHideContactList(event) {
+    document.querySelector('.search-contacts').focus();
     if(document.querySelector('.contact-list').classList.contains('disNone')) {
         document.querySelector('.contact-list').classList.remove('disNone');
         document.querySelector('.contacts .contacts-inner .triangle').classList.add('rotated');

@@ -396,6 +396,7 @@ h1 {
 
 .triangle {
     height: 5px;
+    transform: rotate(0deg);
 }
 
 .triangle svg {
@@ -403,7 +404,7 @@ h1 {
 }
 
 .triangle.rotated {
-    transform: rotateZ(180deg);
+    transform: rotate(180deg);
 }
 
 .search-contacts {

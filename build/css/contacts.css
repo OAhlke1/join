@@ -24,7 +24,7 @@ header {
 }
 
 .mainContainer {
-  height: 928px;
+  height: 100%;
 }
 
 .contactSuccessfullyCreated{
@@ -65,7 +65,7 @@ header {
 .contactList {
   justify-content: space-between;
   width: 456px;
-  height: 928px;
+  height: 100%;
   background-color: white;
   box-shadow: 4px 0px 4px 0px #0000001a;
   animation:  moveSlow 0.5s;
