@@ -270,7 +270,6 @@ main .boardCont .board .board-column .column-card-cont .task .task-category p, m
 
 main .tasks-overlay {
     width: 100%;
-    max-width: 1440px;
     height: 100%;
     position: fixed;
     top: 0;
@@ -521,6 +520,8 @@ main .boardCont .board .board-column .column-card-cont .task .task-description p
     word-wrap: break-word;
     width: 100%;
     max-width: 100%;
+    max-height: 50px;
+    overflow-y: scroll;
 }
 
 main .boardCont .board .board-column .column-card-cont .task .subtasks {
