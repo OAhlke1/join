@@ -101,6 +101,7 @@ header {
   border-radius: 45px;
   width: 42px;
   height: 42px;
+  aspect-ratio: 1 / 1;
   gap: 10px;
   border-radius: 45px;
   background-color: royalblue;
@@ -116,7 +117,8 @@ header {
 .bigSize {
   width: 120px !important;
   height: 120px !important;
-  border-radius: 70px !important;
+  aspect-ratio: 1 / 1;
+  border-radius: 100% !important;
   font-weight: 500;
   font-size: 47px;
 }
