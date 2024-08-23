@@ -47,7 +47,6 @@ function setupShrinking() {
         setTimeout(shrinkLogoBig, 250);
     } else {
         logoBig.classList.add('disNone');
-        focused();
     }
 }
 

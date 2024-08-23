@@ -31,12 +31,8 @@ async function getContacts() {
   contacts = await fetch(BASE_URL + "/contacts.json");
   contacts = await contacts.json();
   getTasks();
-  if(contacts) {
-    setContactsAsArray();
-    sorter();
-  }else {
-    contacts = [];
-  }
+  setContactsAsArray();
+  sorter();
 }
 
 async function getTasks() {
@@ -49,10 +45,8 @@ async function getTasks() {
 
 function setContactsAsArray() {
   let contacsKeysArray = [];
-  if(contacts) {
-    for (let [key, value] of Object.entries(contacts)) {
-      contacsKeysArray.push([key, value]);
-    }
+  for (let [key, value] of Object.entries(contacts)) {
+    contacsKeysArray.push([key, value]);
   }
   contacts = contacsKeysArray;
 }
@@ -82,25 +76,14 @@ function renderIntoLetterBox() {
   newChar = contacts[contactsIndex][1]["lastName"][0];
   getContactsHtml();
   if (contactsIndex < contacts.length) {
-    letterBlock += `<h3 class="sort" c-sortletter="${newChar}"> ${newChar}</h3>${contactsString}`;
+    letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
     contactsString = "";
   }
   if (contactsIndex === contacts.length) {
     showContacts.innerHTML = letterBlock;
-    showHideLetterBoxOfUser();
     return;
   }
   renderIntoLetterBox();
-}
-
-function showHideLetterBoxOfUser() {
-  let splittedUserName = localStorage.User.split(' ');
-  let letter = splittedUserName.length > 0 ? splittedUserName[splittedUserName.length-1][0] : splittedUserName[0][0];
-  if(document.querySelector(`h3.sort[c-sortletter="${letter}"]`)) {
-    if(document.querySelectorAll(`h3.sort[c-sortletter="${letter}"] .contact`).length === 0) {
-      document.querySelector(`h3.sort[c-sortletter="${letter}"]`).classList.add('d-none');
-    }
-  }
 }
 
 function getContactsHtml() {
@@ -119,11 +102,10 @@ function getContactsHtml() {
 
 function contactHTML(contactsIndex, q) {
   getRandomColor();
-  if(contacts[contactsIndex][1].contactId != localStorage.UserId) {
-    return ` <div
+  return ` <div
       class="flex contact c-${contactsIndex}"
       onclick="clickContact(event)" 
-      data-contactIndex="${contactsIndex} ${contacts[contactsIndex][1].UserId === localStorage.UserId ? 'd-None' : ''}">
+      data-contactIndex="${contactsIndex}">
       <div class="flex-center profileImage" style="background-color: ${
         contacts[contactsIndex][1].color
       };" >
@@ -134,9 +116,6 @@ function contactHTML(contactsIndex, q) {
         <span>${contacts[q][1].email}</span>
       </div>
     </div>`;
-  }else {
-    return '';
-  }
 }
 
 function profileName(q) {
@@ -161,7 +140,6 @@ function getRandomColor() {
 
 function clickContact(event) {
   toggleInfoContact = true;
-  unfocusAllContacts();
   if (window.innerWidth < 1100) {
     showHideContactNames();
   }
@@ -174,21 +152,11 @@ function clickContact(event) {
   information.innerHTML = clickContactHTML(presentlyIndexContacts);
 }
 
-/**
- * 
- * @function unfocusAllContacts removes the focus from every contact.
- */
-function unfocusAllContacts() {
-  document.querySelectorAll('.contact').forEach((elem)=> {
-    elem.classList.remove('contactFocus');
-  })
-}
-
 function focusContact() {
   let contact = document.querySelector(`.c-${presentlyIndexContacts}`);
 
   for (let i = 0; contacts.length > i; i++) {
-    //let contact = document.querySelector(`.c-${i}`);
+    let contact = document.querySelector(`.c-${i}`);
     contact.classList.remove("contactFocus");
   }
   contact.classList.add("contactFocus");
@@ -265,10 +233,13 @@ function startingValueEditContact(index) {
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
   let letters = document.querySelector(".editContactImg");
-  document.querySelector(".inputEditName").value = contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
-  document.querySelector(".inputEditEmail").value = contacts[index][1]["email"];
-  document.querySelector(".inputEditNumber").value = contacts[index][1]["number"];
-  document.querySelector(".editContactImg").innerHTML = profileName(index);
+
+  name.value =
+    contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
+  email.value = contacts[index][1]["email"];
+  number.value = contacts[index][1]["number"];
+  letters.innerHTML = profileName(index);
+
   editContactToggle();
 }
 
@@ -279,7 +250,7 @@ function editContact() {
   sureLastName = document.querySelector(".inputEditName").value.trimStart().split(" ");
   editContactToggle();
   deleteContact(presentlyIndexContacts);
-  createContact(email, number, name, sureLastName, contacts[presentlyIndexContacts].color);
+  createContact(email, number, name, sureLastName);
 }
 
 function deleteContact(index) {
@@ -336,8 +307,7 @@ async function postData(path = "", data = {}) {
     },
     body: JSON.stringify(data),
   });
-  responseToJson = await response.json();
-  return responseToJson;
+  return (responseToJson = await response.json());
 }
 
 function createContactValue(event) {
@@ -351,7 +321,7 @@ function createContactValue(event) {
   addContactToggle();
 }
 
-async function createContact(email, number, name, sureLastName, color = '') {
+async function createContact(email, number, name, sureLastName) {
   if (sureLastName.length == 1) {
     sureLastName.unshift("");
   }
@@ -361,9 +331,9 @@ async function createContact(email, number, name, sureLastName, color = '') {
     lastName: sureLastName[1],
     email: email.value,
     number: number.value,
-    color: color === '' ? `#${Math.round(255 * Math.random()).toString(16)}${Math.round(
+    color: `#${Math.round(255 * Math.random()).toString(16)}${Math.round(
       255 * Math.random()
-    ).toString(16)}${Math.round(255 * Math.random()).toString(16)}` : contacts[presentlyIndexContacts].color,
+    ).toString(16)}${Math.round(255 * Math.random()).toString(16)}`,
     contactId: Math.random(),
   };
   contacts.push([contacts.length + 1, newContact]);
