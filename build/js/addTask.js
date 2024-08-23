@@ -29,7 +29,7 @@ async function getTasks() {
     }
     setTasksArray(fetchedTasks);
     getContacts();
-    setOnfocusOut();
+    //setOnfocusOut();
 }
 
 /**
@@ -68,8 +68,8 @@ function setOnfocusOut() {
         })
     });
     document.querySelectorAll('.triangle').forEach((elem)=>{
-        console.log(elem);
         elem.classList.remove('rotated');
+        elem.style.transform = 'rotate(0deg)';
     });
 }
 
@@ -198,6 +198,7 @@ function checkIfFirstOrLastNameIsMissingInContactList(elem) {
  */
 function renderChosenList() {
     document.querySelector('.chosen-list').innerHTML = '';
+    console.log('chosen-list');
     participantsArray.forEach((elem, i)=>{
         console.log(elem);
         document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" style="background-color: ${elem.color};" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})" style="background-color: ${allContactsObjects[i].color};">
@@ -457,9 +458,9 @@ function removeSubtask(i) {
  */
 function clearForm(event) {
     event.preventDefault();
-    document.querySelector('#title-input').value = "";
-    document.querySelector('#textarea-input').value = "";
-    document.querySelector('.contacts-inner p').value = "";
+    document.querySelector('#title-input-add').value = "";
+    document.querySelector('#task-descrip-add').value = "";
+    document.querySelector('.contacts-inner input').value = "";
     document.querySelector('.chosen-list').innerHTML = "";
     document.querySelector('#date-input').value = "";
     resetUrgency();
@@ -531,3 +532,13 @@ function fadeOutTaskAdded() {
         taskAddedElem.classList.add('disNone');
     }, 700);
 }
+
+document.querySelector('body').addEventListener('click', (event)=>{
+    let target = event.target;
+    if(target.classList.contains('contacts-inner') || target.classList.contains('search-contacts') || target.classList.contains('contact') || target.classList.contains('categories-inner') || target.classList.contains('category-name')) {
+        return;
+    }else {
+        document.querySelector('.contact-list').classList.add('disNone');
+        document.querySelector('.categories-list').classList.add('disNone');
+    }
+})
