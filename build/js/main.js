@@ -25,6 +25,11 @@ async function includeHTML() {
 function showUserMenu (){
     let userMenu = document.getElementById('user-menu');
     userMenu.classList.toggle('d-none');
+    if(!userMenu.classList.contains('shift-in')) {
+        userMenu.classList.add('shift-in');
+    }else {
+        userMenu.classList.remove('shift-in');
+    }
 }
 
 /**
@@ -86,10 +91,8 @@ function extractFilename(url) {
     const pathname = urlObj.pathname;
     const filenameWithExtension = pathname.substring(pathname.lastIndexOf('/') + 1);
     const filename = filenameWithExtension.split('.').slice(0, -1).join('.');
-    
     return filename;
   }
-  
 
   /**
    * 
@@ -100,8 +103,8 @@ function extractFilename(url) {
       setTimeout(() => {
         const url = window.location.href;
         const filename = extractFilename(url);
-        if(filename) {
-            document.getElementById(filename).classList.add('active');
+        if(document.querySelector(`#${filename}`)) {
+            document.querySelector(`#${filename}`).classList.add('active');
         }
     }, 150);
  
@@ -109,5 +112,3 @@ function extractFilename(url) {
 
 checkLogin();
 activeLink();
-
-  

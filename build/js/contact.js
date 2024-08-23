@@ -161,6 +161,7 @@ function getRandomColor() {
 
 function clickContact(event) {
   toggleInfoContact = true;
+  unfocusAllContacts();
   if (window.innerWidth < 1100) {
     showHideContactNames();
   }
@@ -171,6 +172,16 @@ function clickContact(event) {
 
   focusContact();
   information.innerHTML = clickContactHTML(presentlyIndexContacts);
+}
+
+/**
+ * 
+ * @function unfocusAllContacts removes the focus from every contact.
+ */
+function unfocusAllContacts() {
+  document.querySelectorAll('.contact').forEach((elem)=> {
+    elem.classList.remove('contactFocus');
+  })
 }
 
 function focusContact() {
@@ -254,13 +265,10 @@ function startingValueEditContact(index) {
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
   let letters = document.querySelector(".editContactImg");
-
-  name.value =
-    contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
-  email.value = contacts[index][1]["email"];
-  number.value = contacts[index][1]["number"];
-  letters.innerHTML = profileName(index);
-
+  document.querySelector(".inputEditName").value = contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
+  document.querySelector(".inputEditEmail").value = contacts[index][1]["email"];
+  document.querySelector(".inputEditNumber").value = contacts[index][1]["number"];
+  document.querySelector(".editContactImg").innerHTML = profileName(index);
   editContactToggle();
 }
 
@@ -328,7 +336,8 @@ async function postData(path = "", data = {}) {
     },
     body: JSON.stringify(data),
   });
-  return (responseToJson = await response.json());
+  responseToJson = await response.json();
+  return responseToJson;
 }
 
 function createContactValue(event) {
