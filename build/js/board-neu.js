@@ -149,13 +149,28 @@ function renderTasks() {
  * @returns a drop-down menue for rendering it into the task-card.
  */
 function renderDropDownShiftTask(index) {
-    return `<select class="select-state">
+    return `<select class="select-state" id="selectState${index}" onchange="checkNewTaskType(event, ${index})">
         <option>Shift Task</option>
-        <option class="${allTaskObjects[index].taskType === 'toDo' ? 'disNone' : ''}" onclick="resetTaskStatus(event, ${index}, 'toDo')">To Do</option>
-        <option class="${allTaskObjects[index].taskType === 'inProgress' ? 'disNone' : ''}" onclick="resetTaskStatus(event, ${index}, 'inProgress')">In Progress</option>
-        <option class="${allTaskObjects[index].taskType === 'awaitFeedback' ? 'disNone' : ''}" onclick="resetTaskStatus(event, ${index}, 'awaitFeedback')">Await Feedback</option>
-        <option class="${allTaskObjects[index].taskType === 'done' ? 'disNone' : ''}" onclick="resetTaskStatus(event, ${index}, 'done')">Done</option>
+        <option class="${allTaskObjects[index].taskType === 'toDo' ? 'disNone' : ''}">To Do</option>
+        <option class="${allTaskObjects[index].taskType === 'inProgress' ? 'disNone' : ''}">In Progress</option>
+        <option class="${allTaskObjects[index].taskType === 'awaitFeedback' ? 'disNone' : ''}">Await Feedback</option>
+        <option class="${allTaskObjects[index].taskType === 'done' ? 'disNone' : ''}">Done</option>
     </select>`;
+}
+
+function checkNewTaskType(event, index) {
+    let state = document.querySelector(`#selectState${index}`).value;
+    console.log(state);
+    if(state === "To Do") {
+        state = "toDo";
+    }else if(state === "In Progress") {
+        state = "inProgress";
+    }else if(state === "Await Feedback") {
+        state = "awaitFeedback";
+    }else if(state === "Done") {
+        state = "done";
+    }
+    resetTaskStatus(event, index, state);
 }
 
 /**

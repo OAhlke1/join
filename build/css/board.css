@@ -1325,5 +1325,6 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     
     main .tasks-overlay .overlay-card .inner h2 {
         font-size: 30px;
+        line-height: 32px;
     }
 }

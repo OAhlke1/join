@@ -80,7 +80,7 @@ input:focus {
 .topBar {
     align-items: flex-start;
     justify-content: space-between;
-    width: 100%;
+    width: 80%;
     max-width: 1440px;
     margin-bottom: 64px;
     position: absolute;
