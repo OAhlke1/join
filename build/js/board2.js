@@ -87,6 +87,7 @@ function renderTaskIntoOverlay(index) {
         </div>`;
         document.querySelector('.overlay-card').innerHTML += `<div class="flex flex-center edit-delete">${renderEditDelete(index)}</div>`;
     document.querySelector('.tasks-overlay').classList.remove('disNone');
+    setFocusOutFunctionSubtaskInputOverlay();
 }
 
 /**
