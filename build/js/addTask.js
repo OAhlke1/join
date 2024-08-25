@@ -29,7 +29,6 @@ async function getTasks() {
     }
     setTasksArray(fetchedTasks);
     getContacts();
-    //setOnfocusOut();
 }
 
 /**

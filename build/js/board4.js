@@ -48,6 +48,7 @@ function deleteTask(index) {
  */
 function openAddTaskOverlay() {
     newSubtasksArrayAdd = [];
+    setFocusOutFunctionsInputAdd();
     document.querySelector('.add-task-overlay').classList.remove('disNone');
 }
 

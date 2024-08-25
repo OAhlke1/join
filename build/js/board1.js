@@ -30,11 +30,7 @@ async function getTasks() {
     includeHTML();
     let response = await fetch(tasksURL+'.json');
     response = await response.json();
-    if(response) {
-        for(let i=0; i<response.length; i++) {
-            allTaskObjects.push(response[i]);
-        }
-    }
+    if(response) {for(let i=0; i<response.length; i++) {allTaskObjects.push(response[i]);}}
     getContacts();
     checkIfSubtasksExist();
     checkIfParticipantsExist();
@@ -89,7 +85,6 @@ function sortContacts() {
             }
         }   
     }
-
     renderContactListAdd();
 }
 

@@ -177,3 +177,23 @@ document.querySelector('body').addEventListener('keyup', (event)=>{
         closeOverlayAdd();
     }
 })
+
+/**
+ * 
+ * @function setFocusOutFunctionsInputAdd sets the functions for the @event focusout of the input-fields of the add-task-overlay.
+ * It is for hiding each box that opens, when an input-field is focused. And it also rotates back their triangles.
+ */
+function setFocusOutFunctionsInputAdd() {
+    document.querySelector('.add-task-overlay-box .search-contacts').addEventListener('focusout', ()=>{
+        document.querySelector('.add-task-overlay-box .contact-list').classList.add('disNone');
+        document.querySelector('.add-task-overlay-box .search-contacts').parentNode.querySelector('.triangle').classList.remove('rotated');
+    })
+    document.querySelector('.add-task-overlay-box .category-name').addEventListener('focusout', ()=>{
+        document.querySelector('.add-task-overlay-box .categories-list').classList.add('disNone');
+        document.querySelector('.add-task-overlay-box .categories-list').parentNode.querySelector('.triangle').classList.remove('rotated');
+    })
+    document.querySelector('#choose-subtasks-add').addEventListener('focusout', ()=>{
+        hideCrossTicAdd();
+        document.querySelector('#choose-subtasks-add').parentNode.querySelector('.triangle').classList.remove('rotated');
+    })
+}

@@ -115,7 +115,7 @@ function renderTopTextsIntoOverlay(index) {
         <div class="due-date flex hide-for-editing"><p>Due date:</p><p>${document.querySelector('#date-input-overlay') ? restyleDateString(allTaskObjects[index].date) : restyleDateString(allTaskObjects[index].date)}</p></div>
         <div class="due-date flex flex-column show-for-editing disNone" style="row-gap: 16px;">
             <p>Due date</p>
-            <input type="date" id="date-input-overlay" required="" value="${allTaskObjects[index].date}">
+            <input type="date" id="date-input-overlay" required="" min="${actualDate}" value="${allTaskObjects[index].date}">
         </div>
         <div class="flex flex-column">
             <div class="flex flex-column" style="row-gap: 16px;">

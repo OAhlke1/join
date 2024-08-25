@@ -1,3 +1,5 @@
+let actualDate;
+
 async function includeHTML() {
     let includeElements = document.querySelectorAll('[w3-include-html]');
     for (let i = 0; i < includeElements.length; i++) {
@@ -14,6 +16,7 @@ async function includeHTML() {
     if (typeof callback === 'function') {
         callback();
     }
+    getActualDate();
 }
 
 
@@ -112,3 +115,30 @@ function extractFilename(url) {
 
 checkLogin();
 activeLink();
+/**
+ * 
+ * @returns a string with the actual date in the form of yyyy-mm-dd
+ */
+function getActualDate() {
+    let date = new Date();
+    if((date.getDate()).toString().length === 1) {
+        actualDate = `${date.getFullYear()}-${date.getMonth()+1}-0${date.getDate()}`;    
+    }else if((date.getMonth()+1).toString().length === 1) {
+        actualDate = `${date.getFullYear()}-0${date.getMonth()+1}-${date.getDate()}`;
+    }else if(date.getDate().toString().length === 1 && (date.getMonth()+1).toString().length === 1) {
+        actualDate = `${date.getFullYear()}-0${date.getMonth()+1}-0${date.getDate()}`;
+    }else {
+        actualDate = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+    }
+    if(document.querySelectorAll('#date-input-add[type="date"]')) {setMinToDateInputs();}
+}
+
+/**
+ * 
+ * @function setMinToDateInputs set the attribute min to ach input-field of type "date" when such input exist on the page.
+ */
+function setMinToDateInputs() {
+    document.querySelectorAll('input[type="date"]').forEach((elem)=>{
+        elem.setAttribute('min', actualDate);
+    })
+}
