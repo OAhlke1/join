@@ -703,6 +703,18 @@ h1 {
 }
 
 @media (max-width: 1280px) {
+    .headline-form {
+        margin-left: 0;
+    }
+
+    .headline-form > h1 {
+        align-self: center;
+    }
+
+    form {
+        align-self: center;
+    }
+
     .bottom-bar {
         margin-bottom: 64px;
     }
