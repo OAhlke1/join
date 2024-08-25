@@ -398,7 +398,7 @@ function actualizeTaskTypes() {
         })
     })
     reRenderTasks();
-    collectNotDeletedTasks();
+    //collectNotDeletedTasks();
 }
 
 /**
@@ -950,7 +950,7 @@ function renderChosenListBackOverlay(index) {
  * is then loaded to the participants-array of the task.
  */
 function selectContactOverlay(event, index) {
-    let newParticipantsOverlay = [];
+    newParticipantsOverlay = [];
     if(event.target.closest('.contact').classList.contains('chosen')) {
         event.target.closest('.contact').classList.remove('chosen');
     }else {
@@ -959,7 +959,7 @@ function selectContactOverlay(event, index) {
     document.querySelectorAll('.overlay-card .contact.chosen').forEach((elem)=>{
         newParticipantsOverlay.push(allContactsObjects[+elem.getAttribute('data-contactindex')]);
     });
-    allTaskObjects[index].participants = newParticipantsOverlay;
+    //allTaskObjects[index].participants = newParticipantsOverlay;
     reRenderChosenListBackOverlay(index);
 }
 
@@ -970,7 +970,7 @@ function selectContactOverlay(event, index) {
  */
 function reRenderChosenListBackOverlay(index) {
     let list = "";
-    allTaskObjects[index].participants.forEach((elem, i)=>{
+    newParticipantsOverlay.forEach((elem, i)=>{
         list += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
     })
     document.querySelector('.overlay-card .chosen-list.back').innerHTML = list;
@@ -986,9 +986,9 @@ function reRenderChosenListBackOverlay(index) {
  * then loaded to the participants of the task.
  */
 function removeParticipantOverlay(index, j) {
-    let newParticipantsOverlay = allTaskObjects[index].participants;
+    newParticipantsOverlay = structuredClone(allTaskObjects[index].participants);
     newParticipantsOverlay.splice(j, 1);
-    allTaskObjects[index].participants = newParticipantsOverlay;
+    //allTaskObjects[index].participants = newParticipantsOverlay;
     actualizeContactListOverlay(index);
     reRenderChosenListBackOverlay(index);
 }
@@ -1189,6 +1189,7 @@ function removeSubtaskOverlay(index, j) {
  * The task is then replaced by that object.
  */
 function actualizeTask(index) {
+    allTaskObjects[index].participants = structuredClone(newParticipantsOverlay);
     let newTaskObject = {
         taskId: allTaskObjects[index].taskId,
         category: allTaskObjects[index].category,
