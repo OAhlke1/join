@@ -1,194 +1,387 @@
-let columnCardConts = document.querySelectorAll('.column-card-cont');
-let userStories = document.querySelectorAll('.user-story');
-let draggedElem = null;
-let allStories = [];
-const taskURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks.json';
-let urgencyLow = /* HTML */ `<button class="menu-icon">
-                        <svg width="18" height="8" viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16.5685 7.16658L1.43151 7.16658C1.18446 7.16658 0.947523 7.06773 0.772832 6.89177C0.598141 6.71581 0.5 6.47716 0.5 6.22831C0.5 5.97947 0.598141 5.74081 0.772832 5.56485C0.947523 5.38889 1.18446 5.29004 1.43151 5.29004L16.5685 5.29004C16.8155 5.29004 17.0525 5.38889 17.2272 5.56485C17.4019 5.74081 17.5 5.97947 17.5 6.22831C17.5 6.47716 17.4019 6.71581 17.2272 6.89177C17.0525 7.06773 16.8155 7.16658 16.5685 7.16658Z" fill="#FFA800"/>
-                            <path d="M16.5685 2.7098L1.43151 2.7098C1.18446 2.7098 0.947523 2.61094 0.772832 2.43498C0.598141 2.25902 0.5 2.02037 0.5 1.77152C0.5 1.52268 0.598141 1.28403 0.772832 1.10807C0.947523 0.932105 1.18446 0.833252 1.43151 0.833252L16.5685 0.833252C16.8155 0.833252 17.0525 0.932105 17.2272 1.10807C17.4019 1.28403 17.5 1.52268 17.5 1.77152C17.5 2.02037 17.4019 2.25902 17.2272 2.43498C17.0525 2.61094 16.8155 2.7098 16.5685 2.7098Z" fill="#FFA800"/>
-                        </svg>                                              
-                    </button>`;
-let urgencyMedium = /* HTML */ `<button class="menu-icon">
-                        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8.99974 7.24524C8.80031 7.24557 8.60603 7.18367 8.44549 7.06863L0.876998 1.63467C0.778524 1.56391 0.695351 1.47498 0.632227 1.37296C0.569103 1.27094 0.527264 1.15784 0.5091 1.0401C0.472414 0.802317 0.534386 0.560105 0.681381 0.366747C0.828377 0.17339 1.04835 0.0447247 1.29292 0.00905743C1.53749 -0.0266099 1.78661 0.0336422 1.98549 0.176559L8.99974 5.2075L16.014 0.17656C16.1125 0.105795 16.2243 0.0545799 16.3431 0.02584C16.462 -0.00289994 16.5855 -0.00860237 16.7066 0.00905829C16.8277 0.0267189 16.944 0.0673968 17.0489 0.128769C17.1538 0.190142 17.2453 0.271007 17.3181 0.366748C17.3909 0.462489 17.4436 0.571231 17.4731 0.686765C17.5027 0.802299 17.5085 0.922362 17.4904 1.0401C17.4722 1.15784 17.4304 1.27094 17.3672 1.37296C17.3041 1.47498 17.221 1.56391 17.1225 1.63467L9.55398 7.06863C9.39344 7.18367 9.19917 7.24557 8.99974 7.24524Z" fill="#7AE229"/>
-                            <path d="M8.99998 12.0001C8.80055 12.0005 8.60628 11.9386 8.44574 11.8235L0.877242 6.38955C0.678366 6.24664 0.546029 6.03276 0.509344 5.79498C0.472658 5.5572 0.53463 5.31499 0.681625 5.12163C0.828621 4.92827 1.0486 4.79961 1.29317 4.76394C1.53773 4.72827 1.78686 4.78853 1.98574 4.93144L8.99998 9.96239L16.0142 4.93144C16.2131 4.78853 16.4622 4.72827 16.7068 4.76394C16.9514 4.79961 17.1713 4.92827 17.3183 5.12163C17.4653 5.31499 17.5273 5.5572 17.4906 5.79498C17.4539 6.03276 17.3216 6.24664 17.1227 6.38956L9.55423 11.8235C9.39369 11.9386 9.19941 12.0005 8.99998 12.0001Z" fill="#7AE229"/>
-                        </svg>                                                
-                    </button>`;
-let urgencyHigh = /* HTML */ `<button class="menu-icon">
-                        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.00002 4.75476C9.19945 4.75443 9.39372 4.81633 9.55427 4.93137L17.1228 10.3653C17.2212 10.4361 17.3044 10.525 17.3675 10.627C17.4307 10.7291 17.4725 10.8422 17.4907 10.9599C17.5273 11.1977 17.4654 11.4399 17.3184 11.6333C17.1714 11.8266 16.9514 11.9553 16.7068 11.9909C16.4623 12.0266 16.2131 11.9664 16.0143 11.8234L9.00002 6.7925L1.98577 11.8234C1.8873 11.8942 1.77545 11.9454 1.65662 11.9742C1.53779 12.0029 1.4143 12.0086 1.2932 11.9909C1.1721 11.9733 1.05577 11.9326 0.950844 11.8712C0.845915 11.8099 0.754446 11.729 0.681662 11.6333C0.608878 11.5375 0.556201 11.4288 0.52664 11.3132C0.49708 11.1977 0.491215 11.0776 0.509379 10.9599C0.527545 10.8422 0.569382 10.7291 0.632508 10.627C0.695632 10.525 0.778805 10.4361 0.87728 10.3653L8.44577 4.93137C8.60631 4.81633 8.80059 4.75443 9.00002 4.75476Z" fill="#FF3D00"/>
-                            <path d="M9.00002 -0.000121266C9.19945 -0.000455511 9.39372 0.0614475 9.55427 0.176482L17.1228 5.61045C17.3216 5.75336 17.454 5.96724 17.4907 6.20502C17.5273 6.4428 17.4654 6.68501 17.3184 6.87837C17.1714 7.07173 16.9514 7.20039 16.7068 7.23606C16.4623 7.27173 16.2131 7.21147 16.0143 7.06856L9.00002 2.03761L1.98577 7.06856C1.78689 7.21147 1.53777 7.27173 1.2932 7.23606C1.04863 7.20039 0.828657 7.07173 0.681662 6.87837C0.534667 6.68501 0.472695 6.4428 0.509379 6.20502C0.546065 5.96723 0.678402 5.75336 0.87728 5.61044L8.44577 0.176482C8.60631 0.0614474 8.80059 -0.000455546 9.00002 -0.000121266Z" fill="#FF3D00"/>
-                        </svg>                                                
-                    </button>`;
-let testParticpantsList = /* HTML */ `<div class="participant flex-center">
-                                        <p class="initials">
-                                            SP
-                                        </p>
-                                        </div>
-                                        <div class="participant flex-center">
-                                        <p class="initials">
-                                            SP
-                                        </p>
-                                        </div>
-                                        <div class="participant flex-center">
-                                        <p class="initials">
-                                            SP
-                                        </p>
-                                    </div>`;
-let dragged = null;
-let draggableObjs;
-const targets = document.querySelectorAll(".column-card-cont");
-
-function loadCont() {
-    getStories();
-    setStoryAttributes();
-    shiftParticipants();
-    checkForEmptyColumns();
-    checkForFilledColumns();
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * @param {nunber} j is the index of the subtask
+ * This function sets the new state of the clicked subtask.
+ */
+function actualizeSubtaskStatus(event, i, j) {
+    event.stopPropagation();
+    if(allTaskObjects[i].subTasks[j].subTaskDone === 1) {
+        allTaskObjects[i].subTasks[j].subTaskDone = 0;
+    }else {
+        allTaskObjects[i].subTasks[j].subTaskDone = 1;
+    }
+    collectNotDeletedTasks();
+    reRenderTasks();
 }
 
-function shiftParticipants() {
-    document.querySelectorAll('main .boardCont .board .board-column .column-card-cont .user-story').forEach((elem, index) => {
-        elem.querySelectorAll(' .participants-and-urgency .participants .participant').forEach((el, i)=>{
-            el.style.left = `${-7*i}px`;
-        })
+/**
+ * 
+ * The @function closeOverlay closes the editing-overlay without setting the values
+ * of the editing-elements to the clicked task. Therefore no data is sent to the FTP as well.
+ */
+function closeOverlay(index) {
+    hideEditingElements();
+    document.querySelector('.tasks-overlay').classList.add('disNone');
+}
+
+/**
+ * 
+ * This function shows all editing elements in the task-overlay.
+ */
+function showEditingElements() {
+    document.querySelectorAll('.hide-for-editing').forEach((el)=>{el.classList.add('disNone')});
+    document.querySelectorAll('.show-for-editing').forEach((el)=>{el.classList.remove('disNone')});
+}
+
+/**
+ * 
+ * This function hides all editing elements in the task-overlay.
+ */
+function hideEditingElements() {
+    document.querySelectorAll('.hide-for-editing').forEach((el)=>{el.classList.remove('disNone')});
+    document.querySelectorAll('.show-for-editing').forEach((el)=>{el.classList.add('disNone')});
+}
+
+/**
+ * 
+ * @param {number} i is the index of the subtask
+ * This function fades in the pen and bin button of the subtask the cursor is hovering over.
+ */
+function fadeInPenBin(i) {
+    let liTag = document.querySelector(`#subtask-li-${i}`);
+    liTag.classList.remove('fade-out-pen-bin');
+    liTag.classList.add('fade-in-pen-bin');
+}
+
+/**
+ * 
+ * @param {number} i is the index of the subtask
+ * This function fades out the pen and bin button of the subtask the cursor is hovering over.
+ */
+function fadeOutPenBin(i) {
+    let liTag = document.querySelector(`#subtask-li-${i}`);
+    liTag.classList.add('fade-out-pen-bin');
+    liTag.classList.remove('fade-in-pen-bin');
+}
+
+/**
+ * 
+ * @param {string} dateString is the date-string stored in the task-object
+ * @returns 
+ */
+function restyleDateString(dateString) {
+    dateString = dateString.split('-');
+    dateString = dateString[2]+'/'+dateString[1]+'/'+dateString[0];
+    return dateString;
+}
+
+/**
+ * 
+ * @param {event} event is the event fired to one of the three urgency-buttons.
+ * At first, the @function chooseUrgencyOverlay removes the marking class "choose-urgency".
+ * Then the clicked button is marked as chosen.
+ */
+function chooseUrgencyOverlay(event) {
+    let classes = ['prio-high-button-bg-color', 'prio-medium-button-bg-color', 'prio-low-button-bg-color'];
+    for(let i=0; i<3; i++) {
+        document.querySelectorAll('.overlay-card .choose-prio-button')[i].classList.remove(classes[i]);
+        document.querySelectorAll('.overlay-card .choose-prio-button')[i].classList.remove('chosen-urgency');
+    }
+    event.target.closest('.choose-prio-button').classList.add(`prio-${event.target.closest('.choose-prio-button').getAttribute('data-resetUrgency')}-button-bg-color`);
+    event.target.closest('.choose-prio-button').classList.add('chosen-urgency');
+}
+
+/**
+ * 
+ * The @function showContactListOverlay shows the contact list in the editing overlay.
+ */
+function showContactListOverlay(event) {
+    document.querySelector('.overlay-card .contact-list').classList.remove('disNone');
+}
+
+/**
+ * 
+ * The @function showContactListOverlay hides the contact list in the editing overlay.
+ */
+function hideContactListOverlay(event) {
+    event.stopPropagation();
+    document.querySelector('.overlay-card .search-contacts').value = "";
+    document.querySelectorAll('.overlay-card .contact').forEach((elem)=>{
+        elem.classList.remove('disNone');
     })
+    document.querySelector('.overlay-card .contact-list').classList.add('disNone');
 }
 
-function setDragDrop() {
-    for(source of draggableObjs) {
-        source.addEventListener("dragstart", (event) => {
-            dragged = event.target;
-        });
-    }
-    
-    for(el of targets) {
-        el.addEventListener("dragover", (event) => {
-            event.preventDefault();
-        });
-    
-        el.addEventListener("drop", (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          forEachTarget(event);
-        });
-    }
-    setStoryAttributes();
-}
-
-function forEachTarget(event) {
-    targets.forEach((elem, index)=>{
-        if(document.querySelectorAll('.user-story').length > 0) {
-            if(elem.contains(event.target) || event.target.classList.contains('column-card-cont')) {
-                dragged.parentNode.removeChild(dragged);
-                event.target.parentNode.append(dragged);
-                checkForEmptyColumns();
-                checkForFilledColumns();
-                if(document.querySelectorAll('.user-story').length > 0) {
-                    setStoryAttributes(index);
-                }
-            }
+/**
+ * 
+ * This function goes into every contact name and checks wether it contains the value of the input.
+ */
+function searchForContactsOverlay(event) {
+    let input = document.querySelector('.overlay-card .search-contacts');
+    document.querySelectorAll('.overlay-card .contact-name').forEach((elem)=>{
+        let lowercased = elem.innerHTML.toLowerCase()
+        if(lowercased.includes(input.value.toLowerCase())) {
+            elem.closest('.contact').classList.remove('disNone');
+        }else {
+            elem.closest('.contact').classList.add('disNone');
         }
     })
 }
 
-function checkForEmptyColumns() {
-    if(document.querySelector('#toDo').querySelectorAll('.user-story').length === 0) {
-        document.querySelector('.no-task-to-do').classList.remove('disNone');
-    }
-    if(document.querySelector('#inProgress').querySelectorAll('.user-story').length === 0) {
-        document.querySelector('.no-task-in-progress').classList.remove('disNone');
-    }
-    if(document.querySelector('#awaitFeedback').querySelectorAll('.user-story').length === 0) {
-        document.querySelector('.no-feedback-awaited').classList.remove('disNone');
-    }
-    if(document.querySelector('#done').querySelectorAll('.user-story').length === 0) {
-        document.querySelector('.no-task-done').classList.remove('disNone');
-    }
-}
-
-
-function checkForFilledColumns() {
-    if(document.querySelector('#toDo').querySelectorAll('.user-story').length > 0) {
-        document.querySelector('.no-task-to-do').classList.add('disNone');
-    }
-    if(document.querySelector('#inProgress').querySelectorAll('.user-story').length > 0) {
-        document.querySelector('.no-task-in-progress').classList.add('disNone');
-    }
-    if(document.querySelector('#awaitFeedback').querySelectorAll('.user-story').length > 0) {
-        document.querySelector('.no-feedback-awaited').classList.add('disNone');
-    }
-    if(document.querySelector('#done').querySelectorAll('.user-story').length > 0) {
-        document.querySelector('.no-task-done').classList.add('disNone');
-    }
-}
-
-async function getStories() {
-    let fetchedStories = await fetch(taskURL);
-    fetchedStories = await fetchedStories.json();
-    for(const [key, value] of Object.entries(fetchedStories)) {
-        allStories.push(value);
-    }
-    setStories();
-}
-
-function setStoryAttributes() {
-    targets.forEach((elem, index)=>{
-        elem.querySelectorAll('.user-story').forEach((el)=>{
-            el.setAttribute('data-storyType', elem.id);
-        })
-        actualizeStory(index);
+/**
+ * 
+ * @param {number} index of the task
+ * @returns an HTML-string with the clicked contacts which is then rendered into the chosen-list
+ * of the editing-chosen-list.
+ */
+function renderChosenListBackOverlay(index) {
+    let list = "";
+    allTaskObjects[index].participants.forEach((elem, i)=>{
+        list += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
     })
+    return list;
 }
 
-function setStories() {
-    allStories.forEach((elem, index)=>{
-        let card = /* HTML */ `<div class="user-story flex-column" draggable="true" data-storyType="${elem.storyType}" data-storyIndex="${index}">
-            <div class="task-type flex-center"><p>User Story</p></div>
-            <div class="headlineDescription flex-column">
-                <h2>${elem.storyTitle}</h2>
-                <div class="task-description"><p>${elem.storyDescrip}</p></div>
-            </div>
-            <div class="subtask flex-center">
-                <div class="subtask-bar"><div class="inner"></div></div>
-                <p class="subtask-count"><span class="count">1</span>/<span class="total">2</span> Subtasks</p>
-            </div>
-            <div class="participants-and-urgency flex">
-                <div class="participants flex">${testParticpantsList}</div>
-                <div class="menu flex">${urgencyLow}${urgencyMedium}${urgencyHigh}</div>
-            </div>
-        </div>`;
-        renderStory(card, elem.storyType);
+/**
+ * 
+ * @param {event} event is the event fired to the contact of the contact-list in the editing-overlay
+ * @param {number} index is the index of the task.
+ * When a contact is clicked, it gets the class "chosen" to mark, that this contact is clicked.
+ * On the other hand, when it already is marked as clicked it loses the class "chosen" to get unmarked again.
+ * Then it checks each contact if it is chosen or not. The ids of these contacts are detected by their HTML-attribute "data-contactindex"
+ * so that the contact-object in the @var allContactsObjects array at this index is pushed to the array @var newParticpantsOverlay which
+ * is then loaded to the participants-array of the task.
+ */
+function selectContactOverlay(event, index) {
+    newParticipantsOverlay = [];
+    if(event.target.closest('.contact').classList.contains('chosen')) {
+        event.target.closest('.contact').classList.remove('chosen');
+    }else {
+        event.target.closest('.contact').closest('.contact').classList.add('chosen');
+    }
+    document.querySelectorAll('.overlay-card .contact.chosen').forEach((elem)=>{
+        newParticipantsOverlay.push(allContactsObjects[+elem.getAttribute('data-contactindex')]);
+    });
+    //allTaskObjects[index].participants = newParticipantsOverlay;
+    reRenderChosenListBackOverlay(index);
+}
+
+/**
+ * 
+ * @param {number} index is the index of the task.
+ * The @function reRenderChosenListBackOverlay rerenderes the chosen-list of the editing-overlay.
+ */
+function reRenderChosenListBackOverlay(index) {
+    let list = "";
+    newParticipantsOverlay.forEach((elem, i)=>{
+        list += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
     })
+    document.querySelector('.overlay-card .chosen-list.back').innerHTML = list;
 }
 
-async function postStories(postMethod) {
-    if(allStories.length > 0) {
-        allStories.forEach(async (elem)=>{
-            let response = await fetch(taskURL, {
-                method: postMethod,
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(elem)
-            }).then((val)=>{return val;}).catch((err)=>{throw err;})
-        })
+/**
+ * 
+ * @param {number} index is the index of the task.
+ * @param {number} j is the index of the participant.
+ * When the chosen participant is clicked, the @function removeParticipantOverlay is called.
+ * It loads the participants-array of the task into the @var newParticipantsOverlay
+ * Then the entry at place @param j is spliced and the @var newParticipantsOverlay array is
+ * then loaded to the participants of the task.
+ */
+function removeParticipantOverlay(index, j) {
+    newParticipantsOverlay = structuredClone(allTaskObjects[index].participants);
+    newParticipantsOverlay.splice(j, 1);
+    //allTaskObjects[index].participants = newParticipantsOverlay;
+    actualizeContactListOverlay(index);
+    reRenderChosenListBackOverlay(index);
+}
+
+/**
+ * 
+ * @param {index} index is the index of the task.
+ * @function actualizeContactListOverlay checks again, which contacts are now chosen.
+ */
+function actualizeContactListOverlay(index) {
+    for(let h=0; h<allContactsObjects.length; h++) {
+        document.querySelectorAll('.overlay-card .contact-list .contact')[h].classList.remove('chosen');
+    }
+    for(let i=0; i<allContactsObjects.length; i++) {
+        for(let j=0; j<allTaskObjects[index].participants.length; j++) {
+            if(allContactsObjects[i].contactId === allTaskObjects[index].participants[j].contactId) {
+                document.querySelectorAll('.overlay-card .contact-list .contact')[i].classList.add('chosen');
+            }
+        }
     }
 }
 
-function renderStory(elem, id) {
-    document.querySelector(`#${id}`).innerHTML += elem;
-    draggableObjs = document.querySelectorAll(".user-story");
-    setStoryAttributes();
-    setDragDrop();
+/**
+ * 
+ * Shows the cross (for removing) and tic (for adding) elements for adding a new subtask to the task in the task-overlay.
+ */
+function showCrossTicOverlay() {
+    document.querySelector('.overlay-card .subtask-input .add').classList.add('disNone');
+    document.querySelector('.overlay-card .cross-tic').classList.remove('disNone');
+    document.querySelector('.overlay-card .subtask-input').style.border = "1px solid blue";
 }
 
-async function actualizeStory(index) {
-    let storyCard = document.querySelector(`.user-story[data-storyIndex=${index}]`);
-    let storyObj = {
-        storyDescrip: storyCard.querySelector('.task-description p').innerHTML,
-        storyTitle: storyCard.querySelector('h2').innerHTML,
-        storyType: storyCard.getAttribute('data-storyType')
+/**
+ * 
+ * Hides the cross (for removing) and tic (for adding) elements for adding a subtask to the task in the task-overlay.
+ */
+function hideCrossTicOverlay() {
+    document.querySelector('#choose-subtasks-overlay').value = "";
+    document.querySelector('.overlay-card .subtask-input .add').classList.remove('disNone');
+    document.querySelector('.overlay-card .cross-tic').classList.add('disNone');
+    document.querySelector('.overlay-card .subtask-input').style.border = "1px solid black";
+}
+
+/**
+ * 
+ * @function clearSubtaskInputAdd deletes the value of the subtask-input in the editing-overlay.
+ */
+function clearSubtaskInputOverlay() {
+    document.querySelector('#choose-subtasks-overlay').value = "";
+    hideCrossTicOverlay();
+}
+
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function adds a new Subtask to the task
+ */
+function addSubtaskOverlay(index) {
+    let subtaskList = structuredClone(allTaskObjects[index].subTasks);
+    if(document.querySelector('#choose-subtasks-overlay').value != "") {
+        if(!checkIfSubtaskExistsOverlay(document.querySelector('#choose-subtasks-overlay').value, index, -1)){
+            reRenderSubtaskListOverlay(index, subtaskList);
+            hideCrossTicOverlay();
+            document.querySelector('#choose-subtasks-overlay').focus();
+            subtaskList = structuredClone(allTaskObjects[index].subTasks);
+            subtaskList.push({
+                subTaskDone: 0,
+                subTaskTitle: document.querySelector('#choose-subtasks-overlay').value
+            });
+        }
+        document.querySelector('#choose-subtasks-overlay').value = "";
     }
-    allStories[index] = storyObj;
-    postStories('PUT');
+}
+
+/**
+ * 
+ * @param {number} index is the index of the task.
+ * @function reRenderSubtaskListOverlay rerenders the the subtask-list in the editing-overlay.
+ */
+function reRenderSubtaskListOverlay(index, subtaskList) {
+    let list = "";
+    subtaskList.forEach((elem, i)=>{
+        list += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
+            <p class="subtask-title-p-overlay-${i}">${elem.subTaskTitle}</p>
+            <div class="pen-bin-subtask-overlay pen-bin-subtask flex flex-center" id="pen-bin-subtask-overlay-${i}">
+                <img src="./assets/img/pen.svg" alt="" onclick="editSubtaskOverlay(${index}, ${i})">
+                <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
+            </div>
+            <div class="edit-subtask flex flex-center disNone" id="edit-subtask-overlay-${index}${i}" style="justify-content: space-between;">
+                <input type="text" id="edit-subtask-input-overlay-${index}${i}" value="${elem.subTaskTitle}" onfocusout="closeEditSubtask(${index}, ${i})">
+                <div class="bin-check flex flex-center">
+                    <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
+                    <img src="./assets/img/check-icon-black.svg" alt="" onclick="changeSubtaskOverlay(${index}, ${i})">
+                </div>
+            </div>
+        </li>`
+    })
+    document.querySelector('#subtask-list-overlay').innerHTML = "";
+    document.querySelector('#subtask-list-overlay').innerHTML = list;
+    newSubtaskList = structuredClone(subtaskList);
+}
+
+/**
+ * 
+ * @param {number} index is the index of the task
+ * @param {number} j is the index of the subtask
+ * Both parameters are needed to get the correct input-id.
+ * @function closeEditSubtask closes the subtask editing.
+ */
+function closeEditSubtask(index, j) {
+    document.querySelector(`#edit-subtask-overlay-${index}${j}`).classList.add('disNone');
+}
+
+/**
+ * 
+ * @param {*} j is the subtasks index
+ * This function shows the input-field of that particular subtask and hides its <p>-tag that contains its title
+ */
+function editSubtaskOverlay(index, j) {
+    document.querySelector(`#edit-subtask-overlay-${index}${j}`).classList.remove('disNone');
+    document.querySelector(`#edit-subtask-input-overlay-${index}${j}`).focus();
+}
+
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * @param {number} j is the index of the subtask
+ * This function sets the new title of the subtask to the @var allTaskObjects and @var newSubtasksArrayOverlay
+ */
+function changeSubtaskOverlay(index, j) {
+    let subtaskList = structuredClone(allTaskObjects[index].subTasks)
+    subtaskList[j].subTaskTitle = document.querySelector(`#edit-subtask-input-overlay-${index}${j}`).value;
+    if(!checkIfSubtaskExistsOverlay(document.querySelector('#choose-subtasks-overlay').value, index, j)) {
+        reRenderSubtaskListOverlay(index, subtaskList);
+    }else {
+        alert('Subtask already exists');
+    }
+}
+
+/**
+ * 
+ * @returns {boolean}
+ * @function checkIfSubtaskExists controlls if the value of the subtask inputfield is the same as the title of an
+ * already existing task. If so, @bool true is returned. Else @bool false is given back.
+ */
+/* function checkIfSubtaskExistsOverlay() {
+    for(let i=0; i<allSubtasksArray.length; i++) {
+        if(allSubtasksArray[i].subTaskTitle.toLowerCase() === subtaskInput.value.toLowerCase()) {
+            alert('Subtask already exists');
+            return true;
+        }else if(allSubtasksArray[i].subTaskTitle.toLowerCase() != subtaskInput.value.toLowerCase()) {
+            if(i+1 === allSubtasksArray.length) {
+                return false;
+            }
+        }
+    }
+} */
+
+
+function checkIfSubtaskExistsOverlay(subtaskInput, index, i) {
+    if(document.querySelectorAll('.subtask-title-p-overlay').length > 0) {
+        for(let k=0; k<document.querySelectorAll('.subtask-title-p-overlay').length; k++) {
+            if(k === i) {
+                continue;
+            }else {
+                if(document.querySelectorAll('.subtask-title-p-overlay')[k].innerHTML === subtaskInput) {
+                    alert('Subtask already exists');
+                    document.querySelector(`#edit-subtask-input-overlay-${index}${i}`).focus();
+                    return true;
+                }else if(document.querySelectorAll('.subtask-title-p-overlay')[k].innerHTML != subtaskInput) {
+                    if(k+1 === document.querySelectorAll('.subtask-title-p-overlay').length) { return false; }
+                }
+            }
+        }
+    }else {
+        return false;
+    }
+}
+
+/**
+ * 
+ * @param {number} index is the task of the index.
+ * @param {number} j is the index of the subtask.
+ * @function removeSubtaskOverlay loads the subtaks into the @var subtaskList array.
+ * Then the subtask at index j gets spliced out of that array and then the array is loaded to
+ * participants of the task.
+ */
+function removeSubtaskOverlay(index, j) {
+    let subtaskList = structuredClone(allTaskObjects[index].subTasks);
+    subtaskList.splice(j, 1);
+    reRenderSubtaskListOverlay(index, subtaskList);
 }
