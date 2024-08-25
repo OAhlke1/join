@@ -188,7 +188,6 @@ function resetTaskStatus(event, index, statusName) {
     hideShiftedTask(index);
     reRenderTask(index);
     showHideGreyTaskCards();
-    //showGreyCardOfOldStatus(oldStatus);
     collectNotDeletedTasks();
 }
 
@@ -398,7 +397,7 @@ function actualizeTaskTypes() {
         })
     })
     reRenderTasks();
-    //collectNotDeletedTasks();
+    collectNotDeletedTasks();
 }
 
 /**
