@@ -48,9 +48,7 @@ function extractFilename(url) {
 function loadUserInitials() {
     let user = localStorage.getItem('User');
     let initials = document.getElementById('user-button-initials');
-    console.log(initials);
     if (initials) {
-        console.log(getInitials(user));
         initials.innerHTML = getInitials(user);
     }
 }

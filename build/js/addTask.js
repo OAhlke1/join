@@ -197,9 +197,7 @@ function checkIfFirstOrLastNameIsMissingInContactList(elem) {
  */
 function renderChosenList() {
     document.querySelector('.chosen-list').innerHTML = '';
-    console.log('chosen-list');
     participantsArray.forEach((elem, i)=>{
-        console.log(elem);
         document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" style="background-color: ${elem.color};" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})" style="background-color: ${allContactsObjects[i].color};">
             <p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p>
             <div class="name-block${i} name-block disNone"><p>${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div>
