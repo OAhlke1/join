@@ -320,6 +320,7 @@ function getSubtasksOverlay(index) {
  */
 function renderSubtaskListOverlay(index) {
     let list = "";
+    newSubtaskList = structuredClone(allTaskObjects[index].subTasks);
     allTaskObjects[index].subTasks.forEach((elem, i)=>{
         list += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
             <p class="subtask-title-p-overlay subtask-title-p-overlay-${i}">${elem.subTaskTitle}</p>
