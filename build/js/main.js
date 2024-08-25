@@ -16,6 +16,7 @@ async function includeHTML() {
     if (typeof callback === 'function') {
         callback();
     }
+    getActualDate();
 }
 
 
