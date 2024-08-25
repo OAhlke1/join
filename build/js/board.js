@@ -535,9 +535,7 @@ function setTaskType() {
 
 async function resetTaskTypeOnFtp(index) {
     let ftpImage = await fetch(tasksURL);
-    console.log(Array.isArray(ftpImage));
     ftpImage = await ftpImage.json();
-    console.log(Array.isArray(ftpImage));
     if(taskIsStillOnRemote(ftpImage, allTaskObjects[index].taskId)) {
         let res = await fetch(`https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks/${allTaskKeys[+dragged.getAttribute('data-taskIndex')]}/taskType.json`, {
             method: 'PUT',

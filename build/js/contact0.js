@@ -26,7 +26,6 @@ async function getContacts() {
 //       }
 //     }
 //   }
-//   console.log(contacts);
 //   renderIntoLetterBox();
 // }
 
@@ -82,7 +81,6 @@ async function getContacts() {
 //   if(contacts[i].lastName[0] != newChar) {
 //      newChar = contacts[i].lastName[0];
 //      contactIndex++;
-//      console.log(contactsHTML);
 //      return contactsHTML;
 //   }
 //   contactsHTML +=`
@@ -229,7 +227,6 @@ function clickContact(event) {
   let index = +event.target
     .closest(".contact")
     .getAttribute("data-contactIndex");
-  console.log(index);
 
   information.innerHTML = `
           <div class="flex showContactName">
@@ -330,8 +327,7 @@ if (!nameSuffix){
   return;
 }
 
-sureLastName = [sureLastName[0], sureLastName[1] + " " + sureLastName[2]]
-console.log(sureLastName);
+sureLastName = [sureLastName[0], sureLastName[1] + " " + sureLastName[2]];
 
 }
 
@@ -345,7 +341,6 @@ function addcontactKeys() {
   // contactKeys = [];
   for (let [key,value] of Object.entries(contacts)) {
     contactKeys.push(key);
-    console.log(contactKeys);
   }
 }
 
@@ -482,7 +477,6 @@ function addContactToggle() {
 //    presentlyIndexContacts = +event.target
 //     .closest(".contact")
 //     .getAttribute("data-contactIndex");
-//   console.log(presentlyIndexContacts);
 
 //   information.innerHTML = clickContactHTML(presentlyIndexContacts);
 // }
@@ -539,7 +533,6 @@ function addContactToggle() {
 // // let name = document.querySelector(".inputEditName");
 // // let email= document.querySelector(".inputEditEmail");
 // // let number = document.querySelector(".inputEditNumber");
-// // console.log(name.value);
 // editContactToggle();
 // createContact();
 // deleteContact(presentlyIndexContacts);
