@@ -332,26 +332,6 @@ function changeSubtaskOverlay(index, j) {
     }
 }
 
-/**
- * 
- * @returns {boolean}
- * @function checkIfSubtaskExists controlls if the value of the subtask inputfield is the same as the title of an
- * already existing task. If so, @bool true is returned. Else @bool false is given back.
- */
-/* function checkIfSubtaskExistsOverlay() {
-    for(let i=0; i<allSubtasksArray.length; i++) {
-        if(allSubtasksArray[i].subTaskTitle.toLowerCase() === subtaskInput.value.toLowerCase()) {
-            alert('Subtask already exists');
-            return true;
-        }else if(allSubtasksArray[i].subTaskTitle.toLowerCase() != subtaskInput.value.toLowerCase()) {
-            if(i+1 === allSubtasksArray.length) {
-                return false;
-            }
-        }
-    }
-} */
-
-
 function checkIfSubtaskExistsOverlay(subtaskInput, index, i) {
     if(document.querySelectorAll('.subtask-title-p-overlay').length > 0) {
         for(let k=0; k<document.querySelectorAll('.subtask-title-p-overlay').length; k++) {
