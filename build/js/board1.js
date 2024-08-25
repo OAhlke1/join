@@ -16,7 +16,6 @@ let urgencyHigh = /* HTML */ `<div class="urgency-icon"><svg width="18" height="
 let doneCount = 0;
 let selectedPrio = "medium";
 let taskAddedElem = document.querySelector('.task-added');
-let oldTaskVersion;
 
 /**
  * This function fetches all task-objects from firebase

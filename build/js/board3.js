@@ -254,16 +254,17 @@ function addSubtaskOverlay(index) {
     let subtaskList = structuredClone(allTaskObjects[index].subTasks);
     if(document.querySelector('#choose-subtasks-overlay').value != "") {
         if(!checkIfSubtaskExistsOverlay(document.querySelector('#choose-subtasks-overlay').value, index, -1)){
-            reRenderSubtaskListOverlay(index, subtaskList);
-            hideCrossTicOverlay();
             document.querySelector('#choose-subtasks-overlay').focus();
             subtaskList = structuredClone(allTaskObjects[index].subTasks);
             subtaskList.push({
                 subTaskDone: 0,
                 subTaskTitle: document.querySelector('#choose-subtasks-overlay').value
             });
+            reRenderSubtaskListOverlay(index, subtaskList);
+            hideCrossTicOverlay();
         }
         document.querySelector('#choose-subtasks-overlay').value = "";
+
     }
 }
 
@@ -282,7 +283,7 @@ function reRenderSubtaskListOverlay(index, subtaskList) {
                 <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
             </div>
             <div class="edit-subtask flex flex-center disNone" id="edit-subtask-overlay-${index}${i}" style="justify-content: space-between;">
-                <input type="text" id="edit-subtask-input-overlay-${index}${i}" value="${elem.subTaskTitle}" onfocusout="closeEditSubtask(${index}, ${i})">
+                <input type="text" id="edit-subtask-input-overlay-${index}${i}" value="${elem.subTaskTitle}">
                 <div class="bin-check flex flex-center">
                     <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
                     <img src="./assets/img/check-icon-black.svg" alt="" onclick="changeSubtaskOverlay(${index}, ${i})">
@@ -323,9 +324,9 @@ function editSubtaskOverlay(index, j) {
  * This function sets the new title of the subtask to the @var allTaskObjects and @var newSubtasksArrayOverlay
  */
 function changeSubtaskOverlay(index, j) {
-    let subtaskList = structuredClone(allTaskObjects[index].subTasks)
+    let subtaskList = structuredClone(allTaskObjects[index].subTasks);
     subtaskList[j].subTaskTitle = document.querySelector(`#edit-subtask-input-overlay-${index}${j}`).value;
-    if(!checkIfSubtaskExistsOverlay(document.querySelector('#choose-subtasks-overlay').value, index, j)) {
+    if(!checkIfSubtaskExistsOverlay(document.querySelector(`#edit-subtask-input-overlay-${index}${j}`).value, index, j)) {
         reRenderSubtaskListOverlay(index, subtaskList);
     }else {
         alert('Subtask already exists');
@@ -338,24 +339,12 @@ function changeSubtaskOverlay(index, j) {
  * @function checkIfSubtaskExists controlls if the value of the subtask inputfield is the same as the title of an
  * already existing task. If so, @bool true is returned. Else @bool false is given back.
  */
-/* function checkIfSubtaskExistsOverlay() {
-    for(let i=0; i<allSubtasksArray.length; i++) {
-        if(allSubtasksArray[i].subTaskTitle.toLowerCase() === subtaskInput.value.toLowerCase()) {
-            alert('Subtask already exists');
-            return true;
-        }else if(allSubtasksArray[i].subTaskTitle.toLowerCase() != subtaskInput.value.toLowerCase()) {
-            if(i+1 === allSubtasksArray.length) {
-                return false;
-            }
-        }
-    }
-} */
-
 
 function checkIfSubtaskExistsOverlay(subtaskInput, index, i) {
     if(document.querySelectorAll('.subtask-title-p-overlay').length > 0) {
         for(let k=0; k<document.querySelectorAll('.subtask-title-p-overlay').length; k++) {
             if(k === i) {
+                if(document.querySelectorAll('.subtask-title-p-overlay').length === 1) { return false; }
                 continue;
             }else {
                 if(document.querySelectorAll('.subtask-title-p-overlay')[k].innerHTML === subtaskInput) {

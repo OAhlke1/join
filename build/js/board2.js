@@ -87,7 +87,7 @@ function renderTaskIntoOverlay(index) {
         </div>`;
         document.querySelector('.overlay-card').innerHTML += `<div class="flex flex-center edit-delete">${renderEditDelete(index)}</div>`;
     document.querySelector('.tasks-overlay').classList.remove('disNone');
-    setFocusOutFunctionsInputOverlay();
+    setFocusOutFunctionSubtaskInputOverlay();
 }
 
 /**
@@ -321,6 +321,7 @@ function getSubtasksOverlay(index) {
  */
 function renderSubtaskListOverlay(index) {
     let list = "";
+    newSubtaskList = structuredClone(allTaskObjects[index].subTasks);
     allTaskObjects[index].subTasks.forEach((elem, i)=>{
         list += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
             <p class="subtask-title-p-overlay subtask-title-p-overlay-${i}">${elem.subTaskTitle}</p>
@@ -329,7 +330,7 @@ function renderSubtaskListOverlay(index) {
                 <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
             </div>
             <div class="edit-subtask flex flex-center disNone" id="edit-subtask-overlay-${index}${i}" style="justify-content: space-between;">
-                <input type="text" id="edit-subtask-input-overlay-${index}${i}" value="${elem.subTaskTitle}" onfocusout="closeEditSubtask(${index}, ${i})">
+                <input type="text" id="edit-subtask-input-overlay-${index}${i}" value="${elem.subTaskTitle}">
                 <div class="bin-check flex flex-center">
                     <img src="./assets/img/bin.svg" alt="" onclick="removeSubtaskOverlay(${index}, ${i})">
                     <img src="./assets/img/check-icon-black.svg" alt="" onclick="changeSubtaskOverlay(${index}, ${i})">

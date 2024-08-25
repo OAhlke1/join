@@ -198,7 +198,6 @@ function setFocusOutFunctionsInputAdd() {
     })
     document.querySelector('#choose-subtasks-add').addEventListener('focusout', ()=>{
         if(document.querySelector('#choose-subtasks-add').value === "") {
-            console.log(document.querySelector('#choose-subtasks-add').value)
             hideCrossTicAdd();
         }
     })
@@ -206,14 +205,14 @@ function setFocusOutFunctionsInputAdd() {
 
 /**
  * 
- * @function setFocusOutFunctionsInputOverlay sets the functions for the @event focusout of the input-fields of the edit-task-overlay.
- * It is for hiding each box that opens, when an input-field is focused. And it also rotates back their triangles.
+ * @function setFocusOutFunctionSubtaskInputOverlay sets the functions for the @event focusout of the input-fields of the edit-task-overlay.
  */
-function setFocusOutFunctionsInputOverlay() {
+function setFocusOutFunctionSubtaskInputOverlay() {
     document.querySelector('#choose-subtasks-overlay').addEventListener('focusout', ()=>{
         if(document.querySelector('#choose-subtasks-overlay').value === "") {
-            
             hideCrossTicOverlay();
+        }else {
+            document.querySelector('.overlay-card .subtask-input').style.border = '1px solid #d1d1d1';
         }
     })
 }
