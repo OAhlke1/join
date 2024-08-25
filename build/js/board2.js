@@ -11,7 +11,7 @@ function actualizeTaskTypes() {
         })
     })
     reRenderTasks();
-    //collectNotDeletedTasks();
+    collectNotDeletedTasks();
 }
 
 /**
