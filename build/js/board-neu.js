@@ -160,7 +160,6 @@ function renderDropDownShiftTask(index) {
 
 function checkNewTaskType(event, index) {
     let state = document.querySelector(`#selectState${index}`).value;
-    console.log(state);
     if(state === "To Do") {
         state = "toDo";
     }else if(state === "In Progress") {
@@ -1150,7 +1149,6 @@ function changeSubtaskOverlay(index, j) {
 
 
 function checkIfSubtaskExistsOverlay(subtaskInput, index, i) {
-    console.log('Hi');
     if(document.querySelectorAll('.subtask-title-p-overlay').length > 0) {
         for(let k=0; k<document.querySelectorAll('.subtask-title-p-overlay').length; k++) {
             if(k === i) {
