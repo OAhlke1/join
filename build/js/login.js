@@ -24,6 +24,7 @@ let logoSmallHeight = logoSmall.offsetHeight;
 let logoSmallPositionTop = logoSmall.getBoundingClientRect().top;
 let logoSmallPositionLeft = logoSmall.getBoundingClientRect().left;
 let newContact;
+let users = [];
 
 function init() {
     setupShrinking();
@@ -114,6 +115,7 @@ async function checkLogin() {
         if (data[property].email === userValue.value && data[property].password === password.value) {
             userName = data[property].name;
             userEmail = data[property].email;
+            userId = data[property].userId;
             loginSuccess = true;
             setLocalStorageForUser();
             break;

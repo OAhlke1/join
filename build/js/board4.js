@@ -5,6 +5,10 @@
  * The task is then replaced by that object.
  */
 function actualizeTask(index) {
+    if(!localStorage.UserId) {
+        alert('Guests are not allowed to create or edit tasks.');
+        return;
+    }
     allTaskObjects[index].participants = structuredClone(newParticipantsOverlay);
     let newTaskObject = {
         taskId: allTaskObjects[index].taskId,
@@ -183,6 +187,10 @@ function showHideContactListAdd(event) {
 function renderContactListAdd() {
     //document.querySelector('.overlay-card .contact-list').innerHTML = '';
     let list = "";
+    if(!localStorage.UserId) {
+        document.querySelector('.add-task-overlay-box .contact-list').innerHTML = "<span class='asterisk' style='font-size: 16px; text-align: center;'>Contact-list is not visible for guests.</span>";
+        return;
+    }
     allContactsObjects.forEach((elem, index)=>{
         list += `<div class="flex flex-center contact" onmousedown="selectContactAdd(event, ${index})" data-selectindex="${index}">
             <div class="flex flex-center contact-left"><div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p></div><p class="contact-name">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""} ${localStorage.UserId == elem.contactId ? ' (You)' : ''}</p></div>

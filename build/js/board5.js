@@ -31,6 +31,10 @@ function searchTasks() {
  */
 function addNewTask(event) {
     event.preventDefault();
+    if(!localStorage.UserId) {
+        alert('Guests are not allowed to create or edit tasks.');
+        return;
+    }
     let newTask = {
         taskId: Math.random(),
         category: document.querySelector('.add-task-overlay-box input.category-name').value,
@@ -193,7 +197,23 @@ function setFocusOutFunctionsInputAdd() {
         document.querySelector('.add-task-overlay-box .categories-list').parentNode.querySelector('.triangle').classList.remove('rotated');
     })
     document.querySelector('#choose-subtasks-add').addEventListener('focusout', ()=>{
-        hideCrossTicAdd();
-        document.querySelector('#choose-subtasks-add').parentNode.querySelector('.triangle').classList.remove('rotated');
+        if(document.querySelector('#choose-subtasks-add').value === "") {
+            console.log(document.querySelector('#choose-subtasks-add').value)
+            hideCrossTicAdd();
+        }
+    })
+}
+
+/**
+ * 
+ * @function setFocusOutFunctionsInputOverlay sets the functions for the @event focusout of the input-fields of the edit-task-overlay.
+ * It is for hiding each box that opens, when an input-field is focused. And it also rotates back their triangles.
+ */
+function setFocusOutFunctionsInputOverlay() {
+    document.querySelector('#choose-subtasks-overlay').addEventListener('focusout', ()=>{
+        if(document.querySelector('#choose-subtasks-overlay').value === "") {
+            
+            hideCrossTicOverlay();
+        }
     })
 }

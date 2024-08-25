@@ -74,6 +74,10 @@ function getInitials(name) {
  */
 function logout() {
     localStorage.setItem('User', '');
+    localStorage.setItem('Email', '');
+    localStorage.setItem('Remember', '');
+    localStorage.setItem('UserColor', '');
+    localStorage.setItem('UserId', '');
 }
 
 

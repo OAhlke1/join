@@ -87,6 +87,7 @@ function renderTaskIntoOverlay(index) {
         </div>`;
         document.querySelector('.overlay-card').innerHTML += `<div class="flex flex-center edit-delete">${renderEditDelete(index)}</div>`;
     document.querySelector('.tasks-overlay').classList.remove('disNone');
+    setFocusOutFunctionsInputOverlay();
 }
 
 /**
@@ -249,7 +250,7 @@ function renderParticipantsBlockIntoOverlay(index) {
                     <path d="M3.29998 4.3L0.699975 1.7C0.383309 1.38333 0.312475 1.02083 0.487475 0.6125C0.662475 0.204167 0.974975 0 1.42498 0H6.57498C7.02498 0 7.33747 0.204167 7.51248 0.6125C7.68748 1.02083 7.61664 1.38333 7.29997 1.7L4.69998 4.3C4.59998 4.4 4.49164 4.475 4.37498 4.525C4.25831 4.575 4.13331 4.6 3.99998 4.6C3.86664 4.6 3.74164 4.575 3.62498 4.525C3.50831 4.475 3.39998 4.4 3.29998 4.3Z" fill="#2A3647"/>
                 </svg>
             </div>
-            <div class="contact-list flex disNone">${renderContactListOverlay(index)}</div>
+            <div class="contact-list flex disNone">${localStorage.UserId ? renderContactListOverlay(index) : "<span class='asterisk' style='font-size: 16px; text-align: center;'>Contact-List is not visible for guests.</span>"}</div>
         </div>
         <ul class="chosen-list back flex flex-center">${renderChosenListBackOverlay(index)}</ul>
     </div>`;
@@ -290,7 +291,7 @@ function getSubtasksOverlay(index) {
             <div id="substasks-container" class="flex-column">
                 <span class="subtitle">Subtasks</span>
                 <div class="flex flex-center subtask-input">
-                    <input type="text" id="choose-subtasks-overlay" placeholder="Add new subtask" onfocus="showCrossTicOverlay()" onfocusout="hideCrossTicOverlay()">
+                    <input type="text" id="choose-subtasks-overlay" placeholder="Add new subtask" onfocus="showCrossTicOverlay()">
                     <svg class="add" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M6.24854 8H1.24854C0.965202 8 0.727702 7.90417 0.536035 7.7125C0.344368 7.52083 0.248535 7.28333 0.248535 7C0.248535 6.71667 0.344368 6.47917 0.536035 6.2875C0.727702 6.09583 0.965202 6 1.24854 6H6.24854V1C6.24854 0.716667 6.34437 0.479167 6.53604 0.2875C6.7277 0.0958333 6.9652 0 7.24854 0C7.53187 0 7.76937 0.0958333 7.96104 0.2875C8.1527 0.479167 8.24854 0.716667 8.24854 1V6H13.2485C13.5319 6 13.7694 6.09583 13.961 6.2875C14.1527 6.47917 14.2485 6.71667 14.2485 7C14.2485 7.28333 14.1527 7.52083 13.961 7.7125C13.7694 7.90417 13.5319 8 13.2485 8H8.24854V13C8.24854 13.2833 8.1527 13.5208 7.96104 13.7125C7.76937 13.9042 7.53187 14 7.24854 14C6.9652 14 6.7277 13.9042 6.53604 13.7125C6.34437 13.5208 6.24854 13.2833 6.24854 13V8Z" fill="#2A3647"></path>
                     </svg>
