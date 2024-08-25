@@ -35,6 +35,15 @@ async function getContacts() {
   sorter();
 }
 
+function closeOverlaysWithEscape(event) {
+  if(event.key === "Escape") {
+    toggleAddContact = false;
+    toggleEditContact = false;
+    addContactToggle();
+    editContactToggle();
+  }
+}
+
 async function getTasks() {
   let response = await fetch(BASE_URL + "/tasks.json");
   response = await response.json();

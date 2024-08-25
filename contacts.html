@@ -11,7 +11,7 @@
     <!-- Platzhalter für CSS Datei-->
   </head>
 
-  <body onload="init()">
+  <body onload="init()" onkeyup="closeOverlaysWithEscape(event)">
     <div class="flex container fixed transform50">
       <nav w3-include-html="./build/templates/navigation.html"> </nav>
       <!-- Platzhalter für die spätere Navigation (Nicht ändern) -->
