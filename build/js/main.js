@@ -119,6 +119,7 @@ function extractFilename(url) {
 
 checkLogin();
 activeLink();
+
 /**
  * 
  * @returns a string with the actual date in the form of yyyy-mm-dd
