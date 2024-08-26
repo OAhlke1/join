@@ -171,12 +171,10 @@ function loadPageMobile() {
     let overview = document.getElementById('overview');
     let greet = document.getElementById('greet');
     let screenWidth = window.innerWidth;
-
     if (screenWidth <= 1280) {
         greet.style = '';
         headline.style = '';
         overview.style = '';
-
         setTimeout(function () {
             greet.style.opacity = '0';
             greet.style.visibility = 'hidden';
@@ -185,7 +183,6 @@ function loadPageMobile() {
             overview.style.display = 'flex';
         }, 1000);
     }
-
     if (screenWidth > 1280) {
         headline.style = '';
         overview.style = '';
@@ -193,9 +190,4 @@ function loadPageMobile() {
             greet.style = '';
         }, 1000);
     }
-
-
-
 }
-
-window.onresize = loadPageMobile;
