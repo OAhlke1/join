@@ -98,18 +98,17 @@
       <div class="input-container flex-center">
         <input type="text" id="name-signin" pattern="^[A-Za-zÄÖÜäöüß\s]+$" placeholder="Name" required
           onblur="validateName()">
-        <span id="error-message-name" class="disNone error-message">Please choose a correct Name without Numbers or
-          other character</span>
+        <span id="error-message-name" class="visNone error-message">Please choose a correct Name</span>
       </div>
       <div class="input-container flex-center">
         <input type="email" id="mail-signin" placeholder="Email" required onblur="validateEmail()">
-        <span id="error-message-email" class="disNone error-message">Please choose a correct email address</span>
+        <span id="error-message-email" class="visNone error-message">Please choose a correct email address</span>
       </div>
       <input type="password" id="password-signin" placeholder="Password" required>
       <div  class="input-container flex-center">
         <input type="password" id="confirm-passwordsignin" placeholder="Confirm Password" required
           onblur="checkPasswordInput()">
-        <div id="sign-error-message" class="error-message"></div>
+        <div id="sign-error-message" class="visNone error-message">Your passwords don't match. Please try again.</div>
       </div>
       <div class="acceptPp">
         <input onchange="acceptPolicy()" type="checkbox" id="acceptPp">

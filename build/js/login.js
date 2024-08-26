@@ -41,8 +41,8 @@ function init() {
  * Then, after a quater of a second, it calls the @function shrinkLogoBig if the width of the viewport is greater than 825 pixels.
  */
 function setupShrinking() {
-    logoBig.style.top = `${(window.innerHeight - logoBigHeight)/2}px`;
-    logoBig.style.left = `${(window.innerWidth - logoBigWidth)/2}px`;
+    logoBig.style.top = `${(window.innerHeight - logoBigHeight) / 2}px`;
+    logoBig.style.left = `${(window.innerWidth - logoBigWidth) / 2}px`;
     logoBig.style.position = "absolute";
     if (window.innerWidth > 825) {
         setTimeout(shrinkLogoBig, 250);
@@ -65,16 +65,16 @@ function setupShrinking() {
  * @returns 
  */
 function shrinkLogoBig(p = 1000) {
-    logoBig.style.top = `${logoSmallPositionTop + (logoBigTop - logoSmallPositionTop)*p/1000}px`;
-    logoBig.style.left = `${logoSmallPositionLeft + (logoBigPositionLeft - logoSmallPositionLeft)*p/1000}px`;
-    logoBig.style.width = `${logoSmallWidth + (logoBigWidth-logoSmallWidth)*p/1000}px`;
-    logoBig.style.height = `${logoSmallHeight + (logoBigHeight-logoSmallHeight)*p/1000}px`;
-    if(logoBig.offsetWidth <= logoSmallWidth) {
+    logoBig.style.top = `${logoSmallPositionTop + (logoBigTop - logoSmallPositionTop) * p / 1000}px`;
+    logoBig.style.left = `${logoSmallPositionLeft + (logoBigPositionLeft - logoSmallPositionLeft) * p / 1000}px`;
+    logoBig.style.width = `${logoSmallWidth + (logoBigWidth - logoSmallWidth) * p / 1000}px`;
+    logoBig.style.height = `${logoSmallHeight + (logoBigHeight - logoSmallHeight) * p / 1000}px`;
+    if (logoBig.offsetWidth <= logoSmallWidth) {
         document.querySelector('.logo-big').classList.add('disNone');
         return;
     }
     p -= 20;
-    setTimeout(()=>{shrinkLogoBig(p)}, 10);
+    setTimeout(() => { shrinkLogoBig(p) }, 10);
 }
 
 /**
@@ -190,7 +190,7 @@ async function checkSignUp() {
         if (signUserPassword.value === signUserPasswordConfirm.value) {
             userId = Math.random();
             let sureLastName = signUserEmail.value.split(' ');
-            userColor = `#${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}`;
+            userColor = `#${Math.round(255 * Math.random()).toString(16)}${Math.round(255 * Math.random()).toString(16)}${Math.round(255 * Math.random()).toString(16)}`;
             let data = {
                 "email": signUserEmail.value,
                 "name": signUserName.value,
@@ -211,8 +211,8 @@ async function checkSignUp() {
             for (const key in users) {
                 if (users[key].email === signUserEmail.value) {
                     document.getElementById('sign-error-message').innerHTML = "User already exists! Please try again.";
-                    userExistsFirebase = true; 
-                    break; 
+                    userExistsFirebase = true;
+                    break;
                 }
             }
             if (!userExistsFirebase) {
@@ -292,7 +292,7 @@ function fadeInConfirmationSign() {
 function fadeOutConfirmationSign() {
     confirmationSign.classList.remove('added');
     confirmationSign.classList.add('not-added');
-    setTimeout(()=>{
+    setTimeout(() => {
         confirmationSign.classList.add('d-none');
         showLogInForm();
     }, 700);
@@ -308,42 +308,42 @@ function validateName() {
     let name = document.getElementById('name-signin').value;
     let nameRegex = /^[A-Za-zÄÖÜäöüß\s]+$/;
     if (!nameRegex.test(name)) {
-      error.classList.remove('disNone');
+        error.classList.remove('visNone');
     } else {
-      error.classList.add('disNone');
+        error.classList.add('visNone');
     }
-  }
+}
 
-  /**
- * 
- * Validate the input value fot the email
- * 
- */
-  function validateEmail() {
+/**
+* 
+* Validate the input value fot the email
+* 
+*/
+function validateEmail() {
     let error = document.getElementById('error-message-email');
     let email = document.getElementById('mail-signin').value;
     let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      error.classList.remove('disNone');
+        error.classList.remove('visNone');
     } else {
-      error.classList.add('disNone');
+        error.classList.add('visNone');
     }
-  }
+}
 
-  /**
- * 
- * Checks if passwords match
- * 
- */
-  function checkPasswordInput() {
+/**
+* 
+* Checks if passwords match
+* 
+*/
+function checkPasswordInput() {
     let password = document.getElementById('password-signin');
     let passwordConfirm = document.getElementById('confirm-passwordsignin');
     let error = document.getElementById('sign-error-message');
     if (!password.value !== '') {
-      if (password.value !== passwordConfirm.value) {
-        error.innerHTML = "Your passwords don't match. Please try again.";
-      } else {
-        error.innerHTML = "";
-      }
+        if (password.value !== passwordConfirm.value) {
+            error.classList.remove('visNone');
+        } else {
+            error.classList.add('visNone');
+        }
     }
-  }
+}

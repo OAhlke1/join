@@ -12,6 +12,10 @@ body {
     display: none !important;
 }
 
+.visNone {
+    visibility: hidden;
+}
+
 input {
     align-items: center;
     width: 100%;
@@ -175,7 +179,7 @@ input:focus {
 }
 
 .form-block form {
-    row-gap: 32px;
+    gap: 16px;
     width: 100%;
     margin-top: 27px;
 }
