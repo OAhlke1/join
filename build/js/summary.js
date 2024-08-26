@@ -97,7 +97,6 @@ function getCount(data, title) {
     }
 }
 
-
 /**
  * 
  * Load urgent tasks from database
@@ -138,6 +137,11 @@ function getUrgentDate(data) {
     }
 }
 
+/**
+ * 
+ * Change the visible divs
+ * 
+ */
 function toggleDivs() {
     let headline = document.getElementById('summary-headline');
     let overview = document.getElementById('overview');
@@ -145,27 +149,29 @@ function toggleDivs() {
     let screenWidth = window.innerWidth;
 
     if (screenWidth <= 1280) {
-        headline.style.display = 'none'; // Div 1 wird ins Layout gebracht
-        overview.style.display = 'none'; // Div 1 wird ins Layout gebracht
+        headline.style.display = 'none'; 
+        overview.style.display = 'none'; 
         setTimeout(function () {
-            greet.style.opacity = '0';     // Div 2 wird ausgeblendet
+            greet.style.opacity = '0';     
             greet.style.visibility = 'hidden';
-            greet.style.display = 'none';  // Div 2 wird aus dem Layout entfernt
-            headline.style.display = 'flex'; // Div 1 wird ins Layout gebracht
-            overview.style.display = 'flex'; // Div 1 wird ins Layout gebracht
-
-        }, 2000); // Warte 3 Sekunden bevor Div 2 ausgeblendet wird
+            greet.style.display = 'none';  
+            headline.style.display = 'flex'; 
+            overview.style.display = 'flex'; 
+        }, 2000); 
     } else {
-        // Wenn Bildschirm größer wird, beide divs wieder anzeigen
         headline.style.display = 'flex';
         overview.style.display = 'flex';
         greet.style.display = 'flex';
-        greet.style.opacity = '1';     // Div 2 wird ausgeblendet
+        greet.style.opacity = '1';     
         greet.style.visibility = 'visible';
-
     }
 }
 
+/**
+ * 
+ * load mobile greeting
+ * 
+ */
 function loadPageMobile() {
     let headline = document.getElementById('summary-headline');
     let overview = document.getElementById('overview');
