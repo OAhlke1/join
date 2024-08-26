@@ -785,7 +785,12 @@ h1 {
 }
 
 @media (max-width: 600px) {
-    .form-center #content-box-left, .form-center #content-box-right, .form-center #prio-container, .form-center #category-container, .form-center #substasks-container, .form-center #title-input-add, .form-center #task-descrip-add, .form-center #date-input, .form-center #choose-prio-container, .form-center .subtask-input, .form-center #title-container, .form-center #title-input-container   {
+    input[placeholder] {
+        font-size: 16px !important;
+        background-color: transparent;
+    }
+
+    .form-center #content-box-left, .form-center #content-box-right, .form-center #prio-container, .form-center #category-container, .form-center #date-container, .form-center #calender, .form-center #description-container, #textarea-container, .form-center #substasks-container, .form-center #title-input-add, .form-center #task-descrip-add, .form-center #date-input, .form-center #choose-prio-container, .form-center .subtask-input, .form-center #title-container, .form-center #title-input-container   {
         width: 90vw;
         height: auto;
     }
