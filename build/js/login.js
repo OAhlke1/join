@@ -132,7 +132,7 @@ async function checkLogin() {
     if (loginSuccess) {
         setLocalStorageForUser();
     } else {
-        error.innerHTML = 'Check your email and password. Please try again.';
+        error.classList.remove('visNone');
     }
 }
 
