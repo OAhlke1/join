@@ -77,6 +77,10 @@ function shrinkLogoBig(p = 1000) {
     setTimeout(()=>{shrinkLogoBig(p)}, 10);
 }
 
+/**
+ * 
+ * @function showSignUpForm shows the login-form and hides the signup-form.
+ */
 function showLogInForm() {
     document.querySelector('#login').classList.remove('disNone');
     document.querySelector('#signup').classList.add('disNone');
@@ -85,6 +89,10 @@ function showLogInForm() {
     }
 }
 
+/**
+ * 
+ * @function showSignUpForm hides the login-form and shows the signup-form.
+ */
 function showSignUpForm() {
     document.querySelector('#login').classList.add('disNone');
     document.querySelector('#signup').classList.remove('disNone');
@@ -181,6 +189,7 @@ async function checkSignUp() {
     if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
         if (signUserPassword.value === signUserPasswordConfirm.value) {
             userId = Math.random();
+            let sureLastName = signUserEmail.value.split(' ');
             userColor = `#${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16)}`;
             let data = {
                 "email": signUserEmail.value,
@@ -191,8 +200,8 @@ async function checkSignUp() {
             }
             newContact = {
                 contactId: userId,
-                sureName: signUserName.value.split(' ')[0],
-                lastName: signUserName.value.split(' ')[1],
+                sureName: sureLastName.length === 2 ? sureLastName[0] : '',
+                lastName: sureLastName.length === 2 ? sureLastName[1] : sureLastName[0],
                 email: signUserEmail.value,
                 color: userColor
             }

@@ -59,6 +59,10 @@ async function getContacts() {
     sortContacts();
 }
 
+/**
+ * 
+ * @function setOnfocusOut sets the functions to the input-fields when they lose focus.
+ */
 function setOnfocusOut() {
     document.querySelectorAll('input').forEach((elem)=>{
         elem.addEventListener('focusout', ()=>{
@@ -530,7 +534,20 @@ function fadeOutTaskAdded() {
     }, 700);
 }
 
+/**
+ * 
+ * Here 
+ */
 document.querySelector('body').addEventListener('click', (event)=>{
+    hideAllLists(event);
+})
+
+/**
+ * 
+ * @param {event} event the click-event fired to the body.
+ * @returns 
+ */
+function hideAllLists(event) {
     let target = event.target;
     if(target.classList.contains('contacts-inner') || target.classList.contains('search-contacts') || target.classList.contains('contact') || target.classList.contains('categories-inner') || target.classList.contains('category-name')) {
         return;
@@ -538,4 +555,4 @@ document.querySelector('body').addEventListener('click', (event)=>{
         document.querySelector('.contact-list').classList.add('disNone');
         document.querySelector('.categories-list').classList.add('disNone');
     }
-})
+}

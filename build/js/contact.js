@@ -129,12 +129,9 @@ function contactHTML(contactsIndex, q) {
 
 function profileName(q) {
   if (contacts[q][1].sureName == "") {
-    return `
-   ${contacts[q][1].lastName[0]}
-  `;
+    return `${contacts[q][1].lastName[0]}`;
   } else {
-    return `
- ${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}`;
+    return `${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}`;
   }
 }
 
@@ -336,8 +333,8 @@ async function createContact(email, number, name, sureLastName) {
   }
   convertNames();
   newContact = {
-    sureName: sureLastName[0],
-    lastName: sureLastName[1],
+    sureName: sureLastName.length === 2 ? sureLastName[0] : '',
+    lastName: sureLastName.length === 2 ? sureLastName[1] : sureLastName[0],
     email: email.value,
     number: number.value,
     color: `#${Math.round(255 * Math.random()).toString(16)}${Math.round(

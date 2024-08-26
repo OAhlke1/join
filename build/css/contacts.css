@@ -114,8 +114,12 @@ header {
   margin: 10px;
 }
 
+.gap p, .gap span {
+  word-break: break-word;
+}
+
 .bigSize {
-  width: 120px !important;
+  min-width: 120px !important;
   height: 120px !important;
   aspect-ratio: 1 / 1;
   border-radius: 100% !important;
