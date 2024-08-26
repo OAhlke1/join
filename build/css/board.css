@@ -1279,6 +1279,15 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
         margin: 0 auto;
     }
 
+    input[placeholder] {
+        font-size: 16px;
+        padding: 8px 16px 8px 0;
+    }
+
+    .search-contacts[placeholder] {
+        font-size: 16px !important;
+    }
+
     #choose-prio-container {
         justify-content: center;
         flex-wrap: wrap;
@@ -1326,5 +1335,23 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     main .tasks-overlay .overlay-card .inner h2 {
         font-size: 30px;
         line-height: 32px;
+    }
+
+    .contact-list .contact {
+        padding: 4px 6px !important;
+    }
+
+    .contact .contact-left {
+        justify-content: flex-start;
+        column-gap: 5px !important;
+    }
+
+    .contact-list .contact .contact-left .contact-name {
+        white-space: wrap;
+        word-break: break-word;
+    }
+
+    .contact .not-chosen, .contact .is-chosen {
+        display: none !important;
     }
 }
