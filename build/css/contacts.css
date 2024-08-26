@@ -569,12 +569,28 @@ height: 32px !important;
   right: 15px;
  }   
 
+ .bigSize{
+  min-width: 60px !important;
+  height: 60px !important;
+padding: 50px;
+font-size: 40px;
+ }
+
+ .showContactName {
+ gap: 26px;
+
+}
+
+
+
+
+
 
 }
 
 @media (max-width: 380px){
 .backArrow{
-  margin-left: -62px;
+  margin-left: -4px;
 }
 }
 
