@@ -177,6 +177,12 @@ function loadPageMobile() {
 
 window.onresize = loadPageMobile;
 
+
+/**
+ * 
+ * Clear mobile style
+ * 
+ */
 function styleMobile() {
   greet.style.opacity = "0";
   greet.style.visibility = "hidden";
