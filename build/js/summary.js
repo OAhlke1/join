@@ -177,7 +177,6 @@ function loadPageMobile() {
 
 window.onresize = loadPageMobile;
 
-
 /**
  * 
  * Clear mobile style
