@@ -628,6 +628,10 @@ align-items: end;
   .editContactMainContainer .profileImage p, .informationPopUp .flex-center.bigSize.profileImage {
     font-size: 40px;
   }
+
+  .betterWithATeam {
+    font-size: 25px !important;
+  }
 }
 
 @media (max-width: 380px) {
