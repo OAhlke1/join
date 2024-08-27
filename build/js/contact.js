@@ -98,7 +98,8 @@ function renderIntoLetterBox() {
 
 /**
  * 
- * @function checkForEmptyColumns checks whether a contact is the user and if it 
+ * @function checkForEmptyColumns checks whether a contact is the user and if it is the only contact with a last name that begins with its last name.
+ * If so, the contact and the headline of the letterblock the contact is in, are hidden.
  */
 function checkForEmptyLetterBoxes() {
   document.querySelectorAll('h3.sort').forEach((elem)=>{
