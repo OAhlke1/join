@@ -160,10 +160,10 @@ function loadPageMobile() {
     if (!sessionStorage.getItem("funktionGeladen" || sessionStorage.getItem("funktionGeladen") !== "true")) {
       sessionStorage.setItem("funktionGeladen", "true");
       setTimeout(function () {
-         styleMobile()
+         styleMobile();
       }, 1000);
     } else {
-        styleMobile()
+        styleMobile();
     }
   }
   if (screenWidth > 1280) {
