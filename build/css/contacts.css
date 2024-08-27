@@ -546,7 +546,7 @@ align-items: end;
   }
 
   .merge {
-    margin-top: -70px !important;
+    margin-top: -60px !important;
   }
 }
 
@@ -608,8 +608,12 @@ align-items: end;
   }
 
   .bigSize {
-    padding: 50px;
     margin: 10px 10px 10px 0;
+    padding: 50px;
+  }
+
+  .addContactMainContainer .bigSize, .editContactMainContainer .bigSize {
+    margin: 10px;
   }
 
   .showContactName {
@@ -622,7 +626,7 @@ align-items: end;
   }
 
   .editContactMainContainer .profileImage p, .informationPopUp .flex-center.bigSize.profileImage {
-    font-size: 30px;
+    font-size: 40px;
   }
 }
 
