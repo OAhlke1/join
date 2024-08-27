@@ -28,6 +28,9 @@ function init() {
   checkForEmptyLetterBoxes();
 }
 
+/**
+ * This Function fetchs the contacts from the database 
+ */
 async function getContacts() {
   contacts = await fetch(BASE_URL + "/contacts.json");
   contacts = await contacts.json();
@@ -44,7 +47,9 @@ function closeOverlaysWithEscape(event) {
     editContactToggle();
   }
 }
-
+/**
+ * This Function fetchs the tasks from the database 
+ */
 async function getTasks() {
   let response = await fetch(BASE_URL + "/tasks.json");
   response = await response.json();
@@ -53,6 +58,9 @@ async function getTasks() {
   }
 }
 
+/**
+ * This function convert the object to a array
+ */
 function setContactsAsArray() {
   let contacsKeysArray = [];
   for (let [key, value] of Object.entries(contacts)) {
@@ -61,6 +69,9 @@ function setContactsAsArray() {
   contacts = contacsKeysArray;
 }
 
+/**
+ * This function sort the contacts alphabetical
+ */
 function sorter() {
   contacts.sort((a, b) => {
     if (a[1].lastName > b[1].lastName) {
@@ -78,6 +89,12 @@ function sorter() {
   renderIntoLetterBox();
 }
 
+
+/**
+ * 
+ * This function checks wether a contact is aviable
+ * then it add contactblock
+ */
 function renderIntoLetterBox() {
   if (contacts.length === 0) {
     showContacts.innerHTML = "";
@@ -109,6 +126,11 @@ function checkForEmptyLetterBoxes() {
   })
 }
 
+/**
+/**
+ * This function iterates through the list of contacts and adds the HTML of the contacts 
+ * that have the same starting letter in their last name to the contactsString variable.
+ */
 function getContactsHtml() {
   for (contactsIndex = q; q < contacts.length; q++) {
     if (contactsIndex == contacts.length) {
@@ -123,6 +145,12 @@ function getContactsHtml() {
   }
 }
 
+/**
+ * This funktion just contains the contactHtml template
+ * @param {int} contactsIndex 
+ * @param {int} q 
+ * @returns 
+ */
 function contactHTML(contactsIndex, q) {
   getRandomColor();
   return `<div class="flex contact c-${contactsIndex} ${contacts[contactsIndex][1].contactId == localStorage.UserId ? 'd-none' : ''}" onclick="clickContact(event)" data-contactIndex="${contactsIndex}" contact-firstletter="${newChar}">
@@ -138,6 +166,11 @@ function contactHTML(contactsIndex, q) {
     </div>`;
 }
 
+/**
+ * This funktion create the profileimage with the fist letter of the first- and lastname 
+ * @param {int} q 
+ * @returns 
+ */
 function profileName(q) {
   if (contacts[q][1].sureName == "") {
     return `${contacts[q][1].lastName[0]}`;
@@ -146,6 +179,10 @@ function profileName(q) {
   }
 }
 
+/**
+ * 
+ * @returns This function creates the colour of the profileimage
+ */
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
   color = "#0";
@@ -155,6 +192,10 @@ function getRandomColor() {
   return color;
 }
 
+/**
+ * This function shows the contactnformations
+ * @param {String} event 
+ */
 function clickContact(event) {
   toggleInfoContact = true;
   if (window.innerWidth < 1100) {
@@ -169,6 +210,10 @@ function clickContact(event) {
   information.innerHTML = clickContactHTML(presentlyIndexContacts);
 }
 
+
+/**
+ * This function coloured the background of the clicked contact
+ */
 function focusContact() {
   let contact = document.querySelector(`.c-${presentlyIndexContacts}`);
 
@@ -179,6 +224,10 @@ function focusContact() {
   contact.classList.add("contactFocus");
 }
 
+
+ /**
+  * This function makes the side responsive
+  */
 function showHideContactNames() {
   if (window.innerWidth <= 950 && toggleInfoContact) {
     contactList.classList.add("d-none");
@@ -195,6 +244,9 @@ window.onresize = function () {
   showHideContactNames();
 };
 
+ /**
+  * This function makes the side responsive
+  */
 function hideContact() {
   if (window.innerWidth < 950) {
     contactList.classList.remove("d-none");
@@ -202,6 +254,11 @@ function hideContact() {
   }
 }
 
+/**
+ * This function contains the HTML template of contactinformation
+ * @param {int} index 
+ * @returns 
+ */
 function clickContactHTML(index) {
   return ` 
   <div class="flex showContactName">
