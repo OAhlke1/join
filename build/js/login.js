@@ -188,8 +188,8 @@ async function checkSignUp() {
     document.getElementById('sign-error-message').innerHTML = '';
     if (signUserName.value !== '' && signUserEmail.value !== '' && signUserPassword.value !== '' && signUserPasswordConfirm.value !== '') {
         if (signUserPassword.value === signUserPasswordConfirm.value) {
+            let sureLastName = signUserName.value.split(' ');
             userId = Math.random();
-            let sureLastName = signUserEmail.value.split(' ');
             userColor = `#${Math.round(255 * Math.random()).toString(16)}${Math.round(255 * Math.random()).toString(16)}${Math.round(255 * Math.random()).toString(16)}`;
             let data = {
                 "email": signUserEmail.value,
@@ -198,6 +198,7 @@ async function checkSignUp() {
                 "userId": userId,
                 "userColor": userColor
             }
+            console.log(userId);
             newContact = {
                 contactId: userId,
                 sureName: sureLastName.length === 2 ? sureLastName[0] : '',

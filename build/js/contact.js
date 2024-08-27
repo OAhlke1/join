@@ -25,6 +25,7 @@ let color;
 function init() {
   includeHTML();
   getContacts();
+  checkForEmptyLetterBoxes();
 }
 
 async function getContacts() {
@@ -74,7 +75,6 @@ function sorter() {
         : 0;
     }
   });
-
   renderIntoLetterBox();
 }
 
@@ -85,14 +85,27 @@ function renderIntoLetterBox() {
   newChar = contacts[contactsIndex][1]["lastName"][0];
   getContactsHtml();
   if (contactsIndex < contacts.length) {
-    letterBlock += `<h3 class="sort"> ${newChar}</h3>${contactsString}`;
+    letterBlock += `<h3 class="sort">${newChar}</h3>${contactsString}`;
     contactsString = "";
   }
   if (contactsIndex === contacts.length) {
-    showContacts.innerHTML = letterBlock;
+    showContacts.innerHTML = structuredClone(letterBlock);
+    checkForEmptyLetterBoxes();
     return;
   }
   renderIntoLetterBox();
+}
+
+/**
+ * 
+ * @function checkForEmptyColumns checks whether a contact is the user and if it 
+ */
+function checkForEmptyLetterBoxes() {
+  document.querySelectorAll('h3.sort').forEach((elem)=>{
+    if(document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"].d-none`).length === document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"]`).length) {
+      elem.classList.add('d-none');
+    }
+  })
 }
 
 function getContactsHtml() {
@@ -111,10 +124,7 @@ function getContactsHtml() {
 
 function contactHTML(contactsIndex, q) {
   getRandomColor();
-  return ` <div
-      class="flex contact c-${contactsIndex}"
-      onclick="clickContact(event)" 
-      data-contactIndex="${contactsIndex}">
+  return `<div class="flex contact c-${contactsIndex} ${contacts[contactsIndex][1].contactId == localStorage.UserId ? 'd-none' : ''}" onclick="clickContact(event)" data-contactIndex="${contactsIndex}" contact-firstletter="${newChar}">
       <div class="flex-center profileImage" style="background-color: ${
         contacts[contactsIndex][1].color
       };" >
@@ -316,6 +326,7 @@ function createContactValue(event) {
   let name = document.querySelector(".inputName");
   sureLastName = document.querySelector(".inputName").value.split(" ");
   createContact(email, number, name, sureLastName);
+  let contactId = Math.random();
   // contactSuccessfullyCreated();
   addContactToggle();
 }

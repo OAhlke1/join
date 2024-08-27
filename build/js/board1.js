@@ -70,15 +70,21 @@ function sortContacts() {
     for (let i = 0; i < allContactsObjects.length - 1; i++) {
         for (let j = i + 1; j < allContactsObjects.length; j++) {
             if (allContactsObjects[i].lastName > allContactsObjects[j].lastName) {
-                puffer = structuredClone(allContactsObjects[i]);
-                allContactsObjects[i] = structuredClone(allContactsObjects[j]);
-                allContactsObjects[j] = structuredClone(puffer);
-            }else if (allContactsObjects[i].lastName === allContactsObjects[i].lastName) {
-                if(allContactsObjects[i].sureName != "" && allContactsObjects[j].sureName != "") {
+                puffer = allContactsObjects[i];
+                allContactsObjects[i] = allContactsObjects[j];
+                allContactsObjects[j] = puffer;
+            }else if (allContactsObjects[i].lastName === allContactsObjects[j].lastName) {
+                if(allContactsObjects[i].sureName != "" || allContactsObjects[j].sureName != "") {
                     if (allContactsObjects[i].sureName > allContactsObjects[j].sureName) {
                         puffer = structuredClone(allContactsObjects[i]);
-                        allContactsObjects[i] = structuredClone(allContactsObjects[j]);
-                        allContactsObjects[j] = structuredClone(puffer);
+                        allContactsObjects[i] = allContactsObjects[j];
+                        allContactsObjects[j] = puffer;
+                    }
+                }else if(allContactsObjects[i].sureName != "" || allContactsObjects[j].sureName != "") {
+                    if(allContactsObjects[i].email > allContactsObjects[j].email) {
+                        puffer = allContactsObjects[i];
+                        allContactsObjects[i] = allContactsObjects[j];
+                        allContactsObjects[j] = puffer;
                     }
                 }
             }
