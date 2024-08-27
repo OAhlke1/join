@@ -239,7 +239,7 @@ function startingValueEditContact(index) {
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
   let letters = document.querySelector(".editContactImg");
-
+  document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').style.background = `${contacts[presentlyIndexContacts][1].color}`;
   name.value =
     contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
   email.value = contacts[index][1]["email"];
@@ -254,8 +254,6 @@ function editContact() {
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
   sureLastName = document.querySelector(".inputEditName").value.trimStart().split(" ");
-  document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').style.background = `${contacts[presentlyIndexContacts][1].color}`;
-  document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').innerHTML = `<div class="flex flex-center" style="width: 100%; height: 100%;">${contacts[presentlyIndexContacts][1].surename && contacts[presentlyIndexContacts][1].lastName ? contacts[presentlyIndexContacts][1].sureName[0]+contacts[presentlyIndexContacts][1].lastName[0] : contacts[presentlyIndexContacts][1].lastName[0]}</div>`;
   editContactToggle();
   deleteContact(presentlyIndexContacts);
   createContact(email, number, name, sureLastName);
@@ -399,6 +397,9 @@ function hasNameSuffix() {
 
 function editContactToggle() {
   let editContact = document.querySelector(".overlayEdit-parent");
+  document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').innerHTML = `<div class="flex flex-center" style="width: 100%; height: 100%;">
+    <p class="editContactInitials">${contacts[presentlyIndexContacts][1].sureName ? contacts[presentlyIndexContacts][1].sureName[0] : ""}${contacts[presentlyIndexContacts][1].lastName ? contacts[presentlyIndexContacts][1].lastName[0] : ""}</p>
+  </div>`;
   if (!toggleEditContact) {
     editContact.classList.add("d-none");
     toggleEditContact = true;

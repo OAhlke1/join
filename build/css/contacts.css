@@ -27,7 +27,7 @@ header {
   height: 100%;
 }
 
-.contactSuccessfullyCreated{
+.contactSuccessfullyCreated {
   position: absolute;
   transform: translate(-50%, -50%);
   top: 77%;
@@ -68,7 +68,7 @@ header {
   height: 100%;
   background-color: white;
   box-shadow: 4px 0px 4px 0px #0000001a;
-  animation:  moveSlow 0.5s;
+  animation: moveSlow 0.5s;
 }
 
 .contactNames h3 {
@@ -114,7 +114,8 @@ header {
   margin: 10px;
 }
 
-.gap p, .gap span {
+.gap p,
+.gap span {
   word-break: break-word;
 }
 
@@ -144,11 +145,13 @@ header {
   align-items: center;
   padding-left: 30px;
 }
+
 /* scrollbar */
 
 .contactList::-webkit-scrollbar {
   width: 6px;
 }
+
 .contactList::-webkit-scrollbar-track {
   background: #f8f6f6;
   border-radius: 5px;
@@ -158,13 +161,14 @@ header {
   background: #a8a8a8;
   border-radius: 5px;
 }
+
 .contactList::-webkit-scrollbar-thumb:hover {
   background: #b9b6b6;
 }
 
 /* Contact information Pop-up */
-.informationPopUp div{
-animation: move 0.5s ;
+.informationPopUp div {
+  animation: move 0.5s;
 }
 
 /* .meunContactOptions {
@@ -173,16 +177,16 @@ justify-content: end;
 align-items: end;
 } */
 
-.meunContactOptions{
-width: 55px;
-height: 55px;
-position: fixed;
-        bottom: 115px;
-        right: 24px;
-        cursor: pointer;
-        width: 60px;
-        height: 60px;
-        animation: move 0.5s linear;
+.meunContactOptions {
+  width: 55px;
+  height: 55px;
+  position: fixed;
+  bottom: 115px;
+  right: 24px;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  animation: move 0.5s linear;
 }
 
 .showContactName img {
@@ -256,7 +260,7 @@ position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: 1;
   background-color: rgba(0 0 0 / 0.2);
 }
@@ -367,18 +371,18 @@ position: fixed;
 }
 
 .editContactButton button:last-child:hover {
-  background-color:  #29abe2;
+  background-color: #29abe2;
   outline-color: #29abe2;
 }
 
 .editContactButton button:first-child {
-  border: 1px solid #2a3647 ;
+  border: 1px solid #2a3647;
 }
 
 .editContactButton button:first-child:hover {
-  color: #29abe2 ;
-  border: 1px solid  #29abe2 ;
-  }
+  color: #29abe2;
+  border: 1px solid #29abe2;
+}
 
 .inputContainer {
   flex-direction: column;
@@ -402,22 +406,22 @@ position: fixed;
   height: 120px;
 }
 
-.contact:hover{
-background-color: #2a3647;
-border-radius: 10px;
-color: white;
-}
-
-.contactFocus{
+.contact:hover {
   background-color: #2a3647;
   border-radius: 10px;
   color: white;
-  }
-  
+}
 
-.backArrow{
-width: 32px !important;
-height: 32px !important;
+.contactFocus {
+  background-color: #2a3647;
+  border-radius: 10px;
+  color: white;
+}
+
+
+.backArrow {
+  width: 32px !important;
+  height: 32px !important;
 }
 
 /* Responsive */
@@ -450,7 +454,8 @@ height: 32px !important;
     height: 60px;
   }
 
-  .informationPopUp{
+  .informationPopUp {
+    height: 100vh;
     margin: -30px;
   }
 }
@@ -461,12 +466,13 @@ height: 32px !important;
     display: none;
   }
 
-  .backArrow{
+  .backArrow {
     display: none;
-      }
-  .meunContactOptions{
+  }
+
+  .meunContactOptions {
     display: none;
-  }    
+  }
 }
 
 @media (max-width: 720px) {
@@ -481,20 +487,22 @@ height: 32px !important;
 
   }
 
-  .addButton button:first-child{
-   display: none;
-  }  
+  .addButton button:first-child {
+    display: none;
+  }
 
-  .addButton button:last-child{
-   width: 202px;
-   } 
+  .addButton button:last-child {
+    width: 202px;
+  }
 
   .addContactLeftContainer p {
     font-size: 47px;
   }
+
   .editContactMainContainer {
     flex-direction: column;
   }
+
   .editContactLeftContainer img {
     display: none;
   }
@@ -532,6 +540,7 @@ height: 32px !important;
     margin-bottom: 70px;
 
   }
+
   .rightContainer img {
     margin-left: 8px;
   }
@@ -542,76 +551,77 @@ height: 32px !important;
 }
 
 @media (min-width: 1110px) {
-.mobileClose{
-  display: none;
-}
+  .mobileClose {
+    display: none;
+  }
 
 }
 
-.showContactName img:hover{
+.showContactName img:hover {
   color: #29ABE2;
   filter: invert(53%) sepia(96%) saturate(406%) hue-rotate(155deg) brightness(92%) contrast(92%);
 }
 
-@media (max-width: 420px){
+@media (max-width: 420px) {
   .addContactMainContainer {
     width: 256px;
-}
-
-.editContactMainContainer {
-  width: 256px;
-}
-
-  .inputContainer input{
-  width: 95%;
   }
- .pos-abs50{
-  right: 15px;
- }   
 
- .bigSize{
-  min-width: 60px !important;
-  height: 60px !important;
-padding: 50px;
-font-size: 40px;
- }
+  .editContactMainContainer {
+    width: 256px;
+  }
 
- .showContactName {
- gap: 26px;
+  .inputContainer input {
+    width: 95%;
+  }
 
+  .pos-abs50 {
+    right: 15px;
+  }
+
+  .bigSize {
+    min-width: 60px !important;
+    height: 60px !important;
+    padding: 50px;
+    font-size: 40px;
+  }
+
+  .showContactName {
+    gap: 26px;
+
+  }
+
+  .profileImage {
+    padding: 18px;
+  }
+
+  .editContactMainContainer .profileImage p, .informationPopUp .flex-center.bigSize.profileImage {
+    font-size: 30px;
+  }
 }
 
-.profileImage {
-padding: 18px;
-}
-
-
-
-
-
-}
-
-@media (max-width: 380px){
-.backArrow{
-  margin-left: -4px;
-}
+@media (max-width: 380px) {
+  .backArrow {
+    margin-left: -4px;
+  }
 }
 
 @media (max-height: 420px) {
-  .mainContainer{
+  .mainContainer {
     height: 620px;
   }
-  .editContactLeftContainer{
+
+  .editContactLeftContainer {
     height: 270px;
   }
 }
-
 
 @keyframes move {
   0% {
     transform: translateX(100%);
     opacity: 0;
   }
+
   100% {
     transform: translateX(0);
     opacity: 1;
@@ -620,27 +630,30 @@ padding: 18px;
 
 @keyframes moveOut {
   100% {
-    transform:translateX(0);
+    transform: translateX(0);
     opacity: 0;
   }
+
   0% {
-    transform:  translateX(0);
+    transform: translateX(0);
     opacity: 1;
   }
 }
 
 @keyframes slideOut {
   0% {
-      left: 100%;
-      opacity: 1;
+    left: 100%;
+    opacity: 1;
   }
+
   50% {
-      left: 50%;
-      opacity: 1;
+    left: 50%;
+    opacity: 1;
   }
+
   100% {
-      left: -200px;
-      opacity: 0;
+    left: -200px;
+    opacity: 0;
   }
 }
 
@@ -649,6 +662,7 @@ padding: 18px;
     opacity: 0;
     transform: scale(0.9);
   }
+
   100% {
     opacity: 1;
     transform: scale(1);
