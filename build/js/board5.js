@@ -31,10 +31,6 @@ function searchTasks() {
  */
 function addNewTask(event) {
     event.preventDefault();
-    if(!localStorage.UserId) {
-        alert('Guests are not allowed to create or edit tasks.');
-        return;
-    }
     let newTask = {
         taskId: Math.random(),
         category: document.querySelector('.add-task-overlay-box input.category-name').value,

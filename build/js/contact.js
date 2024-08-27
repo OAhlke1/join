@@ -204,15 +204,8 @@ function clickContactHTML(index) {
           ${contacts[index][1]["lastName"]}
         </span>
         <div>
-          <img
-            src="./assets/img/editContacts.png"
-            alt=""
-            onclick="startingValueEditContact(${index})"
-          />
-          <img
-            src="./assets/img/DeleteContact.png"
-            alt=""
-            onclick="deleteContact(${presentlyIndexContacts})"
+          <img src="./assets/img/editContacts.png" alt="" onclick="startingValueEditContact(${index})"/>
+          <img src="./assets/img/DeleteContact.png" alt="" onclick="deleteContact(${presentlyIndexContacts})"
           />
         </div>
       </div>
