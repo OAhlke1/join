@@ -254,6 +254,8 @@ function editContact() {
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
   sureLastName = document.querySelector(".inputEditName").value.trimStart().split(" ");
+  document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').style.background = `${contacts[presentlyIndexContacts][1].color}`;
+  document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').innerHTML = `<div class="flex flex-center" style="width: 100%; height: 100%;">${contacts[presentlyIndexContacts][1].surename && contacts[presentlyIndexContacts][1].lastName ? contacts[presentlyIndexContacts][1].sureName[0]+contacts[presentlyIndexContacts][1].lastName[0] : contacts[presentlyIndexContacts][1].lastName[0]}</div>`;
   editContactToggle();
   deleteContact(presentlyIndexContacts);
   createContact(email, number, name, sureLastName);
@@ -337,9 +339,7 @@ async function createContact(email, number, name, sureLastName) {
     lastName: sureLastName.length === 2 ? sureLastName[1] : sureLastName[0],
     email: email.value,
     number: number.value,
-    color: `#${Math.round(255 * Math.random()).toString(16)}${Math.round(
-      255 * Math.random()
-    ).toString(16)}${Math.round(255 * Math.random()).toString(16)}`,
+    color: `#${Math.round(255*Math.random()).toString(16).length === 2 ? Math.round(255*Math.random()).toString(16) : '0'+Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16).length === 2 ? Math.round(255*Math.random()).toString(16) : '0'+Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16).length === 2 ? Math.round(255*Math.random()).toString(16) : '0'+Math.round(255*Math.random()).toString(16)}`,
     contactId: Math.random(),
   };
   contacts.push([contacts.length + 1, newContact]);

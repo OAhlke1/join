@@ -1162,7 +1162,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
         display: flex;
         flex-direction: column;
         align-items: center;
-        min-width: 320px;
+        min-width: 288px;
         width: 80%;
         height: calc(100% - 80px);
         margin: 0 auto;
@@ -1232,7 +1232,7 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
         flex-direction: column;
         align-items: flex-start;
         row-gap: 19px;
-        min-width: 320px;
+        min-width: 288px;
         width: 100%;
         min-height: unset;
         height: fit-content;
@@ -1271,8 +1271,17 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
 }
 
 @media only screen and (max-width: 1100px) {
+    main .tasks-overlay .overlay-card .inner .top-texts h3 {
+        font-size: 16px;
+    }
+    
+    main .tasks-overlay .overlay-card .inner .top-texts p {
+        font-size: 16px;
+    }
+    
     .overlay-card {
         padding: 40px 20px !important;
+        height: 90vh;
     }
     
     .add-task-overlay-box {

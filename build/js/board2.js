@@ -237,7 +237,7 @@ function getDate(index = -1) {
  */
 function renderParticipantsBlockIntoOverlay(index) {
     return /* HTML */ `
-    <div class="flex flex-column hide-for-editing">
+    <div class="flex flex-column hide-for-editing ${allTaskObjects[index].participants.length > 0 ? "" : "disNone"}">
         <p style="font-size: 20px;">Assigned to</p>
         <ul class="chosen-list front flex-column">${renderChosenListFrontOverlay(index)}</ul>
     </div>
@@ -284,7 +284,7 @@ function getSubtasksOverlay(index) {
             input = `<input id="checkbox${index}${j}" type="checkbox" ${elem.subTaskDone === 1 ? 'checked' : ''} onmouseup="actualizeSubtaskStatus(event, ${index}, ${j})">`;
             inputLabel += /* HTML */ `<div class="flex-center" style="width: 100%; justify-content: flex-start;"><div class="subtask-check flex">${input}<p for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</p></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" style="width: 18px; height: 18px;" onclick="deleteSubtask(${index}, ${j})"></div>`;
         })
-        inputLabel = `<div class="hide-for-editing"><p>Subtasks</p><div class="subtasks"><div class="flex flex-center show-for-editing disNone" style="column-gap: 20px;"></div>${inputLabel}</div></div>`;
+        inputLabel = `<div class="hide-for-editing ${allTaskObjects[index].subTasks.length > 0 ? "" : "disNone"}"><p class=">Subtasks</p><div class="subtasks"><div class="flex flex-center show-for-editing disNone" style="column-gap: 20px;"></div>${inputLabel}</div></div>`;
     }
     return /* HTML */ `<div class="flex flex-column" stlye="justify-content: space-between;">
         <div class="flex flex-center show-for-editing disNone" style="column-gap: 20px; width: 100%;">
