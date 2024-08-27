@@ -249,7 +249,7 @@ function startingValueEditContact(index) {
   email.value = contacts[index][1]["email"];
   number.value = contacts[index][1]["number"];
   letters.innerHTML = profileName(index);
-
+  console.log(presentlyIndexContacts);
   editContactToggle();
 }
 
@@ -343,7 +343,7 @@ async function createContact(email, number, name, sureLastName) {
     email: email.value,
     number: number.value,
     color: `#${Math.round(255*Math.random()).toString(16).length === 2 ? Math.round(255*Math.random()).toString(16) : '0'+Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16).length === 2 ? Math.round(255*Math.random()).toString(16) : '0'+Math.round(255*Math.random()).toString(16)}${Math.round(255*Math.random()).toString(16).length === 2 ? Math.round(255*Math.random()).toString(16) : '0'+Math.round(255*Math.random()).toString(16)}`,
-    contactId: Math.random(),
+    contactId: presentlyIndexContacts ? contacts[presentlyIndexContacts][1].contactId : Math.random()
   };
   contacts.push([contacts.length + 1, newContact]);
   resetValue(email, number, name);
@@ -416,6 +416,8 @@ function editContactToggle() {
 
 function addContactToggle() {
   let addContact = document.querySelector(".overlay-parent");
+  presentlyIndexContacts = null;
+  console.log(presentlyIndexContacts);
   if (!toggleAddContact) {
     addContact.classList.add("d-none");
     toggleAddContact = true;
