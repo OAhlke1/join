@@ -22,12 +22,21 @@ let presentlyIndexContacts;
 let information = document.querySelector(".informationPopUp");
 let color;
 
+/**
+ * 
+ * @function init calls the three functions @function includeHTML and @function getContacts and the @function checkForEmptyLetterBoxes
+ * as soon as the page is loaded.
+ */
 function init() {
   includeHTML();
   getContacts();
   checkForEmptyLetterBoxes();
 }
 
+/**
+ * 
+ * @function getContacts for getting the list of already existing contacts
+ */
 async function getContacts() {
   contacts = await fetch(BASE_URL + "/contacts.json");
   contacts = await contacts.json();
@@ -36,6 +45,11 @@ async function getContacts() {
   sorter();
 }
 
+/**
+ * 
+ * @param {event} event is keypress event.
+ * When the key is "Escape", all overlays are being closed.
+ */
 function closeOverlaysWithEscape(event) {
   if(event.key === "Escape") {
     toggleAddContact = false;
@@ -45,6 +59,12 @@ function closeOverlaysWithEscape(event) {
   }
 }
 
+/**
+ * 
+ * @function getTasks loads all the existings tasks from the FTP-Client.
+ * The tasks are needed, because when a contact is deleted, it also must
+ * be removed from all the tasks which it participates.
+ */
 async function getTasks() {
   let response = await fetch(BASE_URL + "/tasks.json");
   response = await response.json();
@@ -53,6 +73,10 @@ async function getTasks() {
   }
 }
 
+/**
+ * 
+ * @function setContactsAsArray loads all the contacts into an array.
+ */
 function setContactsAsArray() {
   let contacsKeysArray = [];
   for (let [key, value] of Object.entries(contacts)) {
@@ -61,6 +85,10 @@ function setContactsAsArray() {
   contacts = contacsKeysArray;
 }
 
+/**
+ * 
+ * @function sorter sorts the contacts alphabetically.
+ */
 function sorter() {
   contacts.sort((a, b) => {
     if (a[1].lastName > b[1].lastName) {
@@ -78,6 +106,12 @@ function sorter() {
   renderIntoLetterBox();
 }
 
+/**
+ * 
+ * @returns an HTML string with with the letterbox for all the contacts whos lastnames
+ * begin with the letter in the Headline of that box.
+ * Then the...
+ */
 function renderIntoLetterBox() {
   if (contacts.length === 0) {
     showContacts.innerHTML = "";
@@ -96,19 +130,6 @@ function renderIntoLetterBox() {
   renderIntoLetterBox();
 }
 
-/**
- * 
- * @function checkForEmptyColumns checks whether a contact is the user and if it is the only contact with a last name that begins with its last name.
- * If so, the contact and the headline of the letterblock the contact is in, are hidden.
- */
-function checkForEmptyLetterBoxes() {
-  document.querySelectorAll('h3.sort').forEach((elem)=>{
-    if(document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"].d-none`).length === document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"]`).length) {
-      elem.classList.add('d-none');
-    }
-  })
-}
-
 function getContactsHtml() {
   for (contactsIndex = q; q < contacts.length; q++) {
     if (contactsIndex == contacts.length) {
@@ -121,6 +142,19 @@ function getContactsHtml() {
 
     contactsString += contactHTML(contactsIndex, q);
   }
+}
+
+/**
+ * 
+ * @function checkForEmptyColumns checks whether a contact is the user and if it is the only contact with a last name that begins with its last name.
+ * If so, the contact and the headline of the letterblock the contact is in, are hidden.
+ */
+function checkForEmptyLetterBoxes() {
+  document.querySelectorAll('h3.sort').forEach((elem)=>{
+    if(document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"].d-none`).length === document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"]`).length) {
+      elem.classList.add('d-none');
+    }
+  })
 }
 
 function contactHTML(contactsIndex, q) {
