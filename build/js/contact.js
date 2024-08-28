@@ -72,8 +72,10 @@ function closeOverlaysWithEscape(event) {
 async function getTasks() {
   let response = await fetch(BASE_URL + "/tasks.json");
   response = await response.json();
-  for (let [key, value] of Object.entries(response)) {
-    tasks.push(value);
+  if(response) {
+    for (let [key, value] of Object.entries(response)) {
+      tasks.push(value);
+    }
   }
 }
 
@@ -380,7 +382,7 @@ function editContact() {
  */
 function deleteContact(index) {
   deleteContactFromAllTasks(contacts[index][1].contactId);
-  deleteData("/contacts/" + contacts[index][0]);
+  deleteData("/contacts/" + `${contacts[index][0]}`);
   contacts.splice(index, 1);
   letterBlock = "";
   contactsIndex = 0;
@@ -629,4 +631,14 @@ function backgroundClickedEdit(event) {
   if (event.target === event.currentTarget) {
     editContactToggle();
   }
+}
+
+async function removeAllTasks() {
+  let response = await fetch('https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks.json', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify([])
+  });
 }
