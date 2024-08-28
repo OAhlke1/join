@@ -34,8 +34,12 @@ function init() {
 }
 
 /**
+<<<<<<< HEAD
  * 
  * @function getContacts for getting the list of already existing contacts
+=======
+ * This Function fetchs the contacts from the database 
+>>>>>>> 9f2505b64b718d80e7810c5ffbd87d20f52c1e19
  */
 async function getContacts() {
   contacts = await fetch(BASE_URL + "/contacts.json");
@@ -74,8 +78,12 @@ async function getTasks() {
 }
 
 /**
+<<<<<<< HEAD
  * 
  * @function setContactsAsArray loads all the contacts into an array.
+=======
+ * This function convert the object to a array
+>>>>>>> 9f2505b64b718d80e7810c5ffbd87d20f52c1e19
  */
 function setContactsAsArray() {
   let contacsKeysArray = [];
@@ -86,8 +94,12 @@ function setContactsAsArray() {
 }
 
 /**
+<<<<<<< HEAD
  * 
  * @function sorter sorts the contacts alphabetically.
+=======
+ * This function sort the contacts alphabetical
+>>>>>>> 9f2505b64b718d80e7810c5ffbd87d20f52c1e19
  */
 function sorter() {
   contacts.sort((a, b) => {
@@ -110,7 +122,6 @@ function sorter() {
  * 
  * @returns an HTML string with with the letterbox for all the contacts whos lastnames
  * begin with the letter in the Headline of that box.
- * Then the...
  */
 function renderIntoLetterBox() {
   if (contacts.length === 0) {
@@ -130,6 +141,10 @@ function renderIntoLetterBox() {
   renderIntoLetterBox();
 }
 
+/**
+ * This function iterates through the list of contacts and adds the HTML of the contacts 
+ * that have the same starting letter in their last name to the contactsString variable.
+ */
 function getContactsHtml() {
   for (contactsIndex = q; q < contacts.length; q++) {
     if (contactsIndex == contacts.length) {
@@ -157,6 +172,26 @@ function checkForEmptyLetterBoxes() {
   })
 }
 
+/**
+<<<<<<< HEAD
+ * 
+ * @function checkForEmptyColumns checks whether a contact is the user and if it is the only contact with a last name that begins with its last name.
+ * If so, the contact and the headline of the letterbox the contact is in, are hidden.
+ */
+function checkForEmptyLetterBoxes() {
+  document.querySelectorAll('h3.sort').forEach((elem)=>{
+    if(document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"].d-none`).length === document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"]`).length) {
+      elem.classList.add('d-none');
+    }
+  })
+}
+
+/**
+ * This funktion just contains the contactHtml template
+ * @param {int} contactsIndex 
+ * @param {int} q 
+ * @returns 
+ */
 function contactHTML(contactsIndex, q) {
   getRandomColor();
   return `<div class="flex contact c-${contactsIndex} ${contacts[contactsIndex][1].contactId == localStorage.UserId ? 'd-none' : ''}" onclick="clickContact(event)" data-contactIndex="${contactsIndex}" contact-firstletter="${newChar}">
@@ -172,6 +207,11 @@ function contactHTML(contactsIndex, q) {
     </div>`;
 }
 
+/**
+ * This funktion create the profileimage with the fist letter of the first- and lastname 
+ * @param {int} q 
+ * @returns 
+ */
 function profileName(q) {
   if (contacts[q][1].sureName == "") {
     return `${contacts[q][1].lastName[0]}`;
@@ -180,6 +220,10 @@ function profileName(q) {
   }
 }
 
+/**
+ * 
+ * @returns This function creates the colour of the profileimage
+ */
 function getRandomColor() {
   const letters = "0123456789ABCDEF";
   color = "#0";
@@ -189,6 +233,10 @@ function getRandomColor() {
   return color;
 }
 
+/**
+ * This function shows the contactnformations
+ * @param {String} event 
+ */
 function clickContact(event) {
   toggleInfoContact = true;
   if (window.innerWidth < 1100) {
@@ -203,6 +251,10 @@ function clickContact(event) {
   information.innerHTML = clickContactHTML(presentlyIndexContacts);
 }
 
+
+/**
+ * This function coloured the background of the clicked contact
+ */
 function focusContact() {
   let contact = document.querySelector(`.c-${presentlyIndexContacts}`);
 
@@ -213,6 +265,10 @@ function focusContact() {
   contact.classList.add("contactFocus");
 }
 
+
+ /**
+  * This function makes the side responsive
+  */
 function showHideContactNames() {
   if (window.innerWidth <= 950 && toggleInfoContact) {
     contactList.classList.add("d-none");
@@ -229,6 +285,9 @@ window.onresize = function () {
   showHideContactNames();
 };
 
+ /**
+  * This function makes the side responsive
+  */
 function hideContact() {
   if (window.innerWidth < 950) {
     contactList.classList.remove("d-none");
@@ -236,6 +295,11 @@ function hideContact() {
   }
 }
 
+/**
+ * This function contains the HTML template of contactinformation
+ * @param {int} index 
+ * @returns 
+ */
 function clickContactHTML(index) {
   return ` 
   <div class="flex showContactName">
@@ -313,6 +377,12 @@ function deleteContact(index) {
   showHideContactNames()
 }
 
+/**
+ * 
+ * @param {number} id is the id of the contact that is deleted.
+ * The function iterates through all tasks and checks if the contact
+ * with the @param id is in the tasks to get removed from it.
+ */
 function deleteContactFromAllTasks(id) {
   for (let i = 0; i < tasks.length; i++) {
     if (tasks[i].participants) {
@@ -326,6 +396,11 @@ function deleteContactFromAllTasks(id) {
   repostTasks();
 }
 
+/**
+ * 
+ * @function repostTasks sets all tasks back to the FTP-Client after the
+ * deleted contact is in no tasks anymore.
+ */
 async function repostTasks() {
   let response = await fetch(BASE_URL + "/tasks.json", {
     method: "PUT",
