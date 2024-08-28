@@ -77,12 +77,8 @@ async function getTasks() {
 }
 
 /**
-<<<<<<< HEAD
  * 
  * @function setContactsAsArray loads all the contacts into an array.
-=======
- * This function convert the object to a array
->>>>>>> 9f2505b64b718d80e7810c5ffbd87d20f52c1e19
  */
 function setContactsAsArray() {
   let contacsKeysArray = [];
