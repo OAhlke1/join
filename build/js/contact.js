@@ -251,7 +251,6 @@ function clickContact(event) {
   information.innerHTML = clickContactHTML(presentlyIndexContacts);
 }
 
-
 /**
  * This function coloured the background of the clicked contact
  */
@@ -264,7 +263,6 @@ function focusContact() {
   }
   contact.classList.add("contactFocus");
 }
-
 
  /**
   * This function makes the side responsive
@@ -280,7 +278,11 @@ function showHideContactNames() {
   }
 }
 
-// Funktion beim Ändern der Fenstergröße aufrufen
+/**
+ * 
+ * window.onresize calles the @function showHideContactNames when
+ * the window is being resized.
+ */
 window.onresize = function () {
   showHideContactNames();
 };
@@ -336,21 +338,31 @@ function clickContactHTML(index) {
       `;
 }
 
+/**
+ * 
+ * @param {number} index is the index of the contact.
+ * @function startingValueEditContact collects the data of the contact with
+ * the index @var index and writes them into the input-fields of the
+ * editing-overlay.
+ */
 function startingValueEditContact(index) {
   let name = document.querySelector(".inputEditName");
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
   let letters = document.querySelector(".editContactImg");
   document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').style.background = `${contacts[presentlyIndexContacts][1].color}`;
-  name.value =
-    contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
+  name.value = contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
   email.value = contacts[index][1]["email"];
   number.value = contacts[index][1]["number"];
   letters.innerHTML = profileName(index);
-  console.log(presentlyIndexContacts);
   editContactToggle();
 }
 
+/**
+ * 
+ * @function editContact sets the input-fields of the editing-overlay into variables
+ * and sets also the splitted contact name into @var sureLastName
+ */
 function editContact() {
   let name = document.querySelector(".inputEditName");
   let email = document.querySelector(".inputEditEmail");
@@ -361,6 +373,11 @@ function editContact() {
   createContact(email, number, name, sureLastName);
 }
 
+/**
+ * 
+ * @param {number} index is the index of the contact.
+ * @function deleteContact deletes the contact at index @param index
+ */
 function deleteContact(index) {
   deleteContactFromAllTasks(contacts[index][1].contactId);
   deleteData("/contacts/" + contacts[index][0]);
@@ -411,6 +428,12 @@ async function repostTasks() {
   });
 }
 
+/**
+ * 
+ * @param {string} path is the part of the URL needed for only removing
+ * that destinct object from the FTP-client.
+ * @returns the response from the FTP-server.
+ */
 async function deleteData(path = "") {
   let response = await fetch(BASE_URL + path + ".json", {
     method: "DELETE",
@@ -418,6 +441,12 @@ async function deleteData(path = "") {
   return (responseToJson = await response.json());
 }
 
+/**
+ * 
+ * @param {string} path is the URL-part needed to post the
+ * @param {object} data to the correct place on the FTP-client. 
+ * @returns the response of the FTP-client.
+ */
 async function postData(path = "", data = {}) {
   let response = await fetch(BASE_URL + path + ".json", {
     method: "POST",
@@ -429,6 +458,12 @@ async function postData(path = "", data = {}) {
   return (responseToJson = await response.json());
 }
 
+/**
+ * 
+ * @param {event} event is the event fired to the button to call
+ * @function createContactValue which sets the values of the adding-
+ * overlay into the variables.
+ */
 function createContactValue(event) {
   event.preventDefault();
   let email = document.querySelector(".inputEmail");
@@ -441,6 +476,14 @@ function createContactValue(event) {
   addContactToggle();
 }
 
+/**
+ * 
+ * @param {string} email is the email of the new contact.
+ * @param {number} number is the number of the new cotact.
+ * @param {string} name is the name of the new cotact.
+ * @param {*} sureLastName is the splitted version of the value
+ * of the name input for having the first and last name separated.
+ */
 async function createContact(email, number, name, sureLastName) {
   if (sureLastName.length == 1) {
     sureLastName.unshift("");
@@ -465,6 +508,11 @@ async function createContact(email, number, name, sureLastName) {
   await getContacts();
 }
 
+/**
+ * 
+ * @function contactSuccessfullyCreated shows the sign that the creation of the
+ * new contact was successful.
+ */
 function contactSuccessfullyCreated() {
   let mainContainer = document.querySelector(".mainContainer");
   mainContainer.innerHTML += `
@@ -474,6 +522,12 @@ function contactSuccessfullyCreated() {
 `;
 }
 
+/**
+ * 
+ * @param {string} email is the last email passed to the @var email
+ * @param {number} number is the last phone number passed to the @var number
+ * @param {string} name is the actually passed name to the @var name
+ */
 function resetValue(email, number, name) {
   email.value = "";
   number.value = "";
@@ -485,9 +539,12 @@ function resetValue(email, number, name) {
   newChar = "A";
 }
 
+/**
+ * 
+ * Checks whether the name has a suffix like "von" or "zu".
+ */
 function convertNames() {
   let rest;
-
   for (let i = 0; i < sureLastName.length; i++) {
     if (sureLastName[i] === "von" || sureLastName[i] === "zu") {
       nameSuffix = true;
@@ -501,6 +558,11 @@ function convertNames() {
   hasNameSuffix();
 }
 
+/**
+ * 
+ * If the name has some name addition like "von" or "zu", that part of the name
+ * is set to the last name of the contact by @function hasNameSuffix
+ */
 function hasNameSuffix() {
   if (!nameSuffix) {
     return;
@@ -509,6 +571,11 @@ function hasNameSuffix() {
   sureLastName = [sureLastName[0], sureLastName[1] + " " + sureLastName[2]];
 }
 
+/**
+ * 
+ * @function editContactToggle opens and closes the overlay for editing a contact
+ * and renders its contact circle.
+ */
 function editContactToggle() {
   let editContact = document.querySelector(".overlayEdit-parent");
   document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').innerHTML = `<div class="flex flex-center" style="width: 100%; height: 100%;">
@@ -523,10 +590,13 @@ function editContactToggle() {
   }
 }
 
+/**
+ * 
+ * @function addContactToggle opens and closes the overlay for adding a new contact.
+ */
 function addContactToggle() {
   let addContact = document.querySelector(".overlay-parent");
   presentlyIndexContacts = null;
-  console.log(presentlyIndexContacts);
   if (!toggleAddContact) {
     addContact.classList.add("d-none");
     toggleAddContact = true;
@@ -536,6 +606,12 @@ function addContactToggle() {
   }
 }
 
+/**
+ * 
+ * @param {event} event is the clicking event fired to the closing elemnt.
+ * @function backgroundClickedAdd closes the overlay for adding a contact
+ * when clicking on the background the overlay lays in.
+ */
 function backgroundClickedAdd(event) {
   // Check if the clicked target is the overlay and not a child element
   if (event.target === event.currentTarget) {
@@ -544,6 +620,11 @@ function backgroundClickedAdd(event) {
   }
 }
 
+/**
+ * 
+ * @param {event} event closes the overlay for editing a contact when clicking
+ * on its background.
+ */
 function backgroundClickedEdit(event) {
   if (event.target === event.currentTarget) {
     editContactToggle();
