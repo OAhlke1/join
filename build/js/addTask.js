@@ -359,8 +359,10 @@ function showCrossTic() {
  * @function hideCrossTic hides the cross- and tic-button oft the task inputfield.
  */
 function hideCrossTic() {
-    document.querySelector('.subtask-input .add').classList.remove('disNone');
-    document.querySelector('.cross-tic').classList.add('disNone');
+    if(document.querySelector('#choose-subtasks').value === "") {
+        document.querySelector('.subtask-input .add').classList.remove('disNone');
+        document.querySelector('.cross-tic').classList.add('disNone');
+    }
 }
 
 /**
