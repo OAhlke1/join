@@ -37,9 +37,6 @@ function init() {
 <<<<<<< HEAD
  * 
  * @function getContacts for getting the list of already existing contacts
-=======
- * This Function fetchs the contacts from the database 
->>>>>>> 9f2505b64b718d80e7810c5ffbd87d20f52c1e19
  */
 async function getContacts() {
   contacts = await fetch(BASE_URL + "/contacts.json");
