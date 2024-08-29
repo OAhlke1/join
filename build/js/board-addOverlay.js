@@ -1,82 +1,11 @@
 /**
  * 
- * @param {number} index is the index of the task.
- * The input- and button-values of the editing-overlay are stored into @var newTaskObject
- * The task is then replaced by that object.
- */
-/* function actualizeTask(index) {
-    allTaskObjects[index].participants = structuredClone(newParticipantsOverlay);
-    let newTaskObject = {
-        taskId: allTaskObjects[index].taskId,
-        category: allTaskObjects[index].category,
-        date: document.querySelector('#date-input-overlay').value,
-        deleted: 0,
-        subTasks: newSubtaskList.length === 0 ? allTaskObjects[index].subTasks : newSubtaskList,
-        participants: allTaskObjects[index].participants,
-        taskDescrip: document.querySelector('#task-descrip-overlay').value,
-        taskTitle: document.querySelector('#title-input-overlay').value,
-        taskType: allTaskObjects[index].taskType,
-        urgency: document.querySelector('.overlay-card .chosen-urgency').getAttribute('data-resetUrgency'),
-        amountOfEditing: allTaskObjects[index].amountOfEditing ? allTaskObjects[index].amountOfEditing+1 : 0
-    };
-    allTaskObjects[index] = structuredClone(newTaskObject);
-    collectNotDeletedTasks();
-    reRenderTasks();
-    closeOverlay(index);
-} */
-
-/**
- * 
- * @param {number} index is the index of the deleted task.
- * Actually the function does not splice the @var allTaskObjects at the given index, but instead
- * it just sets the tasks deleted-state to 1 (for true) and then the task with given index as data-taskindex gets
- * the class "completely-hidden" for being always hidden (so that it does not show up when the tasks are being searched).
- */
-/* function deleteTask(index) {
-    allTaskObjects[index].deleted = 1;
-    if(!document.querySelector(`.task[data-taskindex="${index}"]`).classList.contains('completely-hidden')) {
-        document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('completely-hidden');
-    }
-    closeOverlay(index);
-    showHideGreyTaskCards();
-    collectNotDeletedTasks();
-} */
-
-/**
- * 
- * This function opens the add-task-overlay.
- */
-/* function openAddTaskOverlay() {
-    newSubtasksArrayAdd = [];
-    setFocusOutFunctionsInputAdd();
-    document.querySelector('.add-task-overlay').classList.remove('disNone');
-} */
-
-/**
- * 
  * This function closes the add-task-overlay.
  */
-/* function closeOverlayAdd() {
+function closeOverlayAdd() {
     document.querySelector('.add-task-overlay').classList.add('disNone');
     clearOverlayAdd();
-} */
-
-/**
- * 
- * This function takes the value of the search-input-field and checks each contact in the add-task-overlays contact-list if it includes the input-value.
- * If not, the contact gets hidden by adding the class disNone (for display-none) to it.
- */
-/* function searchForContactsAdd(event) {
-    let input = document.querySelector('.add-task-overlay-box .search-contacts');
-    document.querySelector('.add-task-overlay-box .contact-list').classList.remove('disNone');
-    document.querySelectorAll('.add-task-overlay-box .contact-name').forEach((elem)=>{
-        if(elem.innerHTML.toLowerCase().includes(input.value.toLowerCase())) {
-            elem.closest('.contact').classList.remove('disNone');
-        }else {
-            elem.closest('.contact').classList.add('disNone');
-        }
-    })
-} */
+}
 
 /**
  * 
@@ -84,7 +13,7 @@
  * This function adds the class chosen to the contact in the add-task-overlay that is being clicked.
  * The stopProgation-function is called, to only click on the contact, not the entire overlay.
  */
-/* function selectContactAdd(event) {
+function selectContactAdd(event) {
     event.stopPropagation();
     if(event.target.closest('.contact').classList.contains('chosen')) {
         event.target.closest('.contact').classList.remove('chosen');
@@ -92,66 +21,66 @@
         event.target.closest('.contact').classList.add('chosen');
     }
     getParticipantsAdd();
-} */
+}
 
 /**
  * 
  * This function puts the added participants of a newly created task in an array @param {array} participantsArrayAdd
  */
-/* function getParticipantsAdd() {
+function getParticipantsAdd() {
     participantsArrayAdd = [];
     document.querySelectorAll('.add-task-overlay-box .contact.chosen').forEach((elem)=>{
         participantsArrayAdd.push(allContactsObjects[+elem.getAttribute('data-selectindex')]);
     })
     renderChosenListAdd();
-} */
+}
 
 /**
  * 
  * This function renders the list of chosen participants into the add-task-overlay
  */
-/* function renderChosenListAdd() {
+function renderChosenListAdd() {
     document.querySelector('.add-task-overlay-box .chosen-list').innerHTML = '';
     participantsArrayAdd.forEach((elem, i)=>{
-        document.querySelector('.chosen-list').innerHTML += `<li><div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
+        document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantAdd(${i})" onmouseover="showNameAdd(${i})" onmouseleave="hideNameAdd(${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
     })
     document.querySelector('.add-task-overlay-box .chosen-list').classList.remove('disNone');
-} */
+}
 
 /**
  * 
  * @param {number} i is the index of the Participant
  * This function shows the name-block of the participant in the add-task-overlay
  */
-/* function showNameAdd(i) {
+function showNameAdd(i) {
     document.querySelector(`.name-block${i}`).classList.remove('disNone');
-} */
+}
 
 /**
  * 
  * @param {number} i is the index of the Participant
  * This function hides the name-block of the participant in the add-task-overlay
  */
-/* function hideNameAdd(i) {
+function hideNameAdd(i) {
     document.querySelector(`.name-block${i}`).classList.add('disNone');
-} */
+}
 
 /**
  * 
  * @param {number} i is the index of the chosen participant in the add-task-overlay
  * This function removes the chosen participant from the add-task-overlay.
  */
-/* function removeParticipantAdd(i) {
+function removeParticipantAdd(i) {
     participantsArrayAdd.splice(i, 1);
     document.querySelectorAll('.add-task-overlay-box .contact.chosen')[i].classList.remove('chosen');
     renderChosenListAdd();
-} */
+}
 
 /**
  * When the input-field for searching contacts of the add-task-overlay is focused, the overlays contact-list is shown.
  * When the input-field loses focus, the contact-list is hidden.
  */
-/* function showHideContactListAdd(event) {
+function showHideContactListAdd(event) {
     if(document.querySelector('.add-task-overlay-box .contact-list').classList.contains('disNone')) {
         document.querySelector('.add-task-overlay-box .contact-list').classList.remove('disNone');
         document.querySelector('.add-task-overlay-box .contacts .contacts-inner .triangle').classList.add('rotated');
@@ -159,12 +88,13 @@
         document.querySelector('.add-task-overlay-box .contact-list').classList.add('disNone');
         document.querySelector('.add-task-overlay-box .contacts .contacts-inner .triangle').classList.remove('rotated');
     }
-} */
+}
 
 /**
  * This function renderes the contact-list for the add-task-overlay.
  */
-/* function renderContactListAdd() {
+function renderContactListAdd() {
+    //document.querySelector('.overlay-card .contact-list').innerHTML = '';
     let list = "";
     if(!localStorage.UserId) {
         document.querySelector('.add-task-overlay-box .contact-list').innerHTML = "<span class='asterisk' style='font-size: 16px; text-align: center;'>Contact-list is not visible for guests.</span>";
@@ -181,35 +111,14 @@
         </div>`;
     })
     document.querySelector('.add-task-overlay-box .contact-list').innerHTML = list;
-} */
-
-/**
- * 
- * @param {event} event is the click-event fired to the top-bar of the catagory-list of the add-task-overlay to prevent default.
- * This function shows or hides the list of possible categories.
- */
-/* function showHideCategoriesList(event) {
-    if(document.querySelector('.categories-list').classList.contains('disNone')) {
-        document.querySelector('.categories-list').classList.remove('disNone');
-        document.querySelector('.categories .categories-inner .triangle').classList.add('rotated');
-    }else {
-        document.querySelector('.categories-list').classList.add('disNone');
-        document.querySelector('.categories .categories-inner .triangle').classList.remove('rotated');
-    }
-} */
-
-/* function setCategory(event) {
-    event.preventDefault();
-    document.querySelector('.category-name').value = event.target.closest('.category').getAttribute('data-tasktype');
-    categoryType = event.target.closest('.category').getAttribute('data-tasktype');
-} */
+}
 
 /**
  * 
  * @param {event} event is the click-event fired to the clicked element of the catagory-list.
  * This function chooses the category of the new task.
  */
-/* function choosePrioAdd(event, prio) {
+function choosePrioAdd(event, prio) {
     event.preventDefault();
     if(event.target.closest('.choose-prio-button').classList.contains(`prio-${prio}-button-bg-color`)) {
         event.target.closest('.choose-prio-button').classList.remove(`prio-${prio}-button-bg-color`);
@@ -223,16 +132,16 @@
     event.target.closest('.choose-prio-button').classList.add(`prio-${prio}-button-bg-color`);
     event.target.closest('.choose-prio-button').classList.remove(`chosen-prio`);
     selectedPrio = prio;
-} */
+}
 
 /**
  * 
  * This function renders the subtask-list of the add-task-overlay.
  */
-/* function renderSubtaskListAdd() {
+function renderSubtaskListAdd() {
     document.querySelector('.add-task-overlay-box .subtask-list').innerHTML = '';
     newSubtasksArrayAdd.forEach((elem, i)=>{
-        document.querySelector('.add-task-overlay-box .subtask-list').innerHTML += `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
+        document.querySelector('.add-task-overlay-box .subtask-list').innerHTML += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
             <p class="subtask-title-p-add subtask-title-p-add-${i}">${elem.subTaskTitle}</p>
             <div class="pen-bin-subtask-add pen-bin-subtask flex flex-center" id="pen-bin-subtask-add-${i}">
                 <img src="./assets/img/pen.svg" alt="" onclick="showEditingElementsSubtaskAdd(${i})">
@@ -248,33 +157,33 @@
         </li>`
     })
     document.querySelector('.subtask-list').classList.remove('disNone');
-} */
+}
 
 /**
  * 
  * Shows the cross (for removing) and tic (for adding) elements for adding a subtask to the task in the add-task-overlay.
  */
-/* function showCrossTicAdd() {
+function showCrossTicAdd() {
     document.querySelector('.add-task-overlay-box .subtask-input .add').classList.add('disNone');
     document.querySelector('.add-task-overlay-box .cross-tic').classList.remove('disNone');
     document.querySelector('.add-task-overlay-box .subtask-input').style.border = "1px solid blue";
-} */
+}
 
 /**
  * 
  * Shows the cross (for removing) and tic (for adding) elements for adding a subtask to the task in the task-overlay.
  */
-/* function hideCrossTicAdd() {
+function hideCrossTicAdd() {
     document.querySelector('.add-task-overlay-box .subtask-input').style.border = "1px solid #d1d1d1";
     document.querySelector('.add-task-overlay-box .subtask-input .add').classList.remove('disNone');
     document.querySelector('.add-task-overlay-box .cross-tic').classList.add('disNone');
-} */
+}
 
 /**
  * 
  * This function pushes the defined subtasks into a globally defined array @var newSubtasksArrayAdd
  */
-/* function addSubtaskAdd() {
+function addSubtaskAdd() {
     let subtaskInput = document.querySelector('#choose-subtasks-add').value;
     if(subtaskInput === "") {
         hideCrossTicAdd();
@@ -289,14 +198,14 @@
             clearSubtaskInputAdd();
         }
     }
-} */
+}
 
 /**
  * 
  * @returns a boolean value
  * This function checks whether a subtask already exists in the new task.
  */
-/* function checkIfSubtaskExistsAdd(subtaskInput, i) {
+function checkIfSubtaskExistsAdd(subtaskInput, i) {
     if(document.querySelectorAll('.subtask-title-p-add').length > 0) {
         for(let k=0; k<document.querySelectorAll('.subtask-title-p-add').length; k++) {
             if(k === i) {
@@ -314,27 +223,27 @@
     }else {
         return false;
     }
-} */
+}
 
 /**
  * 
  * @param {number} i is the index of the newly created subtask
  * This function shows the input-field of that particular subtask and hides its <p>-tag that contains its title
  */
-/* function showEditingElementsSubtaskAdd(i) {
+function showEditingElementsSubtaskAdd(i) {
     let editElem = document.querySelector(`#edit-subtask-add-${i}`);
     document.querySelector(`.subtask-title-p-add-${i}`).classList.add('disNone');
     document.querySelector(`#pen-bin-subtask-add-${i}`).classList.add('disNone');
     editElem.classList.remove('disNone');
     document.querySelector(`#edit-subtask-input-add-${i}`).focus();
-} */
+}
 
 /**
  * 
  * @param {number} i is the index of the newly defined subtask
  * This function changes the title of the newly defined subtask.
  */
-/* function changeSubtaskAdd(i) {
+function changeSubtaskAdd(i) {
     if(!checkIfSubtaskExistsAdd(document.querySelector(`#edit-subtask-input-add-${i}`).value, i)) {
         newSubtasksArrayAdd[i].subTaskTitle = document.querySelector(`#edit-subtask-input-add-${i}`).value;
         renderSubtaskListAdd();
@@ -343,32 +252,32 @@
         document.querySelector(`#edit-subtask-input-add-${i}`).value = "";
         document.querySelector(`#edit-subtask-input-add-${i}`).focus();
     }
-} */
+}
 
 /**
  * 
  * This function deletes the input of the subtask input-field of the add-task-overlay
  */
-/* function clearSubtaskInputAdd() {
+function clearSubtaskInputAdd() {
     document.querySelector('.add-task-overlay-box .subtask-input input').value = "";
     hideCrossTicAdd();
-} */
+}
 
 /**
  * 
  * @param {number} i is the index of the newly defined subtask.
  * This function removes the new subtask.
  */
-/* function removeSubtaskAdd(i) {
+function removeSubtaskAdd(i) {
     newSubtasksArrayAdd.splice(i, 1);
     renderSubtaskListAdd();
-} */
+}
 
 /**
  * 
  * @function clearOverlayAdd clears every input field adding task overlay and resets its urgency-button for "medium" as marked.
  */
-/* function clearOverlayAdd() {
+function clearOverlayAdd() {
     document.querySelector('#title-input-add').value = "";
     document.querySelector('#task-descrip-add').value = "";
     document.querySelector('.add-task-overlay-box .search-contacts').value = "";
@@ -380,16 +289,141 @@
     document.querySelector('.add-task-overlay-box .subtask-list').innerHTML = "";
     document.querySelectorAll('.add-task-overlay-box .contact-list .contact.chosen').forEach((elem)=>{elem.classList.remove('chosen');});
     newSubtaskList = [];
-} */
+}
 
 /**
  * 
  * This function resets the urgency of the new task.
  */
-/* function resetUrgencyAdd() {
+function resetUrgencyAdd() {
     document.querySelectorAll('.add-task-overlay-box .choose-prio-button')[0].classList.remove('prio-high-button-bg-color');
     document.querySelectorAll('.add-task-overlay-box .choose-prio-button')[1].classList.remove('prio-medium-button-bg-color');
     document.querySelectorAll('.add-task-overlay-box .choose-prio-button')[2].classList.remove('prio-low-button-bg-color');
     document.querySelectorAll('.add-task-overlay-box .choose-prio-button')[1].classList.add('prio-medium-button-bg-color');
     newUrgency = "medium";
-} */
+}
+
+/**
+ * 
+ * @function setFocusOutFunctionsInputAdd sets the functions for the @event focusout of the input-fields of the add-task-overlay.
+ * It is for hiding each box that opens, when an input-field is focused. And it also rotates back their triangles.
+ */
+function setFocusOutFunctionsInputAdd() {
+    document.querySelector('.add-task-overlay-box .search-contacts').addEventListener('focusout', ()=>{
+        document.querySelector('.add-task-overlay-box .contact-list').classList.add('disNone');
+        document.querySelector('.add-task-overlay-box .search-contacts').parentNode.querySelector('.triangle').classList.remove('rotated');
+    })
+    /* document.querySelector('.add-task-overlay-box .category-name').addEventListener('focusout', (event)=>{
+        document.querySelector('.add-task-overlay-box .categories-list').classList.add('disNone');
+        document.querySelector('.add-task-overlay-box .categories-list').parentNode.querySelector('.triangle').classList.remove('rotated');
+    }) */
+    document.querySelector('#choose-subtasks-add').addEventListener('focusout', ()=>{
+        if(document.querySelector('#choose-subtasks-add').value === "") {
+            hideCrossTicAdd();
+        }
+    })
+}
+
+/**
+ * 
+ * @param {event} event the click-event fired to the body.
+ * @returns 
+ */
+function hideAllListsAdd(event) { //  || target.classList.contains('search-contacts') || target.classList.contains('contact') || target.classList.contains('categories-inner') || target.classList.contains('category-name')
+    let target = event.target;
+    if(target.classList.contains('category') || target.classList.contains('category-name') || target.classList.contains('categories') || target.classList.contains('contacts') || target.classList.contains('contacts-inner') || target.classList.contains('search-contacts')) {
+        return;
+    }else {
+        document.querySelector('.contact-list').classList.add('disNone');
+        document.querySelector('.categories-list').classList.add('disNone');
+    }
+}
+
+/**
+ * 
+ * This function opens the add-task-overlay.
+ */
+function openAddTaskOverlay() {
+    newSubtasksArrayAdd = [];
+    setFocusOutFunctionsInputAdd();
+    document.querySelector('.add-task-overlay').classList.remove('disNone');
+}
+
+/**
+ * 
+ * This function takes the value of the search-input-field and checks each contact in the add-task-overlays contact-list if it includes the input-value.
+ * If not, the contact gets hidden by adding the class disNone (for display-none) to it.
+ */
+function searchForContactsAdd(event) {
+    let input = document.querySelector('.add-task-overlay-box .search-contacts');
+    document.querySelector('.add-task-overlay-box .contact-list').classList.remove('disNone');
+    document.querySelectorAll('.add-task-overlay-box .contact-name').forEach((elem)=>{
+        if(elem.innerHTML.toLowerCase().includes(input.value.toLowerCase())) {
+            elem.closest('.contact').classList.remove('disNone');
+        }else {
+            elem.closest('.contact').classList.add('disNone');
+        }
+    })
+}
+
+/**
+ * 
+ * @param {event} event is the click-event fired to the top-bar of the catagory-list of the add-task-overlay to prevent default.
+ * This function shows or hides the list of possible categories.
+ */
+function showHideCategoriesList(event) {
+    if(document.querySelector('.categories-list').classList.contains('disNone')) {
+        document.querySelector('.categories-list').classList.remove('disNone');
+        document.querySelector('.categories .categories-inner .triangle').classList.add('rotated');
+    }else {
+        document.querySelector('.categories-list').classList.add('disNone');
+        document.querySelector('.categories .categories-inner .triangle').classList.remove('rotated');
+    }
+}
+
+/**
+ * 
+ * @param {event} event is the click-event fired to the category-element in the categories-list.
+ * @function setCategory sets the category of the task into the overlay.
+ */
+function setCategory(event) {
+    event.preventDefault();
+    document.querySelector('.category-name').value = event.target.closest('.category').getAttribute('data-tasktype');
+    categoryType = event.target.closest('.category').getAttribute('data-tasktype');
+}
+
+/**
+ * 
+ * @param {event} event is the event fired to the add-new-task-button
+ * @function addNewTask takes all the values set by the add-task-overlay and puts them into
+ * the @var newTask which is then pushed to @var allTaskObjects
+ */
+function addNewTask(event) {
+    event.preventDefault();
+    let newTask = {
+        taskId: Math.random(),
+        category: document.querySelector('.add-task-overlay-box input.category-name').value,
+        date: document.querySelector('#date-input-add').value,
+        deleted: 0,
+        subTasks: newSubtasksArrayAdd,
+        participants: participantsArrayAdd,
+        taskDescrip: document.querySelector('#task-descrip-add').value,
+        taskTitle: document.querySelector('#title-input-add').value,
+        taskType: 'toDo',
+        urgency: selectedPrio,
+        amountOfEditing: 0
+    };
+    allTaskObjects.push(newTask);
+    renderNewTask(allTaskObjects.length-1);
+    closeOverlayAdd();
+    fadeInTaskAdded();
+}
+
+/**
+ * 
+ * Here the body gets an event handler that starts the function which hides all
+ * Lists on the overlay for adding a task.
+ */
+document.querySelector('body').addEventListener('click', (event)=>{
+    hideAllListsAdd(event);
+})

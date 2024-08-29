@@ -89,12 +89,8 @@ function setContactsAsArray() {
 }
 
 /**
-<<<<<<< HEAD
  * 
  * @function sorter sorts the contacts alphabetically.
-=======
- * This function sort the contacts alphabetical
->>>>>>> 9f2505b64b718d80e7810c5ffbd87d20f52c1e19
  */
 function sorter() {
   contacts.sort((a, b) => {
@@ -345,7 +341,9 @@ function startingValueEditContact(index) {
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
   let letters = document.querySelector(".editContactImg");
-  document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').style.background = `${contacts[presentlyIndexContacts][1].color}`;
+  if(document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge')) {
+    document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').style.background = `${contacts[presentlyIndexContacts][1].color}`;
+  }
   name.value = contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];
   email.value = contacts[index][1]["email"];
   number.value = contacts[index][1]["number"];

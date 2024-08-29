@@ -1,76 +1,11 @@
 /**
  * 
- * The @function actualizeTaskTypes goes threw each task and checks the id of its column.
- * Because the tasks key "taskType" gets the same value as the id of its column the task can be assigned
- * correctly when the page is reloaded.
- */
-/* function actualizeTaskTypes() {
-    columns.forEach((elem)=>{
-        elem.querySelectorAll('.task').forEach((task)=>{
-            allTaskObjects[+task.getAttribute('data-taskindex')].taskType = elem.id;
-        })
-    })
-    reRenderTasks();
-    collectNotDeletedTasks();
-} */
-
-/**
- * 
- * @param {event} event for getting the target.
- * The target is the column, the card is dragged over (but not dropped in).
- * That column gets a grey background.
- */
-/* function highlightColumn(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    document.querySelectorAll('.column-card-cont').forEach((elem)=>{
-        if(elem.contains(event.target)) {
-            elem.classList.add('highlighted');
-            return;
-        }
-    })
-} */
-
-/**
- * 
- * @param {event} event of the event target.
- * Once the task is moved over another column, the previous column (the event target)
- * The grey background of that column is being removed once the dragged task is dragged away from it.
- */
-/* function unhighlightColumn(event) {
-    let unHighlighted = document.querySelector('.highlighted');
-    unHighlighted.classList.remove('highlighted');
-} */
-
-/**
- * 
- * The shiftParticipants shifts each participant circle over the last one for 7 pixels to the left
- * The outer forEach-loop iterates through all task-cards and has the parameter @param {node} elem
- *      which is given a new task-card with each iteration
- * Then a new querySelectorAll for the tasks participants is appended to @param elem - now only the participants
- *      of the actual task are considered. Because with a querySelector for all participants appended
- *      to the document, each participant of each task
- *      would have been taken.
- * You have to shift each participant to the right of 7px times the participants index @param i
- *      Otherwise every participant would have shifted leftwards by 7px and there would be no overlapping
- * 
- */
-/* function shiftParticipantCirclesInTask() {
-    document.querySelectorAll('main .boardCont .board .board-column .column-card-cont .task').forEach((elem) => {
-        elem.querySelectorAll(' .participants-and-urgency .participants .participant').forEach((el, i)=>{
-            el.style.left = `${-7*i}px`;
-        })
-    })
-} */
-
-/**
- * 
  * @param {number} index is the tasks index in the @param allTaskObjects array.
  * This function renders the subtask-overlay and fills it with the data of the task in @param allTaskObjects at index @param index
  */
-/* function renderTaskIntoOverlay(index) {
-    document.querySelector('.overlay-card').setAttribute('data-taskindex', index);
-    document.querySelector('.tasks-overlay .overlay-card .inner').innerHTML = `
+function renderTaskIntoOverlay(index) {
+    document.querySelector('.overlay-card').setAttribute('data-taskindex', index); //if no task-index is given to a function, the data-taskindex can be checked for the tasks index.
+    document.querySelector('.tasks-overlay .overlay-card .inner').innerHTML = /* HTML */ `
         <div class="top-bar flex">
             <div class="task-category flex-center" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};">
                 <p>${allTaskObjects[index].category}</p>
@@ -88,30 +23,30 @@
         document.querySelector('.overlay-card').innerHTML += `<div class="flex flex-center edit-delete">${renderEditDelete(index)}</div>`;
     document.querySelector('.tasks-overlay').classList.remove('disNone');
     setFocusOutFunctionSubtaskInputOverlay();
-} */
+}
 
 /**
  * 
  * @param {number} index is the tasks index in the @param allTaskObjects array.
  * @returns an HTML-string that includes the title and an input-field for editing the title which is hidden until the task has to be edited.
  */
-/* function renderTaskTitleIntoOverlay(index) {
-    return `<div class="flex flex-column" style="width: calc(100% - 10px);">
+function renderTaskTitleIntoOverlay(index) {
+    return /* HTML */ `<div class="flex flex-column" style="width: calc(100% - 10px);">
         <h2 class="hide-for-editing">${allTaskObjects[index].taskTitle}</h2>
         <div class="flex flex-column show-for-editing disNone" style="justify-content: space-between; width: 100%;">
         <div class="flex flex-center cg12"><p class="add">Title</p></div>
             <input type="text" id="title-input-overlay" value="${allTaskObjects[index].taskTitle}">
         </div>
     </div>`;
-} */
+}
 
 /**
  * 
  * @param {number} index is the tasks index in the @param allTaskObjects array.
  * @returns an HTML-String containing the task-description, date and priority along their hidden input-fields and buttons for editing.
  */
-/* function renderTopTextsIntoOverlay(index) {
-    return `<div class="top-texts flex-column">
+function renderTopTextsIntoOverlay(index) {
+    return /* HTML */ `<div class="top-texts flex-column">
         ${renderTaskDescriptionIntoOverlay(index)}
         <div class="due-date flex hide-for-editing"><p>Due date:</p><p>${document.querySelector('#date-input-overlay') ? restyleDateString(allTaskObjects[index].date) : restyleDateString(allTaskObjects[index].date)}</p></div>
         <div class="due-date flex flex-column show-for-editing disNone" style="row-gap: 16px;">
@@ -134,29 +69,29 @@
             </div>
         </div>
     </div>`;
-} */
+}
 
 /**
  * 
  * @param {number} index is the tasks index in the @param allTaskObjects array.
  * @returns an HTML-string that includes the task description and an textarea-field for editing the task description which is hidden until the task has to be edited.
  */
-/* function renderTaskDescriptionIntoOverlay(index) {
-    return `<div class="flex flex-column" style="width: 100%;">
+function renderTaskDescriptionIntoOverlay(index) {
+    return /* HTML */ `<div class="flex flex-column" style="width: 100%;">
         <h3 class="hide-for-editing">${allTaskObjects[index].taskDescrip}</h3>
         <div class="flex flex-column show-for-editing disNone" style="justify-content: space-between; width: 100%;">
             <div class="flex flex-center cg12"><p class="add">Description</p></div>
             <input type="text" id="task-descrip-overlay" value="${allTaskObjects[index].taskDescrip}">
         </div>
     </div>`;
-} */
+}
 
 /**
  * 
  * @param {string} urgency of the task-object at with the index @param index 
  * @returns the respective urgency-svg depending wether the urgency is "low", "medium" or "high"
  */
-/* function getUrgencyHtml(urgency) {
+function getUrgencyHtml(urgency) {
     if(urgency === "low") {
         return urgencyLow;
     }else if(urgency === "medium") {
@@ -164,7 +99,7 @@
     }else if(urgency === "high") {
         return urgencyHigh;
     }
-} */
+}
 
 /**
  * 
@@ -172,8 +107,8 @@
  * @returns an HTML-string containing the three urgency-buttons with 'low', 'medium' and 'high'.
  * These buttons also have an attribute data-resetUrgency with the urgency-level as string for retrieving the urgency-level of the clicked button.
  */
-/* function renderUrgencyButtons(index) {
-    return `<div class="reset-urgency flex show-for-editing disNone">
+function renderUrgencyButtons(index) {
+    return /* HTML */ `<div class="reset-urgency flex show-for-editing disNone">
         <div class="choose-prio-container">
             <div class="choose-prio-button flex flex-center prio-high-button ${allTaskObjects[index].urgency === "high" ? "prio-high-button-bg-color chosen-urgency" : ""}" onclick="chooseUrgencyOverlay(event)" data-resetUrgency="high">
                 <span id="prio-high-overlay" class="flex flex-center">Urgent</span>
@@ -205,29 +140,7 @@
             </div>
         </div>
     </div>`;
-} */
-
-/**
- * 
- * @param {number} index is the tasks index in the @param allTaskObjects array.
- * If the index >= 0, the locally defined array @param yearMonthDay is given an array with the values of year month and day.
- * @returns either an HTML-string with the <p>-tag containing the day (yearMonthDay[2]), month (yearMonthDay[1]) and year (yearMonthDay[0]) seperated by slashes or
- * a <p>-tag containig a 0, when no Date is given to the task.
- * When the index is -1, no index is given to the function and the value of the date-input-field of the add-task-overlay is being returned.
- */
-/* function getDate(index = -1) {
-    let yearMonthDay;
-    if(index > -1) {
-        if(allTaskObjects[index].date) {
-            yearMonthDay = allTaskObjects[index].date.split('-');
-            return '<p>'+yearMonthDay[2]+'/'+yearMonthDay[1]+'/'+yearMonthDay[0]+'</p>';
-        }else {
-            return `<p>0</p>`;
-        }
-    }else {
-        return document.querySelector(('#date-input-add')).value;
-    }
-} */
+}
 
 /**
  * 
@@ -235,8 +148,8 @@
  * @returns an HTML-string containing the participants of the task and the first hidden elements for adding/deleting new participants when the task is being
  * edited.
  */
-/* function renderParticipantsBlockIntoOverlay(index) {
-    return `
+function renderParticipantsBlockIntoOverlay(index) {
+    return /* HTML */ `
     <div class="flex flex-column hide-for-editing ${allTaskObjects[index].participants.length > 0 ? "" : "disNone"}">
         <p style="font-size: 20px;">Assigned to</p>
         <ul class="chosen-list front flex-column">${renderChosenListFrontOverlay(index)}</ul>
@@ -254,39 +167,39 @@
         </div>
         <ul class="chosen-list back flex flex-center">${renderChosenListBackOverlay(index)}</ul>
     </div>`;
-} */
+}
 
 /**
  * 
  * This function renders the list of newly chosen participants into the front of the task-overlay.
  */
-/* function renderChosenListFrontOverlay(index) {
+function renderChosenListFrontOverlay(index) {
     let list = "";
     if(allTaskObjects[index].participants) {
         let elem = allTaskObjects[index].participants;
         for(let i=0; i<allTaskObjects[index].participants.length; i++) {
-            list += `<li class="flex flex-center"><div class="flex flex-center circle" style="background-color: ${elem[i].color}"><p>${elem[i].sureName ? elem[i].sureName[0] : ""}${elem[i].lastName ? elem[i].lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem[i].sureName ? elem[i].sureName : ""} ${elem[i].lastName ? elem[i].lastName : ""}<br>Click icon to remove</p></div></div><p>${elem[i].sureName ? elem[i].sureName : ""} ${elem[i].lastName ? elem[i].lastName : ""}</p></li>`;
+            list += /* HTML */ `<li class="flex flex-center"><div class="flex flex-center circle" style="background-color: ${elem[i].color}"><p>${elem[i].sureName ? elem[i].sureName[0] : ""}${elem[i].lastName ? elem[i].lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem[i].sureName ? elem[i].sureName : ""} ${elem[i].lastName ? elem[i].lastName : ""}<br>Click icon to remove</p></div></div><p>${elem[i].sureName ? elem[i].sureName : ""} ${elem[i].lastName ? elem[i].lastName : ""}</p></li>`;
         }
     }
     return list;
-} */
+}
 
 /**
  * 
  * @param {number} index is the index of the task in @param {array} allTaskObjects
  * @returns an HTML-string with all the Subtasks and their at the beginning invisible edeting-elements to the task-overlay.
  */
-/* function getSubtasksOverlay(index) {
+function getSubtasksOverlay(index) {
     let input = "";
     let inputLabel = "";
     if(allTaskObjects[index].subTasks) {
         allTaskObjects[index].subTasks.forEach((elem, j)=>{
             input = `<input id="checkbox${index}${j}" type="checkbox" ${elem.subTaskDone === 1 ? 'checked' : ''} onmouseup="actualizeSubtaskStatus(event, ${index}, ${j})">`;
-            inputLabel += `<div class="flex-center" style="width: 100%; justify-content: flex-start;"><div class="subtask-check flex">${input}<p for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</p></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" style="width: 18px; height: 18px;" onclick="deleteSubtask(${index}, ${j})"></div>`;
+            inputLabel += /* HTML */ `<div class="flex-center" style="width: 100%; justify-content: flex-start;"><div class="subtask-check flex">${input}<p for="checkbox${index}${j}">${allTaskObjects[index].subTasks[j].subTaskTitle}</p></div><img class="show-for-editing disNone" src="./assets/img/delete.svg" alt="" style="width: 18px; height: 18px;" onclick="deleteSubtask(${index}, ${j})"></div>`;
         })
         inputLabel = `<div class="hide-for-editing"><p class='${allTaskObjects[index].subTasks.length > 0 ? "" : "disNone"}'>Subtasks</p><div class="subtasks"><div class="flex flex-center show-for-editing disNone" style="column-gap: 20px;"></div>${inputLabel}</div></div>`;
     }
-    return `<div class="flex flex-column" stlye="justify-content: space-between;">
+    return /* HTML */ `<div class="flex flex-column" stlye="justify-content: space-between;">
         <div class="flex flex-center show-for-editing disNone" style="column-gap: 20px; width: 100%;">
             <div id="substasks-container" class="flex-column">
                 <span class="subtitle">Subtasks</span>
@@ -312,18 +225,18 @@
             </div>
         </div>
     </div>`+inputLabel;
-} */
+}
 
 /**
  * 
  * @param {number} index is the index of the task in @param {array} allTaskObjects
  * This function renders the subtask-list of the task-overlay.
  */
-/* function renderSubtaskListOverlay(index) {
+function renderSubtaskListOverlay(index) {
     let list = "";
     newSubtaskList = structuredClone(allTaskObjects[index].subTasks);
     allTaskObjects[index].subTasks.forEach((elem, i)=>{
-        list += `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
+        list += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
             <p class="subtask-title-p-overlay subtask-title-p-overlay-${i}">${elem.subTaskTitle}</p>
             <div class="pen-bin-subtask-overlay pen-bin-subtask flex flex-center" id="pen-bin-subtask-overlay-${i}">
                 <img src="./assets/img/pen.svg" alt="" onclick="editSubtaskOverlay(${index}, ${i})">
@@ -339,7 +252,7 @@
         </li>`
     })
     return list;
-} */
+}
 
 /**
  * 
@@ -347,7 +260,7 @@
  * @returns an HTML-string of each contact so that you get the clickable contact-object of
  * the contact-list in each the editing- and adding-overlay.
  */
-/* function renderContactListOverlay(index) {
+function renderContactListOverlay(index) {
     //document.querySelector('.overlay-card .contact-list').innerHTML = '';
     let list = "";
     allContactsObjects.forEach((elem, i)=>{
@@ -361,7 +274,7 @@
         </div>`;
     })
     return list;
-} */
+}
 
 /**
  * 
@@ -371,7 +284,7 @@
  * When the contact-id of a participant in task of index @var index is the same as
  * the @param id, the participant is chosen for that task and the function returns true - else false.
  */
-/* function preselectParticipantsinContactListOverlay(index, id) {
+function preselectParticipantsinContactListOverlay(index, id) {
     for(let i=0; i<allContactsObjects.length; i++) {
         for(let j=0; j<allTaskObjects[index].participants.length; j++) {
             if(id === allTaskObjects[index].participants[j].contactId) {
@@ -383,28 +296,49 @@
             }
         }
     }
-} */
+}
 
 /**
  * 
  * @param {number} index is the index of the task in @param {array} allTaskObjects
- * This function renders editing and delete button at the bottom right of the task-overlay.
- * The @param index is given so that the @function deleteTask knows which task to be removed.
- * 
+ * @param {nunber} j is the index of the subtask
+ * This function sets the new state of the clicked subtask.
  */
-/* function renderEditDelete(index) {
-    return `
-    <div class="delete flex hide-for-editing" onclick="deleteTask(${index})">
-        <img src="./assets/img/bin.svg" alt="">
-        <p>Delete</p>
-    </div>
-    <div class="separator hide-for-editing"></div>
-    <div class="edit flex hide-for-editing" onclick="showEditingElements()">
-        <img src="./assets/img/pen.svg" alt="">
-        <p>Edit</p>
-    </div>
-    <div class="recreate-task flex flex-center show-for-editing disNone" onclick="actualizeTask(${index})">
-        <p>Ok</p>
-        <img src="../../assets/img/check-icon.svg" alt="">
-    </div> `;
-} */
+function actualizeSubtaskStatus(event, i, j) {
+    event.stopPropagation();
+    if(allTaskObjects[i].subTasks[j].subTaskDone === 1) {
+        allTaskObjects[i].subTasks[j].subTaskDone = 0;
+    }else {
+        allTaskObjects[i].subTasks[j].subTaskDone = 1;
+    }
+    collectNotDeletedTasks();
+    reRenderTasks();
+}
+
+/**
+ * 
+ * The @function closeOverlay closes the editing-overlay without setting the values
+ * of the editing-elements to the clicked task. Therefore no data is sent to the FTP as well.
+ */
+function closeOverlay(index) {
+    hideEditingElements();
+    document.querySelector('.tasks-overlay').classList.add('disNone');
+}
+
+/**
+ * 
+ * This function shows all editing elements in the task-overlay.
+ */
+function showEditingElements() {
+    document.querySelectorAll('.hide-for-editing').forEach((el)=>{el.classList.add('disNone')});
+    document.querySelectorAll('.show-for-editing').forEach((el)=>{el.classList.remove('disNone')});
+}
+
+/**
+ * 
+ * This function hides all editing elements in the task-overlay.
+ */
+function hideEditingElements() {
+    document.querySelectorAll('.hide-for-editing').forEach((el)=>{el.classList.remove('disNone')});
+    document.querySelectorAll('.show-for-editing').forEach((el)=>{el.classList.add('disNone')});
+}

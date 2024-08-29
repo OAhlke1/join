@@ -1,5 +1,108 @@
 /**
  * 
+ * @param {event} event of the event target.
+ * Once the task is moved over another column, the previous column (the event target)
+ * The grey background of that column is being removed once the dragged task is dragged away from it.
+ */
+function unhighlightColumn(event) {
+    let unHighlighted = document.querySelector('.highlighted');
+    unHighlighted.classList.remove('highlighted');
+}
+
+/**
+ * 
+ * The shiftParticipants shifts each participant circle over the last one for 7 pixels to the left
+ * The outer forEach-loop iterates through all task-cards and has the parameter @param {node} elem
+ *      which is given a new task-card with each iteration
+ * Then a new querySelectorAll for the tasks participants is appended to @param elem - now only the participants
+ *      of the actual task are considered. Because with a querySelector for all participants appended
+ *      to the document, each participant of each task
+ *      would have been taken.
+ * You have to shift each participant to the right of 7px times the participants index @param i
+ *      Otherwise every participant would have shifted leftwards by 7px and there would be no overlapping
+ * 
+ */
+function shiftParticipantCirclesInTask() {
+    document.querySelectorAll('main .boardCont .board .board-column .column-card-cont .task').forEach((elem) => {
+        elem.querySelectorAll(' .participants-and-urgency .participants .participant').forEach((el, i)=>{
+            el.style.left = `${-7*i}px`;
+        })
+    })
+}
+
+function getDate(index = -1) {
+    let yearMonthDay;
+    if(index > -1) {
+        if(allTaskObjects[index].date) {
+            yearMonthDay = allTaskObjects[index].date.split('-');
+            return '<p>'+yearMonthDay[2]+'/'+yearMonthDay[1]+'/'+yearMonthDay[0]+'</p>';
+        }else {
+            return `<p>0</p>`;
+        }
+    }else {
+        return document.querySelector(('#date-input-add')).value;
+    }
+}
+
+/**
+ * 
+ * @param {number} index is the index of the task in @param {array} allTaskObjects
+ * This function renders editing and delete button at the bottom right of the task-overlay.
+ * The @param index is given so that the @function deleteTask knows which task to be removed.
+ * 
+ */
+function renderEditDelete(index) {
+    return `
+    <div class="delete flex hide-for-editing" onclick="deleteTask(${index})">
+        <img src="./assets/img/bin.svg" alt="">
+        <p>Delete</p>
+    </div>
+    <div class="separator hide-for-editing"></div>
+    <div class="edit flex hide-for-editing" onclick="showEditingElements()">
+        <img src="./assets/img/pen.svg" alt="">
+        <p>Edit</p>
+    </div>
+    <div class="recreate-task flex flex-center show-for-editing disNone" onclick="actualizeTask(${index})">
+        <p>Ok</p>
+        <img src="../../assets/img/check-icon.svg" alt="">
+    </div> `;
+}
+
+/**
+ * 
+ * @param {number} i is the index of the subtask
+ * This function fades in the pen and bin button of the subtask the cursor is hovering over.
+ */
+function fadeInPenBin(i) {
+    let liTag = document.querySelector(`#subtask-li-${i}`);
+    liTag.classList.remove('fade-out-pen-bin');
+    liTag.classList.add('fade-in-pen-bin');
+}
+
+/**
+ * 
+ * @param {number} i is the index of the subtask
+ * This function fades out the pen and bin button of the subtask the cursor is hovering over.
+ */
+function fadeOutPenBin(i) {
+    let liTag = document.querySelector(`#subtask-li-${i}`);
+    liTag.classList.add('fade-out-pen-bin');
+    liTag.classList.remove('fade-in-pen-bin');
+}
+
+/**
+ * 
+ * @param {string} dateString is the date-string stored in the task-object
+ * @returns 
+ */
+function restyleDateString(dateString) {
+    dateString = dateString.split('-');
+    dateString = dateString[2]+'/'+dateString[1]+'/'+dateString[0];
+    return dateString;
+}
+
+/**
+ * 
  * searchTasks takes the value of the search-input-field and goes threw every task
  *      checking if the value in the
  *          task title
@@ -13,7 +116,7 @@
  * The function actually checks the objects containing the task infos and then, when nothing is found,
  *      blanks out the task-card with the data-taskIndex of the index @param i
  */
-/* function searchTasks() {
+function searchTasks() {
     for(let i=0; i<allTaskObjects.length; i++) {
         if(allTaskObjects[i].taskTitle.toUpperCase().indexOf(searchBar.value.toUpperCase()) === -1) { //check if task title includes input value
             if(allTaskObjects[i].taskDescrip.toUpperCase().indexOf(searchBar.value.toUpperCase()) === -1) { //check if task description includes input value
@@ -21,7 +124,7 @@
             }else {document.querySelector(`.board .task[data-taskindex="${i}"]`).classList.remove('disNone');}
         }else {document.querySelector(`.board .task[data-taskindex="${i}"]`).classList.remove('disNone');}
     }
-} */
+}
 
 /**
  * 
@@ -29,7 +132,7 @@
  * @function addNewTask takes all the values set by the add-task-overlay and puts them into
  * the @var newTask which is then pushed to @var allTaskObjects
  */
-/* function addNewTask(event) {
+function addNewTask(event) {
     event.preventDefault();
     let newTask = {
         taskId: Math.random(),
@@ -48,16 +151,16 @@
     renderNewTask(allTaskObjects.length-1);
     closeOverlayAdd();
     fadeInTaskAdded();
-} */
+}
 
 /**
  * 
  * @param {number} index is the index of the newly created task.
  * @function renderNewTask renderes the new task into the board.
  */
-/* function renderNewTask(index) {
+function renderNewTask(index) {
     let elem = allTaskObjects[index];
-    let card = `<div class="task flex-column" draggable="true" data-taskType="${elem.taskType}" data-taskIndex="${index}" onclick="renderTaskIntoOverlay(${index})">
+    let card = /* HTML */ `<div class="task flex-column" draggable="true" data-taskType="${elem.taskType}" data-taskIndex="${index}" onclick="renderTaskIntoOverlay(${index})">
         <div class="task-category flex-center" style="background-color: ${allTaskObjects[index].category === 'User Story' ? '#00338f' : '#1fd7c1'};"><p>${elem.category}</p></div>
         <div class="headlineDescription flex-column">
             <h2>${elem.taskTitle}</h2>
@@ -76,13 +179,13 @@
     showHideGreyTaskCards();
     setDragDrop();
     collectNotDeletedTasks();
-} */
+}
 
 /**
  * 
  * @function collectNotDeletedTasks collects all tasks which deleted-state is 0.
  */
-/* function collectNotDeletedTasks() {
+function collectNotDeletedTasks() {
     notDeletedTasks = [];
     for(let i=0; i<allTaskObjects.length; i++) {
         if(!allTaskObjects[i].deleted) {
@@ -90,7 +193,7 @@
         }
     }
     getActualTaskStateOfRemote();
-} */
+}
 
 /**
  * 
@@ -98,7 +201,7 @@
  * It is necessary for not reuploading a task that has been possibly deleted by another user or to see
  * if a certain task has been edited by someone else.
  */
-/* async function getActualTaskStateOfRemote() {
+async function getActualTaskStateOfRemote() {
     let response = await fetch(tasksURL+'.json');
     response = await response.json();
     actualTasksOnRemote = [];
@@ -111,13 +214,13 @@
         notDeletedTasks = allTaskObjects;
         repostTasks();
     }
-} */
+}
 
 /**
  * 
  * @function actualizeNotDeletedTasks checks wether a task has been recently removed or edited by another member.
  */
-/* function actualizeNotDeletedTasks() {
+function actualizeNotDeletedTasks() {
     for(let i=0; i<actualTasksOnRemote.length; i++) {
         for(let j=0; j<notDeletedTasks.length; j++) {
             if(actualTasksOnRemote[i].taskId === notDeletedTasks[j].taskId) {
@@ -128,13 +231,13 @@
         }
     }
     repostTasks();
-} */
+}
 
 /**
  * 
  * @function repostTasks then reposts the not deleted tasks.
  */
-/* async function repostTasks() {
+async function repostTasks() {
     let response = await fetch(tasksURL+'.json', {
         method: 'PUT',
         headers: {
@@ -142,93 +245,47 @@
         },
         body: JSON.stringify(notDeletedTasks)
     });
-} */
+}
 
 /**
  * 
  *  @function fadeInTaskAdded adds the class 'added' to @var taskAddedElem to fade it in via CSS.
  */
-/* function fadeInTaskAdded() {
+function fadeInTaskAdded() {
     taskAddedElem.classList.remove('disNone');
     taskAddedElem.classList.remove('not-added');
     taskAddedElem.classList.add('added');
     setTimeout(fadeOutTaskAdded, 1000);
-} */
+}
 
 /**
  * 
  *  @function fadeOutTaskAdded removes the class 'added' and adds the class 'not-added' to @var taskAddedElem to fade it out via CSS.
  */
-/* function fadeOutTaskAdded() {
+function fadeOutTaskAdded() {
     taskAddedElem.classList.remove('added');
     taskAddedElem.classList.add('not-added');
     setTimeout(()=>{
         taskAddedElem.classList.add('disNone');
     }, 700);
-} */
+}
 
 /**
  * 
  * The keyup-event is added to the body of the page so that one can close the ovelays also by pressing the escape-key.
  */
-/* document.querySelector('body').addEventListener('keyup', (event)=>{
+document.querySelector('body').addEventListener('keyup', (event)=>{
     if(event.key === "Escape") {
         closeOverlay(+document.querySelector('.overlay-card').getAttribute('data-taskindex'));
         closeOverlayAdd();
     }
-}) */
-
-/**
- * 
- * @function setFocusOutFunctionsInputAdd sets the functions for the @event focusout of the input-fields of the add-task-overlay.
- * It is for hiding each box that opens, when an input-field is focused. And it also rotates back their triangles.
- */
-/* function setFocusOutFunctionsInputAdd() {
-    document.querySelector('.add-task-overlay-box .search-contacts').addEventListener('focusout', ()=>{
-        document.querySelector('.add-task-overlay-box .contact-list').classList.add('disNone');
-        document.querySelector('.add-task-overlay-box .search-contacts').parentNode.querySelector('.triangle').classList.remove('rotated');
-    })
-    document.querySelector('#choose-subtasks-add').addEventListener('focusout', ()=>{
-        if(document.querySelector('#choose-subtasks-add').value === "") {
-            hideCrossTicAdd();
-        }
-    })
-} */
-
-/**
- * 
- * @function setFocusOutFunctionSubtaskInputOverlay sets the functions for the @event focusout of the input-fields of the edit-task-overlay.
- */
-/* function setFocusOutFunctionSubtaskInputOverlay() {
-    document.querySelector('#choose-subtasks-overlay').addEventListener('focusout', ()=>{
-        if(document.querySelector('#choose-subtasks-overlay').value === "") {
-            hideCrossTicOverlay();
-        }else {
-            document.querySelector('.overlay-card .subtask-input').style.border = '1px solid #d1d1d1';
-        }
-    })
-} */
+})
 
 /**
  * 
  * Here the body gets an event handler that starts the function which hides all
  * Lists on the overlay for adding a task.
  */
-/* document.querySelector('body').addEventListener('click', (event)=>{
+document.querySelector('body').addEventListener('click', (event)=>{
     hideAllListsAdd(event);
-}) */
-
-/**
- * 
- * @param {event} event the click-event fired to the body.
- * @returns 
- */
-/* function hideAllListsAdd(event) {
-    let target = event.target;
-    if(target.classList.contains('category') || target.classList.contains('category-name') || target.classList.contains('categories') || target.classList.contains('contacts') || target.classList.contains('contacts-inner') || target.classList.contains('search-contacts')) {
-        return;
-    }else {
-        document.querySelector('.contact-list').classList.add('disNone');
-        document.querySelector('.categories-list').classList.add('disNone');
-    }
-} */
+})

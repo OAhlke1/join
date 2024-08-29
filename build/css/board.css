@@ -845,6 +845,15 @@ main .boardCont .board .board-column .column-card-cont .task .participants-and-u
     white-space: nowrap;
 }
 
+.add-task-overlay-box .select-container.categories {
+    padding: 0 16px;
+}
+
+.add-task-overlay-box .category-name {
+    height: 100%;
+    border-radius: 0;
+}
+
 .add-task-overlay-box .category-name:focus {
     outline: none !important;
 }
