@@ -223,8 +223,8 @@ header {
 }
 
 .help {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     margin-right: 20px;
 }
 
@@ -334,6 +334,10 @@ button {
 
 .active {
     background-color: #2A3D59;
+}
+
+.help-desktop {
+    padding-top: 5px;
 }
 
 @media (max-width: 1280px) {
