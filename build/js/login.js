@@ -195,7 +195,7 @@ function rememberMe() {
 
 /**
  *
- * Check if the user already exists and prove the data that put in the fields
+ * Check if the user already exists and save the data if not
  *
  */
 async function checkSignUp() {
@@ -323,12 +323,10 @@ function validateName() {
   if (!nameRegex.test(name)) {
     error.classList.remove("visNone");
     addWrongValidation("name");
-    console.log(validationStatus);
     button.setAttribute("disabled", "true");
   } else {
     error.classList.add("visNone");
     removeWrongValidation("name");
-    console.log(validationStatus);
     acceptPolicy();
   }
 }
@@ -346,12 +344,10 @@ function validateEmail() {
   if (!emailRegex.test(email)) {
     error.classList.remove("visNone");
     addWrongValidation("email");
-    console.log(validationStatus);
     button.setAttribute("disabled", "true");
   } else {
     error.classList.add("visNone");
     removeWrongValidation("email");
-    console.log(validationStatus);
     acceptPolicy();
   }
 }
