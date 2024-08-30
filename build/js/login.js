@@ -200,13 +200,6 @@ function rememberMe() {
  */
 async function checkSignUp() {
   document.getElementById("sign-error-message").innerHTML = "";
-  if (
-    signUserName.value !== "" &&
-    signUserEmail.value !== "" &&
-    signUserPassword.value !== "" &&
-    signUserPasswordConfirm.value !== ""
-  ) {
-    if (signUserPassword.value === signUserPasswordConfirm.value) {
       let sureLastName = signUserName.value.split(" ");
       userId = Math.random();
       userColor = `#${Math.round(255 * Math.random()).toString(16)}${Math.round(
@@ -219,7 +212,6 @@ async function checkSignUp() {
         userId: userId,
         userColor: userColor,
       };
-      console.log(userId);
       newContact = {
         contactId: userId,
         sureName: sureLastName.length === 2 ? sureLastName[0] : "",
@@ -243,14 +235,6 @@ async function checkSignUp() {
         signUp(data);
         fadeInConfirmationSign();
       }
-    } else {
-      document.getElementById("sign-error-message").innerHTML =
-        "Your passwords don't match. Please try again.";
-    }
-  } else {
-    document.getElementById("sign-error-message").innerHTML =
-      "Something missed! Please fill all fields";
-  }
 }
 
 async function postNewContact() {
@@ -293,8 +277,7 @@ function acceptPolicy() {
   let checkBox = document.getElementById("acceptPp");
   let button = document.getElementById("signInButton");
 
-  if (
-    checkBox.checked === true && validationStatus.length < 1) {
+  if (checkBox.checked === true && validationStatus.length < 1) {
     button.removeAttribute("disabled");
   } else {
     button.setAttribute("disabled", "true");
@@ -356,7 +339,7 @@ function validateName() {
  *
  */
 function validateEmail() {
-    let button = document.getElementById("signInButton");
+  let button = document.getElementById("signInButton");
   let error = document.getElementById("error-message-email");
   let email = document.getElementById("mail-signin").value;
   let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -379,7 +362,7 @@ function validateEmail() {
  *
  */
 function checkPasswordInput() {
-    let button = document.getElementById("signInButton");
+  let button = document.getElementById("signInButton");
   let password = document.getElementById("password-signin");
   let passwordConfirm = document.getElementById("confirm-passwordsignin");
   let error = document.getElementById("sign-error-message");
@@ -387,38 +370,40 @@ function checkPasswordInput() {
     if (password.value !== passwordConfirm.value) {
       error.classList.remove("visNone");
       addWrongValidation("password");
-      console.log(validationStatus);
       button.setAttribute("disabled", "true");
     } else {
       error.classList.add("visNone");
       removeWrongValidation("password");
-      console.log(validationStatus);
       acceptPolicy();
     }
   }
 }
 
 /**
- * 
+ *
  * If validation is succesfull, the value from array removed
- * 
- * @param {string} searchString 
+ *
+ * @param {string} searchString
  */
 function removeWrongValidation(searchString) {
-  const index = validationStatus.findIndex((element) => element === searchString);
+  const index = validationStatus.findIndex(
+    (element) => element === searchString
+  );
   if (index !== -1) {
     validationStatus.splice(index, 1);
   }
 }
 
 /**
- * 
+ *
  * If validation failed, the value pusht into array
- * 
- * @param {string} searchString 
+ *
+ * @param {string} searchString
  */
 function addWrongValidation(searchString) {
-  const index = validationStatus.findIndex((element) => element === searchString);
+  const index = validationStatus.findIndex(
+    (element) => element === searchString
+  );
   if (index === -1) {
     validationStatus.push(searchString);
   }
