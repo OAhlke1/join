@@ -383,6 +383,7 @@ function deleteContact(index) {
   // showContacts.innerHTML = "";
   toggleInfoContact = false;
   // getContacts()
+  repostTasks();
   renderIntoLetterBox();
   showHideContactNames()
 }
@@ -403,5 +404,4 @@ function deleteContactFromAllTasks(id) {
       }
     }
   }
-  repostTasks();
 }

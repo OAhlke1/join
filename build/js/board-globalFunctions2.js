@@ -11,16 +11,8 @@ function unhighlightColumn(event) {
 
 /**
  * 
- * The shiftParticipants shifts each participant circle over the last one for 7 pixels to the left
- * The outer forEach-loop iterates through all task-cards and has the parameter @param {node} elem
- *      which is given a new task-card with each iteration
- * Then a new querySelectorAll for the tasks participants is appended to @param elem - now only the participants
- *      of the actual task are considered. Because with a querySelector for all participants appended
- *      to the document, each participant of each task
- *      would have been taken.
- * You have to shift each participant to the right of 7px times the participants index @param i
- *      Otherwise every participant would have shifted leftwards by 7px and there would be no overlapping
- * 
+ * @function shiftParticipants shifts each participant circle in the draggable task card
+ * over the previous one for 7 pixels
  */
 function shiftParticipantCirclesInTask() {
     document.querySelectorAll('main .boardCont .board .board-column .column-card-cont .task').forEach((elem) => {
