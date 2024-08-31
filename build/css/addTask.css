@@ -208,11 +208,15 @@ h1 {
     background-color: #7ae229 !important;
 }
 
-.prio-low-button-bg-color, .prio-medium-button-bg-color, .prio-high-button-bg-color {
+.prio-low-button-bg-color,
+.prio-medium-button-bg-color,
+.prio-high-button-bg-color {
     color: white !important;
 }
 
-.prio-low-button-bg-color svg path, .prio-medium-button-bg-color svg path, .prio-high-button-bg-color svg path {
+.prio-low-button-bg-color svg path,
+.prio-medium-button-bg-color svg path,
+.prio-high-button-bg-color svg path {
     fill: white;
 }
 
@@ -385,11 +389,13 @@ h1 {
     color: #ff8190;
 }
 
-.contacts, .categories {
+.contacts,
+.categories {
     background-color: white;
 }
 
-.contacts .contacts-inner, .categories .categories-inner {
+.contacts .contacts-inner,
+.categories .categories-inner {
     justify-content: space-between;
     width: 100%;
 }
@@ -412,7 +418,8 @@ h1 {
     font-size: 20px;
 }
 
-.contact-list, .categories-list {
+.contact-list,
+.categories-list {
     width: 100%;
     max-height: 200px;
     position: absolute;
@@ -425,7 +432,8 @@ h1 {
     z-index: 500;
 }
 
-.contact-list .contact, .categories-list .category {
+.contact-list .contact,
+.categories-list .category {
     justify-content: space-between;
     padding: 4px 18px;
     border-radius: 8px;
@@ -436,11 +444,13 @@ h1 {
     column-gap: 15px;
 }
 
-.contact-list .contact:hover, .categories-list .category:hover {
+.contact-list .contact:hover,
+.categories-list .category:hover {
     background-color: #d1d1d1;
 }
 
-.circle, .contact-list .contact .circle {
+.circle,
+.contact-list .contact .circle {
     min-width: 32px;
     height: 32px;
     aspect-ratio: 1 / 1;
@@ -448,7 +458,8 @@ h1 {
     background-color: green;
 }
 
-.circle p, .contact-list .contact .circle p {
+.circle p,
+.contact-list .contact .circle p {
     font-size: 12px;
     color: white;
     width: fit-content;
@@ -501,7 +512,8 @@ h1 {
     background-color: white;
 }
 
-.clear-subtask-input, .add-task {
+.clear-subtask-input,
+.add-task {
     width: fit-content;
 }
 
@@ -707,12 +719,18 @@ h1 {
     }
 }
 
+@media (max-width: 1340px) {
+    .headline-form {
+        margin-left: 48px;
+    }
+}
+
 @media (max-width: 1280px) {
     .headline-form {
         margin-left: 0;
     }
 
-    .headline-form > h1 {
+    .headline-form>h1 {
         align-self: center;
     }
 
@@ -734,7 +752,7 @@ h1 {
         width: fit-content;
         height: fit-content;
     }
-    
+
     .form-center {
         flex-direction: column;
         align-items: center;
@@ -766,7 +784,18 @@ h1 {
         width: 90%;
     }
 
-    #content-box-left, #content-box-right, #prio-container, #category-container, #substasks-container, #title-input-add, #task-descrip-add, #date-input, #choose-prio-container, .subtask-input, #title-container, #title-input-container   {
+    #content-box-left,
+    #content-box-right,
+    #prio-container,
+    #category-container,
+    #substasks-container,
+    #title-input-add,
+    #task-descrip-add,
+    #date-input,
+    #choose-prio-container,
+    .subtask-input,
+    #title-container,
+    #title-input-container {
         width: 60vw;
         height: auto;
     }
@@ -790,7 +819,22 @@ h1 {
         background-color: transparent;
     }
 
-    .form-center #content-box-left, .form-center #content-box-right, .form-center #prio-container, .form-center #category-container, .form-center #date-container, .form-center #calender, .form-center #description-container, #textarea-container, .form-center #substasks-container, .form-center #title-input-add, .form-center #task-descrip-add, .form-center #date-input, .form-center #choose-prio-container, .form-center .subtask-input, .form-center #title-container, .form-center #title-input-container   {
+    .form-center #content-box-left,
+    .form-center #content-box-right,
+    .form-center #prio-container,
+    .form-center #category-container,
+    .form-center #date-container,
+    .form-center #calender,
+    .form-center #description-container,
+    #textarea-container,
+    .form-center #substasks-container,
+    .form-center #title-input-add,
+    .form-center #task-descrip-add,
+    .form-center #date-input,
+    .form-center #choose-prio-container,
+    .form-center .subtask-input,
+    .form-center #title-container,
+    .form-center #title-input-container {
         width: 90vw;
         height: auto;
     }
@@ -799,7 +843,8 @@ h1 {
         font-size: 16px !important;
     }
 
-    input, textarea {
+    input,
+    textarea {
         font-size: 16px !important;
     }
 
