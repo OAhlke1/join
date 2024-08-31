@@ -97,6 +97,7 @@ function shrinkLogoBig(p = 1000) {
 function showLogInForm() {
   document.querySelector("#login").classList.remove("disNone");
   document.querySelector("#signup").classList.add("disNone");
+  document.querySelector(".sign-up").classList.remove("disNone");
   if (window.innerWidth <= 768) {
     document.querySelector(".sign-up-mobile").classList.remove("disNone");
   }
@@ -109,6 +110,7 @@ function showLogInForm() {
 function showSignUpForm() {
   document.querySelector("#login").classList.add("disNone");
   document.querySelector("#signup").classList.remove("disNone");
+  document.querySelector(".sign-up").classList.add("disNone");
   if (window.innerWidth <= 768) {
     document.querySelector(".sign-up-mobile").classList.add("disNone");
   }
