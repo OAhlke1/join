@@ -458,8 +458,10 @@ align-items: end;
   }
 
   .informationPopUp {
-    height: 100vh;
-    margin: -30px;
+    height: calc(100vh - 192px);
+    margin: 0 -30px -30px -30px;
+    position: absolute;
+    overflow: scroll;
   }
 }
 
@@ -570,6 +572,17 @@ align-items: end;
     width: 256px;
     height: fit-content;
     overflow-y: scroll;
+  }
+
+  .informationPopUp .flex-center.bigSize.profileImage {
+    min-width: 80px !important;
+    height: 80px !important;
+  }
+
+  .showContactName span {
+    font-size: 16px !important;
+    word-break: break-word;
+    white-space: wrap;
   }
 
   .editContactMainContainer {
