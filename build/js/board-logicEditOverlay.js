@@ -59,6 +59,9 @@ function searchForContactsOverlay(event) {
  */
 function renderChosenListBackOverlay(index) {
     let list = "";
+    if(!localStorage.UserId) {
+        return `<span class='asterisk' style='font-size: 16px; text-align: center;'>Contact-List is not visible for guests.</span>`;
+    }
     allTaskObjects[index].participants.forEach((elem, i)=>{
         list += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
     })
@@ -96,6 +99,9 @@ function selectContactOverlay(event, index) {
  */
 function reRenderChosenListBackOverlay(index) {
     let list = "";
+    if(!localStorage.UserId) {
+        return `<span class='asterisk' style='font-size: 16px; text-align: center;'>Contact-List is not visible for guests.</span>`;
+    }
     newParticipantsOverlay.forEach((elem, i)=>{
         list += /* HTML */ `<li><div class="flex flex-center circle" onclick="removeParticipantOverlay(${index}, ${i})" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p><div class="name-block${i} name-block disNone"><p style="text-align: center;">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div></div></li>`;
     })

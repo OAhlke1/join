@@ -175,6 +175,9 @@ function renderParticipantsBlockIntoOverlay(index) {
  */
 function renderChosenListFrontOverlay(index) {
     let list = "";
+    if(!localStorage.UserId) {
+        return `<span class='asterisk' style='font-size: 16px; text-align: center;'>Contact-List is not visible for guests.</span>`;
+    }
     if(allTaskObjects[index].participants) {
         let elem = allTaskObjects[index].participants;
         for(let i=0; i<allTaskObjects[index].participants.length; i++) {
@@ -263,6 +266,9 @@ function renderSubtaskListOverlay(index) {
 function renderContactListOverlay(index) {
     //document.querySelector('.overlay-card .contact-list').innerHTML = '';
     let list = "";
+    if(!localStorage.UserId) {
+        return `<span class='asterisk' style='font-size: 16px; text-align: center;'>Contact-List is not visible for guests.</span>`;
+    }
     allContactsObjects.forEach((elem, i)=>{
         list += `<div class="flex flex-center contact ${preselectParticipantsinContactListOverlay(index, elem.contactId) ? 'chosen' : ''}" data-contactindex="${i}" onmousedown="selectContactOverlay(event, ${index})">
             <div class="flex flex-center contact-left"><div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p></div><p class="contact-name">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""} ${localStorage.UserId == elem.contactId ? '(You)' : ''}</p></div>

@@ -250,6 +250,9 @@ function reRenderTasks() {
  */
 function getParticipantsHtml(index) {
     let pList = "";
+    if(!localStorage.UserId) {
+        return "";
+    }
     for(let i=0; i<allTaskObjects[index].participants.length; i++) {
         if(!allTaskObjects[index].participants[i].lastName) {
             pList += `<div class="participant flex-center" style="background-color: ${allTaskObjects[index].participants[i].color}"><p class="initials">${allTaskObjects[index].participants[i].sureName[0]}</p></div>`;
