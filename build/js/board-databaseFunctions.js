@@ -163,6 +163,10 @@ function checkNewTaskType(event, index) {
  */
 function resetTaskStatus(event, index, statusName) {
     event.stopPropagation();
+    if(!localStorage.UserId) {
+        alert('Guest are not allowed to edit tasks');
+        return;
+    }
     let oldStatus = allTaskObjects[index].taskType;
     document.querySelector(`.task[data-taskindex="${index}"]`).innerHTML = "";
     allTaskObjects[index].taskType = statusName;

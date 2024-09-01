@@ -16,13 +16,3 @@ let urgencyHigh = /* HTML */ `<div class="urgency-icon"><svg width="18" height="
 let doneCount = 0;
 let selectedPrio = "medium";
 let taskAddedElem = document.querySelector('.task-added');
-
-async function removeAllTask() {
-    let res = await fetch(tasksURL+'.json', {
-      method: 'PUT',
-          Headers: {
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify([])
-    })
-  }

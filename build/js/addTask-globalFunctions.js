@@ -105,6 +105,10 @@ function sortContacts() {
  */
 function renderContactList() {
     selectContacts.innerHTML = /* HTML */ ``;
+    if(!localStorage.UserId) {
+        selectContacts.innerHTML = `<span class='asterisk' style='font-size: 16px; text-align: center;'>Contact-List is not visible for guests.</span>`;
+        return;
+    }
     allContactsObjects.forEach((elem, i)=>{
         selectContacts.innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContact(event)">
         <div class="flex flex-center contact-left">

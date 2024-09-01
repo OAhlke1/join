@@ -60,6 +60,10 @@ function clearForm(event) {
  */
 function addTask(event) {
     event.preventDefault();
+    if(!localStorage.UserId) {
+        alert('Guest are not allowed to create tasks');
+        return;
+    }
     newTask = {
         taskTitle: document.getElementById("title-input-add").value,
         taskDescrip: document.getElementById("task-descrip-add").value,

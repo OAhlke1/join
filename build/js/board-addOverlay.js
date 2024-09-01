@@ -400,6 +400,10 @@ function setCategory(event) {
  */
 function addNewTask(event) {
     event.preventDefault();
+    if(!localStorage.UserId) {
+        alert('Guests are not allowed to create tasks');
+        return;
+    }
     let newTask = {
         taskId: Math.random(),
         category: document.querySelector('.add-task-overlay-box input.category-name').value,

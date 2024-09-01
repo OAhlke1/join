@@ -309,6 +309,10 @@ function removeSubtaskOverlay(index, j) {
  * The task is then replaced by that object.
  */
 function actualizeTask(index) {
+    if(!localStorage.UserId) {
+        alert('Guests are not allowed to edit tasks');
+        return;
+    }
     allTaskObjects[index].participants = structuredClone(newParticipantsOverlay);
     let newTaskObject = {
         taskId: allTaskObjects[index].taskId,

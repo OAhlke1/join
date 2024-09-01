@@ -312,6 +312,11 @@ function preselectParticipantsinContactListOverlay(index, id) {
  */
 function actualizeSubtaskStatus(event, i, j) {
     event.stopPropagation();
+    if(!localStorage.UserId) {
+        alert('Guest are not allowed to create tasks');
+        event.preventDefault();
+        return;
+    }
     if(allTaskObjects[i].subTasks[j].subTaskDone === 1) {
         allTaskObjects[i].subTasks[j].subTaskDone = 0;
     }else {
