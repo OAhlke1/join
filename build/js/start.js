@@ -89,3 +89,50 @@ function showUserMenu (){
     let userMenu = document.getElementById('user-menu');
     userMenu.classList.toggle('d-none');
 }
+
+/**
+ *
+ * Toggle Usermenu 
+ * 
+ */
+function showUserMenu (){
+    let userMenu = document.getElementById('user-menu');
+    userMenu.classList.toggle('d-none');
+    if(!userMenu.classList.contains('shift-in')) {
+        userMenu.classList.add('shift-in');
+    }else {
+        userMenu.classList.remove('shift-in');
+    }
+}
+
+/**
+ * 
+ * Put the initails into the button
+ * 
+ */
+function loadUserInitials() {
+    let user = localStorage.getItem('User');
+    let initials = document.getElementById('user-button-initials');
+    if(initials) {
+        initials.innerHTML = getInitials(user);
+    }
+}
+
+
+/**
+ * 
+ * Get the initails from the current user for header
+ * 
+ * @param {*} name - User-name
+ * @returns - returns the initails from the user
+ */
+function getInitials(name) {
+    let parts = name.split(' ')
+    let initials = ''
+    for (let i = 0; i < parts.length; i++) {
+        if (parts[i].length > 0 && parts[i] !== '') {
+            initials += parts[i][0]
+        }
+    }
+    return initials;
+}
