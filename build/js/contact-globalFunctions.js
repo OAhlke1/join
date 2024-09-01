@@ -115,6 +115,9 @@ function sorter() {
  * begin with the letter in the Headline of that box.
  */
 function renderIntoLetterBox() {
+  if(!localStorage.UserId) {
+      return `<span class='asterisk' style='font-size: 16px; text-align: center;'>Contact-List is not visible for guests.</span>`;
+  }
   if (contacts.length === 0) {
     showContacts.innerHTML = "";
   }
