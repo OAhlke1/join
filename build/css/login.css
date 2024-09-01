@@ -1,0 +1,437 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 80px 77px;
+    position: relative;
+    background-color: #f6f7f8;
+}
+
+.disNone {
+    display: none !important;
+}
+
+.visNone {
+    visibility: hidden;
+}
+
+input {
+    align-items: center;
+    width: 100%;
+    max-width: 422px;
+    height: 48px;
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    padding: 0px 21px;
+    background-color: white;
+    background-repeat: no-repeat !important;
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 1200px) {
+    input {
+        font-size: 16px;
+    }
+}
+
+input::placeholder {
+    font-size: 20px;
+    color: #d1d1d1;
+    line-height: 0;
+}
+
+button {
+    height:48px;
+    padding: 0px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 0;
+    border-radius: 8px;
+}
+
+button.signin-btn, button.login {
+    width: 91px;
+    height: 49px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    background-color: #2a3647;
+    line-height: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.noBg {
+    background-image: none !important;
+}
+
+input:focus {
+    background: none;
+}
+
+.topBar {
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1440px;
+    margin-bottom: 64px;
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo-big {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 5000;
+    background-color: white;
+}
+
+.logo-big .svgCont {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.logo-big .svgCont .svgCont-inner {
+    width: 274px;
+    height: 335px;
+    aspect-ratio: 274/335;
+}
+
+@keyframes shrinkOverlay {
+    0% {
+        width: 100vw;
+        height: 100vh;
+    }
+    100% {
+        width: 101px;
+        height: 122px;
+    }
+}
+
+@keyframes shrinkLogo {
+    0% {
+        width: 274px;
+    }
+    100% {
+        width: 101px;
+        display: none;
+    }
+}
+
+.topBar .sign-up {
+    column-gap: 35px;
+}
+
+.topBar .sign-up .not-yet {
+    background-color: transparent;
+    font-size: 20px;
+    line-height: 0;
+    font-weight: 400;
+}
+
+.form-block {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 32px;
+    min-width: 396px;
+    width: 80%;
+    max-width: 652px;
+    min-height: 493px;
+    padding: 48px 115px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 14px 3px rgba(0 0 0 / 0.04);
+    position: relative;
+    background-color: white;
+}
+
+.form-block h1 {
+    position: relative;
+}
+
+.form-block h1::after {
+    content: "";
+    width: 150px;
+    height: 2px;
+    background-color: #29abe2;
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.form-block form {
+    gap: 16px;
+    width: 100%;
+    margin-top: 27px;
+}
+
+#name-signin {
+    background-image: url('../../assets/img/name-icon.png');
+    background-size: 16px auto;
+    background-position: calc(100% - 25px) center;
+}
+
+#mail-login, #mail-signin {
+    background-image: url('../../assets/img/mail-icon.png');
+    background-size: 24px auto;
+    background-position: calc(100% - 23px) center;
+    background-repeat: no-repeat;
+}
+
+#password-login, #password-signin, #confirm-password-signin {
+    background-image: url('../../assets/img/password-icon.png');
+    background-size: 16px auto;
+    background-position: calc(100% - 25px) center;
+    margin-bottom: 8px;
+}
+
+.form-block .goBack {
+    height: fit-content;
+    position: absolute;
+    top: 70px;
+    left: 53px;
+    padding: 0;
+}
+
+.form-block form .remember {
+    align-items: center;
+    padding-left: 43px;
+    column-gap: 8px;
+    width: fit-content;
+    height: 16px;
+    cursor: pointer;
+}
+
+#rememberMe, #acceptPp {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #2a3647;
+    position: relative;
+    cursor: pointer;
+}
+
+.form-block form .remember label {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+    line-height: 100%;
+    cursor: pointer;
+}
+
+.form-block form .acceptPp {
+    align-self: center;
+}
+
+.form-block form .acceptPp label {
+    color: #a8a8a8;
+}
+
+.form-block form .acceptPp label a {
+    color: #29abe2;
+}
+
+.form-block form .login-btns {
+    align-items: center;
+    column-gap: 35px;
+}
+
+.form-block form .login-btns .login {
+    color: white;
+    background-color: #2a3647;
+}
+
+.form-block form .login-btns .sign-up {
+    align-self: center;
+}
+
+.form-block form .login-btns .guest-login {
+    border: 2px solid #2a3647;
+}
+
+.sign-up-mobile {
+    display: none;
+    column-gap: 35px;
+    margin-top: 52.5px;
+}
+
+.terms-and-cond {
+    column-gap: 24px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 35px;
+    z-index: 50;
+}
+
+.terms-and-cond a {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #cdcdcd;
+}
+
+#logo-mobile {
+    display: none;
+}
+
+.error-message {
+    color: red;
+    display: flex;
+    padding-left: 16px;
+    white-space: wrap;
+}
+
+.signin-btn:disabled {
+    background-color: #a8a8a8;
+    color: #d1d1d1;
+}
+
+.confirm-sign {
+    width: 312px;
+    height: 74px;
+    position: fixed;
+    z-index: 5000;
+    user-select: none;
+}
+
+.confirm-sign.added {
+    animation: confirmSignFadeIn 0.7s linear;
+}
+
+.confirm-sign.not-added {
+    animation: confirmSignFadeOut 0.7s linear;
+    opacity: 0;
+}
+
+.input-container {
+    flex-direction: column;
+}
+
+@keyframes confirmSignFadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes confirmSignFadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@media only screen and (max-width: 825px) {
+    body {
+        padding: 37px 16px;
+    }
+
+    .logo-big {
+        display: none;
+    }
+
+    #logo-desktop {
+        display: none;
+    }
+
+    #logo-mobile {
+        display: block;
+    }
+
+    .topBar {
+        position: static;
+        transform: unset;
+        padding: 0px 22px
+    }
+
+    .topBar .sign-up {
+        display: none !important;
+    }
+
+    .form-block {
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 0px;
+    }
+
+    .form-block h1 {
+        font-size: 47px;
+    }
+
+    .form-block h1::after {
+        bottom: -10px;
+    }
+
+    .form-block form .remember {
+        padding-left: 0;
+    }
+
+    input {
+        width: 364px;
+    }
+
+    .form-block form {
+        align-items: center;
+    }
+    
+    .login-btns {
+        flex-direction: column;
+        row-gap: 21px;
+    }
+
+    .login-btns button {
+        width: 180px;
+        height: 51px;
+        font-size: 16px;
+    }
+
+    .sign-up-mobile {
+        display: flex;
+    }
+}
+
+@media (max-width: 420px) {
+    .form-block {
+        min-width: 300px;
+        max-width: 400px;
+    }
+
+    input {
+        width: 280px;
+    }
+
+    .sign-up-mobile {
+        margin-bottom: 52.5px;
+    }
+
+    .form-block .goBack {
+        left: 20px;
+    }
+}
