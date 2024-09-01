@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Join - Contacts</title>
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico" />
+    <link rel="stylesheet" href="./build/css/general.css" />
+    <link rel="stylesheet" href="./build/css/contacts.css" />
+
+    <!-- Platzhalter für CSS Datei-->
+  </head>
+
+  <body onload="init()">
+    <div class="flex container fixed transform50">
+      <nav w3-include-html="./build/templates/navigation.html"> </nav>
+      <!-- Platzhalter für die spätere Navigation (Nicht ändern) -->
+      
+      <main class="flex">
+        <header class="flex" w3-include-html="./build/templates/header.html"></header>
+        <!-- Platzhalter für den späteren Header (Nicht ändern) -->
+
+        <!-- Hier den Inhalt der Seite einfügen und stylen in separater CSS Datei -->
+
+        <div class="flex mainContainer">
+          <div class="contactList">
+            <div class="newContactButton flex-center">
+              <!-- Add new contact Button -->
+
+              <button class="flex-center" onclick="addContactToggle()">
+                Add new contact
+
+                <img src="./assets/img/person_add.png" alt="" />
+              </button>
+            </div>
+            <!-- Contactlist -->
+
+            <div class="contactNames">
+                
+                    <div  id="showContact"></div>
+                
+                    <div class="personAdd" onclick="addContactToggle()"> <img src="./assets/img/person_add.png" alt=""></div>
+            </div>
+          </div>
+
+          <div class="flex-column">
+          <div class="headline flex ">
+            <h1>Contacts</h1>
+            
+            <span>Better with a team</span>     
+          </div>
+
+
+          <div class="informationPopUp">
+         </div>
+         
+        </div>
+        <!-- <div class="personAdd"> <img src="./assets/img/person_add.png" alt=""></div> -->
+  
+
+<div class="overlayEdit-parent flex flex-center d-none"  onclick="backgroundClickedEdit(event)">
+  
+  <div class="editContactMainContainer flex pos-rel flex-center" >
+    
+      <div class="editContactLeftContainer flex">
+        <img src="./assets/img/capa 2.png" alt="">
+        <p>Edit contact</p>
+        <p></p>
+      </div>
+   
+      <div class="flex-center bigSize editContactImg profileImage merge" onclick="editContactImg()">AM</div>
+    <div class="flex rightContainer">
+        <img class="close-overlay slide"src="./assets/img/close.png" alt="" onclick="editContactToggle();">
+        <img class="close-overlay  mobileClose" src="./assets/img/closeWhite.png" alt="" onclick="editContactToggle()">
+     <form class="flex inputContainer" onsubmit="editContact(event)">
+      <div class="pos-rel"><input type="text" placeholder="name" class="inputEditName" required><img src="./assets/img/person.png" alt="" class="pos-abs50"></div>
+      <div class="pos-rel"><input type="email" placeholder="email" class="inputEditEmail" required><img src="./assets/img/mail.png" alt="" class="pos-abs50"></div>
+        <div class="pos-rel"> <input type="phone" placeholder="number" class="inputEditNumber" required><img src="./assets/img/call.png" alt="" class="pos-abs50"></div>
+      
+      <div class="flex editContactButton"> <button type="submit" onclick="deleteContact(presentlyIndexContacts)">Delete</button> <button class="flex" type="submit">Save <img src="./assets/img/save.png" alt=""></button></div>
+     
+  
+     </form>
+     </div>
+    </div>
+</div>
+
+
+ <div class="overlay-parent  flex flex-center d-none" onclick="backgroundClickedAdd(event)" >
+
+    <div class="addContactMainContainer flex pos-rel flex-center" >
+  
+      <div class="editContactLeftContainer flex">
+       <img src="./assets/img/capa 2.png" alt="">
+        <p>Add contact</p>
+        <p>Tasks are better with a team!</p>
+       </div>
+
+
+      
+       <div class="flex-center bigSize nonePerson merge"><img src="./assets/img/personNone.png" alt=""></div>
+
+       <div class="flex rightContainer">
+         <img class="close-overlay" src="./assets/img/close.png" alt="" onclick="addContactToggle()">
+         <img class="close-overlay mobileClose" src="./assets/img/closeWhite.png" alt="" onclick="addContactToggle()">
+     <form class="flex inputContainer" onsubmit="createContactValue(event)">
+      <div class="pos-rel"><input type="text" placeholder="name" class="inputName" required><img src="./assets/img/person.png" alt="" class="pos-abs50"></div>
+      <div class="pos-rel"> <input type="email" placeholder="email" class="inputEmail" required><img src="./assets/img/mail.png" alt="" class="pos-abs50"></div>
+      <div class="pos-rel"><input type="number" placeholder="number" class="inputNumber" required><img src="./assets/img/call.png" alt="" class="pos-abs50"></div>
+      
+     <div class="flex editContactButton addButton"> <button  onclick="addContactToggle()">Cancel</button> <button type="submit" class="flex">Create contact <img src="./assets/img/save.png" alt=""></button></div>
+        
+     
+     </form>
+     </div>
+     
+    </div>
+  </div>
+
+      </main>
+    </div>
+
+    
+
+    <!-- Platzhalter für den spätere JS-Datei -->
+    <script src="./build/js/contact.js"></script>
+    <script src="./build/js/main.js"></script>
+  </body>
+</html>
+
+
+
