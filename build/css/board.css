@@ -194,6 +194,7 @@ main .boardCont .board .board-column .column-card-cont .card p {
 main .boardCont .board .board-column .column-card-cont .task {
     border-radius: 16px;
     background-color: white;
+    border: 1px solid #5e5e5e;
     padding: 16px;
     font-size: 16px;
     row-gap: 24px;

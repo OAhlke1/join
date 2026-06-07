@@ -194,7 +194,8 @@ function collectNotDeletedTasks() {
  * if a certain task has been edited by someone else.
  */
 async function getActualTaskStateOfRemote() {
-    let response = await fetch(tasksURL+'.json');
+    let response = await fetch(BASE_URL + '/tasks.json');
+    // let response = await fetch(BASE_URL + `/tasks.json`, { method: "POST", });
     response = await response.json();
     actualTasksOnRemote = [];
     if(allTaskObjects.length > 1) {
@@ -204,8 +205,8 @@ async function getActualTaskStateOfRemote() {
         actualizeNotDeletedTasks();
     }else {
         notDeletedTasks = allTaskObjects;
-        repostTasks();
     }
+    repostTasks();
 }
 
 /**
@@ -237,6 +238,7 @@ async function repostTasks() {
         },
         body: JSON.stringify(notDeletedTasks)
     });
+    console.log(response)
 }
 
 /**

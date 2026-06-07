@@ -330,11 +330,10 @@ function actualizeTask(index) {
  * it just sets the tasks deleted-state to 1 (for true) and then the task with given index as data-taskindex gets
  * the class "completely-hidden" for being always hidden (so that it does not show up when the tasks are being searched).
  */
-function deleteTask(index) {
+async function deleteTask(index) {
     allTaskObjects[index].deleted = 1;
-    if(!document.querySelector(`.task[data-taskindex="${index}"]`).classList.contains('completely-hidden')) {
-        document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('completely-hidden');
-    }
+    // let response = await fetch(BASE_URL + `/tasks/${index}.json`, { method: "DELETE", });
+    if(!document.querySelector(`.task[data-taskindex="${index}"]`).classList.contains('completely-hidden')) { document.querySelector(`.task[data-taskindex="${index}"]`).classList.add('completely-hidden'); }
     closeOverlay(index);
     showHideGreyTaskCards();
     collectNotDeletedTasks();
