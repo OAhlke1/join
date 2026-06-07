@@ -1,6 +1,6 @@
 var allInputs = document.querySelectorAll("input");
 let userUrl =
-  "https://join-249-default-rtdb.europe-west1.firebasedatabase.app/user";
+  "https://join-3f6e2-default-rtdb.europe-west1.firebasedatabase.app/user";
 let userValue = document.getElementById("mail-login");
 let userName;
 let userEmail;

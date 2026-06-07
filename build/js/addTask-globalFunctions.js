@@ -12,8 +12,9 @@ let selectContacts = document.querySelector('.contact-list');
 let subtaskInput = document.querySelector('#choose-subtasks');
 let categoryType = "medium";
 let taskAddedElem = document.querySelector('.task-added');
-const BASE_URL = "https://join-249-default-rtdb.europe-west1.firebasedatabase.app";
-const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks'
+const BASE_URL = "https://join-3f6e2-default-rtdb.europe-west1.firebasedatabase.app";
+const tasksURL = 'https://join-3f6e2-default-rtdb.europe-west1.firebasedatabase.app/tasks';
+const userJsonURL = BASE_URL + "/user.json";
 
 /**
  * 
@@ -21,9 +22,9 @@ const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.ap
  */
 async function getTasks() {
     includeHTML();
-    let fetchedTasks = await fetch(tasksURL+'.json');
+    let fetchedTasks = await fetch(tasksURL + '.json');
     fetchedTasks = await fetchedTasks.json();
-    if(!fetchedTasks) {
+    if (!fetchedTasks) {
         getContacts();
         return;
     }
@@ -37,7 +38,7 @@ async function getTasks() {
  * @function setTasksArray stores all these Tasks in an Array.
  */
 function setTasksArray(tasksJson) {
-    for(let [key, value] of Object.entries(tasksJson)) {
+    for (let [key, value] of Object.entries(tasksJson)) {
         allTaskKeys.push(key);
         allTaskObjects.push(value);
     }
@@ -48,15 +49,17 @@ function setTasksArray(tasksJson) {
  * @function getContacts gets the Contacts from the FTP-server.
  */
 async function getContacts() {
-    allContactsObjects = await fetch(BASE_URL+'/contacts.json');
-    allContactsObjects = await allContactsObjects.json();
-    let contactsArray = [];
-    for(const [key, value] of Object.entries(allContactsObjects)) {
-        contactKeys.push(key);
-        contactsArray.push(value);
+    allContactsObjects = await fetch(userJsonURL);
+    if (allContactsObjects.ok) {
+        allContactsObjects = await allContactsObjects.json();
+        let contactsArray = [];
+        for (const [key, value] of Object.entries(allContactsObjects)) {
+            contactKeys.push(key);
+            contactsArray.push(value);
+        }
+        allContactsObjects = contactsArray;
+        sortContacts();
     }
-    allContactsObjects = contactsArray;
-    sortContacts();
 }
 
 /**
@@ -64,13 +67,13 @@ async function getContacts() {
  * @function setOnfocusOut sets the functions to the input-fields when they lose focus.
  */
 function setOnfocusOut() {
-    document.querySelectorAll('input').forEach((elem)=>{
-        elem.addEventListener('focusout', ()=>{
+    document.querySelectorAll('input').forEach((elem) => {
+        elem.addEventListener('focusout', () => {
             document.querySelector('.contact-list').classList.add('disNone');
             document.querySelector('.categories-list').classList.add('disNone');
         })
     });
-    document.querySelectorAll('.triangle').forEach((elem)=>{
+    document.querySelectorAll('.triangle').forEach((elem) => {
         elem.classList.remove('rotated');
         elem.style.transform = 'rotate(0deg)';
     });
@@ -95,7 +98,7 @@ function sortContacts() {
                     allContactsObjects[j] = puffer;
                 }
             }
-        }   
+        }
     }
     renderContactList();
 }
@@ -105,7 +108,7 @@ function sortContacts() {
  */
 function renderContactList() {
     selectContacts.innerHTML = /* HTML */ ``;
-    allContactsObjects.forEach((elem, i)=>{
+    allContactsObjects.forEach((elem, i) => {
         selectContacts.innerHTML += /* HTML */ `<div class="flex flex-center contact" data-selectindex="${i}" onclick="selectContact(event)">
         <div class="flex flex-center contact-left">
             <div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p></div><p class="contact-name">${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""} ${elem.contactId == localStorage.UserId ? '(You)' : ""}</p>
@@ -128,10 +131,10 @@ function renderContactList() {
  */
 function showHideContactList(event) {
     document.querySelector('.search-contacts').focus();
-    if(document.querySelector('.contact-list').classList.contains('disNone')) {
+    if (document.querySelector('.contact-list').classList.contains('disNone')) {
         document.querySelector('.contact-list').classList.remove('disNone');
         document.querySelector('.contacts .contacts-inner .triangle').classList.add('rotated');
-    }else {
+    } else {
         document.querySelector('.contact-list').classList.add('disNone');
         document.querySelector('.contacts .contacts-inner .triangle').classList.remove('rotated');
     }
@@ -156,10 +159,10 @@ function removeParticipant(i) {
 function searchForContacts(event) {
     let input = document.querySelector('.search-contacts');
     document.querySelector('.contact-list').classList.remove('disNone');
-    document.querySelectorAll('.contact-name').forEach((elem)=>{
-        if(elem.innerHTML.toLowerCase().includes(input.value.toLowerCase())) {
+    document.querySelectorAll('.contact-name').forEach((elem) => {
+        if (elem.innerHTML.toLowerCase().includes(input.value.toLowerCase())) {
             elem.closest('.contact').classList.remove('disNone');
-        }else {
+        } else {
             elem.closest('.contact').classList.add('disNone');
         }
     })
@@ -172,9 +175,9 @@ function searchForContacts(event) {
  */
 function selectContact(event) {
     event.stopPropagation();
-    if(event.target.closest('.contact').classList.contains('chosen')) {
+    if (event.target.closest('.contact').classList.contains('chosen')) {
         event.target.closest('.contact').classList.remove('chosen');
-    }else {
+    } else {
         event.target.closest('.contact').classList.add('chosen');
     }
     getParticipants();
@@ -186,11 +189,11 @@ function selectContact(event) {
  * @returns an HTML-string with either just the first- or lastname of the participant when the other name is missing or with both of his/her names.
  */
 function checkIfFirstOrLastNameIsMissingInContactList(elem) {
-    if(!elem.sureName) {
+    if (!elem.sureName) {
         return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.lastName[0]}</p></div><p class="contact-name">${elem.lastName}</p>`;
-    }else if(!elem.lastName) {
+    } else if (!elem.lastName) {
         return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}</p></div><p class="contact-name">${elem.sureName}</p>`;
-    }else {
+    } else {
         return `<div class="flex flex-center circle" style="background-color: ${elem.color}"><p>${elem.sureName[0]}${elem.lastName[0]}</p></div><p class="contact-name">${elem.sureName} ${elem.lastName}</p>`;
     }
 }
@@ -201,7 +204,7 @@ function checkIfFirstOrLastNameIsMissingInContactList(elem) {
  */
 function renderChosenList() {
     document.querySelector('.chosen-list').innerHTML = '';
-    participantsArray.forEach((elem, i)=>{
+    participantsArray.forEach((elem, i) => {
         document.querySelector('.chosen-list').innerHTML += /* HTML */ `<li><div class="flex flex-center circle" style="background-color: ${elem.color};" onclick="removeParticipant(${i})" onmouseover="showName(${i})" onmouseleave="hideName(${i})" style="background-color: ${allContactsObjects[i].color};">
             <p>${elem.sureName ? elem.sureName[0] : ""}${elem.lastName ? elem.lastName[0] : ""}</p>
             <div class="name-block${i} name-block disNone"><p>${elem.sureName ? elem.sureName : ""} ${elem.lastName ? elem.lastName : ""}<br>Click icon to remove</p></div>
@@ -237,7 +240,7 @@ function hideName(i) {
  */
 function getParticipants() {
     participantsArray = [];
-    document.querySelectorAll('.contact.chosen').forEach((elem)=>{
+    document.querySelectorAll('.contact.chosen').forEach((elem) => {
         participantsArray.push(allContactsObjects[+elem.getAttribute('data-selectindex')])
     })
     renderChosenList();
@@ -253,7 +256,7 @@ function getParticipants() {
  */
 function choosePrio(event, prio) {
     event.preventDefault();
-    if(event.target.closest('.choose-prio-button').classList.contains(`prio-${prio}-button-bg-color`)) {
+    if (event.target.closest('.choose-prio-button').classList.contains(`prio-${prio}-button-bg-color`)) {
         event.target.closest('.choose-prio-button').classList.remove(`prio-${prio}-button-bg-color`);
         selectedPrio = "low";
         return;
@@ -283,10 +286,10 @@ function resetUrgency() {
  * @function showHideCategoriesList shows or hides the list of task-categories.
  */
 function showHideCategoriesList(event) {
-    if(document.querySelector('.categories-list').classList.contains('disNone')) {
+    if (document.querySelector('.categories-list').classList.contains('disNone')) {
         document.querySelector('.categories-list').classList.remove('disNone');
         document.querySelector('.categories .categories-inner .triangle').classList.add('rotated');
-    }else {
+    } else {
         document.querySelector('.categories-list').classList.add('disNone');
         document.querySelector('.categories .categories-inner .triangle').classList.remove('rotated');
     }
@@ -311,15 +314,15 @@ function setCategory(event) {
  * @function addSubtask pushes a new subtask to @var allSubtasksArray
  */
 function addSubtask() {
-    if(subtaskInput.value === "") {
+    if (subtaskInput.value === "") {
         hideCrossTic();
         return;
-    }else {
-        if(checkIfSubtaskExists()) {
+    } else {
+        if (checkIfSubtaskExists()) {
             subtaskInput.value = '';
             alert('Subtask already exists');
-        }else {
-            allSubtasksArray.push({subTaskDone: 0, subTaskTitle: subtaskInput.value})
+        } else {
+            allSubtasksArray.push({ subTaskDone: 0, subTaskTitle: subtaskInput.value })
             renderSubtaskList();
             subtaskInput.value = '';
             hideCrossTic();
@@ -334,11 +337,11 @@ function addSubtask() {
  * already existing task. If so, @bool true is returned. Else @bool false is given back.
  */
 function checkIfSubtaskExists() {
-    for(let i=0; i<allSubtasksArray.length; i++) {
-        if(allSubtasksArray[i].subTaskTitle.toLowerCase() === subtaskInput.value.toLowerCase()) {
+    for (let i = 0; i < allSubtasksArray.length; i++) {
+        if (allSubtasksArray[i].subTaskTitle.toLowerCase() === subtaskInput.value.toLowerCase()) {
             return true;
-        }else if(allSubtasksArray[i].subTaskTitle.toLowerCase() != subtaskInput.value.toLowerCase()) {
-            if(i+1 === allSubtasksArray.length) {
+        } else if (allSubtasksArray[i].subTaskTitle.toLowerCase() != subtaskInput.value.toLowerCase()) {
+            if (i + 1 === allSubtasksArray.length) {
                 return false;
             }
         }
@@ -359,7 +362,7 @@ function showCrossTic() {
  * @function hideCrossTic hides the cross- and tic-button oft the task inputfield.
  */
 function hideCrossTic() {
-    if(document.querySelector('#choose-subtasks').value === "") {
+    if (document.querySelector('#choose-subtasks').value === "") {
         document.querySelector('.subtask-input .add').classList.remove('disNone');
         document.querySelector('.cross-tic').classList.add('disNone');
     }
@@ -402,7 +405,7 @@ function fadeOutPenBin(i) {
  */
 function renderSubtaskList() {
     document.querySelector('.subtask-list').innerHTML = '';
-    allSubtasksArray.forEach((elem, i)=>{
+    allSubtasksArray.forEach((elem, i) => {
         document.querySelector('.subtask-list').innerHTML += /* HTML */ `<li id="subtask-li-${i}" class="flex flex-center" style="column-gap: 12px;" onmouseover="fadeInPenBin(${i})" onmouseleave="fadeOutPenBin(${i})">
             <p class="subtask-title-p-${i}">${elem.subTaskTitle}</p>
             <div class="pen-bin-subtask flex flex-center" id="pen-bin-subtask-${i}">

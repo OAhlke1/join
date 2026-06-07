@@ -1,5 +1,5 @@
 const BASE_URL =
-  "https://join-249-default-rtdb.europe-west1.firebasedatabase.app";
+  "https://join-3f6e2-default-rtdb.europe-west1.firebasedatabase.app";
 
 let contacts = [];
 let tasks = [];
@@ -52,7 +52,7 @@ async function getContacts() {
  * When the key is "Escape", all overlays are being closed.
  */
 function closeOverlaysWithEscape(event) {
-  if(event.key === "Escape") {
+  if (event.key === "Escape") {
     toggleAddContact = false;
     toggleEditContact = false;
     addContactToggle();
@@ -69,7 +69,7 @@ function closeOverlaysWithEscape(event) {
 async function getTasks() {
   let response = await fetch(BASE_URL + "/tasks.json");
   response = await response.json();
-  if(response) {
+  if (response) {
     for (let [key, value] of Object.entries(response)) {
       tasks.push(value);
     }
@@ -102,8 +102,8 @@ function sorter() {
       return a[1].sureName > b[1].sureName
         ? 1
         : a[1].sureName < b[1].sureName
-        ? -1
-        : 0;
+          ? -1
+          : 0;
     }
   });
   renderIntoLetterBox();
@@ -156,8 +156,8 @@ function getContactsHtml() {
  * If so, the contact and the headline of the letterblock the contact is in, are hidden.
  */
 function checkForEmptyLetterBoxes() {
-  document.querySelectorAll('h3.sort').forEach((elem)=>{
-    if(document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"].d-none`).length === document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"]`).length) {
+  document.querySelectorAll('h3.sort').forEach((elem) => {
+    if (document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"].d-none`).length === document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"]`).length) {
       elem.classList.add('d-none');
     }
   })
@@ -170,8 +170,8 @@ function checkForEmptyLetterBoxes() {
  * If so, the contact and the headline of the letterbox the contact is in, are hidden.
  */
 function checkForEmptyLetterBoxes() {
-  document.querySelectorAll('h3.sort').forEach((elem)=>{
-    if(document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"].d-none`).length === document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"]`).length) {
+  document.querySelectorAll('h3.sort').forEach((elem) => {
+    if (document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"].d-none`).length === document.querySelectorAll(`#showContact .contact[contact-firstletter="${elem.innerHTML}"]`).length) {
       elem.classList.add('d-none');
     }
   })
@@ -186,9 +186,8 @@ function checkForEmptyLetterBoxes() {
 function contactHTML(contactsIndex, q) {
   getRandomColor();
   return `<div class="flex contact c-${contactsIndex} ${contacts[contactsIndex][1].contactId == localStorage.UserId ? 'd-none' : ''}" onclick="clickContact(event)" data-contactIndex="${contactsIndex}" contact-firstletter="${newChar}">
-      <div class="flex-center profileImage" style="background-color: ${
-        contacts[contactsIndex][1].color
-      };" >
+      <div class="flex-center profileImage" style="background-color: ${contacts[contactsIndex][1].color
+    };" >
        ${profileName(q)}
       </div>
       <div class="gap"> 
@@ -255,16 +254,16 @@ function focusContact() {
   contact.classList.add("contactFocus");
 }
 
- /**
-  * This function makes the side responsive
-  */
+/**
+ * This function makes the side responsive
+ */
 function showHideContactNames() {
   if (window.innerWidth <= 950 && toggleInfoContact) {
     contactList.classList.add("d-none");
     information.classList.remove("d-none");
   } else if (window.innerWidth > 950 && toggleInfoContact) {
     contactList.classList.remove("d-none");
-  }else{
+  } else {
     contactList.classList.remove("d-none");
   }
 }
@@ -278,9 +277,9 @@ window.onresize = function () {
   showHideContactNames();
 };
 
- /**
-  * This function makes the side responsive
-  */
+/**
+ * This function makes the side responsive
+ */
 function hideContact() {
   if (window.innerWidth < 950) {
     contactList.classList.remove("d-none");
@@ -320,9 +319,8 @@ function clickContactHTML(index) {
         <h5>Email</h5>
         <span> ${contacts[index][1]["email"]}</span>
         <h5>Phone</h5>
-        <a  href="tel:${contacts[index][1]["number"]}"> ${
-    contacts[index][1]["number"]
-  }</a>
+        <a  href="tel:${contacts[index][1]["number"]}"> ${contacts[index][1]["number"]
+    }</a>
       </div>
       </div>
        <img class="meunContactOptions" src="./assets/img/menuContactOptions.png" alt="">
@@ -341,7 +339,7 @@ function startingValueEditContact(index) {
   let email = document.querySelector(".inputEditEmail");
   let number = document.querySelector(".inputEditNumber");
   let letters = document.querySelector(".editContactImg");
-  if(document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge')) {
+  if (document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge')) {
     document.querySelector('.flex-center.bigSize.editContactImg.profileImage.merge').style.background = `${contacts[presentlyIndexContacts][1].color}`;
   }
   name.value = contacts[index][1]["sureName"] + " " + contacts[index][1]["lastName"];

@@ -1,3 +1,6 @@
+const BASE_URL =
+  "https://join-3f6e2-default-rtdb.europe-west1.firebasedatabase.app";
+
 /**
  * This function fetches all task-objects from firebase
  * 
@@ -8,7 +11,7 @@
  */
 async function getTasks() {
     includeHTML();
-    let response = await fetch(tasksURL+'.json');
+    let response = await fetch(BASE_URL+'/tasks.json');
     response = await response.json();
     if(response) {for(let i=0; i<response.length; i++) {allTaskObjects.push(response[i]);}}
     getContacts();
@@ -27,7 +30,7 @@ async function getTasks() {
  * 
  */
 async function getContacts() {
-    let response = await fetch(contactsURL+'.json');
+    let response = await fetch(BASE_URL+'/contacts.json');
     response = await response.json();
     if(response) {
         for(let [key, value] of Object.entries(response)) {

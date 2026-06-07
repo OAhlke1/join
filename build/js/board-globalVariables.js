@@ -1,5 +1,6 @@
-const tasksURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks';
-const contactsURL = 'https://join-249-default-rtdb.europe-west1.firebasedatabase.app/contacts';
+// const BASE_URL = "https://join-3f6e2-default-rtdb.europe-west1.firebasedatabase.app";
+const tasksURL = BASE_URL + '/tasks';
+const contactsURL = BASE_URL + '/contacts';
 const columns = document.querySelectorAll(".column-card-cont");
 let allTaskObjects = [];
 let allContactsObjects = [];

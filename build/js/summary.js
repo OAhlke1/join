@@ -62,7 +62,7 @@ function getGreetingName() {
  */
 async function getValues() {
   let response = await fetch(
-    "https://join-249-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
+    "https://join-3f6e2-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
   );
   let data = await response.json();
 
