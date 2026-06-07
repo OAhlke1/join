@@ -39,7 +39,7 @@ function init() {
  * @function getContacts for getting the list of already existing contacts
  */
 async function getContacts() {
-  contacts = await fetch(BASE_URL + "/contacts.json");
+  contacts = await fetch(BASE_URL + "/user.json");
   contacts = await contacts.json();
   getTasks();
   setContactsAsArray();
@@ -118,7 +118,9 @@ function renderIntoLetterBox() {
   if (contacts.length === 0) {
     showContacts.innerHTML = "";
   }
-  newChar = contacts[contactsIndex][1]["lastName"][0];
+  if(contacts[contactsIndex][1]["lastName"]) {
+    newChar = contacts[contactsIndex][1]["lastName"][0];
+  } else { newChar = contacts[contactsIndex][1]["name"][0]; }
   getContactsHtml();
   if (contactsIndex < contacts.length) {
     letterBlock += `<h3 class="sort">${newChar}</h3>${contactsString}`;
@@ -142,9 +144,7 @@ function getContactsHtml() {
       return;
     }
     contactsIndex = q;
-    if (newChar != contacts[q][1].lastName[0]) {
-      return;
-    }
+    if (contacts[q][1]["lastName"] && newChar != contacts[q][1]["lastName"][0]) { return; }
 
     contactsString += contactHTML(contactsIndex, q);
   }
@@ -203,11 +203,9 @@ function contactHTML(contactsIndex, q) {
  * @returns 
  */
 function profileName(q) {
-  if (contacts[q][1].sureName == "") {
-    return `${contacts[q][1].lastName[0]}`;
-  } else {
-    return `${contacts[q][1].sureName[0]}${contacts[q][1].lastName[0]}`;
-  }
+  if (contacts[q][1]["sureName"] && contacts[q][1]["lastName"]) {
+    return contacts[q][1]["sureName"][0] + contacts[q][1]["lastName"][0];
+  } else { return contacts[q][1]["name"][0]; }
 }
 
 /**

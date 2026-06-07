@@ -33,7 +33,7 @@ async function repostTasks() {
    * @returns the response of the FTP-client.
    */
   async function postData(path = "", data = {}) {
-    let response = await fetch(BASE_URL + path + ".json", {
+    let response = await fetch(BASE_URL + "/user.json", {
       method: "POST",
       header: {
         "Content-Type": "application/json",
