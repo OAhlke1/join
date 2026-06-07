@@ -27,4 +27,4 @@ My other links:
 
 ## Screenshot
 
-![App Screenshot](https://oscar-ahlke.de/join/screenshot.webp)
+![App Screenshot](https://oscar-ahlke.de/join/screenshot-login.png)
